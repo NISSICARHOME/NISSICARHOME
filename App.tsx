@@ -10,6 +10,7 @@ import Policies from './components/Policies';
 import PaymentMethods from './components/PaymentMethods';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
+import LandingPageVidrexClarityWash from './pages/LandingPageVidrexClarityWash';
 
 const App: React.FC = () => {
   useEffect(() => {
@@ -44,6 +45,11 @@ const App: React.FC = () => {
     };
   }, []);
   
+  // Simple routing based on pathname
+  if (window.location.pathname === '/kit-vidrex-clarity-wash') {
+    return <LandingPageVidrexClarityWash />;
+  }
+
   return (
     <div className="bg-[#e0e5ec] min-h-screen text-gray-800">
       <Header />
