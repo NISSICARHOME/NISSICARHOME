@@ -1,7 +1,7 @@
 import React from 'react';
 import { SocialLink } from './types';
 
-const iconClasses = "h-6 w-6 text-gray-400 group-hover:text-amber-400 transition-colors duration-300";
+const iconClasses = "h-6 w-6 text-gray-700 group-hover:text-amber-500 transition-colors duration-300";
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {

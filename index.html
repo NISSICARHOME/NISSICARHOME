@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0" />
@@ -14,6 +14,30 @@
     <style>
       body {
         font-family: 'Poppins', sans-serif;
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+      }
+
+      @keyframes gradient {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* Custom scrollbar for a cleaner look */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(251, 191, 36, 0.5); /* amber-400 */
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(245, 158, 11, 0.7); /* amber-500 */
       }
     </style>
   <script type="importmap">
@@ -21,12 +45,25 @@
   "imports": {
     "react": "https://aistudiocdn.com/react@^19.2.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.27.0"
   }
 }
 </script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        boxShadow: {
+          'neumorphic-outset': '5px 5px 10px #bebebe, -5px -5px 10px #ffffff',
+          'neumorphic-inset': 'inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff',
+        }
+      }
+    }
+  }
+</script>
 </head>
-  <body class="bg-gray-900 text-gray-100">
+  <body class="text-gray-800">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
   </body>

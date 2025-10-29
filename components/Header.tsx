@@ -4,12 +4,12 @@ const Logo = () => (
     <img 
         src="https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=w1344-h768-s-no-gm?authuser=0" 
         alt="Nissi Car Home Logo" 
-        className="h-12 md:h-16 object-contain"
+        className="h-16 md:h-20 object-contain"
     />
 );
 
 const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick: () => void; }> = ({ href, children, onClick }) => (
-  <a href={href} onClick={onClick} className="block py-2 px-3 text-gray-300 rounded hover:bg-gray-700 hover:text-white md:hover:bg-transparent md:border-0 md:hover:text-amber-400 md:p-0 transition-colors duration-300">
+  <a href={href} onClick={onClick} className="block py-2 px-3 text-gray-700 rounded-lg hover:bg-white/20 md:hover:bg-transparent md:border-0 md:hover:text-amber-500 md:p-0 transition-colors duration-300 font-semibold">
     {children}
   </a>
 );
@@ -32,15 +32,15 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50 shadow-md shadow-black/20">
+    <header className="bg-white/20 backdrop-blur-md sticky top-0 z-50 border-b border-white/30">
       <nav className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="#inicio" className="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="#inicio" onClick={handleLinkClick} className="flex items-center space-x-3 rtl:space-x-reverse">
           <Logo />
         </a>
         <button
           onClick={() => setIsOpen(!isOpen)}
           type="button"
-          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-400 rounded-lg md:hidden hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-600"
+          className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-600 rounded-lg md:hidden hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
           aria-controls="navbar-default"
           aria-expanded={isOpen}
         >
@@ -50,7 +50,7 @@ const Header: React.FC = () => {
           </svg>
         </button>
         <div className={`${isOpen ? 'block' : 'hidden'} w-full md:block md:w-auto`} id="navbar-default">
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-700 rounded-lg bg-gray-800 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent">
+          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-white/20 rounded-lg bg-white/20 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent">
             {navItems.map(item => (
               <li key={item.href}>
                 <NavLink href={item.href} onClick={handleLinkClick}>{item.label}</NavLink>

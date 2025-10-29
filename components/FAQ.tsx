@@ -2,7 +2,7 @@ import React from 'react';
 import { FAQItem } from '../types';
 import Accordion from './shared/Accordion';
 
-const faqData: FAQItem[] = [
+export const faqData: FAQItem[] = [
   {
     question: "¿En qué consiste exactamente la garantía de 365 días y cómo puedo reclamarla?",
     answer: "Nuestra garantía única cubre el rendimiento y la eficacia del producto durante 365 días. Si, siguiendo las instrucciones, no obtienes el resultado prometido, la hacemos válida. Para reclamarla, debes presentar tu comprobante de compra y agendar una videollamada con un técnico, quien te guiará en una aplicación en vivo para verificar el caso y darte una solución."
@@ -43,22 +43,24 @@ const faqData: FAQItem[] = [
 
 const FAQ: React.FC = () => {
   return (
-    <section id="faq" className="py-20 bg-gray-800/50">
+    <section id="faq" className="py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-            Preguntas Frecuentes
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-400">
-            Aquí respondemos a tus preguntas más comunes para que tengas toda la información que necesitas.
-          </p>
-        </div>
-        <div className="space-y-4">
-          {faqData.map((item, index) => (
-            <Accordion key={index} title={item.question}>
-              <p className="text-gray-300">{item.answer}</p>
-            </Accordion>
-          ))}
+        <div className="p-8 rounded-3xl shadow-neumorphic-outset">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+              Preguntas Frecuentes
+            </h2>
+            <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+              Aquí respondemos a tus preguntas más comunes para que tengas toda la información que necesitas.
+            </p>
+          </div>
+          <div className="space-y-4">
+            {faqData.map((item, index) => (
+              <Accordion key={index} title={item.question}>
+                <p className="text-gray-700">{item.answer}</p>
+              </Accordion>
+            ))}
+          </div>
         </div>
       </div>
     </section>

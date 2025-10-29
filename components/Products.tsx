@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Product } from '../types';
 import ProductModal from './shared/ProductModal';
+import ProductCarousel from './ProductCarousel';
 
 const productsData: Product[] = [
   {
     name: 'VIDREX Bloqueador de Manchas',
-    image: 'https://picsum.photos/seed/vidrex/500/500',
+    image: 'https://i.ibb.co/L5B7g7N/vidrex.png',
     shortDesc: 'Gel de rápido efecto para eliminar manchas en vidrios, acrílico, aluminio y cromo.',
     details: {
       content: '120 ML',
@@ -19,7 +20,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Clarity Wash',
-    image: 'https://picsum.photos/seed/clarity/500/500',
+    image: 'https://i.ibb.co/rpxb1zZ/clarity-wash.png',
     shortDesc: 'Desmancha vidrios, elimina tallones en pintura y desmancha farolas externamente.',
     details: {
       content: '300Gr',
@@ -33,7 +34,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Cera Hyper Diamond',
-    image: 'https://picsum.photos/seed/diamond/500/500',
+    image: 'https://i.ibb.co/jLzV8KJ/cera-hyper-diamond.png',
     shortDesc: 'Cera con nanotecnología para ultra protección e hiper brillo en la pintura de tu vehículo.',
     details: {
       title: 'CERA HYPER DIAMOND CON CARNAUBA',
@@ -48,7 +49,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Perfect Llantix',
-    image: 'https://picsum.photos/seed/llantix/500/500',
+    image: 'https://i.ibb.co/BqM8Lq4/perfect-llantix.png',
     shortDesc: 'Fórmula para un excelente brillo y un acabado definido que protege la superficie de las llantas.',
     details: {
       content: '250 ml',
@@ -61,7 +62,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Perfume para Auto IQ 250',
-    image: 'https://picsum.photos/seed/perfume/500/500',
+    image: 'https://i.ibb.co/1Mj0y34/perfume-iq250.png',
     shortDesc: 'Aroma con mayor duración para restablecer la armonía de tu cuerpo y mente mientras conduces.',
     details: {
       title: 'IQ 250 - 300 LOCIÓN',
@@ -74,7 +75,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Ultra Restorer',
-    image: 'https://picsum.photos/seed/restorer/500/500',
+    image: 'https://i.ibb.co/qY0b8tK/ultra-restorer.png',
     shortDesc: 'Restaura piezas plásticas grises y negras, devolviendo un acabado perfecto con ultra protección.',
     details: {
       features: ['Fácil Aplicación', 'Super Recubrimiento', 'Ultra Protección'],
@@ -86,7 +87,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Cero Eliminador de Rayones',
-    image: 'https://picsum.photos/seed/rayones/500/500',
+    image: 'https://i.ibb.co/ZJp5k3p/cero-rayones.png',
     shortDesc: 'Fórmula avanzada para corregir pequeños arañazos en la pintura de tu vehículo.',
     details: {
       description: 'Fórmula avanzada diseñada para corregir y disimular eficazmente pequeños arañazos y marcas superficiales en la pintura de tu vehículo, devolviéndole su acabado original.',
@@ -97,7 +98,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Shampoo PH Neutro',
-    image: 'https://picsum.photos/seed/shampoo/500/500',
+    image: 'https://i.ibb.co/XjYnB8S/shampoo-ph-neutro.png',
     shortDesc: 'Limpieza suave y segura para todas las superficies de tu vehículo, sin dañar ceras o selladores.',
     details: {
       description: 'Un shampoo de pH neutro que produce una espuma densa para encapsular y levantar la suciedad de manera segura, evitando rayones y protegiendo los tratamientos existentes en la pintura.',
@@ -109,14 +110,16 @@ const productsData: Product[] = [
 ];
 
 const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = ({ product, onSelect }) => (
-  <div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-amber-500/20 transition-all duration-300 transform hover:-translate-y-2 flex flex-col">
-    <img src={product.image} alt={product.name} className="w-full h-56 object-cover" />
+  <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col group">
+    <div className="overflow-hidden">
+        <img src={product.image} alt={product.name} className="w-full h-56 object-contain p-4 group-hover:scale-105 transition-transform duration-300" />
+    </div>
     <div className="p-6 flex flex-col flex-grow">
-      <h3 className="text-xl font-bold text-white mb-2">{product.name}</h3>
-      <p className="text-gray-400 text-sm flex-grow">{product.shortDesc}</p>
+      <h3 className="text-xl font-bold text-gray-800 mb-2">{product.name}</h3>
+      <p className="text-gray-600 text-sm flex-grow">{product.shortDesc}</p>
       <button 
         onClick={onSelect} 
-        className="mt-4 bg-amber-500 text-gray-900 hover:bg-amber-400 font-bold py-2 px-4 rounded-lg transition-colors duration-300 w-full"
+        className="mt-4 bg-amber-500/80 text-white hover:bg-amber-500/100 backdrop-blur-sm border border-amber-400/50 font-bold py-2 px-4 rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg"
       >
         Ver Detalles
       </button>
@@ -127,26 +130,53 @@ const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = ({ pro
 const Products: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
+  // Replace picsum photos with actual product images
+  const updatedProductsData = productsData.map(p => {
+    const matchingCarouselProduct = carouselProductsData.find(cp => cp.name.toLowerCase().includes(p.name.split(' ')[0].toLowerCase()));
+    if (matchingCarouselProduct) {
+      return { ...p, image: matchingCarouselProduct.imgSrc };
+    }
+    return p;
+  });
+
+
   return (
-    <section id="productos" className="py-20 bg-gray-900">
+    <section id="productos" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
-            Nuestros Productos Esenciales
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-400">
-            Una línea completa para el cuidado de tu vehículo y hogar, formulada con materias primas de vanguardia.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {productsData.map((product) => (
-            <ProductCard key={product.name} product={product} onSelect={() => setSelectedProduct(product)} />
-          ))}
+        <div className="p-8 rounded-3xl shadow-neumorphic-outset">
+            <ProductCarousel />
+            <div className="text-center mb-16 pt-16">
+              <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+                Nuestros Productos Esenciales
+              </h2>
+              <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+                Una línea completa para el cuidado de tu vehículo y hogar, formulada con materias primas de vanguardia.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {updatedProductsData.map((product) => (
+                <ProductCard key={product.name} product={product} onSelect={() => setSelectedProduct(product)} />
+              ))}
+            </div>
         </div>
       </div>
       {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
     </section>
   );
 };
+
+// Data for carousel is needed here for image mapping
+const carouselProductsData = [
+    { id: 1, name: 'VIDREX', imgSrc: 'https://i.ibb.co/L5B7g7N/vidrex.png' },
+    { id: 2, name: 'Clarity Wash', imgSrc: 'https://i.ibb.co/rpxb1zZ/clarity-wash.png' },
+    { id: 3, name: 'Cera Hyper Diamond', imgSrc: 'https://i.ibb.co/jLzV8KJ/cera-hyper-diamond.png' },
+    { id: 4, name: 'Perfect Llantix', imgSrc: 'https://i.ibb.co/BqM8Lq4/perfect-llantix.png' },
+    { id: 5, name: 'Perfume IQ 250', imgSrc: 'https://i.ibb.co/1Mj0y34/perfume-iq250.png' },
+    { id: 6, name: 'Ultra Restorer', imgSrc: 'https://i.ibb.co/qY0b8tK/ultra-restorer.png' },
+    { id: 7, name: 'Cero Rayones', imgSrc: 'https://i.ibb.co/ZJp5k3p/cero-rayones.png' },
+    { id: 8, name: 'Shampoo PH Neutro', imgSrc: 'https://i.ibb.co/XjYnB8S/shampoo-ph-neutro.png' },
+    { id: 9, name: 'Aplicador Media Luna', imgSrc: 'https://i.ibb.co/2WqJtJk/aplicador-luna.png' },
+    { id: 10, name: 'Toalla Microfibra', imgSrc: 'https://i.ibb.co/wYq4b7X/toalla-microfibra.png' },
+];
 
 export default Products;

@@ -9,13 +9,13 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="border-b border-gray-700">
+    <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg transition-all duration-300">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center py-5 px-6 text-left text-lg font-semibold text-white hover:bg-gray-700/50 transition-colors"
+        className="w-full flex justify-between items-center py-4 px-6 text-left text-lg font-semibold text-gray-800 hover:bg-white/20 transition-colors"
         aria-expanded={isOpen}
       >
-        <span>{title}</span>
+        <span className="flex-1 pr-4">{title}</span>
         <svg
           className={`w-6 h-6 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
@@ -27,10 +27,12 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
         </svg>
       </button>
       <div
-        className={`overflow-hidden transition-all duration-500 ease-in-out ${isOpen ? 'max-h-screen' : 'max-h-0'}`}
+        className={`grid transition-all duration-500 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
       >
-        <div className="p-6 pt-0">
-          {children}
+        <div className="overflow-hidden">
+          <div className="p-6 pt-0">
+            {children}
+          </div>
         </div>
       </div>
     </div>
