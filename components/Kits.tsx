@@ -9,7 +9,7 @@ const kitsData: ExtendedKit[] = [
     {
         id: "kit-vidrex-clarity",
         name: "KIT ESTRELLA: Vidrex + Clarity Wash",
-        image: "https://i.imgur.com/K7ZgX3I.jpeg",
+        image: "https://i.ibb.co/1q2Dcvn/kit-vidrex-clarity-wash-esponjas.png",
         description: "La solución definitiva para desmanchar vidrios, eliminar sarro, lluvia ácida y devolver la vida a tu auto y hogar. ¡Resultados garantizados!",
         isSpecial: true,
         price: "¡Oferta Especial!",
@@ -78,9 +78,9 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
     }
 
     return (
-      <div className={`bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col group ${isSpecial ? 'lg:col-span-1 border-2 border-green-500' : 'lg:col-span-1'}`}>
+      <div className={`bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-6 flex flex-col group ${isSpecial ? 'lg:col-span-1 border-2 border-green-500' : 'lg:col-span-1'}`}>
         <div className="overflow-hidden">
-            <img src={kit.image} alt={kit.name} className={`w-full h-56 object-contain p-4 group-hover:scale-105 transition-transform duration-300 ${isSpecial ? 'object-cover' : 'object-contain'}`} />
+            <img src={kit.image} alt={kit.name} className="w-full h-56 object-contain p-4 group-hover:scale-125 transition-transform duration-500 ease-in-out" />
         </div>
         <div className="p-6 flex flex-col flex-grow">
           <h3 className={`text-xl font-bold mb-2 ${isSpecial ? 'text-green-700' : 'text-gray-800'}`}>{kit.name}</h3>

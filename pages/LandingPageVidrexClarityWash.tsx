@@ -29,7 +29,13 @@ const FloatingWhatsApp: React.FC = () => (
 
 const LandingHero: React.FC = () => (
   <section className="bg-white py-12 px-4 text-center">
-    <img src="https://i.imgur.com/K7ZgX3I.jpeg" alt="Kit Vidrex y Clarity Wash Banner" className="mx-auto rounded-lg shadow-2xl mb-8 w-full max-w-4xl" />
+    <div className="w-full max-w-3xl mx-auto rounded-lg shadow-2xl mb-8 overflow-hidden bg-gray-100">
+        <img 
+            src="https://i.ibb.co/1q2Dcvn/kit-vidrex-clarity-wash-esponjas.png" 
+            alt="Componentes del Kit Estrella: Vidrex y Clarity Wash" 
+            className="w-full h-auto" 
+        />
+    </div>
     <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4">¡NO CAMBIES TUS VIDRIOS, DESMANCHALOS!</h1>
     <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Recupera la transparencia y el brillo de tus vidrios fácil y sin esfuerzo. Descubre la solución definitiva para eliminar manchas de sarro, lluvia ácida y depósitos minerales en tu auto y hogar.</p>
 
@@ -46,18 +52,22 @@ const LandingHero: React.FC = () => (
         </div>
         <div className="flex flex-col items-center">
              <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">ANTES / DESPUÉS</h2>
-            <img src="https://placehold.co/600x400/cccccc/ffffff?text=Antes" alt="Vidrio manchado antes del tratamiento" className="rounded-t-lg w-full"/>
-            <img src="https://placehold.co/600x400/22c55e/ffffff?text=Después" alt="Vidrio limpio después del tratamiento" className="rounded-b-lg w-full"/>
+            <img src="https://images.pexels.com/photos/10394781/pexels-photo-10394781.jpeg" alt="Vidrio manchado antes del tratamiento" className="rounded-t-lg w-full object-cover h-48"/>
+            <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-3.webp" alt="Vidrio limpio después del tratamiento" className="rounded-b-lg w-full object-cover h-48"/>
         </div>
     </div>
     
-    <p className="font-bold text-lg bg-yellow-300 text-yellow-800 py-2 px-4 rounded-md inline-block mb-8">OBSEQUIO: 2 APLICADORES DE ESPUMA</p>
+    <p className="font-bold text-lg bg-yellow-300 text-yellow-800 py-2 px-4 rounded-md inline-block mb-8">OBSEQUIO: 2 APLICADORES DE ESPUMA + TOALLA MICROFIBRA</p>
     
     <CTAButton>¡COMPRA AHORA!</CTAButton>
 
     <div id="oferta" className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12 text-center">
-        {[{q:1, p:"$XX.XXX", b:"$XX.XXX"},{q:2, p:"$XX.XXX", b:"$XX.XXX"},{q:3, p:"$XX.XXX", b:"$XX.XXX"}].map(offer => (
-            <div key={offer.q} className="border-2 border-green-500 rounded-lg p-6 bg-green-50 shadow-lg">
+        {[
+            {q:1, p:"$50.000", b:"$75.000"},
+            {q:2, p:"$90.000", b:"$150.000"},
+            {q:3, p:"$130.000", b:"$225.000"}
+        ].map(offer => (
+            <div key={offer.q} className="border-2 border-green-500 rounded-lg p-6 bg-green-50 shadow-lg transform hover:scale-105 transition-transform">
                 <h3 className="text-xl font-bold text-gray-800">{offer.q} KIT{offer.q > 1 && 'S'}</h3>
                 <p className="text-2xl font-bold text-green-600 my-2">Por solo: {offer.p}</p>
                 <p className="text-gray-500 line-through">Antes: {offer.b}</p>
@@ -84,10 +94,10 @@ const LandingBenefits: React.FC = () => (
                     <CheckListItem><strong>Seguro para múltiples superficies:</strong> Úsalo en Vidrios, Acrílico, Aluminio y Cromo.</CheckListItem>
                 </ul>
                 <div className="grid grid-cols-2 gap-4">
-                    <img src="https://placehold.co/400x300/22c55e/ffffff?text=Vidrio+de+Auto" className="rounded-lg shadow-md" alt="Vidrio de auto brillante"/>
-                    <img src="https://placehold.co/400x300/22c55e/ffffff?text=División+de+Baño" className="rounded-lg shadow-md" alt="División de baño transparente"/>
-                    <img src="https://placehold.co/400x300/22c55e/ffffff?text=Farola+Restaurada" className="rounded-lg shadow-md" alt="Farola de auto restaurada"/>
-                    <img src="https://placehold.co/400x300/22c55e/ffffff?text=Rin+de+Aluminio" className="rounded-lg shadow-md" alt="Rin de aluminio limpio"/>
+                    <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-3.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Vidrio de auto brillante"/>
+                    <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-1.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="División de baño transparente"/>
+                    <img src="https://nissicarhome.com/wp-content/uploads/2023/11/2-1-1-1024x1024.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Farola de auto restaurada"/>
+                    <img src="https://images.pexels.com/photos/1637780/pexels-photo-1637780.jpeg" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Rin de aluminio limpio"/>
                 </div>
             </div>
              <div className="mt-12 text-center">
@@ -128,15 +138,15 @@ const LandingHowToUse: React.FC = () => (
              <p className="text-center text-xl text-red-600 font-bold mb-8">Sigue estos 4 sencillos pasos en seco (No mojar antes):</p>
              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 {[
-                    {num: 1, title: 'APLICA LA CREMA', desc: 'Coloque una pequeña cantidad de Clarity Wash en el aplicador de espuma. Frota sobre la superficie (ej. 15x15cm) con movimientos firmes.'},
-                    {num: 2, title: 'APLICACIÓN DEL GEL', desc: 'Sin retirar la crema, aplique 30-40 gotas de Vidrex sobre el mismo aplicador. Sigue frotando sobre la misma área por 50 segundos.'},
-                    {num: 3, title: 'LIMPIA EL EXCESO', desc: 'Retira el exceso de producto con una toalla de microfibra limpia y seca.'},
-                    {num: 4, title: 'ENJUAGA AL FINAL', desc: 'Una vez hayas desmanchado toda el área (todo el parabrisas, etc), enjuaga con abundante agua.'},
+                    {num: 1, title: 'APLICA LA CREMA', desc: 'Coloque una pequeña cantidad de Clarity Wash en el aplicador de espuma. Frota sobre la superficie (ej. 15x15cm) con movimientos firmes.', img: 'https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-4.webp'},
+                    {num: 2, title: 'APLICACIÓN DEL GEL', desc: 'Sin retirar la crema, aplique 30-40 gotas de Vidrex sobre el mismo aplicador. Sigue frotando sobre la misma área por 50 segundos.', img: 'https://images.pexels.com/photos/7794429/pexels-photo-7794429.jpeg'},
+                    {num: 3, title: 'LIMPIA EL EXCESO', desc: 'Retira el exceso de producto con una toalla de microfibra limpia y seca.', img: 'https://images.pexels.com/photos/8349233/pexels-photo-8349233.jpeg'},
+                    {num: 4, title: 'ENJUAGA AL FINAL', desc: 'Una vez hayas desmanchado toda el área (todo el parabrisas, etc), enjuaga con abundante agua.', img: 'https://images.pexels.com/photos/372959/pexels-photo-372959.jpeg'},
                 ].map(step => (
                      <div key={step.num} className="text-center">
                          <div className="relative mb-4">
-                            <img src={`https://placehold.co/400x300?text=Paso+${step.num}`} alt={`Paso ${step.num}`} className="rounded-lg shadow-md w-full"/>
-                            <div className="absolute -top-4 -left-4 bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold">{step.num}</div>
+                            <img src={step.img} alt={`Paso ${step.num}`} className="rounded-lg shadow-md w-full h-48 object-cover"/>
+                            <div className="absolute -top-4 -left-4 bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold border-4 border-white">{step.num}</div>
                          </div>
                          <h3 className="text-xl font-bold text-gray-800">{step.title}</h3>
                          <p className="text-gray-600">{step.desc}</p>
@@ -196,6 +206,7 @@ const LandingSocialProofFAQ: React.FC = () => (
                      {name: "María F.", city: "Pereira", quote: "¡Recuperé las divisiones del baño! Tenía manchas de sarro que no salían con nada. Probé el kit y fue inmediato. Se nota el cambio, parecen nuevos."},
                      {name: "Carlos Mejía", city: "Ibagué", quote: "Muy útil para manejar seguro en lluvia. El parabrisas quedó excelente. El agua resbala y ya no se me mancha como antes. 100% recomendado."},
                      {name: "David R.", city: "Bogotá", quote: "Quedé impresionado con el brillo. Lo usé en los vidrios del carro y en los rines de aluminio. Eliminó todo tipo de suciedad y les dio un brillo increíble."},
+                     {name: "Laura G.", city: "Medellín", quote: "El soporte técnico es de lo mejor. Tenía dudas con la aplicación, me contacté por WhatsApp y me guiaron paso a paso. ¡Qué gran servicio!"},
                  ].map(testimonial => (
                     <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
                         <div className="flex text-yellow-400 mb-2">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
