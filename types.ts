@@ -53,3 +53,20 @@ export interface Policy {
   title: string;
   content: string;
 }
+
+// Added for new checkout functionality
+export interface CartItem {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+}
+
+export interface OrderDetails {
+  name: string;
+  phone: string;
+  address: string;
+  city: string;
+  department: string;
+  details: string;
+}

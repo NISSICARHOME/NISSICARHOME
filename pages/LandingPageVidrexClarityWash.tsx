@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import Accordion from '../components/shared/Accordion';
+import { CartItem } from '../types';
+
+// --- CART & CHECKOUT COMPONENTS ---
+
+const ShoppingCartIcon: React.FC = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+);
+
+export const FloatingCartButton: React.FC<{ cart: CartItem[]; onClick: () => void }> = ({ cart, onClick }) => {
+  const totalItems = useMemo(() => cart.reduce((sum, item) => sum + item.quantity, 0), [cart]);
+  const totalPrice = useMemo(() => cart.reduce((sum, item) => sum + (item.price * item.quantity), 0), [cart]);
+
+  if (totalItems === 0) return null;
+
+  return (
+    <button
+      onClick={onClick}
+      className="fixed bottom-6 right-6 bg-green-600/80 backdrop-blur-md border-2 border-white/50 text-white w-auto h-16 px-6 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600/100 transition-all transform hover:scale-110 z-50"
+      aria-label="Ver carrito y finalizar compra"
+    >
+      <ShoppingCartIcon />
+      <div className="ml-3 text-left">
+        <span className="font-bold block -mb-1">{totalItems} {totalItems > 1 ? 'productos' : 'producto'}</span>
+        <span className="text-sm">${totalPrice.toLocaleString('es-CO')}</span>
+      </div>
+    </button>
+  );
+};
+
 
 // --- HELPER COMPONENTS (scoped to this file) ---
-
-const CTAButton: React.FC<{ href: string; children: React.ReactNode; className?: string }> = ({ href, children, className = '' }) => (
-  <a 
-    href={href} 
-    target="_blank" 
-    rel="noopener noreferrer"
-    className={`block w-full max-w-md mx-auto text-center bg-green-600 text-white font-bold text-xl md:text-2xl py-4 px-8 rounded-lg shadow-lg hover:bg-green-700 transition-transform transform hover:scale-105 animate-pulse ${className}`}
-  >
-    {children}
-  </a>
-);
 
 const CheckListItem: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <li className="flex items-start text-lg">
@@ -25,15 +43,8 @@ const CheckListItem: React.FC<{ children: React.ReactNode }> = ({ children }) =>
 
 // --- PAGE SECTIONS ---
 
-const LandingHero: React.FC = () => {
-  const WHATSAPP_BASE_URL = 'https://wa.me/573203393805?text=';
-  const genericMessage = encodeURIComponent('Hola, quiero comprar el KIT ESTRELLA y pagar al recibir. ¿Me pueden ayudar con el proceso?');
-
-  const offers = [
-    {q:1, p:"$50.000", b:"$75.000", text: encodeURIComponent('Hola, quiero comprar la oferta de 1 KIT ESTRELLA por $50.000 y pagar al recibir.')},
-    {q:2, p:"$90.000", b:"$150.000", text: encodeURIComponent('Hola, quiero comprar la oferta de 2 KITS ESTRELLA por $90.000 y pagar al recibir.')},
-    {q:3, p:"$130.000", b:"$225.000", text: encodeURIComponent('Hola, quiero comprar la oferta de 3 KITS ESTRELLA por $130.000 y pagar al recibir.')}
-  ];
+const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNow }) => {
+  const defaultKit: CartItem = {id: 'kit-1', name: "KIT ESTRELLA", price: 50000, quantity: 1};
 
   return (
     <section id="oferta" className="bg-white py-12 px-4 text-center">
@@ -65,26 +76,25 @@ const LandingHero: React.FC = () => {
           </div>
       </div>
       
-      <p className="font-bold text-lg bg-yellow-300 text-yellow-800 py-2 px-4 rounded-md inline-block mb-8">OBSEQUIO: 2 APLICADORES DE ESPUMA + TOALLA MICROFIBRA</p>
-      
-      <CTAButton href={`${WHATSAPP_BASE_URL}${genericMessage}`}>¡COMPRA AHORA!</CTAButton>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12 text-center">
-          {offers.map(offer => (
-              <a 
-                key={offer.q} 
-                href={`${WHATSAPP_BASE_URL}${offer.text}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block border-2 border-green-500 rounded-lg p-6 bg-green-50 shadow-lg transform hover:scale-105 transition-transform cursor-pointer"
-              >
-                  <h3 className="text-xl font-bold text-gray-800">{offer.q} KIT{offer.q > 1 && 'S'}</h3>
-                  <p className="text-2xl font-bold text-green-600 my-2">Por solo: {offer.p}</p>
-                  <p className="text-gray-500 line-through">Antes: {offer.b}</p>
-              </a>
-          ))}
+      <div className="text-center my-12">
+        <img 
+            src="https://i.ibb.co/L5B7wzQ/obsequio-banner.png"
+            alt="Obsequio: 2 aplicadores de espuma + toalla microfibra"
+            className="mx-auto max-w-lg w-full rounded-lg shadow-lg transition-transform duration-500 hover:scale-105"
+        />
       </div>
-      <div className="flex justify-center items-center gap-8 mt-8 text-gray-600 font-semibold">
+      
+      <div className="max-w-md mx-auto">
+        <button
+          onClick={() => onBuyNow(defaultKit)}
+          className="w-full bg-green-600 text-white font-bold text-2xl py-4 px-6 rounded-lg shadow-lg hover:bg-green-700 transition-all transform hover:scale-105 animate-pulse"
+        >
+          ¡COMPRA AHORA!
+        </button>
+        <p className="mt-4 text-sm text-gray-500">Haz clic para pedir tu kit y paga al recibir. ¡Es fácil y seguro!</p>
+      </div>
+
+       <div className="flex justify-center items-center gap-8 mt-8 text-gray-600 font-semibold">
           <p>🚚 Envío a todo Colombia</p>
           <p>💵 Paga al recibir en casa</p>
       </div>
@@ -93,9 +103,6 @@ const LandingHero: React.FC = () => {
 };
 
 const LandingBenefits: React.FC = () => {
-    const WHATSAPP_BASE_URL = 'https://wa.me/573203393805?text=';
-    const message = encodeURIComponent('Hola, quiero pedir mi KIT ESTRELLA y pagar al recibir. ¿Me ayudan?');
-
     return (
         <section className="bg-gray-50 py-16 px-4">
             <div className="max-w-6xl mx-auto">
@@ -111,22 +118,16 @@ const LandingBenefits: React.FC = () => {
                     <div className="grid grid-cols-2 gap-4">
                         <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-3.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Vidrio de auto brillante"/>
                         <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-1.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="División de baño transparente"/>
-                        <img src="https://nissicarhome.com/wp-content/uploads/2023/11/2-1-1-1024x1024.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Farola de auto restaurada"/>
+                        <img src="https://nissicarhome.com/wp-content/uploads/2023/11/2-1-1-1-1024x1024.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Farola de auto restaurada"/>
                         <img src="https://images.pexels.com/photos/1637780/pexels-photo-1637780.jpeg" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Rin de aluminio limpio"/>
                     </div>
                 </div>
-                 <div className="mt-12 text-center">
-                     <CTAButton href={`${WHATSAPP_BASE_URL}${message}`}>¡PIDE TU KIT HOY MISMO!</CTAButton>
-                 </div>
             </div>
         </section>
     );
 };
 
 const LandingHowToUse: React.FC = () => {
-    const WHATSAPP_BASE_URL = 'https://wa.me/573203393805?text=';
-    const message = encodeURIComponent('Hola, estoy listo/a para comprar el KIT ESTRELLA y pagar al recibir.');
-
     return (
         <section className="bg-white py-16 px-4">
             <div className="max-w-6xl mx-auto">
@@ -175,9 +176,6 @@ const LandingHowToUse: React.FC = () => {
                  </div>
                  <div className="text-center mt-12">
                     <p className="bg-red-100 text-red-700 p-4 rounded-lg max-w-3xl mx-auto"><strong>NOTA:</strong> Usar guantes. NO APLICAR VIDREX EN PINTURA O FAROLAS (Para farolas, usa solo Clarity Wash).</p>
-                    <div className="mt-8">
-                        <CTAButton href={`${WHATSAPP_BASE_URL}${message}`}>¡COMPRAR AHORA!</CTAButton>
-                    </div>
                  </div>
             </div>
         </section>
@@ -185,9 +183,6 @@ const LandingHowToUse: React.FC = () => {
 };
 
 const LandingOffer: React.FC = () => {
-    const WHATSAPP_BASE_URL = 'https://wa.me/573203393805?text=';
-    const message = encodeURIComponent('Hola, ¡quiero aprovechar la promoción del KIT ESTRELLA! Por favor, ayúdenme a hacer mi pedido para pagar al recibir.');
-
     return (
         <section className="bg-gray-800 text-white py-16 px-4">
             <div className="max-w-4xl mx-auto text-center">
@@ -205,9 +200,6 @@ const LandingOffer: React.FC = () => {
                         <CheckListItem><span className="bg-yellow-300 px-2 py-1 rounded">GRATIS:</span> Envío a toda Colombia.</CheckListItem>
                         <CheckListItem><span className="font-bold">GARANTÍA:</span> Compra 100% segura y garantizada por 365 días.</CheckListItem>
                     </ul>
-                </div>
-                <div className="mt-8">
-                    <CTAButton href={`${WHATSAPP_BASE_URL}${message}`}>¡SÍ, QUIERO MI KIT!</CTAButton>
                 </div>
             </div>
         </section>
@@ -257,10 +249,14 @@ const LandingSocialProofFAQ: React.FC = () => (
 
 // --- MAIN LANDING PAGE COMPONENT ---
 
-const LandingPageVidrexClarityWash: React.FC = () => {
+interface LandingPageProps {
+  onBuyNow: (item: CartItem) => void;
+}
+
+const LandingPageVidrexClarityWash: React.FC<LandingPageProps> = ({ onBuyNow }) => {
     return (
         <main>
-            <LandingHero />
+            <LandingHero onBuyNow={onBuyNow} />
             <LandingBenefits />
             <LandingHowToUse />
             <LandingOffer />
