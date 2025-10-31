@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -13,43 +13,78 @@ import Chatbot from './components/Chatbot';
 import LandingPageVidrexClarityWash from './pages/LandingPageVidrexClarityWash';
 
 const App: React.FC = () => {
-  useEffect(() => {
-    const handleSmoothScroll = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const anchor = target.closest('a[href^="#"]');
+  const [pathname, setPathname] = useState(window.location.pathname);
 
-      if (anchor) {
-        const href = anchor.getAttribute('href');
-        if (href && href.length > 1) {
-          e.preventDefault();
-          const targetId = href.substring(1);
-          const targetElement = document.getElementById(targetId);
-          if (targetElement) {
-            const header = document.querySelector('header');
-            const headerHeight = header ? header.offsetHeight : 0;
-            const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
-            
-            window.scrollTo({
-                top: targetPosition,
-                behavior: 'smooth'
-            });
-          }
+  // Effect to handle browser back/forward buttons
+  useEffect(() => {
+    const onLocationChange = () => {
+      setPathname(window.location.pathname);
+    };
+    window.addEventListener('popstate', onLocationChange);
+    return () => window.removeEventListener('popstate', onLocationChange);
+  }, []);
+
+  // Unified click handler for all types of navigation
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const anchor = target.closest('a');
+
+      if (!anchor || anchor.target === '_blank' || anchor.origin !== window.location.origin) {
+        return;
+      }
+
+      const href = anchor.getAttribute('href');
+      if (!href) return;
+
+      // Case 1: Internal page link (SPA navigation)
+      if (href.startsWith('/') && !href.startsWith('//')) {
+        e.preventDefault();
+        if (href !== window.location.pathname) {
+          window.history.pushState({}, '', href);
+          setPathname(href);
+          window.scrollTo(0, 0);
         }
+        return;
+      }
+
+      // Case 2: Hash link (smooth scroll)
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const targetId = href.substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+          const header = document.querySelector('header');
+          const headerHeight = header ? header.offsetHeight : 0;
+          const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
+          
+          window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+          });
+        }
+        return;
       }
     };
 
-    document.addEventListener('click', handleSmoothScroll);
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []); // This effect runs only once to set up the global click listener.
 
-    return () => {
-      document.removeEventListener('click', handleSmoothScroll);
-    };
-  }, []);
-  
-  // Simple routing based on pathname
-  if (window.location.pathname === '/kit-vidrex-clarity-wash') {
-    return <LandingPageVidrexClarityWash />;
+  if (pathname === '/kit-vidrex-clarity-wash') {
+    // Render the landing page view
+    return (
+      <div className="bg-gray-50 font-['Poppins',_sans-serif]">
+        <Header />
+        <LandingPageVidrexClarityWash />
+        <Footer />
+        <Chatbot />
+      </div>
+    );
   }
 
+  // Render the main page view
   return (
     <div className="bg-[#e0e5ec] min-h-screen text-gray-800">
       <Header />

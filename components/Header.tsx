@@ -18,7 +18,7 @@ const Header: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { href: '#inicio', label: 'Inicio' },
+    { href: '/', label: 'Inicio' },
     { href: '#nosotros', label: 'Nosotros' },
     { href: '#productos', label: 'Productos' },
     { href: '#kits', label: 'Kits' },
@@ -34,7 +34,7 @@ const Header: React.FC = () => {
   return (
     <header className="bg-white/20 backdrop-blur-md sticky top-0 z-50 border-b border-white/30">
       <nav className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="#inicio" onClick={handleLinkClick} className="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="/" onClick={handleLinkClick} className="flex items-center space-x-3 rtl:space-x-reverse">
           <Logo />
         </a>
         <button

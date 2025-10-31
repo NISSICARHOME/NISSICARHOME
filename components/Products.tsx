@@ -20,7 +20,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Clarity Wash',
-    image: 'https://i.ibb.co/rpxb1zZ/clarity-wash.png',
+    image: 'https://drive.google.com/uc?export=view&id=1skmnbLhw1h-O8_3v_Obk_HCZbBaq8emm',
     shortDesc: 'Desmancha vidrios, elimina tallones en pintura y desmancha farolas externamente.',
     details: {
       content: '300Gr',
@@ -168,7 +168,7 @@ const Products: React.FC = () => {
 // Data for carousel is needed here for image mapping
 const carouselProductsData = [
     { id: 1, name: 'VIDREX', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczMtiRvcWH7hX10fMo5IPK4tcUy6Fb9wStoN0ftTN-922XVKHbmAZIrmlMVjA8zY7vtwAM8QCwwmKBTAgaVxmDhnTsYiULO0HrjcWRemE2MStowsWe7AESE_JOeCsNQ_lfSGtEsHYkmsQR-trE53KaFV=w661-h991-s-no-gm?authuser=0' },
-    { id: 2, name: 'Clarity Wash', imgSrc: 'https://i.ibb.co/rpxb1zZ/clarity-wash.png' },
+    { id: 2, name: 'Clarity Wash', imgSrc: 'https://drive.google.com/uc?export=view&id=1skmnbLhw1h-O8_3v_Obk_HCZbBaq8emm' },
     { id: 3, name: 'Cera Hyper Diamond', imgSrc: 'https://i.ibb.co/jLzV8KJ/cera-hyper-diamond.png' },
     { id: 4, name: 'Perfect Llantix', imgSrc: 'https://i.ibb.co/BqM8Lq4/perfect-llantix.png' },
     { id: 5, name: 'Perfume IQ 250', imgSrc: 'https://i.ibb.co/1Mj0y34/perfume-iq250.png' },

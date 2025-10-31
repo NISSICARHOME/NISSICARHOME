@@ -9,7 +9,7 @@ const kitsData: ExtendedKit[] = [
     {
         id: "kit-vidrex-clarity",
         name: "KIT ESTRELLA: Vidrex + Clarity Wash",
-        image: "https://i.ibb.co/1q2Dcvn/kit-vidrex-clarity-wash-esponjas.png",
+        image: "https://lh3.googleusercontent.com/pw/AP1GczOCzImOJU1107YMzELszciZoSttvEdneqFcfISCVcx10OqmvZ8_OeV6ucu9Je5tCsMqggztzQHHgpiexKoxADemxSzRlcFJJa1P2LVaDtCe79HyclXB92re4Gnoa53OEZk_k_mZ7VXmDHavO7wgGMa0=w735-h945-s-no-gm?authuser=0",
         description: "La solución definitiva para desmanchar vidrios, eliminar sarro, lluvia ácida y devolver la vida a tu auto y hogar. ¡Resultados garantizados!",
         isSpecial: true,
         price: "¡Oferta Especial!",
@@ -45,49 +45,56 @@ const complementsData: Kit[] = [
 const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
     const isSpecial = kit.id === 'kit-vidrex-clarity';
     const hasDetails = kit.includes && kit.includes.length > 0;
+    const href = kit.link || '#contacto';
 
-    const CTAButton = () => (
-        <a href={kit.link || '#contacto'} className={`mt-4 w-full text-center font-bold py-2 px-4 rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg ${isSpecial ? 'bg-green-600 text-white hover:bg-green-700' : 'bg-amber-500/80 text-white hover:bg-amber-500/100'}`}>
+    const Button = () => (
+        <div className={`mt-4 w-full text-center font-bold py-2 px-4 rounded-lg transition-all duration-300 active:scale-95 shadow-md ${isSpecial ? 'bg-green-600 text-white group-hover:bg-green-700' : 'bg-amber-500/80 text-white group-hover:bg-amber-500/100'}`}>
             {isSpecial ? 'Ver Oferta Ahora' : 'Más Información'}
-        </a>
+        </div>
     );
 
-    if (hasDetails) {
-        return (
-             <div className="col-span-1 lg:col-span-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col lg:flex-row">
-                <img src={kit.image} alt={kit.name} className="w-full lg:w-1/3 h-64 lg:h-auto object-contain p-4" />
-                <div className="p-6 lg:p-8 flex flex-col">
-                    <h3 className="text-2xl font-bold text-amber-600">{kit.name}</h3>
-                    {kit.price && <p className="text-xl font-semibold text-gray-800 mt-1 mb-3">{kit.price}</p>}
-                    <p className="text-gray-700 mb-4">{kit.description}</p>
-                    <div className="flex-grow">
-                        <h4 className="font-semibold text-gray-800 mb-2">¿Qué Incluye el Kit?</h4>
-                        <ul className="space-y-2">
-                           {kit.includes?.map((item, index) => (
-                                <li key={index} className="flex items-start text-sm text-gray-700">
-                                    <svg className="flex-shrink-0 h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                                    <span>{item}</span>
-                                </li>
-                           ))}
-                        </ul>
-                    </div>
-                    <CTAButton />
+    const cardContent = hasDetails ? (
+        <>
+            <img src={kit.image} alt={kit.name} className="w-full lg:w-1/3 h-64 lg:h-auto object-contain p-4" />
+            <div className="p-6 lg:p-8 flex flex-col">
+                <h3 className="text-2xl font-bold text-amber-600">{kit.name}</h3>
+                {kit.price && <p className="text-xl font-semibold text-gray-800 mt-1 mb-3">{kit.price}</p>}
+                <p className="text-gray-700 mb-4">{kit.description}</p>
+                <div className="flex-grow">
+                    <h4 className="font-semibold text-gray-800 mb-2">¿Qué Incluye el Kit?</h4>
+                    <ul className="space-y-2">
+                       {kit.includes?.map((item, index) => (
+                            <li key={index} className="flex items-start text-sm text-gray-700">
+                                <svg className="flex-shrink-0 h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                <span>{item}</span>
+                            </li>
+                       ))}
+                    </ul>
                 </div>
+                <Button />
             </div>
-        )
-    }
+        </>
+    ) : (
+        <>
+            <div className="overflow-hidden">
+                <img src={kit.image} alt={kit.name} className="w-full h-56 object-contain p-4 group-hover:scale-125 transition-transform duration-500 ease-in-out" />
+            </div>
+            <div className="p-6 flex flex-col flex-grow">
+              <h3 className={`text-xl font-bold mb-2 ${isSpecial ? 'text-green-700' : 'text-gray-800'}`}>{kit.name}</h3>
+              <p className="text-gray-600 text-sm flex-grow">{kit.description}</p>
+              <Button />
+            </div>
+        </>
+    );
+
+    const cardClasses = hasDetails 
+        ? "col-span-1 lg:col-span-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col lg:flex-row group"
+        : `bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-6 flex flex-col group ${isSpecial ? 'lg:col-span-1 border-2 border-green-500' : 'lg:col-span-1'}`;
 
     return (
-      <div className={`bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-6 flex flex-col group ${isSpecial ? 'lg:col-span-1 border-2 border-green-500' : 'lg:col-span-1'}`}>
-        <div className="overflow-hidden">
-            <img src={kit.image} alt={kit.name} className="w-full h-56 object-contain p-4 group-hover:scale-125 transition-transform duration-500 ease-in-out" />
-        </div>
-        <div className="p-6 flex flex-col flex-grow">
-          <h3 className={`text-xl font-bold mb-2 ${isSpecial ? 'text-green-700' : 'text-gray-800'}`}>{kit.name}</h3>
-          <p className="text-gray-600 text-sm flex-grow">{kit.description}</p>
-          <CTAButton />
-        </div>
-      </div>
+        <a href={href} className={cardClasses}>
+            {cardContent}
+        </a>
     );
 };
 
