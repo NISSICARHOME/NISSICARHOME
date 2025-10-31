@@ -20,7 +20,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Clarity Wash',
-    image: 'https://drive.google.com/uc?export=view&id=1skmnbLhw1h-O8_3v_Obk_HCZbBaq8emm',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczN7SItDwQo-iusQyZ3VRyk07V5fgirL3EjHV2kCnlv0_Ds3BxBF6Es6UySi5dkslDK7iDMb7ziWDdhNcISf7dZfEtJqUHaA0dfLwPQpIm0FtLFwx8p4bnbYzP3l8KU68p0EgLNwbJRtSaXzZO4pYlAV=w1040-h800-s-no-gm?authuser=0',
     shortDesc: 'Desmancha vidrios, elimina tallones en pintura y desmancha farolas externamente.',
     details: {
       content: '300Gr',
@@ -34,7 +34,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Cera Hyper Diamond',
-    image: 'https://i.ibb.co/jLzV8KJ/cera-hyper-diamond.png',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczN-zXHr14d1RfpvNWQ9Zn6Y1vdjBlCgnsiDyT57kpTfA81-h5eZtRvzJmEPvxDcbGw5IBYvDqMEhlwuq7W6VpM7E-z3xtq6QOjAZN0tYTtQtIoGklEpD9Iufe8YT9ajvLN7jX8LUHoewgAhTKf64xRX=w1040-h800-s-no-gm?authuser=0',
     shortDesc: 'Cera con nanotecnología para ultra protección e hiper brillo en la pintura de tu vehículo.',
     details: {
       title: 'CERA HYPER DIAMOND CON CARNAUBA',
@@ -75,7 +75,7 @@ const productsData: Product[] = [
   },
   {
     name: 'Ultra Restorer',
-    image: 'https://i.ibb.co/qY0b8tK/ultra-restorer.png',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczN4wvAxjKsz_jeB8jpHUVAbL7aeEqGSpXjqjbWbyapjHRzrU54da2aT8lFBEtDIvAfP4Hj7TL8MMkdNivvoS5L0M6CzftY_g8nwRtX6fPBm6arqinMCSNrYQQcWxiAkCKR5zD60S_HNhq7iCLfBNumL=w1080-h800-s-no-gm?authuser=0',
     shortDesc: 'Restaura piezas plásticas grises y negras, devolviendo un acabado perfecto con ultra protección.',
     details: {
       features: ['Fácil Aplicación', 'Super Recubrimiento', 'Ultra Protección'],
@@ -168,11 +168,11 @@ const Products: React.FC = () => {
 // Data for carousel is needed here for image mapping
 const carouselProductsData = [
     { id: 1, name: 'VIDREX', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczMtiRvcWH7hX10fMo5IPK4tcUy6Fb9wStoN0ftTN-922XVKHbmAZIrmlMVjA8zY7vtwAM8QCwwmKBTAgaVxmDhnTsYiULO0HrjcWRemE2MStowsWe7AESE_JOeCsNQ_lfSGtEsHYkmsQR-trE53KaFV=w661-h991-s-no-gm?authuser=0' },
-    { id: 2, name: 'Clarity Wash', imgSrc: 'https://drive.google.com/uc?export=view&id=1skmnbLhw1h-O8_3v_Obk_HCZbBaq8emm' },
-    { id: 3, name: 'Cera Hyper Diamond', imgSrc: 'https://i.ibb.co/jLzV8KJ/cera-hyper-diamond.png' },
+    { id: 2, name: 'Clarity Wash', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczN7SItDwQo-iusQyZ3VRyk07V5fgirL3EjHV2kCnlv0_Ds3BxBF6Es6UySi5dkslDK7iDMb7ziWDdhNcISf7dZfEtJqUHaA0dfLwPQpIm0FtLFwx8p4bnbYzP3l8KU68p0EgLNwbJRtSaXzZO4pYlAV=w1040-h800-s-no-gm?authuser=0' },
+    { id: 3, name: 'Cera Hyper Diamond', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczN-zXHr14d1RfpvNWQ9Zn6Y1vdjBlCgnsiDyT57kpTfA81-h5eZtRvzJmEPvxDcbGw5IBYvDqMEhlwuq7W6VpM7E-z3xtq6QOjAZN0tYTtQtIoGklEpD9Iufe8YT9ajvLN7jX8LUHoewgAhTKf64xRX=w1040-h800-s-no-gm?authuser=0' },
     { id: 4, name: 'Perfect Llantix', imgSrc: 'https://i.ibb.co/BqM8Lq4/perfect-llantix.png' },
     { id: 5, name: 'Perfume IQ 250', imgSrc: 'https://i.ibb.co/1Mj0y34/perfume-iq250.png' },
-    { id: 6, name: 'Ultra Restorer', imgSrc: 'https://i.ibb.co/qY0b8tK/ultra-restorer.png' },
+    { id: 6, name: 'Ultra Restorer', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczN4wvAxjKsz_jeB8jpHUVAbL7aeEqGSpXjqjbWbyapjHRzrU54da2aT8lFBEtDIvAfP4Hj7TL8MMkdNivvoS5L0M6CzftY_g8nwRtX6fPBm6arqinMCSNrYQQcWxiAkCKR5zD60S_HNhq7iCLfBNumL=w1080-h800-s-no-gm?authuser=0' },
     { id: 7, name: 'Cero Rayones', imgSrc: 'https://i.ibb.co/ZJp5k3p/cero-rayones.png' },
     { id: 8, name: 'Shampoo PH Neutro', imgSrc: 'https://i.ibb.co/XjYnB8S/shampoo-ph-neutro.png' },
     { id: 9, name: 'Aplicador Media Luna', imgSrc: 'https://i.ibb.co/2WqJtJk/aplicador-luna.png' },
