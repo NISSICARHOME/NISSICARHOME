@@ -39,7 +39,7 @@ const LandingHero: React.FC = () => {
     <section id="oferta" className="bg-white py-12 px-4 text-center">
       <div className="w-full max-w-3xl mx-auto rounded-lg shadow-2xl mb-8 overflow-hidden bg-gray-100">
           <img 
-              src="https://lh3.googleusercontent.com/pw/AP1GczOCzImOJU1107YMzELszciZoSttvEdneqFcfISCVcx10OqmvZ8_OeV6ucu9Je5tCsMqggztzQHHgpiexKoxADemxSzRlcFJJa1P2LVaDtCe79HyclXB92re4Gnoa53OEZk_k_mZ7VXmDHavO7wgGMa0=w735-h945-s-no-gm?authuser=0" 
+              src="https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0" 
               alt="Componentes del Kit Estrella: Vidrex y Clarity Wash" 
               className="w-full h-auto" 
           />
