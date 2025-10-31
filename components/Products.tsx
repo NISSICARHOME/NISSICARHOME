@@ -86,8 +86,8 @@ const productsData: Product[] = [
     }
   },
   {
-    name: 'Cero Eliminador de Rayones',
-    image: 'https://i.ibb.co/ZJp5k3p/cero-rayones.png',
+    name: 'RAYONES-CERO Eliminador de rayones',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczOk00JOL8Il_ZxU7w1AhMjKM8S0GxAQJqVhGp2osNYpOVQSu4b4sYdi9d6RHiLDfbo4bDU04WreZ-a5hBq8X8ZnZy8dmXPmn8rI0DkHMZf0y6wNn8usimpnql8u93xjg__FAYTBSzEwvv8oNGg_oJW9=w1184-h864-s-no-gm?authuser=0',
     shortDesc: 'Fórmula avanzada para corregir pequeños arañazos en la pintura de tu vehículo.',
     details: {
       description: 'Fórmula avanzada diseñada para corregir y disimular eficazmente pequeños arañazos y marcas superficiales en la pintura de tu vehículo, devolviéndole su acabado original.',
@@ -112,7 +112,7 @@ const productsData: Product[] = [
 const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = ({ product, onSelect }) => (
   <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col group">
     <div className="overflow-hidden">
-        <img src={product.image} alt={product.name} className="w-full h-56 object-contain p-4 group-hover:scale-105 transition-transform duration-300" />
+        <img src={product.image} alt={product.name} className="w-full h-56 object-contain p-4 group-hover:scale-125 transition-transform duration-500" />
     </div>
     <div className="p-6 flex flex-col flex-grow">
       <h3 className="text-xl font-bold text-gray-800 mb-2">{product.name}</h3>
@@ -173,7 +173,7 @@ const carouselProductsData = [
     { id: 4, name: 'Perfect Llantix', imgSrc: 'https://i.ibb.co/BqM8Lq4/perfect-llantix.png' },
     { id: 5, name: 'Perfume IQ 250', imgSrc: 'https://i.ibb.co/1Mj0y34/perfume-iq250.png' },
     { id: 6, name: 'Ultra Restorer', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczN4wvAxjKsz_jeB8jpHUVAbL7aeEqGSpXjqjbWbyapjHRzrU54da2aT8lFBEtDIvAfP4Hj7TL8MMkdNivvoS5L0M6CzftY_g8nwRtX6fPBm6arqinMCSNrYQQcWxiAkCKR5zD60S_HNhq7iCLfBNumL=w1080-h800-s-no-gm?authuser=0' },
-    { id: 7, name: 'Cero Rayones', imgSrc: 'https://i.ibb.co/ZJp5k3p/cero-rayones.png' },
+    { id: 7, name: 'RAYONES-CERO', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczOk00JOL8Il_ZxU7w1AhMjKM8S0GxAQJqVhGp2osNYpOVQSu4b4sYdi9d6RHiLDfbo4bDU04WreZ-a5hBq8X8ZnZy8dmXPmn8rI0DkHMZf0y6wNn8usimpnql8u93xjg__FAYTBSzEwvv8oNGg_oJW9=w1184-h864-s-no-gm?authuser=0' },
     { id: 8, name: 'Shampoo PH Neutro', imgSrc: 'https://i.ibb.co/XjYnB8S/shampoo-ph-neutro.png' },
     { id: 9, name: 'Aplicador Media Luna', imgSrc: 'https://i.ibb.co/2WqJtJk/aplicador-luna.png' },
     { id: 10, name: 'Toalla Microfibra', imgSrc: 'https://i.ibb.co/wYq4b7X/toalla-microfibra.png' },
