@@ -57,7 +57,7 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
         <>
             <img src={kit.image} alt={kit.name} className="w-full lg:w-1/3 h-64 lg:h-auto object-contain p-4" />
             <div className="p-6 lg:p-8 flex flex-col">
-                <h3 className="text-2xl font-bold text-amber-600">{kit.name}</h3>
+                <h3 className="text-2xl font-bold text-amber-600 drop-shadow-golden-glow">{kit.name}</h3>
                 {kit.price && <p className="text-xl font-semibold text-gray-800 mt-1 mb-3">{kit.price}</p>}
                 <p className="text-gray-700 mb-4">{kit.description}</p>
                 <div className="flex-grow">

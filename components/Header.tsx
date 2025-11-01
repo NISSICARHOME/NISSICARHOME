@@ -4,7 +4,7 @@ const Logo = () => (
     <img 
         src="https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=w1344-h768-s-no-gm?authuser=0" 
         alt="Nissi Car Home Logo" 
-        className="h-16 md:h-20 object-contain"
+        className="h-24 md:h-32 object-contain transition-all duration-500 ease-in-out filter drop-shadow-lg hover:scale-110 hover:brightness-125 hover:drop-shadow-[0_0_15px_rgba(251,191,36,0.8)]"
     />
 );
 
