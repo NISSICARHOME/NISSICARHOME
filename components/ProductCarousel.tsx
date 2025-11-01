@@ -1,24 +1,24 @@
-import React, { useRef, useEffect } from 'react';
-
-const carouselProductsData = [
-    { id: 1, name: 'VIDREX', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczMtiRvcWH7hX10fMo5IPK4tcUy6Fb9wStoN0ftTN-922XVKHbmAZIrmlMVjA8zY7vtwAM8QCwwmKBTAgaVxmDhnTsYiULO0HrjcWRemE2MStowsWe7AESE_JOeCsNQ_lfSGtEsHYkmsQR-trE53KaFV=w661-h991-s-no-gm?authuser=0' },
-    { id: 2, name: 'Clarity Wash', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczN7SItDwQo-iusQyZ3VRyk07V5fgirL3EjHV2kCnlv0_Ds3BxBF6Es6UySi5dkslDK7iDMb7ziWDdhNcISf7dZfEtJqUHaA0dfLwPQpIm0FtLFwx8p4bnbYzP3l8KU68p0EgLNwbJRtSaXzZO4pYlAV=w1040-h800-s-no-gm?authuser=0' },
-    { id: 3, name: 'Cera Hyper Diamond', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczN-zXHr14d1RfpvNWQ9Zn6Y1vdjBlCgnsiDyT57kpTfA81-h5eZtRvzJmEPvxDcbGw5IBYvDqMEhlwuq7W6VpM7E-z3xtq6QOjAZN0tYTtQtIoGklEpD9Iufe8YT9ajvLN7jX8LUHoewgAhTKf64xRX=w1040-h800-s-no-gm?authuser=0' },
-    { id: 4, name: 'Perfect Llantix', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczOjiJJeZc6HIutbfWKJGXISSyYp6uFOXne3E4Bxw8mZijJQzpOBRpjiyvtjQi4tw0SZ2Bg6aT5bjQ559BIZ4UO1DXvcZMjqXGHDQaAsGvyDdphGMwjNdb8QM0AKlue18DUnkhu6IjMw6Z9q3H5BVFW0=w1080-h800-s-no-gm?authuser=0' },
-    { id: 5, name: 'Perfume IQ 250', imgSrc: 'https://i.ibb.co/1Mj0y34/perfume-iq250.png' },
-    { id: 6, name: 'Ultra Restorer', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczN4wvAxjKsz_jeB8jpHUVAbL7aeEqGSpXjqjbWbyapjHRzrU54da2aT8lFBEtDIvAfP4Hj7TL8MMkdNivvoS5L0M6CzftY_g8nwRtX6fPBm6arqinMCSNrYQQcWxiAkCKR5zD60S_HNhq7iCLfBNumL=w1080-h800-s-no-gm?authuser=0' },
-    { id: 7, name: 'RAYONES-CERO', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczOk00JOL8Il_ZxU7w1AhMjKM8S0GxAQJqVhGp2osNYpOVQSu4b4sYdi9d6RHiLDfbo4bDU04WreZ-a5hBq8X8ZnZy8dmXPmn8rI0DkHMZf0y6wNn8usimpnql8u93xjg__FAYTBSzEwvv8oNGg_oJW9=w1184-h864-s-no-gm?authuser=0' },
-    { id: 8, name: 'Shampoo PH Neutro', imgSrc: 'https://i.ibb.co/XjYnB8S/shampoo-ph-neutro.png' },
-    { id: 9, name: 'Aplicador Media Luna', imgSrc: 'https://i.ibb.co/2WqJtJk/aplicador-luna.png' },
-    { id: 10, name: 'Toalla Microfibra', imgSrc: 'https://i.ibb.co/wYq4b7X/toalla-microfibra.png' },
-];
+import React, { useRef, useEffect, useMemo } from 'react';
+import { Product } from '../types';
 
 // Base64 encoded swoosh sound - short and royalty-free
 const scrollSound = 'data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU3LjgyLjEwMAAAAAAAAAAAAAAA//tAwAAAAAAAAAAAAAAAAAAAAAAAB/8lAMASyVo+gBdj04iEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASxVo+gBdj04iEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAgxVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAgAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAgAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAgxVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAgxVpAAAAAADSAYAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAgAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAgxVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAgxVpAAAAAADSAYAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAgxVpAAAAAADSAYAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAgxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMASYVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAAAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAgxVpAAAAAADSAYAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA/8lAMAQxVpBAAAAADSAEAD//3MA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFqCwBymQoA/+sA/yYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACY4AAA';
 
-const ProductCarousel: React.FC = () => {
+interface ProductCarouselProps {
+    products: Product[];
+    onProductSelect: (product: Product) => void;
+}
+
+const ProductCarousel: React.FC<ProductCarouselProps> = ({ products, onProductSelect }) => {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const audioRef = useRef<HTMLAudioElement | null>(null);
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const isJumping = useRef(false);
+
+    const displayProducts = useMemo(() => {
+        if (products.length === 0) return [];
+        return [...products, ...products];
+    }, [products]);
 
     useEffect(() => {
         audioRef.current = new Audio(scrollSound);
@@ -32,26 +32,68 @@ const ProductCarousel: React.FC = () => {
         }
     };
 
-    const handleScroll = (direction: 'left' | 'right') => {
+    const handleScrollButtonClick = (direction: 'left' | 'right') => {
         playSound();
         if (scrollContainerRef.current) {
-            const scrollAmount = scrollContainerRef.current.clientWidth / 2;
+            const scrollAmount = scrollContainerRef.current.clientWidth;
             scrollContainerRef.current.scrollBy({
                 left: direction === 'left' ? -scrollAmount : scrollAmount,
                 behavior: 'smooth',
             });
         }
     };
+    
+    const handleInfiniteScroll = () => {
+        if (isJumping.current || !scrollContainerRef.current) return;
+        const { scrollLeft, scrollWidth } = scrollContainerRef.current;
+        const originalContentWidth = scrollWidth / 2;
+
+        if (scrollLeft >= originalContentWidth) {
+            isJumping.current = true;
+            scrollContainerRef.current.scrollBy({ left: -originalContentWidth, behavior: 'instant' });
+            setTimeout(() => { isJumping.current = false; }, 50);
+        }
+    };
+
+    const startAutoScroll = () => {
+        stopAutoScroll();
+        intervalRef.current = setInterval(() => {
+            if (scrollContainerRef.current) {
+                scrollContainerRef.current.scrollBy({ left: scrollContainerRef.current.clientWidth, behavior: 'smooth' });
+            }
+        }, 3000);
+    };
+
+    const stopAutoScroll = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+        }
+    };
+
+    useEffect(() => {
+        startAutoScroll();
+        const container = scrollContainerRef.current;
+        container?.addEventListener('scroll', handleInfiniteScroll);
+
+        return () => {
+            stopAutoScroll();
+            container?.removeEventListener('scroll', handleInfiniteScroll);
+        };
+    }, [products]);
 
     return (
-        <div className="relative w-full">
-            <div className="text-center mb-8">
+        <div 
+            className="relative w-full"
+            onMouseEnter={stopAutoScroll}
+            onMouseLeave={startAutoScroll}
+        >
+            <div className="text-center mb-6">
                 <h3 className="text-2xl font-bold text-gray-800 sm:text-3xl">Explora Nuestra Línea</h3>
             </div>
-            <div className="relative flex items-center group">
+            <div className="relative flex items-center">
                 <button
-                    onClick={() => handleScroll('left')}
-                    className="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/40 text-gray-800 rounded-full p-2 transition-all duration-300 opacity-0 group-hover:opacity-100 disabled:opacity-0"
+                    onClick={() => handleScrollButtonClick('left')}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-white/50 backdrop-blur-sm border border-white/30 hover:bg-white/80 text-gray-800 rounded-full p-2 transition-all duration-300 shadow-md hidden md:flex items-center justify-center"
                     aria-label="Scroll Left"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
@@ -59,26 +101,29 @@ const ProductCarousel: React.FC = () => {
 
                 <div
                     ref={scrollContainerRef}
-                    className="flex items-center gap-8 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide py-4 px-2"
+                    className="flex items-center gap-2 md:gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide py-4"
                 >
-                    {carouselProductsData.map(product => (
-                        <div key={product.id} className="snap-center flex-shrink-0 relative group/item">
-                            <a href="#productos" className="block w-40 h-40 p-4 bg-[#e0e5ec] rounded-full transition-all duration-500 hover:shadow-neumorphic-inset shadow-neumorphic-outset cursor-pointer transform hover:scale-125">
+                    {displayProducts.map((product, index) => (
+                        <div key={`${product.name}-${index}`} className="snap-center flex-shrink-0 w-28 md:w-40 text-center flex flex-col items-center justify-start p-1">
+                             <button 
+                                onClick={() => onProductSelect(product)}
+                                className="block w-24 h-24 md:w-36 md:h-36 transition-transform duration-300 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-4 focus:ring-offset-[#e0e5ec]"
+                            >
                                 <img
-                                    src={product.imgSrc}
+                                    src={product.image}
                                     alt={product.name}
-                                    className="w-full h-full object-contain"
+                                    className="w-full h-full object-contain drop-shadow-lg"
                                     loading="lazy"
                                 />
-                            </a>
-                            <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-sm text-gray-700 opacity-0 group-hover/item:opacity-100 transition-opacity duration-300 pointer-events-none">{product.name}</span>
+                            </button>
+                            <span className="block text-xs md:text-sm font-semibold text-gray-800 mt-2 h-10 flex items-center justify-center text-center">{product.name}</span>
                         </div>
                     ))}
                 </div>
 
                 <button
-                    onClick={() => handleScroll('right')}
-                    className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/40 text-gray-800 rounded-full p-2 transition-all duration-300 opacity-0 group-hover:opacity-100 disabled:opacity-0"
+                    onClick={() => handleScrollButtonClick('right')}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-white/50 backdrop-blur-sm border border-white/30 hover:bg-white/80 text-gray-800 rounded-full p-2 transition-all duration-300 shadow-md hidden md:flex items-center justify-center"
                     aria-label="Scroll Right"
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>

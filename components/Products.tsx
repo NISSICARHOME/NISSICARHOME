@@ -106,12 +106,34 @@ const productsData: Product[] = [
       precautions: 'No dejar que el producto se seque sobre la superficie. Usar sobre superficies frías y a la sombra.',
       composition: 'Agentes tensoactivos, polímeros lubricantes, suavizantes de agua, conservantes y fragancia.'
     }
+  },
+  {
+    name: 'Aplicador Media Luna',
+    image: 'https://i.ibb.co/2WqJtJk/aplicador-luna.png',
+    shortDesc: 'Espuma de densidad blanda y estructura absorbente, ideal para ceras y selladores.',
+    details: {
+      description: 'Espuma de densidad blanda y estructura absorbente, ideal para ceras y selladores. Su diseño ergonómico facilita la aplicación uniforme de productos en diversas superficies.',
+      howToUse: 'Aplique el producto deseado (cera, sellador, etc.) sobre el aplicador. Distribuya uniformemente sobre la superficie con movimientos circulares o rectos según la recomendación del producto. Lavar después de cada uso.',
+      precautions: 'Mantener limpio y seco cuando no esté en uso para prolongar su vida útil.',
+      composition: 'Espuma de poliuretano de alta densidad.'
+    }
+  },
+  {
+    name: 'Toalla de Microfibra',
+    image: 'https://i.ibb.co/wYq4b7X/toalla-microfibra.png',
+    shortDesc: 'Ultra suave y absorbente, esencial para retirar ceras y secar sin dejar rayones.',
+    details: {
+      description: 'Toalla de microfibra de alta calidad, ultra suave y absorbente. Esencial para retirar ceras, selladores y para el secado del vehículo sin dejar marcas o rayones.',
+      howToUse: 'Utilizar seca para retirar residuos de cera o pulimento. Utilizar húmeda para limpieza general o seca para el secado final del vehículo. Lavar con detergentes neutros y no usar suavizantes.',
+      precautions: 'Lavar por separado para evitar que atrape pelusa de otras prendas. No usar cloro ni suavizantes.',
+      composition: '80% Poliéster, 20% Poliamida.'
+    }
   }
 ];
 
 const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = ({ product, onSelect }) => (
   <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col group">
-    <div className="overflow-hidden">
+    <div className="overflow-hidden cursor-pointer" onClick={onSelect}>
         <img src={product.image} alt={product.name} className="w-full h-56 object-contain p-4 group-hover:scale-125 transition-transform duration-500" />
     </div>
     <div className="p-6 flex flex-col flex-grow">
@@ -130,22 +152,20 @@ const ProductCard: React.FC<{ product: Product; onSelect: () => void }> = ({ pro
 const Products: React.FC = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  // Replace picsum photos with actual product images
-  const updatedProductsData = productsData.map(p => {
-    const matchingCarouselProduct = carouselProductsData.find(cp => cp.name.toLowerCase().includes(p.name.split(' ')[0].toLowerCase()));
-    if (matchingCarouselProduct) {
-      return { ...p, image: matchingCarouselProduct.imgSrc };
-    }
-    return p;
-  });
-
-
   return (
-    <section id="productos" className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 rounded-3xl shadow-neumorphic-outset">
-            <ProductCarousel />
-            <div className="text-center mb-16 pt-16">
+    <>
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="p-8 rounded-3xl shadow-neumorphic-outset">
+            <ProductCarousel products={productsData} onProductSelect={setSelectedProduct} />
+          </div>
+        </div>
+      </section>
+
+      <section id="productos" className="pb-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="p-8 rounded-3xl shadow-neumorphic-outset">
+            <div className="text-center mb-16">
               <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
                 Nuestros Productos Esenciales
               </h2>
@@ -154,29 +174,16 @@ const Products: React.FC = () => {
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {updatedProductsData.map((product) => (
+              {productsData.map((product) => (
                 <ProductCard key={product.name} product={product} onSelect={() => setSelectedProduct(product)} />
               ))}
             </div>
+          </div>
         </div>
-      </div>
-      {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
-    </section>
+        {selectedProduct && <ProductModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />}
+      </section>
+    </>
   );
 };
-
-// Data for carousel is needed here for image mapping
-const carouselProductsData = [
-    { id: 1, name: 'VIDREX', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczMtiRvcWH7hX10fMo5IPK4tcUy6Fb9wStoN0ftTN-922XVKHbmAZIrmlMVjA8zY7vtwAM8QCwwmKBTAgaVxmDhnTsYiULO0HrjcWRemE2MStowsWe7AESE_JOeCsNQ_lfSGtEsHYkmsQR-trE53KaFV=w661-h991-s-no-gm?authuser=0' },
-    { id: 2, name: 'Clarity Wash', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczN7SItDwQo-iusQyZ3VRyk07V5fgirL3EjHV2kCnlv0_Ds3BxBF6Es6UySi5dkslDK7iDMb7ziWDdhNcISf7dZfEtJqUHaA0dfLwPQpIm0FtLFwx8p4bnbYzP3l8KU68p0EgLNwbJRtSaXzZO4pYlAV=w1040-h800-s-no-gm?authuser=0' },
-    { id: 3, name: 'Cera Hyper Diamond', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczN-zXHr14d1RfpvNWQ9Zn6Y1vdjBlCgnsiDyT57kpTfA81-h5eZtRvzJmEPvxDcbGw5IBYvDqMEhlwuq7W6VpM7E-z3xtq6QOjAZN0tYTtQtIoGklEpD9Iufe8YT9ajvLN7jX8LUHoewgAhTKf64xRX=w1040-h800-s-no-gm?authuser=0' },
-    { id: 4, name: 'Perfect Llantix', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczOjiJJeZc6HIutbfWKJGXISSyYp6uFOXne3E4Bxw8mZijJQzpOBRpjiyvtjQi4tw0SZ2Bg6aT5bjQ559BIZ4UO1DXvcZMjqXGHDQaAsGvyDdphGMwjNdb8QM0AKlue18DUnkhu6IjMw6Z9q3H5BVFW0=w1080-h800-s-no-gm?authuser=0' },
-    { id: 5, name: 'Perfume IQ 250', imgSrc: 'https://i.ibb.co/1Mj0y34/perfume-iq250.png' },
-    { id: 6, name: 'Ultra Restorer', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczN4wvAxjKsz_jeB8jpHUVAbL7aeEqGSpXjqjbWbyapjHRzrU54da2aT8lFBEtDIvAfP4Hj7TL8MMkdNivvoS5L0M6CzftY_g8nwRtX6fPBm6arqinMCSNrYQQcWxiAkCKR5zD60S_HNhq7iCLfBNumL=w1080-h800-s-no-gm?authuser=0' },
-    { id: 7, name: 'RAYONES-CERO', imgSrc: 'https://lh3.googleusercontent.com/pw/AP1GczOk00JOL8Il_ZxU7w1AhMjKM8S0GxAQJqVhGp2osNYpOVQSu4b4sYdi9d6RHiLDfbo4bDU04WreZ-a5hBq8X8ZnZy8dmXPmn8rI0DkHMZf0y6wNn8usimpnql8u93xjg__FAYTBSzEwvv8oNGg_oJW9=w1184-h864-s-no-gm?authuser=0' },
-    { id: 8, name: 'Shampoo PH Neutro', imgSrc: 'https://i.ibb.co/XjYnB8S/shampoo-ph-neutro.png' },
-    { id: 9, name: 'Aplicador Media Luna', imgSrc: 'https://i.ibb.co/2WqJtJk/aplicador-luna.png' },
-    { id: 10, name: 'Toalla Microfibra', imgSrc: 'https://i.ibb.co/wYq4b7X/toalla-microfibra.png' },
-];
 
 export default Products;
