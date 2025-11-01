@@ -4,6 +4,7 @@ import { Product } from '../../types';
 interface ProductModalProps {
   product: Product;
   onClose: () => void;
+  onAddToCart: (product: Product) => void;
 }
 
 const DetailSection: React.FC<{ title: string; children: React.ReactNode; }> = ({ title, children }) => (
@@ -13,7 +14,7 @@ const DetailSection: React.FC<{ title: string; children: React.ReactNode; }> = (
     </div>
 );
 
-const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
+const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onAddToCart }) => {
   return (
     <div 
       className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50 p-4 transition-opacity duration-300"
@@ -40,7 +41,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
                 <img src={product.image} alt={product.name} className="w-full h-auto max-h-64 md:max-h-none object-contain rounded-md" />
                 <div>
-                     {product.details.content && <p className="text-base font-bold text-amber-600 drop-shadow-[0_1px_1px_rgba(255,255,255,0.9)]">{product.details.content}</p>}
+                     <p className="text-2xl font-bold text-amber-600 drop-shadow-[0_1px_1px_rgba(255,255,255,0.9)]">${product.price.toLocaleString('es-CO')}</p>
+                     {product.details.content && <p className="text-sm font-semibold text-gray-600 ">{product.details.content}</p>}
                     {(product.details.features && product.details.features.length > 0) && (
                         <div className="mt-2">
                             <ul className="space-y-1">
@@ -63,6 +65,15 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose }) => {
                             </div>
                         </div>
                     )}
+                    <button 
+                        onClick={() => {
+                            onAddToCart(product);
+                            onClose();
+                        }}
+                        className="mt-4 w-full bg-amber-500/80 text-white hover:bg-amber-500/100 backdrop-blur-sm border border-amber-400/50 font-bold py-3 px-4 rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg"
+                    >
+                        Añadir al Carrito
+                    </button>
                 </div>
             </div>
 

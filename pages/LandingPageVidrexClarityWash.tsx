@@ -1,34 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useState } from 'react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem } from '../types';
-
-// --- CART & CHECKOUT COMPONENTS ---
-
-const ShoppingCartIcon: React.FC = () => (
-  <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-);
-
-export const FloatingCartButton: React.FC<{ cart: CartItem[]; onClick: () => void }> = ({ cart, onClick }) => {
-  const totalItems = useMemo(() => cart.reduce((sum, item) => sum + item.quantity, 0), [cart]);
-  const totalPrice = useMemo(() => cart.reduce((sum, item) => sum + (item.price * item.quantity), 0), [cart]);
-
-  if (totalItems === 0) return null;
-
-  return (
-    <button
-      onClick={onClick}
-      className="fixed bottom-6 right-6 bg-green-600/80 backdrop-blur-md border-2 border-white/50 text-white w-auto h-16 px-6 rounded-full shadow-lg flex items-center justify-center hover:bg-green-600/100 transition-all transform hover:scale-110 z-50"
-      aria-label="Ver carrito y finalizar compra"
-    >
-      <ShoppingCartIcon />
-      <div className="ml-3 text-left">
-        <span className="font-bold block -mb-1">{totalItems} {totalItems > 1 ? 'productos' : 'producto'}</span>
-        <span className="text-sm">${totalPrice.toLocaleString('es-CO')}</span>
-      </div>
-    </button>
-  );
-};
-
 
 // --- HELPER COMPONENTS (scoped to this file) ---
 
@@ -41,10 +13,27 @@ const CheckListItem: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   </li>
 );
 
+const ShareIcon: React.FC = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.368a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
+    </svg>
+);
+
+
 // --- PAGE SECTIONS ---
 
 const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNow }) => {
-  const defaultKit: CartItem = {id: 'kit-1', name: "KIT ESTRELLA", price: 50000, quantity: 1};
+  const defaultKit: CartItem = {id: 'kit-vidrex-clarity', name: "KIT ESTRELLA: Vidrex + Clarity", price: 50000, quantity: 1};
+  const [copied, setCopied] = useState(false);
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Hide message after 2 seconds
+      })
+      .catch(err => console.error('Failed to copy link: ', err));
+  };
 
   return (
     <section id="oferta" className="bg-white py-12 px-4 text-center">
@@ -84,15 +73,29 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
         />
       </div>
       
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto flex items-center justify-center gap-4">
         <button
           onClick={() => onBuyNow(defaultKit)}
-          className="w-full bg-green-600 text-white font-bold text-2xl py-4 px-6 rounded-lg shadow-lg hover:bg-green-700 transition-all transform hover:scale-105 animate-pulse"
+          className="flex-grow bg-green-600 text-white font-bold text-xl md:text-2xl py-4 px-6 rounded-lg shadow-lg hover:bg-green-700 transition-all transform hover:scale-105 animate-pulse"
         >
-          ¡COMPRA AHORA!
+          ¡PIDE AHORA Y PAGA EN CASA!
         </button>
-        <p className="mt-4 text-sm text-gray-500">Haz clic para pedir tu kit y paga al recibir. ¡Es fácil y seguro!</p>
+        <div className="relative">
+             <button
+              onClick={handleShare}
+              title="Compartir enlace"
+              className="p-4 bg-gray-200/50 rounded-full hover:bg-gray-200/80 transition-colors"
+            >
+              <ShareIcon />
+            </button>
+            {copied && (
+              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap animate-fade-out">
+                ¡Enlace copiado!
+              </div>
+            )}
+        </div>
       </div>
+      <p className="mt-4 text-sm text-gray-500">Haz clic para pedir tu kit. ¡Es fácil y seguro!</p>
 
        <div className="flex justify-center items-center gap-8 mt-8 text-gray-600 font-semibold">
           <p>🚚 Envío a todo Colombia</p>
@@ -118,7 +121,7 @@ const LandingBenefits: React.FC = () => {
                     <div className="grid grid-cols-2 gap-4">
                         <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-3.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Vidrio de auto brillante"/>
                         <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-1.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="División de baño transparente"/>
-                        <img src="https://nissicarhome.com/wp-content/uploads/2023/11/2-1-1-1-1024x1024.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Farola de auto restaurada"/>
+                        <img src="https://nissicarhome.com/wp-content/uploads/2023/11/2-1-1-1-1-1024x1024.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Farola de auto restaurada"/>
                         <img src="https://images.pexels.com/photos/1637780/pexels-photo-1637780.jpeg" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Rin de aluminio limpio"/>
                     </div>
                 </div>
@@ -255,13 +258,23 @@ interface LandingPageProps {
 
 const LandingPageVidrexClarityWash: React.FC<LandingPageProps> = ({ onBuyNow }) => {
     return (
-        <main>
+        <div className="bg-white">
             <LandingHero onBuyNow={onBuyNow} />
             <LandingBenefits />
             <LandingHowToUse />
             <LandingOffer />
             <LandingSocialProofFAQ />
-        </main>
+             <style>{`
+                @keyframes fade-out {
+                    0% { opacity: 1; transform: translateY(0) translateX(-50%); }
+                    80% { opacity: 1; transform: translateY(0) translateX(-50%); }
+                    100% { opacity: 0; transform: translateY(-10px) translateX(-50%); }
+                }
+                .animate-fade-out {
+                    animation: fade-out 2s ease-in-out forwards;
+                }
+            `}</style>
+        </div>
     );
 };
 

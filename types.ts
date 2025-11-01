@@ -2,9 +2,12 @@
 import React from 'react';
 
 export interface Product {
+  id: string;
   name: string;
+  price: number;
   image: string;
   shortDesc: string;
+  category: string;
   details: {
     title?: string;
     brand?: string;
@@ -67,6 +70,16 @@ export interface OrderDetails {
   phone: string;
   address: string;
   city: string;
-  department: string;
-  details: string;
+  state: string; // For 'departamento'
+  housingType: string;
+  notes: string; // For 'torre o casa o conjunto mtorre o apartamento' details
+  location?: string;
+}
+
+
+// Added for filter functionality
+export interface ActiveFilters {
+  categories: string[];
+  priceRange: { min: number; max: number; };
+  sortOrder: string;
 }

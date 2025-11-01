@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
-import Products from './components/Products';
+import Products, { getAllProducts } from './components/Products';
+import Filters from './components/Filters';
 import Kits from './components/Kits';
 import Services from './components/Services';
 import FAQ from './components/FAQ';
@@ -12,21 +13,26 @@ import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import LandingPageVidrexClarityWash from './pages/LandingPageVidrexClarityWash';
 import CheckoutForm from './components/checkout/CheckoutForm';
-import { CartItem } from './types';
-import { FloatingCartButton } from './pages/LandingPageVidrexClarityWash';
+import ProductModal from './components/shared/ProductModal';
+import { CartItem, Product, ActiveFilters } from './types';
 
 const App: React.FC = () => {
   const [pathname, setPathname] = useState(window.location.pathname);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCheckoutVisible, setCheckoutVisible] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
+    categories: [],
+    priceRange: { min: 0, max: Infinity },
+    sortOrder: 'default'
+  });
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  const allProducts = useMemo(() => getAllProducts(), []);
 
   useEffect(() => {
     const onLocationChange = () => {
       setPathname(window.location.pathname);
-      // If navigating away from landing page, hide checkout
-      if (window.location.pathname !== '/kit-vidrex-clarity-wash') {
-        setCheckoutVisible(false);
-      }
     };
     window.addEventListener('popstate', onLocationChange);
     return () => window.removeEventListener('popstate', onLocationChange);
@@ -68,55 +74,46 @@ const App: React.FC = () => {
     return () => document.removeEventListener('click', handleClick);
   }, []);
 
-  const handleBuyNow = (itemToAdd: CartItem) => {
+  const addToCart = (itemToAdd: CartItem) => {
     setCart(currentCart => {
         const existingItem = currentCart.find(item => item.id === itemToAdd.id);
         if (existingItem) {
             return currentCart.map(item => 
                 item.id === itemToAdd.id 
-                    ? { ...item, quantity: item.quantity + 1 } 
+                    ? { ...item, quantity: item.quantity + itemToAdd.quantity } 
                     : item
             );
         }
-        return [...currentCart, { ...itemToAdd, quantity: 1 }];
+        return [...currentCart, itemToAdd];
     });
+  };
+
+  const handleAddToCart = (product: Product) => {
+    addToCart({ id: product.id, name: product.name, price: product.price, quantity: 1 });
+  };
+  
+  const handleBuyNow = (itemToAdd: CartItem) => {
+    addToCart(itemToAdd);
     setCheckoutVisible(true);
   };
 
-  const commonLayout = (children: React.ReactNode, showChatbot = true) => (
-    <div className="bg-gray-50 font-['Poppins',_sans-serif]">
-      <Header />
-      {children}
-      <Footer />
-      {showChatbot && <Chatbot />}
-    </div>
-  );
+  const totalItems = useMemo(() => cart.reduce((sum, item) => sum + item.quantity, 0), [cart]);
 
-  if (isCheckoutVisible) {
-    return commonLayout(
-      <CheckoutForm 
-        cart={cart} 
-        setCart={setCart} 
-        onClose={() => setCheckoutVisible(false)} 
-      />
-    );
-  }
+  const renderPage = () => {
+    if (pathname === '/kit-vidrex-clarity-wash') {
+      return <LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />;
+    }
 
-  if (pathname === '/kit-vidrex-clarity-wash') {
-    return commonLayout(
-      <>
-        <LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />
-        <FloatingCartButton cart={cart} onClick={() => setCheckoutVisible(true)} />
-      </>
-    );
-  }
-
-  return (
-    <div className="bg-[#e0e5ec] min-h-screen text-gray-800">
-      <Header />
+    return (
       <main>
         <Hero />
-        <Products />
+        <Filters activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
+        <Products 
+          onAddToCart={handleAddToCart} 
+          searchTerm={searchTerm} 
+          activeFilters={activeFilters}
+          onProductSelect={setSelectedProduct}
+        />
         <About />
         <Kits />
         <Services />
@@ -124,8 +121,38 @@ const App: React.FC = () => {
         <Policies />
         <PaymentMethods />
       </main>
-      <Footer />
-      <Chatbot />
+    );
+  };
+
+  return (
+    <div className={`bg-[#e0e5ec] min-h-screen text-gray-800 ${isCheckoutVisible || selectedProduct ? 'overflow-hidden h-screen' : ''}`}>
+      <div className={isCheckoutVisible || selectedProduct ? 'blur-sm' : ''}>
+        <Header 
+          cartItemCount={totalItems} 
+          onCartClick={() => setCheckoutVisible(true)}
+          searchTerm={searchTerm}
+          onSearchChange={setSearchTerm}
+          allProducts={allProducts}
+          onProductSelect={setSelectedProduct}
+        />
+        {renderPage()}
+        <Footer />
+        <Chatbot />
+      </div>
+      {isCheckoutVisible && 
+        <CheckoutForm 
+          cart={cart} 
+          setCart={setCart} 
+          onClose={() => setCheckoutVisible(false)} 
+        />
+      }
+      {selectedProduct &&
+        <ProductModal 
+            product={selectedProduct}
+            onClose={() => setSelectedProduct(null)}
+            onAddToCart={handleAddToCart}
+        />
+      }
     </div>
   );
 };
