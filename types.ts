@@ -73,7 +73,6 @@ export interface OrderDetails {
   state: string; // For 'departamento'
   housingType: string;
   notes: string; // For 'torre o casa o conjunto mtorre o apartamento' details
-  location?: string;
 }
 
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Product } from '../types';
 
 const Logo = () => (
@@ -76,6 +76,8 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, searchTerm,
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isSearchFocused, setSearchFocused] = useState(false);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+
 
   const navItems = [
     { href: '/', label: 'Inicio' },
@@ -112,6 +114,18 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, searchTerm,
     }
   }, [lastScrollY]);
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+        if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
+            setSearchFocused(false);
+        }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+        document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   const handleProductSelectFromSearch = (product: Product) => {
     onProductSelect(product);
     onSearchChange(''); // Clear search term
@@ -126,14 +140,14 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, searchTerm,
         </a>
         <div className="flex items-center md:order-2 space-x-1 md:space-x-3">
             <div 
+              ref={searchContainerRef}
               className="relative hidden sm:block"
-              onFocus={() => setSearchFocused(true)}
-              onBlur={() => setTimeout(() => setSearchFocused(false), 200)} // Delay to allow click on results
             >
                 <input
                     type="text"
                     value={searchTerm}
                     onChange={(e) => onSearchChange(e.target.value)}
+                    onFocus={() => setSearchFocused(true)}
                     placeholder="Buscar productos..."
                     className="w-full p-2 pl-4 pr-4 rounded-lg bg-white/30 border border-white/40 focus:outline-none focus:ring-2 focus:ring-amber-400 transition-all duration-300 sm:w-64"
                 />

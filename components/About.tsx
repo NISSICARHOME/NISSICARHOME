@@ -2,7 +2,7 @@ import React from 'react';
 
 const InfoCard: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
     <div className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full">
-        <h3 className="text-2xl font-bold text-amber-600 mb-4 drop-shadow-golden-glow">{title}</h3>
+        <h3 className="text-2xl font-bold text-amber-600 mb-4">{title}</h3>
         <p className="text-gray-700">{children}</p>
     </div>
 );

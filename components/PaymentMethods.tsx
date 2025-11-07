@@ -2,7 +2,7 @@ import React from 'react';
 
 const PaymentCard: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
     <div className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-2xl shadow-lg h-full">
-        <h3 className="text-xl font-bold text-amber-600 mb-3 drop-shadow-golden-glow">{title}</h3>
+        <h3 className={`text-xl font-bold text-amber-600 mb-3 ${title !== 'Mercado Pago' ? 'drop-shadow-golden-glow' : ''}`}>{title}</h3>
         <div className="text-gray-700 text-sm space-y-2">{children}</div>
     </div>
 );

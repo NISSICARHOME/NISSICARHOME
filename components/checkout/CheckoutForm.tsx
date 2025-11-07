@@ -8,18 +8,10 @@ interface CheckoutFormProps {
   onClose: () => void;
 }
 
-const LocationIcon: React.FC<{className?: string}> = ({ className }) => (
-    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-    </svg>
-);
-
-
 const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, onClose }) => {
   const [orderDetails, setOrderDetails] = useState<OrderDetails>({
-    name: '', phone: '', address: '', city: '', state: '', housingType: '', notes: '', location: ''
+    name: '', phone: '', address: '', city: '', state: '', housingType: '', notes: ''
   });
-  const [isLocating, setIsLocating] = useState(false);
   
   const allProducts = useMemo(() => getAllProducts(), []);
 
@@ -48,26 +40,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, onClose }) =
     });
   };
   
-  const handleGetLocation = () => {
-    if (!navigator.geolocation) {
-        alert("Geolocalización no es soportada por este navegador.");
-        return;
-    }
-    setIsLocating(true);
-    navigator.geolocation.getCurrentPosition(
-        (position) => {
-            const { latitude, longitude } = position.coords;
-            const locationString = `Lat: ${latitude.toFixed(4)}, Lon: ${longitude.toFixed(4)}`;
-            setOrderDetails(prev => ({ ...prev, location: locationString }));
-            setIsLocating(false);
-        },
-        () => {
-            alert("No se pudo obtener la ubicación. Por favor, asegúrate de haber dado permiso.");
-            setIsLocating(false);
-        }
-    );
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (cart.length === 0) {
@@ -96,7 +68,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, onClose }) =
     orderSummary += `*Departamento:* ${orderDetails.state}\n`;
     if(orderDetails.housingType) orderSummary += `*Tipo de Vivienda:* ${orderDetails.housingType}\n`;
     if(orderDetails.notes) orderSummary += `*Notas Adicionales:* ${orderDetails.notes}\n`;
-    if(orderDetails.location) orderSummary += `*Ubicación (Opcional):* ${orderDetails.location}\n`;
     
     const whatsappUrl = `https://wa.me/573203393805?text=${encodeURIComponent(orderSummary)}`;
     window.open(whatsappUrl, '_blank');
@@ -188,11 +159,6 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, onClose }) =
                             <option value="Otro">Otro</option>
                         </select>
                         <textarea name="notes" placeholder="Notas adicionales (Ej: Torre 1, Apto 502)" value={orderDetails.notes} onChange={handleInputChange} className={`${inputClasses} h-20`}/>
-                        <button type="button" onClick={handleGetLocation} disabled={isLocating} className="w-full flex items-center justify-center gap-2 bg-white/40 hover:bg-white/60 text-gray-800 font-semibold py-3 px-4 rounded-lg transition-colors disabled:opacity-50 border border-white/50 shadow-sm">
-                           <LocationIcon className="w-5 h-5" />
-                           {isLocating ? 'Buscando...' : 'Usar mi ubicación actual (Opcional)'}
-                        </button>
-                        {orderDetails.location && <p className="text-xs text-center text-green-700 font-semibold">Ubicación obtenida: {orderDetails.location}</p>}
                     </div>
                 </div>
             </div>

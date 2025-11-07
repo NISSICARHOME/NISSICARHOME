@@ -19,7 +19,7 @@ const kitsData: ExtendedKit[] = [
         id: "kit-2",
         name: "Kit de Embellecimiento para tu Vehículo",
         price: "$125.000 COP",
-        image: "https://i.ibb.co/bJCZz8K/kit-embellecimiento.png",
+        image: "https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0",
         description: "Dale a tu vehículo el tratamiento completo que se merece. Este kit ha sido cuidadosamente seleccionado para ofrecer un embellecimiento integral.",
         includes: [
             "1 Cera Hyper Diamond con Carnauba (220 gr)",
@@ -31,15 +31,15 @@ const kitsData: ExtendedKit[] = [
     {
         id: "kit-1",
         name: "Kit Básico de Cuidado",
-        image: "https://picsum.photos/seed/kit1/500/500",
+        image: "https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0",
         description: "El punto de partida perfecto para mantener tu vehículo limpio y protegido. Incluye nuestros productos esenciales.",
     },
 ];
 
 const complementsData: Kit[] = [
-     { id: "comp-1", name: "Aplicador Media Luna", image: "https://i.ibb.co/2WqJtJk/aplicador-luna.png", description: "Espuma de densidad blanda y estructura absorbente, ideal para ceras y selladores." },
-     { id: "comp-2", name: "Aplicador Circular", image: "https://picsum.photos/seed/comp2/500/500", description: "Perfecto para aplicar restauradores y protectores en plásticos y llantas." },
-     { id: "comp-3", name: "Toalla de Microfibra", image: "https://i.ibb.co/wYq4b7X/toalla-microfibra.png", description: "Ultra suave y absorbente, esencial para retirar ceras y secar sin dejar rayones." },
+     { id: "comp-1", name: "Aplicador Media Luna", image: "https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0", description: "Espuma de densidad blanda y estructura absorbente, ideal para ceras y selladores." },
+     { id: "comp-2", name: "Aplicador Circular", image: "https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0", description: "Perfecto para aplicar restauradores y protectores en plásticos y llantas." },
+     { id: "comp-3", name: "Toalla de Microfibra", image: "https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0", description: "Ultra suave y absorbente, esencial para retirar ceras y secar sin dejar rayones." },
 ];
 
 const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
@@ -57,7 +57,7 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
         <>
             <img src={kit.image} alt={kit.name} className="w-full lg:w-1/3 h-64 lg:h-auto object-contain p-4" />
             <div className="p-6 lg:p-8 flex flex-col">
-                <h3 className="text-2xl font-bold text-amber-600 drop-shadow-golden-glow">{kit.name}</h3>
+                <h3 className="text-2xl font-bold text-amber-600">{kit.name}</h3>
                 {kit.price && <p className="text-xl font-semibold text-gray-800 mt-1 mb-3">{kit.price}</p>}
                 <p className="text-gray-700 mb-4">{kit.description}</p>
                 <div className="flex-grow">

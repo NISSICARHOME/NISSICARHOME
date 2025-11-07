@@ -87,8 +87,10 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({ products, onProductSe
             onMouseEnter={stopAutoScroll}
             onMouseLeave={startAutoScroll}
         >
-            <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-gray-800 sm:text-3xl">Explora Nuestra Línea</h3>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="text-center mb-6">
+                    <h3 className="text-2xl font-bold text-gray-800 sm:text-3xl">Explora Nuestra Línea</h3>
+                </div>
             </div>
             <div className="relative flex items-center">
                 <button

@@ -73,6 +73,19 @@ const App: React.FC = () => {
     document.addEventListener('click', handleClick);
     return () => document.removeEventListener('click', handleClick);
   }, []);
+  
+  useEffect(() => {
+    const body = document.body;
+    if (isCheckoutVisible || selectedProduct) {
+      body.style.overflow = 'hidden';
+    } else {
+      body.style.overflow = 'auto';
+    }
+
+    return () => {
+      body.style.overflow = 'auto';
+    };
+  }, [isCheckoutVisible, selectedProduct]);
 
   const addToCart = (itemToAdd: CartItem) => {
     setCart(currentCart => {
@@ -124,20 +137,28 @@ const App: React.FC = () => {
     );
   };
 
+  const isLandingPage = pathname === '/kit-vidrex-clarity-wash';
+
   return (
-    <div className={`bg-[#e0e5ec] min-h-screen text-gray-800 ${isCheckoutVisible || selectedProduct ? 'overflow-hidden h-screen' : ''}`}>
-      <div className={isCheckoutVisible || selectedProduct ? 'blur-sm' : ''}>
-        <Header 
-          cartItemCount={totalItems} 
-          onCartClick={() => setCheckoutVisible(true)}
-          searchTerm={searchTerm}
-          onSearchChange={setSearchTerm}
-          allProducts={allProducts}
-          onProductSelect={setSelectedProduct}
-        />
+    <div className="bg-[#e0e5ec] min-h-screen text-gray-800">
+      <div className={isCheckoutVisible || selectedProduct ? 'blur-sm pointer-events-none' : ''}>
+        {!isLandingPage && (
+          <Header 
+            cartItemCount={totalItems} 
+            onCartClick={() => setCheckoutVisible(true)}
+            searchTerm={searchTerm}
+            onSearchChange={setSearchTerm}
+            allProducts={allProducts}
+            onProductSelect={setSelectedProduct}
+          />
+        )}
         {renderPage()}
-        <Footer />
-        <Chatbot />
+        {!isLandingPage && (
+          <>
+            <Footer />
+            <Chatbot />
+          </>
+        )}
       </div>
       {isCheckoutVisible && 
         <CheckoutForm 

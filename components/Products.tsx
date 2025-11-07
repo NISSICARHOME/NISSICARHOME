@@ -52,7 +52,7 @@ const productsData: Product[] = [
       description: 'Esta composición contiene polímeros con nanotecnología especializados en ultra protección e hiper brillo para la pintura de tu vehículo.',
       howToUse: 'Aplique la cera hyperdiamond sobre la pintura que desea blindar, con un aplicador de espuma esparza el producto por secciones. Luego retire con máquina pulidora o con toalla de microfibra para dar el acabado.',
       precautions: 'Mantener fuera del alcance de los niños, si entra en contacto con los ojos, lave con abundante agua, en caso de ingerir acuda a su médico.',
-      composition: 'Monóxido de dihidrógeno, polímeros naturales, emulsión hidrofóbica, pigmento sintético, esencia ambientada.'
+      composition: 'Monóxido de dihidrógeno, polímeros naturais, emulsión hidrofóbica, pigmento sintético, esencia ambientada.'
     }
   },
   {
@@ -75,7 +75,7 @@ const productsData: Product[] = [
     id: 'prod-perfume-iq',
     name: 'Perfume para Auto IQ 250',
     price: 15000,
-    image: 'https://i.ibb.co/1Mj0y34/perfume-iq250.png',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0',
     shortDesc: 'Aroma con mayor duración para restablecer la armonía de tu cuerpo y mente mientras conduces.',
     category: 'Accesorios',
     details: {
@@ -120,7 +120,7 @@ const productsData: Product[] = [
     id: 'prod-shampoo',
     name: 'Shampoo PH Neutro',
     price: 22000,
-    image: 'https://i.ibb.co/XjYnB8S/shampoo-ph-neutro.png',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0',
     shortDesc: 'Limpieza suave y segura para todas las superficies de tu vehículo, sin dañar ceras o selladores.',
     category: 'Limpieza General',
     details: {
@@ -134,7 +134,7 @@ const productsData: Product[] = [
     id: 'prod-aplicador',
     name: 'Aplicador Media Luna',
     price: 8000,
-    image: 'https://i.ibb.co/2WqJtJk/aplicador-luna.png',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0',
     shortDesc: 'Espuma de densidad blanda y estructura absorbente, ideal para ceras y selladores.',
     category: 'Accesorios',
     details: {
@@ -148,7 +148,7 @@ const productsData: Product[] = [
     id: 'prod-toalla',
     name: 'Toalla de Microfibra',
     price: 12000,
-    image: 'https://i.ibb.co/wYq4b7X/toalla-microfibra.png',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0',
     shortDesc: 'Ultra suave y absorbente, esencial para retirar ceras y secar sin dejar rayones.',
     category: 'Accesorios',
     details: {
@@ -238,11 +238,7 @@ const Products: React.FC<ProductsProps> = ({ onAddToCart, searchTerm, activeFilt
   return (
     <>
       <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 rounded-3xl shadow-neumorphic-outset">
-            <ProductCarousel products={productsData} onProductSelect={onProductSelect} />
-          </div>
-        </div>
+        <ProductCarousel products={productsData} onProductSelect={onProductSelect} />
       </section>
 
       <section id="productos" className="pb-20">
