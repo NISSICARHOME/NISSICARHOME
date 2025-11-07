@@ -80,7 +80,7 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, searchTerm,
 
 
   const navItems = [
-    { href: '/', label: 'Inicio' },
+    { href: '#/', label: 'Inicio' },
     { href: '#nosotros', label: 'Nosotros' },
     { href: '#productos', label: 'Productos' },
     { href: '#kits', label: 'Kits' },
@@ -135,7 +135,7 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, searchTerm,
   return (
     <header className={`bg-white/20 backdrop-blur-md sticky top-0 z-40 border-b border-white/30 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
       <nav className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="/" onClick={handleLinkClick} className="flex items-center space-x-3 rtl:space-x-reverse">
+        <a href="#/" onClick={handleLinkClick} className="flex items-center space-x-3 rtl:space-x-reverse">
           <Logo />
         </a>
         <div className="flex items-center md:order-2 space-x-1 md:space-x-3">

@@ -13,7 +13,7 @@ const kitsData: ExtendedKit[] = [
         description: "La solución definitiva para desmanchar vidrios, eliminar sarro, lluvia ácida y devolver la vida a tu auto y hogar. ¡Resultados garantizados!",
         isSpecial: true,
         price: "¡Oferta Especial!",
-        link: "/kit-vidrex-clarity-wash"
+        link: "#/kit-vidrex-clarity-wash"
     },
     {
         id: "kit-2",
