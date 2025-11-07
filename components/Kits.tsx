@@ -76,7 +76,7 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
         </>
     ) : (
         <>
-            <div className="overflow-hidden">
+            <div>
                 <img src={kit.image} alt={kit.name} className="w-full h-56 object-contain p-4 group-hover:scale-125 transition-transform duration-500 ease-in-out" />
             </div>
             <div className="p-6 flex flex-col flex-grow">
@@ -88,8 +88,8 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
     );
 
     const cardClasses = hasDetails 
-        ? "col-span-1 lg:col-span-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col lg:flex-row group"
-        : `bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-6 flex flex-col group ${isSpecial ? 'lg:col-span-1 border-2 border-green-500' : 'lg:col-span-1'}`;
+        ? "col-span-1 lg:col-span-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex flex-col lg:flex-row group relative hover:z-10"
+        : `bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-6 hover:scale-105 flex flex-col group relative hover:z-10 ${isSpecial ? 'lg:col-span-1 border-2 border-green-500' : 'lg:col-span-1'}`;
 
     return (
         <a href={href} className={cardClasses}>

@@ -103,13 +103,13 @@ const ProductCarousel: React.FC<ProductCarouselProps> = ({ products, onProductSe
 
                 <div
                     ref={scrollContainerRef}
-                    className="flex items-center gap-2 md:gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide py-4"
+                    className="flex items-center gap-2 md:gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-hide py-36"
                 >
                     {displayProducts.map((product, index) => (
-                        <div key={`${product.name}-${index}`} className="snap-center flex-shrink-0 w-28 md:w-40 text-center flex flex-col items-center justify-start p-1">
+                        <div key={`${product.name}-${index}`} className="snap-center flex-shrink-0 w-28 md:w-40 text-center flex flex-col items-center justify-start p-1 relative group hover:z-50">
                              <button 
                                 onClick={() => onProductSelect(product)}
-                                className="block w-24 h-24 md:w-36 md:h-36 transition-transform duration-300 ease-in-out hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-4 focus:ring-offset-[#e0e5ec]"
+                                className="block w-24 h-24 md:w-36 md:h-36 transition-transform duration-300 ease-in-out group-hover:scale-[3] focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-4 focus:ring-offset-[#e0e5ec]"
                             >
                                 <img
                                     src={product.image}

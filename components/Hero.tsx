@@ -28,7 +28,7 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-black opacity-50"></div>
       </div>
       <div className="relative z-10 p-8 max-w-4xl mx-auto bg-black/20 backdrop-blur-sm border border-white/20 rounded-2xl">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight text-amber-300 drop-shadow-golden-glow">
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight text-amber-300">
           Nissi Car Home
         </h1>
         <p className="text-lg md:text-2xl mb-8 font-light text-gray-100">

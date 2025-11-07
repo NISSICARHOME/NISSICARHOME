@@ -170,8 +170,8 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCart }) => (
-  <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col group">
-    <div className="overflow-hidden cursor-pointer" onClick={onSelect}>
+  <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 flex flex-col group relative hover:z-10">
+    <div className="cursor-pointer" onClick={onSelect}>
         <img src={product.image} alt={product.name} className="w-full h-56 object-contain p-4 group-hover:scale-125 transition-transform duration-500" />
     </div>
     <div className="p-6 flex flex-col flex-grow">
@@ -237,7 +237,7 @@ const Products: React.FC<ProductsProps> = ({ onAddToCart, searchTerm, activeFilt
 
   return (
     <>
-      <section className="py-20">
+      <section className="py-10">
         <ProductCarousel products={productsData} onProductSelect={onProductSelect} />
       </section>
 
