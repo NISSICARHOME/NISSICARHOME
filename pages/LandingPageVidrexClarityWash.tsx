@@ -111,11 +111,11 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
 };
 
 const benefitsData = [
-    { title: "Recupera el brillo original", description: "Devuelve la transparencia a vidrios y acrílicos.", image: "https://images.pexels.com/photos/1957478/pexels-photo-1957478.jpeg" },
-    { title: "Desengrasa y desmancha", description: "Clarity Wash elimina sarro, moho y hongos incrustados.", image: "https://images.pexels.com/photos/8089255/pexels-photo-8089255.jpeg" },
-    { title: "Elimina depósitos minerales", description: "Acaba con las manchas de lluvia ácida y agua dura.", image: "https://images.pexels.com/photos/7133099/pexels-photo-7133099.jpeg" },
-    { title: "Pule superficies", description: "Clarity Wash también elimina tallones en pintura y desmancha farolas (externamente).", image: "https://images.pexels.com/photos/9513133/pexels-photo-9513133.jpeg" },
-    { title: "Seguro para múltiples superficies", description: "Úsalo en Vidrios, Acrílico, Aluminio y Cromo.", image: "https://images.pexels.com/photos/164654/pexels-photo-164654.jpeg" },
+    { title: "Recupera el brillo original", description: "Devuelve la transparencia a vidrios y acrílicos.", image: "https://lh3.googleusercontent.com/pw/AP1GczMtiRvcWH7hX10fMo5IPK4tcUy6Fb9wStoN0ftTN-922XVKHbmAZIrmlMVjA8zY7vtwAM8QCwwmKBTAgaVxmDhnTsYiULO0HrjcWRemE2MStowsWe7AESE_JOeCsNQ_lfSGtEsHYkmsQR-trE53KaFV=w661-h991-s-no-gm?authuser=0" },
+    { title: "Desengrasa y desmancha", description: "Clarity Wash elimina sarro, moho y hongos incrustados.", image: "https://lh3.googleusercontent.com/pw/AP1GczMtiRvcWH7hX10fMo5IPK4tcUy6Fb9wStoN0ftTN-922XVKHbmAZIrmlMVjA8zY7vtwAM8QCwwmKBTAgaVxmDhnTsYiULO0HrjcWRemE2MStowsWe7AESE_JOeCsNQ_lfSGtEsHYkmsQR-trE53KaFV=w661-h991-s-no-gm?authuser=0" },
+    { title: "Elimina depósitos minerales", description: "Acaba con las manchas de lluvia ácida y agua dura.", image: "https://lh3.googleusercontent.com/pw/AP1GczMtiRvcWH7hX10fMo5IPK4tcUy6Fb9wStoN0ftTN-922XVKHbmAZIrmlMVjA8zY7vtwAM8QCwwmKBTAgaVxmDhnTsYiULO0HrjcWRemE2MStowsWe7AESE_JOeCsNQ_lfSGtEsHYkmsQR-trE53KaFV=w661-h991-s-no-gm?authuser=0" },
+    { title: "Pule superficies", description: "Clarity Wash también elimina tallones en pintura y desmancha farolas (externamente).", image: "https://lh3.googleusercontent.com/pw/AP1GczN7SItDwQo-iusQyZ3VRyk07V5fgirL3EjHV2kCnlv0_Ds3BxBF6Es6UySi5dkslDK7iDMb7ziWDdhNcISf7dZfEtJqUHaA0dfLwPQpIm0FtLFwx8p4bnbYzP3l8KU68p0EgLNwbJRtSaXzZO4pYlAV=w1040-h800-s-no-gm?authuser=0" },
+    { title: "Seguro para múltiples superficies", description: "Úsalo en Vidrios, Acrílico, Aluminio y Cromo.", image: "https://lh3.googleusercontent.com/pw/AP1GczN7SItDwQo-iusQyZ3VRyk07V5fgirL3EjHV2kCnlv0_Ds3BxBF6Es6UySi5dkslDK7iDMb7ziWDdhNcISf7dZfEtJqUHaA0dfLwPQpIm0FtLFwx8p4bnbYzP3l8KU68p0EgLNwbJRtSaXzZO4pYlAV=w1040-h800-s-no-gm?authuser=0" },
 ];
 
 const LandingBenefits: React.FC = () => {
