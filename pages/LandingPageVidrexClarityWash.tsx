@@ -110,6 +110,14 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
   );
 };
 
+const benefitsData = [
+    { title: "Recupera el brillo original", description: "Devuelve la transparencia a vidrios y acrílicos.", image: "https://images.pexels.com/photos/1957478/pexels-photo-1957478.jpeg" },
+    { title: "Desengrasa y desmancha", description: "Clarity Wash elimina sarro, moho y hongos incrustados.", image: "https://images.pexels.com/photos/8089255/pexels-photo-8089255.jpeg" },
+    { title: "Elimina depósitos minerales", description: "Acaba con las manchas de lluvia ácida y agua dura.", image: "https://images.pexels.com/photos/7133099/pexels-photo-7133099.jpeg" },
+    { title: "Pule superficies", description: "Clarity Wash también elimina tallones en pintura y desmancha farolas (externamente).", image: "https://images.pexels.com/photos/9513133/pexels-photo-9513133.jpeg" },
+    { title: "Seguro para múltiples superficies", description: "Úsalo en Vidrios, Acrílico, Aluminio y Cromo.", image: "https://images.pexels.com/photos/164654/pexels-photo-164654.jpeg" },
+];
+
 const LandingBenefits: React.FC = () => {
     return (
         <section className="bg-gray-50 py-16 px-4">
@@ -117,17 +125,18 @@ const LandingBenefits: React.FC = () => {
                 <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Resultados que puedes ver desde la primera aplicación</h2>
                 <div className="grid md:grid-cols-2 gap-12 items-center">
                      <ul className="space-y-4">
-                        <CheckListItem><strong>Recupera el brillo original:</strong> Devuelve la transparencia a vidrios y acrílicos.</CheckListItem>
-                        <CheckListItem><strong>Desengrasa y desmancha:</strong> Clarity Wash elimina sarro, moho y hongos incrustados.</CheckListItem>
-                        <CheckListItem><strong>Elimina depósitos minerales:</strong> Acaba con las manchas de lluvia ácida y agua dura.</CheckListItem>
-                        <CheckListItem><strong>Pule superficies:</strong> Clarity Wash también elimina tallones en pintura y desmancha farolas (externamente).</CheckListItem>
-                        <CheckListItem><strong>Seguro para múltiples superficies:</strong> Úsalo en Vidrios, Acrílico, Aluminio y Cromo.</CheckListItem>
+                        {benefitsData.map(benefit => (
+                           <CheckListItem key={benefit.title}>
+                                <strong>{benefit.title}:</strong> {benefit.description}
+                           </CheckListItem>
+                        ))}
                     </ul>
-                    <div className="grid grid-cols-2 gap-4">
-                        <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-3.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Vidrio de auto brillante"/>
-                        <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-1.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="División de baño transparente"/>
-                        <img src="https://nissicarhome.com/wp-content/uploads/2023/11/2-1-1-1-1-1024x1024.webp" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Farola de auto restaurada"/>
-                        <img src="https://images.pexels.com/photos/1637780/pexels-photo-1637780.jpeg" className="rounded-lg shadow-md h-48 w-full object-cover" alt="Rin de aluminio limpio"/>
+                    <div className="grid grid-cols-6 gap-4">
+                        <img src={benefitsData[0].image} alt={benefitsData[0].title} className="col-span-3 rounded-lg shadow-md h-40 w-full object-cover" />
+                        <img src={benefitsData[1].image} alt={benefitsData[1].title} className="col-span-3 rounded-lg shadow-md h-40 w-full object-cover" />
+                        <img src={benefitsData[2].image} alt={benefitsData[2].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-cover" />
+                        <img src={benefitsData[3].image} alt={benefitsData[3].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-cover" />
+                        <img src={benefitsData[4].image} alt={benefitsData[4].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-cover" />
                     </div>
                 </div>
             </div>
