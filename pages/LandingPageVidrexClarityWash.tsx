@@ -60,7 +60,7 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
           </div>
           <div className="flex flex-col items-center">
                <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">ANTES / DESPUÉS</h2>
-              <img src="https://images.pexels.com/photos/10394781/pexels-photo-10394781.jpeg" alt="Vidrio manchado antes del tratamiento" className="rounded-t-lg w-full object-cover h-48"/>
+              <img src="https://aluviarte.com/images/instalacion-vidrios/divisiones-de-bano-bogota-colombia.jpg" alt="Vidrio manchado antes del tratamiento" className="rounded-t-lg w-full object-cover h-48"/>
               <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-3.webp" alt="Vidrio limpio después del tratamiento" className="rounded-b-lg w-full object-cover h-48"/>
           </div>
       </div>
