@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem } from '../types';
 
@@ -19,6 +19,89 @@ const ShareIcon: React.FC = () => (
     </svg>
 );
 
+const SliderHandleIcon: React.FC = () => (
+    <svg className="w-8 h-8 text-gray-800" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16l-4-4m0 0l4-4m-4 4h18m-4 4l4-4m0 0l-4-4" />
+    </svg>
+);
+
+const ImageSlider: React.FC<{ beforeImage: string; afterImage: string }> = ({ beforeImage, afterImage }) => {
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleMove = useCallback((clientX: number) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
+    const percent = (x / rect.width) * 100;
+    setSliderPosition(percent);
+  }, []);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsDragging(true);
+  };
+
+  useEffect(() => {
+    const handleUp = () => setIsDragging(false);
+    
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+      handleMove(e.clientX);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isDragging) return;
+      handleMove(e.touches[0].clientX);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleUp);
+    window.addEventListener('touchmove', handleTouchMove);
+    window.addEventListener('touchend', handleUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleUp);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleUp);
+    };
+  }, [isDragging, handleMove]);
+
+  return (
+    <div 
+        ref={containerRef} 
+        className="relative w-full max-w-xl mx-auto aspect-video sm:aspect-[4/3] overflow-hidden rounded-lg select-none cursor-ew-resize shadow-lg"
+        onMouseDown={handleMouseDown}
+        onTouchStart={handleTouchStart}
+    >
+      <img 
+        src={afterImage} 
+        alt="Resultado Después" 
+        className="absolute w-full h-full object-cover pointer-events-none" 
+      />
+      <div 
+        className="absolute w-full h-full object-cover overflow-hidden pointer-events-none" 
+        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+      >
+        <img src={beforeImage} alt="Resultado Antes" className="w-full h-full object-cover pointer-events-none" />
+      </div>
+      <div 
+        className="absolute top-0 bottom-0 w-1.5 bg-white pointer-events-none" 
+        style={{ left: `${sliderPosition}%`, transform: 'translateX(-50%)' }}
+      >
+        <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 bg-white rounded-full h-12 w-12 flex items-center justify-center shadow-2xl">
+          <SliderHandleIcon />
+        </div>
+      </div>
+    </div>
+  );
+};
 
 // --- PAGE SECTIONS ---
 
@@ -47,7 +130,7 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
       <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4">¡NO CAMBIES TUS VIDRIOS, DESMANCHALOS!</h1>
       <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Recupera la transparencia y el brillo de tus vidrios fácil y sin esfuerzo. Descubre la solución definitiva para eliminar manchas de sarro, lluvia ácida y depósitos minerales en tu auto y hogar.</p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-10 text-left">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-10 text-left items-center">
           <div>
               <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">LOS BENEFICIOS SON:</h2>
               <ul className="space-y-3">
@@ -60,8 +143,10 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
           </div>
           <div className="flex flex-col items-center">
                <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">ANTES / DESPUÉS</h2>
-              <img src="https://aluviarte.com/images/instalacion-vidrios/divisiones-de-bano-bogota-colombia.jpg" alt="Vidrio manchado antes del tratamiento" className="rounded-t-lg w-full object-cover h-48"/>
-              <img src="https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-3.webp" alt="Vidrio limpio después del tratamiento" className="rounded-b-lg w-full object-cover h-48"/>
+               <ImageSlider 
+                beforeImage="https://aluviarte.com/images/instalacion-vidrios/divisiones-de-bano-bogota-colombia.jpg"
+                afterImage="https://lh3.googleusercontent.com/pw/AP1GczMtiRvcWH7hX10fMo5IPK4tcUy6Fb9wStoN0ftTN-922XVKHbmAZIrmlMVjA8zY7vtwAM8QCwwmKBTAgaVxmDhnTsYiULO0HrjcWRemE2MStowsWe7AESE_JOeCsNQ_lfSGtEsHYkmsQR-trE53KaFV=w661-h991-s-no-gm?authuser=0"
+               />
           </div>
       </div>
       
