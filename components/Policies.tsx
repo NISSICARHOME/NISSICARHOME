@@ -52,14 +52,14 @@ Usted tiene derecho a conocer, actualizar, rectificar y solicitar la supresión 
 
 const Policies: React.FC = () => {
   return (
-    <section id="policies" className="py-20">
+    <section id="policies" className="py-10 md:py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 rounded-3xl shadow-neumorphic-outset">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+        <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-xl font-extrabold text-gray-800 sm:text-4xl">
               Políticas y Condiciones
             </h2>
-            <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
               Nuestros compromisos de calidad, servicio y protección de tu información.
             </p>
           </div>

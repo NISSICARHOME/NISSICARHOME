@@ -161,8 +161,8 @@ const App: React.FC = () => {
           activeFilters={activeFilters}
           onProductSelect={setSelectedProduct}
         />
-        <About />
         <Kits />
+        <About />
         <Services />
         <FAQ />
         <Policies />

@@ -1,22 +1,22 @@
 import React from 'react';
 
 const InfoCard: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-    <div className="bg-white/20 backdrop-blur-md border border-white/30 p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full">
-        <h3 className="text-2xl font-bold text-amber-600 mb-4">{title}</h3>
-        <p className="text-gray-700">{children}</p>
+    <div className="bg-white/20 backdrop-blur-md border border-white/30 p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+        <h3 className="text-xl sm:text-2xl font-bold text-amber-600 mb-4">{title}</h3>
+        <p className="text-gray-700 text-sm sm:text-base">{children}</p>
     </div>
 );
 
 
 const About: React.FC = () => {
     return (
-        <section id="nosotros" className="py-20">
+        <section id="nosotros" className="py-12 md:py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="text-center mb-16 p-8 rounded-3xl shadow-neumorphic-outset">
-                    <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+                <div className="text-center mb-12 md:mb-16 p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset">
+                    <h2 className="text-2xl font-extrabold text-gray-800 sm:text-4xl">
                        ¿Quiénes Somos?
                     </h2>
-                    <p className="mt-4 max-w-3xl mx-auto text-lg text-gray-600">
+                    <p className="mt-4 max-w-3xl mx-auto text-base text-gray-600 sm:text-lg">
                        Somos una empresa colombiana, con casa matriz en Pereira y sedes en Ibagué y El Espinal, apasionada por la innovación en el cuidado estético. Nuestro equipo se especializa en la formulación de recubrimientos y productos de limpieza basados en materias primas de vanguardia, garantizando protección, brillo y una vida útil prolongada para las superficies de su vehículo y hogar.
                     </p>
                 </div>
@@ -32,9 +32,9 @@ const About: React.FC = () => {
                     </InfoCard>
                 </div>
 
-                <div className="mt-20 p-8 rounded-3xl shadow-neumorphic-outset">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+                <div className="mt-12 md:mt-20 p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset">
+                    <div className="text-center mb-12 md:mb-16">
+                        <h2 className="text-2xl font-extrabold text-gray-800 sm:text-3xl">
                            Principios y Valores
                         </h2>
                     </div>

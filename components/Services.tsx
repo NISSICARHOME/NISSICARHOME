@@ -12,33 +12,33 @@ const servicesData = [
 const ServiceItem: React.FC<{ name: string; description: string; }> = ({ name, description }) => (
   <div className="flex">
     <div className="flex-shrink-0">
-      <div className="flex items-center justify-center h-12 w-12 rounded-xl bg-amber-500/80 text-white border border-amber-400/50 backdrop-blur-sm shadow-lg">
+      <div className="flex items-center justify-center h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-amber-500/80 text-white border border-amber-400/50 backdrop-blur-sm shadow-lg">
         <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
         </svg>
       </div>
     </div>
     <div className="ml-4">
-      <dt className="text-lg leading-6 font-medium text-gray-800">{name}</dt>
-      <dd className="mt-2 text-base text-gray-600">{description}</dd>
+      <dt className="text-base sm:text-lg leading-6 font-medium text-gray-800">{name}</dt>
+      <dd className="mt-1 sm:mt-2 text-sm sm:text-base text-gray-600">{description}</dd>
     </div>
   </div>
 );
 
 const Services: React.FC = () => {
   return (
-    <section id="servicios" className="py-20">
+    <section id="servicios" className="py-10 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 rounded-3xl shadow-neumorphic-outset">
+        <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset">
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">Servicios Adicionales y Soporte</h2>
-            <p className="mt-4 max-w-2xl mx-auto text-xl text-gray-600">
+            <h2 className="text-xl font-extrabold text-gray-800 sm:text-4xl">Servicios Adicionales y Soporte</h2>
+            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
               No solo ofrecemos productos, sino también servicios especializados y el mejor soporte para ti.
             </p>
           </div>
 
-          <div className="mt-16">
-            <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+          <div className="mt-12 md:mt-16">
+            <dl className="space-y-8 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
               {servicesData.map(service => (
                 <ServiceItem key={service.name} name={service.name} description={service.description} />
               ))}

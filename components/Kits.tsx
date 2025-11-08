@@ -48,23 +48,23 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
     const href = kit.link || '#contacto';
 
     const Button = () => (
-        <div className={`mt-4 w-full text-center font-bold py-2 px-4 rounded-lg transition-all duration-300 active:scale-95 shadow-md ${isSpecial ? 'bg-green-600 text-white group-hover:bg-green-700' : 'bg-amber-500/80 text-white group-hover:bg-amber-500/100'}`}>
+        <div className={`mt-auto w-full text-center font-bold py-2 px-3 text-sm rounded-lg transition-all duration-300 active:scale-95 shadow-md ${isSpecial ? 'bg-green-600 text-white group-hover:bg-green-700' : 'bg-amber-500/80 text-white group-hover:bg-amber-500/100'}`}>
             {isSpecial ? 'Ver Oferta Ahora' : 'Más Información'}
         </div>
     );
 
     const cardContent = hasDetails ? (
         <>
-            <img src={kit.image} alt={kit.name} className="w-full lg:w-1/3 h-64 lg:h-auto object-contain p-4" />
-            <div className="p-6 lg:p-8 flex flex-col">
-                <h3 className="text-2xl font-bold text-amber-600">{kit.name}</h3>
-                {kit.price && <p className="text-xl font-semibold text-gray-800 mt-1 mb-3">{kit.price}</p>}
-                <p className="text-gray-700 mb-4">{kit.description}</p>
-                <div className="flex-grow">
+            <img src={kit.image} alt={kit.name} className="w-full lg:w-1/3 h-32 sm:h-56 lg:h-auto object-contain p-4" />
+            <div className="p-3 sm:p-5 lg:p-6 flex flex-col">
+                <h3 className="text-base sm:text-xl font-bold text-amber-600">{kit.name}</h3>
+                {kit.price && <p className="text-sm sm:text-lg font-semibold text-gray-800 mt-1 mb-3">{kit.price}</p>}
+                <p className="text-sm text-gray-700 mb-3 sm:mb-4">{kit.description}</p>
+                <div className="flex-grow mb-4">
                     <h4 className="font-semibold text-gray-800 mb-2">¿Qué Incluye el Kit?</h4>
                     <ul className="space-y-2">
                        {kit.includes?.map((item, index) => (
-                            <li key={index} className="flex items-start text-sm text-gray-700">
+                            <li key={index} className="flex items-start text-xs text-gray-700">
                                 <svg className="flex-shrink-0 h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                                 <span>{item}</span>
                             </li>
@@ -77,11 +77,11 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
     ) : (
         <>
             <div>
-                <img src={kit.image} alt={kit.name} className="w-full h-56 object-contain p-4 group-hover:scale-125 transition-transform duration-500 ease-in-out" />
+                <img src={kit.image} alt={kit.name} className="w-full h-32 sm:h-48 object-contain p-3 group-hover:scale-110 transition-transform duration-500 ease-in-out" />
             </div>
-            <div className="p-6 flex flex-col flex-grow">
-              <h3 className={`text-xl font-bold mb-2 ${isSpecial ? 'text-green-700' : 'text-gray-800'}`}>{kit.name}</h3>
-              <p className="text-gray-600 text-sm flex-grow">{kit.description}</p>
+            <div className="p-3 sm:p-4 flex flex-col flex-grow">
+              <h3 className={`text-sm sm:text-lg font-bold mb-2 ${isSpecial ? 'text-green-700' : 'text-gray-800'}`}>{kit.name}</h3>
+              <p className="text-gray-600 text-xs flex-grow mb-4">{kit.description}</p>
               <Button />
             </div>
         </>
@@ -89,7 +89,7 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
 
     const cardClasses = hasDetails 
         ? "col-span-1 lg:col-span-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex flex-col lg:flex-row group relative hover:z-10"
-        : `bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-6 hover:scale-105 flex flex-col group relative hover:z-10 ${isSpecial ? 'lg:col-span-1 border-2 border-green-500' : 'lg:col-span-1'}`;
+        : `bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col group relative hover:z-10 ${isSpecial ? 'lg:col-span-1 border-2 border-green-500' : 'lg:col-span-1'}`;
 
     return (
         <a href={href} className={cardClasses}>
@@ -98,17 +98,28 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
     );
 };
 
+const ComplementCard: React.FC<{ complement: Kit }> = ({ complement }) => (
+    <a href="#contacto" className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col text-center p-2 group items-center h-full">
+        <div className="h-20 w-full flex items-center justify-center">
+            <img src={complement.image} alt={complement.name} className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300" />
+        </div>
+        <div className="flex flex-col flex-grow mt-2 w-full">
+            <h4 className="font-bold text-xs text-gray-800 leading-tight">{complement.name}</h4>
+        </div>
+    </a>
+);
+
 
 const Kits: React.FC = () => {
     return (
-        <section id="kits" className="py-20">
+        <section id="kits" className="py-10 md:py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="p-8 rounded-3xl shadow-neumorphic-outset">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+                <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset">
+                    <div className="text-center mb-8 sm:mb-16">
+                        <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800">
                             Kits y Complementos
                         </h2>
-                        <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+                        <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-lg text-gray-600">
                             Soluciones completas y herramientas esenciales para llevar el cuidado de tu vehículo al siguiente nivel.
                         </p>
                     </div>
@@ -116,13 +127,13 @@ const Kits: React.FC = () => {
                         {kitsData.map((kit) => <KitCard key={kit.id} kit={kit} />)}
                     </div>
 
-                     <div className="text-center mt-20 mb-16">
-                        <h3 className="text-2xl font-bold text-gray-800 sm:text-3xl">
+                     <div className="text-center mt-12 sm:mt-20 mb-8 sm:mb-16">
+                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-800">
                             Complementos Esenciales
                         </h3>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {complementsData.map((complement) => <KitCard key={complement.id} kit={complement} />)}
+                    <div className="grid grid-cols-3 gap-4">
+                        {complementsData.map((complement) => <ComplementCard key={complement.id} complement={complement} />)}
                     </div>
                 </div>
             </div>

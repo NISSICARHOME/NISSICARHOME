@@ -12,7 +12,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
     <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg transition-all duration-300">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center py-4 px-6 text-left text-lg font-semibold text-gray-800 hover:bg-white/20 transition-colors"
+        className="w-full flex justify-between items-center py-3 px-4 sm:py-4 sm:px-5 text-left text-sm sm:text-base font-semibold text-gray-800 hover:bg-white/20 transition-colors"
         aria-expanded={isOpen}
       >
         <span className="flex-1 pr-4">{title}</span>
@@ -30,7 +30,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
         className={`grid transition-all duration-500 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
       >
         <div className="overflow-hidden">
-          <div className="p-6 pt-0">
+          <div className="px-4 pt-0 pb-3 sm:px-5 sm:pb-4 sm:pt-0">
             {children}
           </div>
         </div>

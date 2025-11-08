@@ -1,8 +1,8 @@
 import React from 'react';
 
 const PaymentCard: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-    <div className="bg-white/20 backdrop-blur-md border border-white/30 p-6 rounded-2xl shadow-lg h-full">
-        <h3 className={`text-xl font-bold text-amber-600 mb-3 ${title !== 'Mercado Pago' ? 'drop-shadow-golden-glow' : ''}`}>{title}</h3>
+    <div className="bg-white/20 backdrop-blur-md border border-white/30 p-4 sm:p-5 rounded-2xl shadow-lg h-full">
+        <h3 className={`text-base sm:text-lg font-bold text-amber-600 mb-3 ${title !== 'Mercado Pago' ? 'drop-shadow-golden-glow' : ''}`}>{title}</h3>
         <div className="text-gray-700 text-sm space-y-2">{children}</div>
     </div>
 );
@@ -10,19 +10,19 @@ const PaymentCard: React.FC<{ title: string; children: React.ReactNode }> = ({ t
 
 const PaymentMethods: React.FC = () => {
     return (
-        <section id="payment" className="py-20">
+        <section id="payment" className="py-10 md:py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="p-8 rounded-3xl shadow-neumorphic-outset">
-                    <div className="text-center mb-12">
-                        <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+                <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset">
+                    <div className="text-center mb-8 sm:mb-12">
+                        <h2 className="text-xl font-extrabold text-gray-800 sm:text-4xl">
                             Métodos de Pago
                         </h2>
-                        <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+                        <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
                             Aceptamos diversas formas de pago para tu comodidad. Sigue las instrucciones para un proceso rápido y seguro.
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
                         <PaymentCard title="Transferencias">
                             <p><strong>Plataformas:</strong> Nequi, Bancolombia, Daviplata.</p>
                             <p><strong>Instrucciones:</strong></p>

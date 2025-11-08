@@ -37,7 +37,7 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
 
   return (
     <section id="oferta" className="bg-white py-12 px-4 text-center">
-      <div className="w-full max-w-3xl mx-auto rounded-lg shadow-2xl mb-8 overflow-hidden bg-gray-100">
+      <div className="w-full max-w-3xl mx-auto mb-8">
           <img 
               src="https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0" 
               alt="Componentes del Kit Estrella: Vidrex y Clarity Wash" 
@@ -65,12 +65,17 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
           </div>
       </div>
       
-      <div className="text-center my-12">
-        <img 
-            src="https://i.ibb.co/L5B7wzQ/obsequio-banner.png"
-            alt="Obsequio: 2 aplicadores de espuma + toalla microfibra"
-            className="mx-auto max-w-lg w-full rounded-lg shadow-lg transition-transform duration-500 hover:scale-105"
-        />
+      <div className="text-center my-12 max-w-2xl mx-auto">
+        <div className="aspect-video w-full rounded-lg shadow-lg overflow-hidden">
+            <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/IYcb3wNVNvM?si=SZFcurYg4zBLaZ5R"
+                title="YouTube video player"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen>
+            </iframe>
+        </div>
       </div>
       
       <div className="max-w-md mx-auto flex items-center justify-center gap-4">
@@ -162,10 +167,10 @@ const LandingHowToUse: React.FC = () => {
                  <p className="text-center text-xl text-red-600 font-bold mb-8">Sigue estos 4 sencillos pasos en seco (No mojar antes):</p>
                  <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {[
-                        {num: 1, title: 'APLICA LA CREMA', desc: 'Coloque una pequeña cantidad de Clarity Wash en el aplicador de espuma. Frota sobre la superficie (ej. 15x15cm) con movimientos firmes.', img: 'https://nissicarhome.com/wp-content/uploads/2023/11/clarity-wash-vidrex-4.webp'},
-                        {num: 2, title: 'APLICACIÓN DEL GEL', desc: 'Sin retirar la crema, aplique 30-40 gotas de Vidrex sobre el mismo aplicador. Sigue frotando sobre la misma área por 50 segundos.', img: 'https://images.pexels.com/photos/7794429/pexels-photo-7794429.jpeg'},
-                        {num: 3, title: 'LIMPIA EL EXCESO', desc: 'Retira el exceso de producto con una toalla de microfibra limpia y seca.', img: 'https://images.pexels.com/photos/8349233/pexels-photo-8349233.jpeg'},
-                        {num: 4, title: 'ENJUAGA AL FINAL', desc: 'Una vez hayas desmanchado toda el área (todo el parabrisas, etc), enjuaga con abundante agua.', img: 'https://images.pexels.com/photos/372959/pexels-photo-372959.jpeg'},
+                        {num: 1, title: 'APLICA LA CREMA', desc: 'Coloque una pequeña cantidad de Clarity Wash en el aplicador de espuma. Frota sobre la superficie (ej. 15x15cm) con movimientos firmes.', img: 'https://lh3.googleusercontent.com/pw/AP1GczN-yEJ60kKupmGnof1HdhmvaB6_6TOSX0jXKSbXyVZZTnHJdOY2E-2YzrgbxGhXARlPXjf03Ogzh_tkHzThZnn8EZtVleVuc0gHtyEjxnR7zHYG7eTme1sjOLqSXUtkLigDDtcn9MMzMLGVVHmMzEYq=w1152-h896-s-no-gm?authuser=0'},
+                        {num: 2, title: 'APLICACIÓN DEL GEL', desc: 'Sin retirar la crema, aplique 30-40 gotas de Vidrex sobre el mismo aplicador. Sigue frotando sobre la misma área por 50 segundos.', img: 'https://lh3.googleusercontent.com/pw/AP1GczOXRSorm7DVC8IsNgR40xqa-UT4Vy0rRFtfOgpB35-NICCFjyWptX9gwT3AHWxxpB4ushpLV64xPAHGXNqbiSkFIMKeBIunwK5mp00GipSbaQewhqWBlBKBgWW_uxMfYWApPaDN-yXDGSctMCcqHUBI=w1152-h896-s-no-gm?authuser=0'},
+                        {num: 3, title: 'LIMPIA EL EXCESO', desc: 'Retira el exceso de producto con una toalla de microfibra limpia y seca.', img: 'https://lh3.googleusercontent.com/pw/AP1GczOQXrjr2VsLYqpU93Z8giuavXR9vNdzIxJp8ZOQIQi7iAPcR8ZY77n-OOJJ2uYaeLopnU_yCF7IRU9Q4RqN_pHoKDyvcNnDCVHZtvX4I9jt632ubvKbQiJLogFUt8qxFpwrUpT-OI9pvxIltTwOOesY=w1152-h896-s-no-gm?authuser=0'},
+                        {num: 4, title: 'ENJUAGA AL FINAL', desc: 'Una vez hayas desmanchado toda el área (todo el parabrisas, etc), enjuaga con abundante agua.', img: 'https://lh3.googleusercontent.com/pw/AP1GczPDEggKp3jj4TxNCl6PX6PK8TY5DiqvgNt4uRfqDUSqcGvLvXK3Zcm-SvOtAbNcMe8wwkzNsW1wuPAdvarNhJ7HqjQUxxt_SnklqvBQ2JVE3S6rFzjAM1IuKBxdIOLxDHr2DguPlaP9r90BISo0KYjJ=w991-h991-s-no-gm?authuser=0'},
                     ].map(step => (
                          <div key={step.num} className="text-center">
                              <div className="relative mb-4">
@@ -237,6 +242,19 @@ const LandingSocialProofFAQ: React.FC = () => (
                  ))}
             </div>
             
+            <div className="text-center my-16">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4">¡Tu Opinión Nos Impulsa a Mejorar!</h3>
+                <p className="text-gray-600 max-w-2xl mx-auto mb-6">Si nuestros productos han superado tus expectativas, te invitamos a compartir tu experiencia. ¡Tu calificación nos ayuda a crecer y a que otros conozcan la calidad de Nissi Car Home!</p>
+                <a 
+                    href="https://g.page/r/Cf9bBmx6F9d8EBI/review"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-block bg-yellow-400 text-gray-800 font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:bg-yellow-500 transition-all transform hover:scale-105"
+                >
+                    Calificar con 5 Estrellas ⭐
+                </a>
+            </div>
+
             <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">PREGUNTAS FRECUENTES</h2>
              <div className="space-y-4">
                 {faqData.map((item, index) => (

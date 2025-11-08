@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Product, ActiveFilters } from '../types';
 import ProductCarousel from './ProductCarousel';
 
@@ -162,32 +162,51 @@ const productsData: Product[] = [
 
 export const getAllProducts = () => productsData;
 
+const ListIcon: React.FC = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>;
+const GridIcon: React.FC = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>;
+
 
 interface ProductCardProps {
     product: Product;
     onSelect: () => void;
     onAddToCart: (product: Product) => void;
+    viewMode: 'list' | 'grid';
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCart }) => (
-  <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 flex flex-col group relative hover:z-10">
-    <div className="cursor-pointer" onClick={onSelect}>
-        <img src={product.image} alt={product.name} className="w-full h-56 object-contain p-4 group-hover:scale-125 transition-transform duration-500" />
+const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCart, viewMode }) => (
+  <div className={`
+    bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl 
+    transition-all duration-300 transform flex group relative hover:z-10 
+    sm:flex-col sm:hover:-translate-y-2 sm:hover:scale-105
+    ${viewMode === 'list' 
+      ? 'flex-row items-center p-2 gap-3' 
+      : 'flex-col hover:-translate-y-2 hover:scale-105'
+    }`
+  }>
+    <div 
+      className={`cursor-pointer flex-shrink-0 sm:w-full ${viewMode === 'list' ? 'w-24' : 'w-full'}`} 
+      onClick={onSelect}
+    >
+      <img src={product.image} alt={product.name} className={`
+        w-full object-contain transition-transform duration-500 
+        sm:h-56 sm:p-4 sm:group-hover:scale-125
+        ${viewMode === 'list' ? 'h-24' : 'h-36 p-2 group-hover:scale-110'}`
+      } />
     </div>
-    <div className="p-6 flex flex-col flex-grow">
-      <h3 className="text-xl font-bold text-gray-800 mb-2">{product.name}</h3>
-      <p className="text-gray-600 text-sm flex-grow">{product.shortDesc}</p>
-      <p className="text-lg font-bold text-gray-800 mt-2">${product.price.toLocaleString('es-CO')}</p>
-      <div className="mt-4 flex gap-2">
+    <div className={`flex flex-col flex-grow ${viewMode === 'grid' ? 'p-3' : ''}`}>
+      <h3 className={`font-bold text-gray-800 sm:text-xl ${viewMode === 'list' ? 'text-base' : 'text-base mb-1'}`}>{product.name}</h3>
+      <p className={`text-gray-600 flex-grow ${viewMode === 'list' ? 'text-sm hidden sm:block' : 'text-xs block'}`}>{product.shortDesc}</p>
+      <p className={`font-bold text-gray-800 sm:text-lg ${viewMode === 'list' ? 'my-1' : 'mt-2'}`}>{product.price.toLocaleString('es-CO')}</p>
+      <div className="flex gap-1 mt-1">
         <button 
             onClick={onSelect} 
-            className="flex-1 bg-white/40 text-gray-800 hover:bg-white/60 backdrop-blur-sm border border-white/50 font-bold py-2 px-4 rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg"
+            className="flex-1 bg-white/40 text-gray-800 hover:bg-white/60 backdrop-blur-sm border border-white/50 font-bold rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg text-xs py-1 px-2 sm:text-base sm:py-2 sm:px-4"
         >
             Detalles
         </button>
         <button 
             onClick={() => onAddToCart(product)} 
-            className="flex-1 bg-amber-500/80 text-white hover:bg-amber-500/100 backdrop-blur-sm border border-amber-400/50 font-bold py-2 px-4 rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg"
+            className="flex-1 bg-amber-500/80 text-white hover:bg-amber-500/100 backdrop-blur-sm border border-amber-400/50 font-bold rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg text-xs py-1 px-2 sm:text-base sm:py-2 sm:px-4"
         >
             Añadir
         </button>
@@ -204,33 +223,23 @@ interface ProductsProps {
 }
 
 const Products: React.FC<ProductsProps> = ({ onAddToCart, searchTerm, activeFilters, onProductSelect }) => {
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
 
   const filteredProducts = useMemo(() => {
     return productsData
       .filter(product => {
-        // Search term filter
         const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
-        
-        // Category filter
         const matchesCategory = activeFilters.categories.length === 0 || activeFilters.categories.includes(product.category);
-
-        // Price range filter
         const matchesPrice = product.price >= activeFilters.priceRange.min && product.price <= activeFilters.priceRange.max;
-
         return matchesSearch && matchesCategory && matchesPrice;
       })
       .sort((a, b) => {
         switch (activeFilters.sortOrder) {
-          case 'price-asc':
-            return a.price - b.price;
-          case 'price-desc':
-            return b.price - a.price;
-          case 'name-asc':
-            return a.name.localeCompare(b.name);
-          case 'name-desc':
-            return b.name.localeCompare(a.name);
-          default:
-            return 0;
+          case 'price-asc': return a.price - b.price;
+          case 'price-desc': return b.price - a.price;
+          case 'name-asc': return a.name.localeCompare(b.name);
+          case 'name-desc': return b.name.localeCompare(a.name);
+          default: return 0;
         }
       });
   }, [searchTerm, activeFilters]);
@@ -243,8 +252,8 @@ const Products: React.FC<ProductsProps> = ({ onAddToCart, searchTerm, activeFilt
 
       <section id="productos" className="pb-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="p-8 rounded-3xl shadow-neumorphic-outset">
-            <div className="text-center mb-16">
+          <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset">
+            <div className="text-center mb-8 sm:mb-16">
               <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
                 Nuestros Productos Esenciales
               </h2>
@@ -252,9 +261,28 @@ const Products: React.FC<ProductsProps> = ({ onAddToCart, searchTerm, activeFilt
                 Una línea completa para el cuidado de tu vehículo y hogar, formulada con materias primas de vanguardia.
               </p>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+            <div className="flex justify-end items-center gap-2 mb-6 sm:hidden">
+              <span className="text-sm font-semibold text-gray-600">Vista:</span>
+              <button 
+                onClick={() => setViewMode('list')} 
+                className={`p-2 rounded-lg transition-colors ${viewMode === 'list' ? 'bg-amber-500/50 text-white' : 'bg-white/40'}`}
+                aria-label="Vista de lista"
+              >
+                <ListIcon />
+              </button>
+              <button 
+                onClick={() => setViewMode('grid')} 
+                className={`p-2 rounded-lg transition-colors ${viewMode === 'grid' ? 'bg-amber-500/50 text-white' : 'bg-white/40'}`}
+                aria-label="Vista de cuadrícula"
+              >
+                <GridIcon />
+              </button>
+            </div>
+
+            <div className={`grid gap-4 sm:gap-8 ${viewMode === 'list' ? 'grid-cols-1' : 'grid-cols-2'} sm:grid-cols-2 lg:grid-cols-4`}>
               {filteredProducts.map((product) => (
-                <ProductCard key={product.id} product={product} onSelect={() => onProductSelect(product)} onAddToCart={onAddToCart} />
+                <ProductCard key={product.id} product={product} onSelect={() => onProductSelect(product)} onAddToCart={onAddToCart} viewMode={viewMode} />
               ))}
             </div>
              {filteredProducts.length === 0 && (

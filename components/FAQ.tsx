@@ -43,21 +43,21 @@ export const faqData: FAQItem[] = [
 
 const FAQ: React.FC = () => {
   return (
-    <section id="faq" className="py-20">
+    <section id="faq" className="py-10 md:py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-8 rounded-3xl shadow-neumorphic-outset">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-gray-800 sm:text-4xl">
+        <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-xl font-extrabold text-gray-800 sm:text-4xl">
               Preguntas Frecuentes
             </h2>
-            <p className="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
+            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
               Aquí respondemos a tus preguntas más comunes para que tengas toda la información que necesitas.
             </p>
           </div>
           <div className="space-y-4">
             {faqData.map((item, index) => (
               <Accordion key={index} title={item.question}>
-                <p className="text-gray-700">{item.answer}</p>
+                <p className="text-gray-700 text-sm sm:text-base">{item.answer}</p>
               </Accordion>
             ))}
           </div>
