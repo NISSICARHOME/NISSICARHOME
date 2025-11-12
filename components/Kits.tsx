@@ -19,7 +19,7 @@ const kitsData: ExtendedKit[] = [
         id: "kit-2",
         name: "Kit de Embellecimiento para tu Vehículo",
         price: "$125.000 COP",
-        image: "https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0",
+        image: "https://lh3.googleusercontent.com/pw/AP1GczMJFFm1_O3u4r3G_bzpxRzudJYpBK640gQdWuWI=w1040-h800-s-no-gm?authuser=0",
         description: "Dale a tu vehículo el tratamiento completo que se merece. Este kit ha sido cuidadosamente seleccionado para ofrecer un embellecimiento integral.",
         includes: [
             "1 Cera Hyper Diamond con Carnauba (220 gr)",
@@ -31,7 +31,7 @@ const kitsData: ExtendedKit[] = [
     {
         id: "kit-1",
         name: "Kit Básico de Cuidado",
-        image: "https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0",
+        image: "https://lh3.googleusercontent.com/pw/AP1GczPxjPxodnGrbBnhjJtiXVRDihgMha6p49ACpFyI=w1040-h800-s-no-gm?authuser=0",
         description: "El punto de partida perfecto para mantener tu vehículo limpio y protegido. Incluye nuestros productos esenciales.",
     },
 ];
