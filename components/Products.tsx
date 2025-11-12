@@ -75,7 +75,7 @@ const productsData: Product[] = [
     id: 'prod-perfume-iq',
     name: 'Perfume para Auto IQ 250',
     price: 15000,
-    image: 'https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczNGm09XudSQyCC9Y5VONBw73KefzfMTKgBpYO3NtdLHEeAd1ZdBG4gIyWJBWhlt5FaipkPqazrm2yLlKuFNQu7H3bxHw8gjeNEUH-hDYSR_xoSceSMeyIHajfC7rePHuj5tBrDR19SXBRRQXzjz-rnV=w454-h624-s-no-gm?authuser=0',
     shortDesc: 'Aroma con mayor duración para restablecer la armonía de tu cuerpo y mente mientras conduces.',
     category: 'Accesorios',
     details: {
@@ -134,7 +134,7 @@ const productsData: Product[] = [
     id: 'prod-aplicador',
     name: 'Aplicador Media Luna',
     price: 8000,
-    image: 'https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczMQ4EUxiH3Ndfgs385HG6O8xSn6tRe-hKzmI2RX2bfziUZzV8TqTzEF66DO7c7FINzqGNj2Wx3_0o6NghBXnC8Dad4V81LJDDqU3n5vrv01KuPR8Lyn4jgayBDxS21B9l28P6ozJt6UZ2skGHKMhLkZ=w500-h717-s-no-gm?authuser=0',
     shortDesc: 'Espuma de densidad blanda y estructura absorbente, ideal para ceras y selladores.',
     category: 'Accesorios',
     details: {
@@ -148,7 +148,7 @@ const productsData: Product[] = [
     id: 'prod-toalla',
     name: 'Toalla de Microfibra',
     price: 12000,
-    image: 'https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=s128-no?authuser=0',
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczPn8Nx3WgdMKOguR8-_ISl7lyhdrJoWEWxaFuy3-po0uM7NAQAT4vSdBSj2LZkpNQ52hEvJ-Kgd3TG1WPCaaGklZSukEoquViMAuPeEImOPVd39drDoagydRag8yKyCAPh63Er63riRmEKFJLwZ_nv2=w354-h372-s-no-gm?authuser=0',
     shortDesc: 'Ultra suave y absorbente, esencial para retirar ceras y secar sin dejar rayones.',
     category: 'Accesorios',
     details: {
