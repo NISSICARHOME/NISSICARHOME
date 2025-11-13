@@ -12,6 +12,7 @@ import PaymentMethods from './components/PaymentMethods';
 import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import LandingPageVidrexClarityWash from './pages/LandingPageVidrexClarityWash';
+import LandingPageBeautyKit from './pages/LandingPageBeautyKit';
 import CheckoutForm from './components/checkout/CheckoutForm';
 import ProductModal from './components/shared/ProductModal';
 import { CartItem, Product, ActiveFilters } from './types';
@@ -151,6 +152,10 @@ const App: React.FC = () => {
       return <LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />;
     }
 
+    if (route === '/kit-embellecimiento') {
+      return <LandingPageBeautyKit onBuyNow={handleBuyNow} />;
+    }
+
     return (
       <main>
         <Hero />
@@ -171,7 +176,7 @@ const App: React.FC = () => {
     );
   };
 
-  const isLandingPage = route === '/kit-vidrex-clarity-wash';
+  const isLandingPage = route === '/kit-vidrex-clarity-wash' || route === '/kit-embellecimiento';
 
   return (
     <div className="bg-[#e0e5ec] min-h-screen text-gray-800">

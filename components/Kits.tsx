@@ -19,7 +19,7 @@ const kitsData: ExtendedKit[] = [
         id: "kit-2",
         name: "Kit de Embellecimiento para tu Vehículo",
         price: "$125.000 COP",
-        image: "https://lh3.googleusercontent.com/pw/AP1GczNM6gXGlZ3tLL_ldLUVx2j_92Pg1c0Kuyr8P49edYnKZMQ7KWi9Ct5XZz1ivfNubBNzXabrlVi_c4mXFLlJT4ghQAFic32h_2y9Twa2QvP0K0Q8H5ke1TS95s0cvrZstyomhC9gs5Npk0wGgdHWlSm-=w585-h427-s-no-gm?authuser=0",
+        image: "https://lh3.googleusercontent.com/pw/AP1GczMY47G5C1QfpxseWKtafJTKBxtMW7FzwcLr1hkzefpVRIWH9g45SMv9L9gc1bfIlS0JR4k2Jd7wBEX03hN7BmRHjFjjwreFEr0CHDpxV62-Fbd84Hth8LkrXy_gdHHSx3fo88RnFQDficvQM5jnsNEz=w620-h424-s-no-gm?authuser=0",
         description: "Dale a tu vehículo el tratamiento completo que se merece. Este kit ha sido cuidadosamente seleccionado para ofrecer un embellecimiento integral.",
         includes: [
             "1 Cera Hyper Diamond con Carnauba (220 gr)",
@@ -27,11 +27,12 @@ const kitsData: ExtendedKit[] = [
             "¡OBSEQUIO ESPECIAL! 1 Ultra Restorer de Partes Negras (120 ml)",
             "2 Aplicadores de Espuma (Abrasividad Blanda)",
         ],
+        link: "#/kit-embellecimiento",
     },
     {
         id: "kit-1",
         name: "Kit Básico de Cuidado",
-        image: "https://lh3.googleusercontent.com/pw/AP1GczM1J0hUbtENAc4fznmkSsEoC3hSuh6zEKd0vn8lIK-1SJAYdlQL0AD93vSdubF7uRnyGWLw9doNOROSRyNZ3iE2whqtdsnuvjNcwzASTKsocYp7QkiMNEpOS9TwuLLHWzlOSXxPaJnqcxqKZxBa6xrR=w585-h427-s-no-gm?authuser=0",
+        image: "https://lh3.googleusercontent.com/pw/AP1GczOzc5XobmAERtALiliyk1JbpWK9TtlNYR-Gq8ho_9NrxGyhRPsDqNM-pw--dmicYoJ0_81bX_O_lzOKpZgscWtppJojH71Pg6PkQH4o-KcNy9eQKQ5Tb0jyUd6yAN_E_fQAB2JsWaoh-N5LdH_xss1_=w801-h584-s-no-gm?authuser=0",
         description: "El punto de partida perfecto para mantener tu vehículo limpio y protegido. Incluye nuestros productos esenciales.",
     },
 ];
@@ -44,56 +45,51 @@ const complementsData: Kit[] = [
 
 const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
     const isSpecial = kit.id === 'kit-vidrex-clarity';
-    const hasDetails = kit.includes && kit.includes.length > 0;
+    const hasLandingPage = kit.link && kit.link.startsWith('#/');
     const href = kit.link || '#contacto';
 
-    const Button = () => (
-        <div className={`mt-auto w-full text-center font-bold py-2 px-3 text-sm rounded-lg transition-all duration-300 active:scale-95 shadow-md ${isSpecial ? 'bg-green-600 text-white group-hover:bg-green-700' : 'bg-amber-500/80 text-white group-hover:bg-amber-500/100'}`}>
-            {isSpecial ? 'Ver Oferta Ahora' : 'Más Información'}
-        </div>
-    );
-
-    const cardContent = hasDetails ? (
-        <>
-            <img src={kit.image} alt={kit.name} className="w-full lg:w-1/3 h-32 sm:h-56 lg:h-auto object-contain p-4" />
-            <div className="p-3 sm:p-5 lg:p-6 flex flex-col">
-                <h3 className="text-base sm:text-xl font-bold text-amber-600">{kit.name}</h3>
-                {kit.price && <p className="text-sm sm:text-lg font-semibold text-gray-800 mt-1 mb-3">{kit.price}</p>}
-                <p className="text-sm text-gray-700 mb-3 sm:mb-4">{kit.description}</p>
-                <div className="flex-grow mb-4">
-                    <h4 className="font-semibold text-gray-800 mb-2">¿Qué Incluye el Kit?</h4>
-                    <ul className="space-y-2">
-                       {kit.includes?.map((item, index) => (
-                            <li key={index} className="flex items-start text-xs text-gray-700">
-                                <svg className="flex-shrink-0 h-5 w-5 text-green-500 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                                <span>{item}</span>
-                            </li>
-                       ))}
-                    </ul>
-                </div>
-                <Button />
-            </div>
-        </>
-    ) : (
-        <>
-            <div>
-                <img src={kit.image} alt={kit.name} className="w-full h-32 sm:h-48 object-contain p-3 group-hover:scale-110 transition-transform duration-500 ease-in-out" />
-            </div>
-            <div className="p-3 sm:p-4 flex flex-col flex-grow">
-              <h3 className={`text-sm sm:text-lg font-bold mb-2 ${isSpecial ? 'text-green-700' : 'text-gray-800'}`}>{kit.name}</h3>
-              <p className="text-gray-600 text-xs flex-grow mb-4">{kit.description}</p>
-              <Button />
-            </div>
-        </>
-    );
-
-    const cardClasses = hasDetails 
-        ? "col-span-1 lg:col-span-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 flex flex-col lg:flex-row group relative hover:z-10"
-        : `bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 flex flex-col group relative hover:z-10 ${isSpecial ? 'lg:col-span-1 border-2 border-green-500' : 'lg:col-span-1'}`;
-
     return (
-        <a href={href} className={cardClasses}>
-            {cardContent}
+        <a 
+            href={href} 
+            className={`
+                bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl 
+                transition-all duration-300 transform hover:scale-[1.02] 
+                flex flex-col sm:flex-row items-center group relative hover:z-10 
+                ${isSpecial ? 'border-2 border-green-500' : ''}
+            `}
+        >
+            {/* Image Section */}
+            <div className="w-full sm:w-1/3 p-4 flex-shrink-0">
+                <img src={kit.image} alt={kit.name} className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-110" />
+            </div>
+
+            {/* Content Section */}
+            <div className="p-4 sm:p-6 flex flex-col flex-grow">
+                <h3 className={`text-lg sm:text-xl font-bold ${isSpecial ? 'text-green-700' : 'text-amber-600'}`}>{kit.name}</h3>
+                {kit.price && <p className="text-base sm:text-lg font-semibold text-gray-800 mt-1 mb-3">{kit.price}</p>}
+                <p className="text-sm text-gray-700 mb-4 flex-grow">{kit.description}</p>
+                
+                {kit.includes && (
+                     <div className="flex-grow mb-4">
+                        <h4 className="font-semibold text-gray-800 mb-2">¿Qué Incluye el Kit?</h4>
+                        <ul className="space-y-2">
+                           {kit.includes.map((item, index) => (
+                                <li key={index} className="flex items-start text-sm text-gray-700">
+                                    <svg className="flex-shrink-0 h-5 w-5 text-green-500 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
+                                    <span>{item}</span>
+                                </li>
+                           ))}
+                        </ul>
+                    </div>
+                )}
+
+                {/* Action Button */}
+                <div className="mt-auto pt-4">
+                     <div className={`w-full sm:w-auto sm:max-w-xs text-center font-bold py-3 px-6 text-base rounded-lg transition-all duration-300 active:scale-95 shadow-md ${hasLandingPage ? 'bg-green-600 text-white group-hover:bg-green-700' : 'bg-amber-500/80 text-white group-hover:bg-amber-500/100'}`}>
+                        {isSpecial ? 'Ver Oferta Ahora' : hasLandingPage ? 'Ver Detalles del Kit' : 'Más Información'}
+                    </div>
+                </div>
+            </div>
         </a>
     );
 };
@@ -123,7 +119,7 @@ const Kits: React.FC = () => {
                             Soluciones completas y herramientas esenciales para llevar el cuidado de tu vehículo al siguiente nivel.
                         </p>
                     </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+                    <div className="flex flex-col gap-8">
                         {kitsData.map((kit) => <KitCard key={kit.id} kit={kit} />)}
                     </div>
 
