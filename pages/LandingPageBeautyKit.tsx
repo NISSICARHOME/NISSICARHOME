@@ -40,7 +40,7 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
           <img 
               src="https://lh3.googleusercontent.com/pw/AP1GczPOSFnFflE6hcsTtHPybBLPUfECVYU5rzmbCHYRlWK8KomBZvI4N_SVy_knMkpVVRf7lUQ7jdtf3I1thYkuVCyIlqyy1n1Ws34eahtILybAJVbqxTBWECpEFzjcbt8co6QbWA-7F9lKGZmXw26CK57k=w777-h798-s-no-gm?authuser=0"
               alt="Kit de Embellecimiento Profesional 6 en 1" 
-              className="w-full h-auto rounded-lg shadow-xl" 
+              className="w-full h-auto" 
           />
       </div>
       <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4">Kit de Embellecimiento Profesional 6 en 1</h1>
@@ -76,7 +76,6 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
 const LandingShowcase: React.FC = () => {
     const [offsetY, setOffsetY] = useState(0);
     const handleScroll = () => {
-      // Ensure this only runs client-side
       if (typeof window !== "undefined") {
         setOffsetY(window.scrollY * 0.2);
       }
@@ -86,12 +85,6 @@ const LandingShowcase: React.FC = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
-
-    const galleryImages = [
-        "https://lh3.googleusercontent.com/pw/AP1GczNSs4K4z7Muf8CJ8r97YPPxwdEt8v18SCeNjavCHFsFjRv4GxDJPB88me-dpcdn41MVMQm6AfXaKDAwyuJc5CMvz9IRl4FPDycp4k-zhkGv3CRm_W3SneIByCt3P07khKMOipuWliIdl-GXeovuPKxm=w991-h991-s-no-gm?authuser=0",
-        "https://lh3.googleusercontent.com/pw/AP1GczMmabIEIv6jmhwAV9na8wB11oZBRDiDn9H5VqPv_P68xn5ILqOBK8Q1dICAHP3HSgXfh-6xjy0RR6pbszay12-86gSnrE1C2gzXUShZavOAHytKboxJPHpPli35p_ysyGrRtp0lhtraVMT1H3rLfmW4=w1120-h928-s-no-gm?authuser=0",
-        "https://lh3.googleusercontent.com/pw/AP1GczMRCg5IJKtk0Nsk4b0AmCpXgVJpOVau_j0unuT34A-ERi-VlNEM3dlql6qUOX1pO5XmmetvFX4K-iDa856iwZ758OQknG71I8TYGVqtMFeksWj6FGuoQNLwejhN_-aa3K9oC74pvfb3pbibxZfKvAz1=w991-h991-s-no-gm?authuser=0"
-    ];
 
     return (
         <section className="relative h-[60vh] md:h-[80vh] flex flex-col items-center justify-center text-white text-center overflow-hidden">
@@ -106,14 +99,7 @@ const LandingShowcase: React.FC = () => {
             </div>
             <div className="relative z-10 p-8 max-w-4xl mx-auto bg-black/20 backdrop-blur-sm border border-white/20 rounded-2xl">
                 <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Un Acabado Que Habla Por Sí Mismo</h2>
-                <p className="text-lg md:text-xl mb-8">Observa la transformación y el nivel de detalle que puedes lograr.</p>
-                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4">
-                    {galleryImages.map((src, index) => (
-                        <div key={index} className="snap-center flex-shrink-0 w-64 h-40 md:w-80 md:h-52">
-                            <img src={src} alt={`Resultado ${index + 1}`} className="w-full h-full object-cover rounded-lg shadow-lg" />
-                        </div>
-                    ))}
-                </div>
+                <p className="text-lg md:text-xl">Observa la transformación y el nivel de detalle que puedes lograr.</p>
             </div>
         </section>
     );
@@ -216,12 +202,54 @@ interface LandingPageProps {
 }
 
 const LandingPageBeautyKit: React.FC<LandingPageProps> = ({ onBuyNow }) => {
+    
+    useEffect(() => {
+        const originalTitle = document.title;
+        const metaDescription = document.querySelector('meta[name="description"]');
+        const originalDescription = metaDescription ? metaDescription.getAttribute('content') : '';
+
+        const newTitle = "Kit de Embellecimiento Profesional 6 en 1 - Nissi Car Home";
+        const newDescription = "Todo lo que necesitas para restaurar, proteger y brillar tu vehículo como un profesional. ¡Resultados garantizados que deslumbran y duran!";
+        const imageUrl = "https://lh3.googleusercontent.com/pw/AP1GczNSs4K4z7Muf8CJ8r97YPPxwdEt8v18SCeNjavCHFsFjRv4GxDJPB88me-dpcdn41MVMQm6AfXaKDAwyuJc5CMvz9IRl4FPDycp4k-zhkGv3CRm_W3SneIByCt3P07khKMOipuWliIdl-GXeovuPKxm=w991-h991-s-no-gm?authuser=0";
+
+        document.title = newTitle;
+        if (metaDescription) {
+            metaDescription.setAttribute('content', newDescription);
+        }
+
+        const tagsToSet = {
+            'og:title': newTitle,
+            'og:description': newDescription,
+            'og:image': imageUrl,
+            'og:url': window.location.href,
+            'twitter:card': 'summary_large_image',
+        };
+
+        const addedTags: HTMLElement[] = [];
+
+        Object.entries(tagsToSet).forEach(([property, content]) => {
+            const tag = document.createElement('meta');
+            tag.setAttribute('property', property);
+            tag.setAttribute('content', content);
+            document.head.appendChild(tag);
+            addedTags.push(tag);
+        });
+
+        return () => {
+            document.title = originalTitle;
+            if (metaDescription && originalDescription) {
+                metaDescription.setAttribute('content', originalDescription);
+            }
+            addedTags.forEach(tag => document.head.removeChild(tag));
+        };
+    }, []);
+
     return (
         <div className="bg-white">
             <LandingHero onBuyNow={onBuyNow} />
+            <LandingVideo />
             <LandingWhatYouGet />
             <LandingShowcase />
-            <LandingVideo />
             <LandingSocialProofFAQ />
              <style>{`
                 @keyframes fade-out {

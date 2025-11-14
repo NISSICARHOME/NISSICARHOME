@@ -106,7 +106,7 @@ const ImageSlider: React.FC<{ beforeImage: string; afterImage: string }> = ({ be
 // --- PAGE SECTIONS ---
 
 const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNow }) => {
-  const defaultKit: CartItem = {id: 'kit-vidrex-clarity', name: "KIT ESTRELLA: Vidrex + Clarity", price: 50000, quantity: 1};
+  const defaultKit: CartItem = {id: 'kit-vidrex-clarity', name: "KIT ESTRELLA: Vidrex + Claridad", price: 50000, quantity: 1};
   const [copied, setCopied] = useState(false);
 
   const handleShare = () => {
@@ -369,6 +369,48 @@ interface LandingPageProps {
 }
 
 const LandingPageVidrexClarityWash: React.FC<LandingPageProps> = ({ onBuyNow }) => {
+    
+    useEffect(() => {
+        const originalTitle = document.title;
+        const metaDescription = document.querySelector('meta[name="description"]');
+        const originalDescription = metaDescription ? metaDescription.getAttribute('content') : '';
+
+        const newTitle = "Kit Estrella: Vidrex + Claridad - Nissi Car Home";
+        const newDescription = "La solución definitiva para desmanchar vidrios, eliminar sarro, lluvia ácida y devolver la vida a tu auto y hogar. ¡Resultados garantizados!";
+        const imageUrl = "https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0";
+
+        document.title = newTitle;
+        if (metaDescription) {
+            metaDescription.setAttribute('content', newDescription);
+        }
+
+        const tagsToSet = {
+            'og:title': newTitle,
+            'og:description': newDescription,
+            'og:image': imageUrl,
+            'og:url': window.location.href,
+            'twitter:card': 'summary_large_image',
+        };
+
+        const addedTags: HTMLElement[] = [];
+
+        Object.entries(tagsToSet).forEach(([property, content]) => {
+            const tag = document.createElement('meta');
+            tag.setAttribute('property', property);
+            tag.setAttribute('content', content);
+            document.head.appendChild(tag);
+            addedTags.push(tag);
+        });
+
+        return () => {
+            document.title = originalTitle;
+            if (metaDescription && originalDescription) {
+                metaDescription.setAttribute('content', originalDescription);
+            }
+            addedTags.forEach(tag => document.head.removeChild(tag));
+        };
+    }, []);
+    
     return (
         <div className="bg-white">
             <LandingHero onBuyNow={onBuyNow} />
