@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem } from '../types';
 
@@ -22,7 +22,7 @@ const ShareIcon: React.FC = () => (
 // --- PAGE SECTIONS ---
 
 const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNow }) => {
-  const beautyKit: CartItem = {id: 'kit-2', name: "Kit de Embellecimiento para tu Vehículo", price: 125000, quantity: 1};
+  const beautyKit: CartItem = {id: 'kit-2', name: "Kit de Embellecimiento Profesional 6 en 1", price: 125000, quantity: 1};
   const [copied, setCopied] = useState(false);
 
   const handleShare = () => {
@@ -38,13 +38,13 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
     <section id="oferta-embellecimiento" className="bg-white py-12 px-4 text-center">
       <div className="w-full max-w-2xl mx-auto mb-8">
           <img 
-              src="https://lh3.googleusercontent.com/pw/AP1GczMY47G5C1QfpxseWKtafJTKBxtMW7FzwcLr1hkzefpVRIWH9g45SMv9L9gc1bfIlS0JR4k2Jd7wBEX03hN7BmRHjFjjwreFEr0CHDpxV62-Fbd84Hth8LkrXy_gdHHSx3fo88RnFQDficvQM5jnsNEz=w620-h424-s-no-gm?authuser=0"
-              alt="Kit de Embellecimiento para tu Vehículo" 
+              src="https://lh3.googleusercontent.com/pw/AP1GczPOSFnFflE6hcsTtHPybBLPUfECVYU5rzmbCHYRlWK8KomBZvI4N_SVy_knMkpVVRf7lUQ7jdtf3I1thYkuVCyIlqyy1n1Ws34eahtILybAJVbqxTBWECpEFzjcbt8co6QbWA-7F9lKGZmXw26CK57k=w777-h798-s-no-gm?authuser=0"
+              alt="Kit de Embellecimiento Profesional 6 en 1" 
               className="w-full h-auto rounded-lg shadow-xl" 
           />
       </div>
-      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4">El Secreto de un Auto que Deslumbra</h1>
-      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Brillo, Protección y Renovación en un solo Kit. Dale a tu vehículo el tratamiento profesional que merece y haz que luzca como nuevo, ¡fácilmente y en casa!</p>
+      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4">Kit de Embellecimiento Profesional 6 en 1</h1>
+      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Todo lo que necesitas para restaurar, proteger y brillar tu vehículo como un profesional. ¡Resultados garantizados que deslumbran y duran!</p>
 
       <div className="max-w-md mx-auto flex items-center justify-center gap-4">
         <button
@@ -73,27 +73,74 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
   );
 };
 
+const LandingShowcase: React.FC = () => {
+    const [offsetY, setOffsetY] = useState(0);
+    const handleScroll = () => {
+      // Ensure this only runs client-side
+      if (typeof window !== "undefined") {
+        setOffsetY(window.scrollY * 0.2);
+      }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const galleryImages = [
+        "https://lh3.googleusercontent.com/pw/AP1GczNSs4K4z7Muf8CJ8r97YPPxwdEt8v18SCeNjavCHFsFjRv4GxDJPB88me-dpcdn41MVMQm6AfXaKDAwyuJc5CMvz9IRl4FPDycp4k-zhkGv3CRm_W3SneIByCt3P07khKMOipuWliIdl-GXeovuPKxm=w991-h991-s-no-gm?authuser=0",
+        "https://lh3.googleusercontent.com/pw/AP1GczMmabIEIv6jmhwAV9na8wB11oZBRDiDn9H5VqPv_P68xn5ILqOBK8Q1dICAHP3HSgXfh-6xjy0RR6pbszay12-86gSnrE1C2gzXUShZavOAHytKboxJPHpPli35p_ysyGrRtp0lhtraVMT1H3rLfmW4=w1120-h928-s-no-gm?authuser=0",
+        "https://lh3.googleusercontent.com/pw/AP1GczMRCg5IJKtk0Nsk4b0AmCpXgVJpOVau_j0unuT34A-ERi-VlNEM3dlql6qUOX1pO5XmmetvFX4K-iDa856iwZ758OQknG71I8TYGVqtMFeksWj6FGuoQNLwejhN_-aa3K9oC74pvfb3pbibxZfKvAz1=w991-h991-s-no-gm?authuser=0"
+    ];
+
+    return (
+        <section className="relative h-[60vh] md:h-[80vh] flex flex-col items-center justify-center text-white text-center overflow-hidden">
+            <div className="absolute inset-0 z-0">
+                <img
+                    src="https://lh3.googleusercontent.com/pw/AP1GczMRCg5IJKtk0Nsk4b0AmCpXgVJpOVau_j0unuT34A-ERi-VlNEM3dlql6qUOX1pO5XmmetvFX4K-iDa856iwZ758OQknG71I8TYGVqtMFeksWj6FGuoQNLwejhN_-aa3K9oC74pvfb3pbibxZfKvAz1=w991-h991-s-no-gm?authuser=0"
+                    alt="Vehículo detallado profesionalmente"
+                    className="absolute top-0 left-0 w-full min-h-[120vh] object-cover"
+                    style={{ transform: `translateY(${offsetY}px)` }}
+                />
+                <div className="absolute inset-0 bg-black opacity-60"></div>
+            </div>
+            <div className="relative z-10 p-8 max-w-4xl mx-auto bg-black/20 backdrop-blur-sm border border-white/20 rounded-2xl">
+                <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Un Acabado Que Habla Por Sí Mismo</h2>
+                <p className="text-lg md:text-xl mb-8">Observa la transformación y el nivel de detalle que puedes lograr.</p>
+                <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-4">
+                    {galleryImages.map((src, index) => (
+                        <div key={index} className="snap-center flex-shrink-0 w-64 h-40 md:w-80 md:h-52">
+                            <img src={src} alt={`Resultado ${index + 1}`} className="w-full h-full object-cover rounded-lg shadow-lg" />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+    );
+}
+
+
 const LandingWhatYouGet: React.FC = () => {
     const kitItems = [
-        { name: '1 Cera Hyper Diamond', content: '(220 gr) Con Carnauba y nanotecnología para un brillo profundo y protección duradera contra el sol y la lluvia.', image: 'https://lh3.googleusercontent.com/pw/AP1GczN-zXHr14d1RfpvNWQ9Zn6Y1vdjBlCgnsiDyT57kpTfA81-h5eZtRvzJmEPvxDcbGw5IBYvDqMEhlwuq7W6VpM7E-z3xtq6QOjAZN0tYTtQtIoGklEpD9Iufe8YT9ajvLN7jX8LUHoewgAhTKf64xRX=w1040-h800-s-no-gm?authuser=0' },
-        { name: '1 Brillo Protector Perfect Llantix', content: '(250 ml) No solo da un acabado negro intenso y brillante a tus llantas, sino que las hidrata y protege del agrietamiento.', image: 'https://lh3.googleusercontent.com/pw/AP1GczOjiJJeZc6HIutbfWKJGXISSyYp6uFOXne3E4Bxw8mZijJQzpOBRpjiyvtjQi4tw0SZ2Bg6aT5bjQ559BIZ4UO1DXvcZMjqXGHDQaAsGvyDdphGMwjNdb8QM0AKlue18DUnkhu6IjMw6Z9q3H5BVFW0=w1080-h800-s-no-gm?authuser=0' },
-        { name: '1 Ultra Restorer de Partes Negras', content: '(120 ml) ¡OBSEQUIO ESPECIAL! Devuelve la vida y el color original a los plásticos y vinilos exteriores quemados por el sol.', image: 'https://lh3.googleusercontent.com/pw/AP1GczN4wvAxjKsz_jeB8jpHUVAbL7aeEqGSpXjqjbWbyapjHRzrU54da2aT8lFBEtDIvAfP4Hj7TL8MMkdNivvoS5L0M6CzftY_g8nwRtX6fPBm6arqinMCSNrYQQcWxiAkCKR5zD60S_HNhq7iCLfBNumL=w1080-h800-s-no-gm?authuser=0' },
-        { name: '2 Aplicadores de Espuma', content: 'GRATIS. La herramienta perfecta para aplicar la cera y el restaurador de manera uniforme y sin desperdiciar producto.', image: 'https://lh3.googleusercontent.com/pw/AP1GczMQ4EUxiH3Ndfgs385HG6O8xSn6tRe-hKzmI2RX2bfziUZzV8TqTzEF66DO7c7FINzqGNj2Wx3_0o6NghBXnC8Dad4V81LJDDqU3n5vrv01KuPR8Lyn4jgayBDxS21B9l28P6ozJt6UZ2skGHKMhLkZ=w500-h717-s-no-gm?authuser=0' }
+        { name: '1. Hyper Diamond', content: "Cera con Carnauba y polímeros para brillar, proteger y 'diamantizar' la pintura. Crea una capa hidrofóbica que dura de 3 a 6 meses.", image: 'https://lh3.googleusercontent.com/pw/AP1GczP57aUodBhc7K7ZflHRVRKqTB9ExPi8JVngHqqJThksSH8zT7LTQD8k80pq435B6J5MRwOVBbN-ASnyjIuIrPzH8aDo2E2I4IRVI-EETt1Annaav3xd5c2Meneiq7_NR7oJSfqjTqTXWOuMzcfEQ0Xz=w193-h702-s-no-gm?authuser=0' },
+        { name: '2. Ultra Restorer', content: "Restaura plásticos, caucho y cuero de cualquier color. Hidrata, devuelve el color y protege contra el sol y la lluvia con un potente efecto hidrofóbico.", image: 'https://lh3.googleusercontent.com/pw/AP1GczNzWe3SNPTGDhI1ITWJrY9XcI0YEzB5ibmX0yBwQZ5VGA_IE70mUL8Up595CNMsW5W4sB88HP8NdhYSB6yiFEJBJHD_EnmFC9xa6SNvRaS8LOD7loiX8V4W4uRZ8PfVY-opmLWTv6Gbn8nNjreGDGOK=w167-h659-s-no-gm?authuser=0' },
+        { name: '3. Perfect Llantix', content: "Hidrata profundamente las llantas, dándoles una apariencia nueva y brillante. Evita el desgaste y cuarteamiento. Duración de 15 a 20 días. (250ml)", image: 'https://lh3.googleusercontent.com/pw/AP1GczOjiJJeZc6HIutbfWKJGXISSyYp6uFOXne3E4Bxw8mZijJQzpOBRpjiyvtjQi4tw0SZ2Bg6aT5bjQ559BIZ4UO1DXvcZMjqXGHDQaAsGvyDdphGMwjNdb8QM0AKlue18DUnkhu6IjMw6Z9q3H5BVFW0=w1080-h800-s-no-gm?authuser=0' },
+        { name: '4. Shampoo pH Neutro', content: "Lava la carrocería sin dañar la pintura. Su fórmula multiusos también quita manchas de la cojinería y el techo, y deja una capa que repele el polvo.", image: 'https://lh3.googleusercontent.com/pw/AP1GczOoQ2FzQzw_XT_wjt3OwSHwF7eKa7UU9JvuVHye01TYVTOIoC5souIqz7GOZ685LZ5qEnFVdveH7TvsX6erA6EkdHQex7x08fe1RCkUnVsRtQiMpv09PT3_TBP1aPYyV9K1FHhg54gjSjUFQUbdkB0i=w207-h560-s-no-gm?authuser=0' },
+        { name: '5. Aplicadores de Espuma (x2)', content: "GRATIS. Espuma blanda diseñada para esparcir los productos de manera uniforme y segura, sin rayar ninguna superficie.", image: 'https://lh3.googleusercontent.com/pw/AP1GczPnlvdqEOaMSPmluNpiZJ6bire1z001a4V6bNTg-wbKKZXj2BcDJrB5f5lkJ9P_ra2V8xL8NMzxMkV6ag09MMTv29CtAQoLoG3DtutAXc1u8HtnRzXrtEOAZH963OstZ-5lrSuTj2GkCVmFwyaX61sw=w466-h366-s-no-gm?authuser=0' },
+        { name: '6. Toalla de Microfibra Profesional', content: "GRATIS. Toalla (80% algodón, 20% poliéster) ultra suave para dar el acabado final y lograr un brillo deslumbrante.", image: 'https://lh3.googleusercontent.com/pw/AP1GczPFl5r7A_X0sLUaQeHpmlYuOMSd699hRkGR1yjovzriJaTjm0ioFvft9aa_vEFi4lDLbddyEXrtF9Fab_X1c_pu0tvLBgD-oSHnmQXGYv3fLSNPBpxgDZ1mNPliGakCFXNFbuC0D1gtqrLnYxsShp2T=w748-h404-s-no-gm?authuser=0' }
     ];
 
     return (
         <section className="bg-gray-50 py-16 px-4">
-            <div className="max-w-5xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-4">Todo lo que Recibes para Transformar tu Vehículo</h2>
-                <p className="text-center text-xl text-gray-600 mb-12">Un arsenal completo para detallado profesional por un precio increíble: <strong>$125.000 COP</strong></p>
-                <div className="grid md:grid-cols-2 gap-8">
+            <div className="max-w-6xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-4">Un Arsenal Completo Para un Detallado de Lujo</h2>
+                <p className="text-center text-xl text-gray-600 mb-12">Cada fórmula ha sido diseñada para un propósito específico, garantizando resultados superiores.</p>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {kitItems.map(item => (
-                        <div key={item.name} className="flex items-start gap-4 bg-white p-4 rounded-lg shadow-md">
-                            <img src={item.image} alt={item.name} className="w-24 h-24 object-contain flex-shrink-0" />
-                            <div>
-                                <h3 className="text-xl font-bold text-amber-600">{item.name}</h3>
-                                <p className="text-gray-700">{item.content}</p>
-                            </div>
+                        <div key={item.name} className="flex flex-col items-center text-center bg-white p-6 rounded-lg shadow-md h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
+                            <img src={item.image} alt={item.name} className="h-40 object-contain mb-4" />
+                            <h3 className="text-xl font-bold text-amber-600 flex-grow">{item.name}</h3>
+                            <p className="text-gray-700">{item.content}</p>
                         </div>
                     ))}
                 </div>
@@ -102,44 +149,33 @@ const LandingWhatYouGet: React.FC = () => {
     );
 };
 
-const LandingHowToApply: React.FC = () => {
+const LandingVideo: React.FC = () => {
     return (
         <section className="bg-white py-16 px-4">
-            <div className="max-w-6xl mx-auto">
-                 <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Resultados Profesionales en 3 Simples Pasos</h2>
-                 <div className="grid sm:grid-cols-1 lg:grid-cols-3 gap-8">
-                    {[
-                        {num: 1, title: 'RESTAURA Y PROTEGE PLÁSTICOS', product: 'Ultra Restorer', desc: 'Con la superficie limpia y seca, aplica el restaurador con una espuma sobre las partes negras o grises. Verás cómo recuperan su color al instante.', img: 'https://lh3.googleusercontent.com/pw/AP1GczN4wvAxjKsz_jeB8jpHUVAbL7aeEqGSpXjqjbWbyapjHRzrU54da2aT8lFBEtDIvAfP4Hj7TL8MMkdNivvoS5L0M6CzftY_g8nwRtX6fPBm6arqinMCSNrYQQcWxiAkCKR5zD60S_HNhq7iCLfBNumL=w1080-h800-s-no-gm?authuser=0'},
-                        {num: 2, title: 'APLICA LA CERA Y SACA BRILLO', product: 'Cera Hyper Diamond', desc: 'Esparce una capa fina de cera sobre la pintura con el aplicador. Déjala secar unos minutos hasta que se vea opaca y luego retírala con una toalla de microfibra limpia para revelar un brillo espectacular.', img: 'https://lh3.googleusercontent.com/pw/AP1GczN-zXHr14d1RfpvNWQ9Zn6Y1vdjBlCgnsiDyT57kpTfA81-h5eZtRvzJmEPvxDcbGw5IBYvDqMEhlwuq7W6VpM7E-z3xtq6QOjAZN0tYTtQtIoGklEpD9Iufe8YT9ajvLN7jX8LUHoewgAhTKf64xRX=w1040-h800-s-no-gm?authuser=0'},
-                        {num: 3, title: 'ACABADO PERFECTO EN LLANTAS', product: 'Perfect Llantix', desc: 'Asegúrate de que las llantas estén limpias. Aplica Llantix con una espuma para un acabado negro, brillante y protegido que dura por días.', img: 'https://lh3.googleusercontent.com/pw/AP1GczOjiJJeZc6HIutbfWKJGXISSyYp6uFOXne3E4Bxw8mZijJQzpOBRpjiyvtjQi4tw0SZ2Bg6aT5bjQ559BIZ4UO1DXvcZMjqXGHDQaAsGvyDdphGMwjNdb8QM0AKlue18DUnkhu6IjMw6Z9q3H5BVFW0=w1080-h800-s-no-gm?authuser=0'},
-                    ].map(step => (
-                         <div key={step.num} className="text-center p-4 border rounded-lg shadow-sm">
-                             <div className="relative mb-4 h-56 flex items-center justify-center">
-                                <img src={step.img} alt={step.title} className="max-h-full max-w-full object-contain"/>
-                                <div className="absolute top-0 left-0 bg-amber-500 text-white rounded-full w-10 h-10 flex items-center justify-center text-2xl font-bold">{step.num}</div>
-                             </div>
-                             <h3 className="text-xl font-bold text-gray-800">{step.title}</h3>
-                             <p className="text-gray-500 font-semibold mb-2">{step.product}</p>
-                             <p className="text-gray-600">{step.desc}</p>
-                         </div>
-                    ))}
-                 </div>
-                 <div className="text-center mt-12">
-                     <a href="#oferta-embellecimiento" className="inline-block bg-green-600 text-white font-bold text-xl py-4 px-8 rounded-lg shadow-lg hover:bg-green-700 transition-all transform hover:scale-105">
-                        ¡Sí, Quiero Mi Kit Ahora!
-                    </a>
-                 </div>
+            <div className="max-w-4xl mx-auto text-center">
+                 <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-8">Míralo en Acción</h2>
+                 <div className="aspect-video w-full rounded-lg shadow-lg overflow-hidden border-4 border-gray-200">
+                    <iframe
+                        className="w-full h-full"
+                        src="https://www.youtube.com/embed/vk3W73Pnan0?si=A6kWy7eGKIG4yxHa"
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen>
+                    </iframe>
+                </div>
             </div>
         </section>
     );
 };
 
+
 const faqBeautyKitData = [
-    { question: "¿La Cera Hyper Diamond es difícil de aplicar?", answer: "¡Para nada! Es una cera de tipo 'paste wax' muy amigable. Se aplica fácilmente con la espuma incluida y se retira sin esfuerzo con una microfibra, dejando un acabado liso y sin residuos." },
-    { question: "¿Cuánto tiempo dura el brillo de Perfect Llantix?", answer: "El brillo intenso puede durar varios días, dependiendo de las condiciones climáticas. Lo más importante es que deja una capa protectora que hidrata el caucho, previniendo que se reseque, incluso después de que el brillo disminuya." },
-    { question: "¿El Ultra Restorer deja una sensación grasosa o pegajosa?", answer: "No. Nuestra fórmula está diseñada para ser absorbida por el plástico, restaurando el color desde adentro. Deja un acabado seco al tacto, satinado y no atrae el polvo." },
-    { question: "¿Puedo usar el Ultra Restorer en plásticos interiores?", answer: "Aunque está formulado principalmente para plásticos exteriores por su alta protección UV, puedes usarlo en partes interiores como el tablero o paneles de las puertas. Recomendamos aplicar una capa muy fina y retirar cualquier exceso." },
-    { question: "¿Este kit es suficiente para un detallado completo?", answer: "Este kit cubre tres de las áreas más importantes del embellecimiento: pintura, plásticos y llantas. Es el 'toque final' perfecto. Para la limpieza previa, te recomendamos nuestro Shampoo PH Neutro." },
+    { question: "¿Qué productos incluye el nuevo Kit de Embellecimiento Profesional?", answer: "El kit incluye 6 componentes: Cera Hyper Diamond, Ultra Restorer de plásticos, Perfect Llantix, Shampoo pH Neutro, y como obsequio, dos aplicadores de espuma y una toalla de microfibra profesional." },
+    { question: "¿Cuánto dura la protección de la cera Hyper Diamond?", answer: "Gracias a su fórmula con Carnauba y polímeros, la protección hidrofóbica (que repele el agua) y el brillo pueden durar entre 3 y 6 meses, dependiendo de las condiciones de uso y clima." },
+    { question: "El Ultra Restorer, ¿sirve para plásticos de colores o solo negros?", answer: "Sirve para cualquier color de plástico, caucho, cuero o cuero sintético. Su función es hidratar y devolver el color original, por lo que es efectivo en una amplia gama de superficies." },
+    { question: "¿El Shampoo es solo para la carrocería?", answer: "No, es un producto multiusos. Su principal función es lavar la carrocería de forma segura gracias a su pH neutro, pero también es muy eficaz para quitar manchas en la cojinería y el techo del vehículo." },
+    { question: "Los aplicadores y la toalla, ¿son de buena calidad?", answer: "Absolutamente. Son herramientas de grado profesional. Las espumas están diseñadas para no rayar y aplicar el producto de forma uniforme, y la toalla de microfibra tiene la suavidad y composición ideal (80% algodón, 20% poliéster) para un acabado perfecto." },
 ];
 
 const LandingSocialProofFAQ: React.FC = () => (
@@ -151,7 +187,7 @@ const LandingSocialProofFAQ: React.FC = () => (
                      {name: "Juan David G.", city: "Pereira", quote: "¡Mi carro parece otro! La cera le dio un brillo increíble y el restaurador de plásticos es simplemente mágico. Volvió negras unas partes que llevaban años grises."},
                      {name: "Sofia L.", city: "Cali", quote: "Excelente relación calidad-precio. Con este kit tengo todo lo que necesito para dejar mi camioneta como nueva el fin de semana. ¡Y el envío fue rapidísimo!"},
                      {name: "Miguel Ángel R.", city: "Medellín", quote: "Compré el kit sin muchas expectativas y me sorprendió. Los productos son muy fáciles de usar y los resultados son de nivel profesional. Lo recomiendo totalmente."},
-                     {name: "Carolina V.", city: "Bogotá", quote: "Me encantó el obsequio del Ultra Restorer. Lo usé en los bumpers y espejos y el cambio fue brutal. El kit completo vale cada peso."},
+                     {name: "Carolina V.", city: "Bogotá", quote: "Me encantó el detalle de los aplicadores y la toalla. Se nota que piensan en todo. El shampoo quita las manchas de la cojinería súper fácil."},
                  ].map(testimonial => (
                     <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
                         <div className="flex text-yellow-400 mb-2">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
@@ -184,7 +220,8 @@ const LandingPageBeautyKit: React.FC<LandingPageProps> = ({ onBuyNow }) => {
         <div className="bg-white">
             <LandingHero onBuyNow={onBuyNow} />
             <LandingWhatYouGet />
-            <LandingHowToApply />
+            <LandingShowcase />
+            <LandingVideo />
             <LandingSocialProofFAQ />
              <style>{`
                 @keyframes fade-out {
@@ -194,6 +231,13 @@ const LandingPageBeautyKit: React.FC<LandingPageProps> = ({ onBuyNow }) => {
                 }
                 .animate-fade-out {
                     animation: fade-out 2s ease-in-out forwards;
+                }
+                .scrollbar-hide::-webkit-scrollbar {
+                    display: none;
+                }
+                .scrollbar-hide {
+                    -ms-overflow-style: none;
+                    scrollbar-width: none;
                 }
             `}</style>
         </div>
