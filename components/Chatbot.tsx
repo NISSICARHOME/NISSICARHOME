@@ -35,6 +35,10 @@ interface Message {
 interface ChatbotProps {
     allProducts: Product[];
     onProductSelect: (product: Product) => void;
+    isOpen: boolean;
+    setIsOpen: (isOpen: boolean) => void;
+    startListening: boolean;
+    onListeningEnd: () => void;
 }
 
 
@@ -79,8 +83,7 @@ const ContactLink: React.FC<{ type: 'WhatsApp' | 'Location' }> = ({ type }) => {
 
 // --- MAIN CHATBOT COMPONENT ---
 
-const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen, setIsOpen, startListening, onListeningEnd }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [chat, setChat] = useState<Chat | null>(null);
@@ -147,15 +150,28 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect }) => {
     };
   }, []);
 
-  const toggleListen = () => {
+  const toggleListen = useCallback(() => {
     if (isListening) {
         recognitionRef.current?.stop();
+        setIsListening(false);
     } else {
-        recognitionRef.current?.start();
-        setInputValue('');
+        if (recognitionRef.current) {
+            setInputValue('');
+            recognitionRef.current.start();
+            setIsListening(true);
+        }
     }
-    setIsListening(!isListening);
-  };
+  }, [isListening]);
+
+  useEffect(() => {
+    // This effect handles the external trigger from the header
+    if (isOpen && startListening && !isListening) {
+      if (recognitionRef.current) {
+        toggleListen();
+      }
+      onListeningEnd(); // Reset the trigger in App.tsx
+    }
+  }, [isOpen, startListening, isListening, onListeningEnd, toggleListen]);
 
 
   // --- Core Chat Logic ---
@@ -168,15 +184,17 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect }) => {
                 config: { systemInstruction: systemInstruction },
             });
             setChat(chatInstance);
-            const welcomeMsg = '¡Hola! Soy NissiBot, tu asistente virtual. ¿Cómo puedo ayudarte hoy?';
-            setMessages([{ sender: 'bot', text: welcomeMsg }]);
-            speak(welcomeMsg);
+            if (messages.length === 0) {
+                const welcomeMsg = '¡Hola! Soy NissiBot, tu asistente virtual. ¿Cómo puedo ayudarte hoy?';
+                setMessages([{ sender: 'bot', text: welcomeMsg }]);
+                speak(welcomeMsg);
+            }
         } catch (error) {
             console.error("Error initializing Gemini:", error);
             setMessages([{ sender: 'bot', text: 'Lo siento, no puedo conectarme en este momento. Por favor, inténtalo más tarde.' }]);
         }
     }
-  }, [isOpen, chat, speak]);
+  }, [isOpen, chat, speak, messages.length]);
   
   useEffect(() => {
     if (chatContainerRef.current) {

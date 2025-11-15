@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { Product } from '../types';
+import React, { useState, useEffect } from 'react';
 
 const Logo = () => (
     <img 
@@ -19,6 +18,12 @@ const ShoppingCartIcon: React.FC = () => (
   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
 );
 
+const MicIcon: React.FC<{ className?: string }> = ({ className }) => (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.49 6-3.31 6-6.72h-1.7z" />
+    </svg>
+);
+
 const CloseIcon: React.FC<{ className?: string }> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -26,65 +31,16 @@ const CloseIcon: React.FC<{ className?: string }> = ({ className }) => (
 );
 
 
-interface SearchResultsProps {
-    searchTerm: string;
-    products: Product[];
-    onSelect: (product: Product) => void;
-}
-
-const SearchResults: React.FC<SearchResultsProps> = ({ searchTerm, products, onSelect }) => {
-    const filteredProducts = useMemo(() => {
-        if (!searchTerm) return [];
-        return products.filter(p => p.name.toLowerCase().includes(searchTerm.toLowerCase()));
-    }, [searchTerm, products]);
-
-    if (filteredProducts.length === 0) {
-        return (
-            <div className="absolute top-full mt-2 w-full bg-white/80 backdrop-blur-lg border border-white/50 rounded-lg shadow-lg p-4 text-center text-gray-600 z-20">
-                No se encontraron productos.
-            </div>
-        );
-    }
-    
-    return (
-        <div className="absolute top-full mt-2 w-full bg-white/80 backdrop-blur-lg border border-white/50 rounded-lg shadow-lg max-h-80 overflow-y-auto z-20">
-            <ul className="divide-y divide-white/30">
-                {filteredProducts.map(product => (
-                    <li key={product.id}>
-                        <button 
-                            onClick={() => onSelect(product)}
-                            className="w-full flex items-center gap-4 p-3 text-left hover:bg-white/50 transition-colors"
-                        >
-                            <img src={product.image} alt={product.name} className="w-12 h-12 object-contain flex-shrink-0 rounded-md bg-white p-1" />
-                            <div className="flex-grow">
-                                <p className="font-semibold text-sm text-gray-800">{product.name}</p>
-                                <p className="text-xs text-amber-700 font-bold">${product.price.toLocaleString('es-CO')}</p>
-                            </div>
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-};
-
-
 interface HeaderProps {
     cartItemCount: number;
     onCartClick: () => void;
-    searchTerm: string;
-    onSearchChange: (term: string) => void;
-    allProducts: Product[];
-    onProductSelect: (product: Product) => void;
+    onVoiceSearchStart: () => void;
 }
 
-const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, searchTerm, onSearchChange, allProducts, onProductSelect }) => {
+const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSearchStart }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const [isSearchFocused, setSearchFocused] = useState(false);
-  const desktopSearchRef = useRef<HTMLDivElement>(null);
-  const mobileSearchRef = useRef<HTMLDivElement>(null);
 
 
   const navItems = [
@@ -122,27 +78,6 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, searchTerm,
     }
   }, [lastScrollY]);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-        const isClickInsideDesktop = desktopSearchRef.current && desktopSearchRef.current.contains(event.target as Node);
-        const isClickInsideMobile = mobileSearchRef.current && mobileSearchRef.current.contains(event.target as Node);
-
-        if (!isClickInsideDesktop && !isClickInsideMobile) {
-            setSearchFocused(false);
-        }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-        document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const handleProductSelectFromSearch = (product: Product) => {
-    onProductSelect(product);
-    onSearchChange(''); // Clear search term
-    setSearchFocused(false); // Hide results
-    setIsOpen(false); // Close mobile menu if open
-  };
 
   return (
     <header className={`bg-white/20 backdrop-blur-md sticky top-0 z-40 border-b border-white/30 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
@@ -151,26 +86,13 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, searchTerm,
           <Logo />
         </a>
         <div className="flex items-center md:order-2 space-x-1 md:space-x-3">
-            <div 
-              ref={desktopSearchRef}
-              className="relative hidden md:block"
+            <button 
+                onClick={onVoiceSearchStart} 
+                className="p-2 text-gray-600 rounded-lg hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+                aria-label="Buscar por voz"
             >
-                <input
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => onSearchChange(e.target.value)}
-                    onFocus={() => setSearchFocused(true)}
-                    placeholder="Buscar productos..."
-                    className="w-full p-2 pl-4 pr-4 rounded-lg bg-white/30 border border-white/40 focus:outline-none focus:ring-2 focus:ring-amber-400 transition-all duration-300 sm:w-64"
-                />
-                {(isSearchFocused && searchTerm) && (
-                    <SearchResults 
-                        searchTerm={searchTerm}
-                        products={allProducts}
-                        onSelect={handleProductSelectFromSearch}
-                    />
-                )}
-            </div>
+                <MicIcon className="w-6 h-6" />
+            </button>
             <button 
               onClick={onCartClick} 
               className="relative p-2 text-gray-600 rounded-lg hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
@@ -227,23 +149,17 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, searchTerm,
             </div>
             
             <div className="p-4">
-                <div ref={mobileSearchRef} className="relative mb-6">
-                    <input
-                        type="text"
-                        value={searchTerm}
-                        onChange={(e) => onSearchChange(e.target.value)}
-                        onFocus={() => setSearchFocused(true)}
-                        placeholder="Buscar productos..."
-                        className="w-full p-3 pl-4 pr-4 rounded-lg bg-white/50 border border-white/40 focus:outline-none focus:ring-2 focus:ring-amber-400 transition-all duration-300"
-                    />
-                    {(isSearchFocused && searchTerm) && (
-                        <SearchResults 
-                            searchTerm={searchTerm}
-                            products={allProducts}
-                            onSelect={handleProductSelectFromSearch}
-                        />
-                    )}
-                </div>
+                <button 
+                    onClick={() => {
+                        onVoiceSearchStart();
+                        handleLinkClick(); // Close menu after activating
+                    }} 
+                    className="w-full flex items-center justify-center gap-3 p-3 mb-4 rounded-lg bg-white/50 hover:bg-white/70 transition-colors shadow-sm active:scale-95"
+                    aria-label="Iniciar búsqueda por voz"
+                >
+                    <MicIcon className="w-6 h-6 text-gray-700" />
+                    <span className="font-semibold text-gray-800">Búsqueda por Voz</span>
+                </button>
 
                 <ul className="flex flex-col">
                     {navItems.map(item => (

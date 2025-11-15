@@ -34,6 +34,9 @@ const App: React.FC = () => {
     sortOrder: 'default'
   });
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [isChatbotOpen, setChatbotOpen] = useState(false);
+  const [startChatbotListening, setStartChatbotListening] = useState(false);
+
 
   const allProducts = useMemo(() => getAllProducts(), []);
 
@@ -145,6 +148,11 @@ const App: React.FC = () => {
     setCheckoutVisible(true);
   };
 
+  const handleVoiceSearchStart = () => {
+    setChatbotOpen(true);
+    setStartChatbotListening(true);
+  };
+
   const totalItems = useMemo(() => cart.reduce((sum, item) => sum + item.quantity, 0), [cart]);
 
   const renderPage = () => {
@@ -185,10 +193,7 @@ const App: React.FC = () => {
           <Header 
             cartItemCount={totalItems} 
             onCartClick={() => setCheckoutVisible(true)}
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            allProducts={allProducts}
-            onProductSelect={setSelectedProduct}
+            onVoiceSearchStart={handleVoiceSearchStart}
           />
         )}
         {renderPage()}
@@ -198,8 +203,12 @@ const App: React.FC = () => {
       </div>
 
       <Chatbot 
+        isOpen={isChatbotOpen}
+        setIsOpen={setChatbotOpen}
         allProducts={allProducts}
         onProductSelect={setSelectedProduct}
+        startListening={startChatbotListening}
+        onListeningEnd={() => setStartChatbotListening(false)}
       />
 
       {isCheckoutVisible && 
