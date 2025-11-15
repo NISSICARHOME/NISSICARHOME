@@ -5,16 +5,25 @@ import { Product } from '../types';
 
 const products = getAllProducts();
 
-const productsString = products.map((p: Product) => `
-ID: ${p.id}
-Nombre: ${p.name}
-Precio: ${p.price} COP
-Descripción Corta: ${p.shortDesc}
-Categoría: ${p.category}
-Detalles: ${p.details.description}
-Modo de Uso: ${p.details.howToUse}
----
-`).join('\n');
+const productsString = products.map((p: Product) => {
+    const details = [
+        `ID: ${p.id}`,
+        `Nombre: ${p.name}`,
+        `Precio: ${p.price} COP`,
+        `Descripción Corta: ${p.shortDesc}`,
+        `Categoría: ${p.category}`,
+        p.details.content && `Contenido: ${p.details.content}`,
+        p.details.features && `Características: ${p.details.features.join(', ')}`,
+        p.details.surfaces && `Superficies de Aplicación: ${p.details.surfaces.join(', ')}`,
+        `Descripción Detallada: ${p.details.description}`,
+        `Modo de Uso: ${p.details.howToUse}`,
+        `Precauciones: ${p.details.precautions}`,
+        `Composición: ${p.details.composition}`,
+        p.details.barcode && `Código de Barras: ${p.details.barcode}`,
+    ];
+    return details.filter(Boolean).join('\n');
+}).join('\n---\n');
+
 
 const faqString = faqData.map(item => `P: ${item.question}\nR: ${item.answer}`).join('\n\n');
 const policiesString = policiesData.map(item => `Política: ${item.title}\nContenido: ${item.content}`).join('\n\n');

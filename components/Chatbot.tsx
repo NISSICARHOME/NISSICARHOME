@@ -202,16 +202,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
     }
   }, [messages]);
 
-
-  const handleSendMessage = useCallback(async (messageText: string) => {
-    if (!messageText.trim() || isLoading || !chat) return;
-
-    setInputValue('');
-    if (autoSendTimer.current) clearTimeout(autoSendTimer.current);
-
-    setMessages(prev => [...prev, { sender: 'user', text: messageText }]);
+  const getBotResponse = useCallback(async (messageText: string) => {
     setIsLoading(true);
-
     try {
         const response = await chat.sendMessage({ message: messageText });
         const botResponse = response.text;
@@ -225,21 +217,42 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
     } finally {
         setIsLoading(false);
     }
-  }, [isLoading, chat, speak]);
+  }, [chat, speak]);
+
+  const handleSendMessage = (messageText: string) => {
+      if (!messageText.trim() || isLoading || !chat) return;
+      
+      if (autoSendTimer.current) {
+          clearTimeout(autoSendTimer.current);
+          autoSendTimer.current = null;
+      }
+      
+      setMessages(prev => [...prev, { sender: 'user', text: messageText }]);
+      getBotResponse(messageText);
+  };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSendMessage(inputValue);
+    const currentMessage = inputValue.trim();
+    if (currentMessage) {
+      handleSendMessage(currentMessage);
+      setInputValue('');
+    }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setInputValue(value);
     
-    if (autoSendTimer.current) clearTimeout(autoSendTimer.current);
+    if (autoSendTimer.current) {
+        clearTimeout(autoSendTimer.current);
+        autoSendTimer.current = null;
+    }
+    
     if (value.trim() !== '') {
         autoSendTimer.current = window.setTimeout(() => {
             handleSendMessage(value);
+            setInputValue('');
         }, 4000);
     }
   };

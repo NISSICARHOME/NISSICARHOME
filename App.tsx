@@ -34,6 +34,7 @@ const App: React.FC = () => {
     sortOrder: 'default'
   });
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [productToReveal, setProductToReveal] = useState<Product | null>(null);
   const [isChatbotOpen, setChatbotOpen] = useState(false);
   const [startChatbotListening, setStartChatbotListening] = useState(false);
 
@@ -124,6 +125,24 @@ const App: React.FC = () => {
       body.style.overflow = 'auto';
     };
   }, [isCheckoutVisible, selectedProduct]);
+  
+  // This effect will trigger after a navigation to reveal a product from the chatbot
+  useEffect(() => {
+    if (productToReveal && route === '/') {
+      setSelectedProduct(productToReveal);
+      
+      setTimeout(() => {
+        const element = document.getElementById(`product-card-${productToReveal.id}`);
+        if (element) {
+          const header = document.querySelector('header');
+          const headerHeight = header ? header.offsetHeight : 0;
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+          window.scrollTo({ top: elementPosition, behavior: 'smooth' });
+        }
+        setProductToReveal(null); // Reset
+      }, 100); // Small delay for DOM to update
+    }
+  }, [productToReveal, route]);
 
   const addToCart = (itemToAdd: CartItem) => {
     setCart(currentCart => {
@@ -152,6 +171,27 @@ const App: React.FC = () => {
     setChatbotOpen(true);
     setStartChatbotListening(true);
   };
+  
+  const isLandingPage = route === '/kit-vidrex-clarity-wash' || route === '/kit-embellecimiento';
+
+  const handleProductSelect = (product: Product) => {
+    if (isLandingPage) {
+      // If on a landing page, navigate to home and let the useEffect handle the reveal
+      setProductToReveal(product);
+      window.history.pushState({}, '', '#/');
+      setRoute(getRoute());
+    } else {
+      // Already on the main page, just show and scroll
+      setSelectedProduct(product);
+      const element = document.getElementById(`product-card-${product.id}`);
+      if (element) {
+          const header = document.querySelector('header');
+          const headerHeight = header ? header.offsetHeight : 0;
+          const elementPosition = element.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
+          window.scrollTo({ top: elementPosition, behavior: 'smooth' });
+      }
+    }
+  };
 
   const totalItems = useMemo(() => cart.reduce((sum, item) => sum + item.quantity, 0), [cart]);
 
@@ -172,7 +212,7 @@ const App: React.FC = () => {
           onAddToCart={handleAddToCart} 
           searchTerm={searchTerm} 
           activeFilters={activeFilters}
-          onProductSelect={setSelectedProduct}
+          onProductSelect={handleProductSelect}
         />
         <Kits />
         <About />
@@ -183,8 +223,6 @@ const App: React.FC = () => {
       </main>
     );
   };
-
-  const isLandingPage = route === '/kit-vidrex-clarity-wash' || route === '/kit-embellecimiento';
 
   return (
     <div className="bg-[#e0e5ec] min-h-screen text-gray-800">
@@ -206,7 +244,7 @@ const App: React.FC = () => {
         isOpen={isChatbotOpen}
         setIsOpen={setChatbotOpen}
         allProducts={allProducts}
-        onProductSelect={setSelectedProduct}
+        onProductSelect={handleProductSelect}
         startListening={startChatbotListening}
         onListeningEnd={() => setStartChatbotListening(false)}
       />

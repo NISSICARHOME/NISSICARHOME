@@ -174,7 +174,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCart, viewMode }) => (
-  <div className={`
+  <div id={`product-card-${product.id}`} className={`
     bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl 
     transition-all duration-300 transform flex group relative hover:z-10 
     sm:flex-col sm:hover:-translate-y-2 sm:hover:scale-105

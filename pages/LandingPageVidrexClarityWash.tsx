@@ -76,20 +76,20 @@ const ImageSlider: React.FC<{ beforeImage: string; afterImage: string }> = ({ be
   return (
     <div 
         ref={containerRef} 
-        className="relative w-full aspect-[3/4] sm:aspect-square md:aspect-[3/4] overflow-hidden rounded-lg select-none cursor-ew-resize shadow-lg bg-black"
+        className="relative w-full aspect-[3/2] overflow-hidden rounded-lg select-none cursor-ew-resize shadow-lg bg-black"
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
     >
       <img 
         src={afterImage} 
         alt="Resultado Después" 
-        className="absolute w-full h-full object-contain pointer-events-none" 
+        className="absolute w-full h-full object-cover pointer-events-none" 
       />
       <div 
-        className="absolute w-full h-full object-contain overflow-hidden pointer-events-none" 
+        className="absolute w-full h-full object-cover overflow-hidden pointer-events-none" 
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
-        <img src={beforeImage} alt="Resultado Antes" className="w-full h-full object-contain pointer-events-none" />
+        <img src={beforeImage} alt="Resultado Antes" className="w-full h-full object-cover pointer-events-none" />
       </div>
       <div 
         className="absolute top-0 bottom-0 w-1.5 bg-white pointer-events-none" 
@@ -144,8 +144,8 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
           <div className="flex flex-col items-center">
                <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">ANTES / DESPUÉS</h2>
                <ImageSlider 
-                beforeImage="https://lh3.googleusercontent.com/pw/AP1GczOrG-Nzr32_8v1Q7E9dnJp3_d_S1qLw-Tz-0sQkH_bA0h_x-aD4iWpM6ZzQ7sN-e8U5f_g_zI-kL9b-sE6g_vL7j-uV=w1080-h1920-no?authuser=0"
-                afterImage="https://lh3.googleusercontent.com/pw/AP1GczO2V64F0x3o4aF8a9J1j7d3e-A3g_s_F6m_iK5e8W3X9p2jQ1a_sF6a_zQ5m-tB3uV9c8b_R4n_X9d-dG9f_Y2Z_v=w1080-h1920-no?authuser=0"
+                beforeImage="https://lh3.googleusercontent.com/pw/AP1GczOSq4WI-RFLsquk8Bk37ATK54Rw4YYI45FXsLhKIm7C_IONy6uVpPP3A1SPQP2z11opqdovdExlL2SL_BeXPVJ7QlLMfRZNJllIEXX7PLebtVUlHXC1egPDre-yMCrD4LFYCndb--nxf75ofC5v68BP=w1248-h832-s-no-gm?authuser=0"
+                afterImage="https://lh3.googleusercontent.com/pw/AP1GczNpzmN3XzZKKO2MO5zDOhkKVOKSEbAeNAZVMSeJA9GtPkx1MZIEXHCBvOcZfZ9Y62v0uwsiltgbGY8-Ydw9uuJDavJh8RRGhNZ-vij-dbOC9vASLj0ovAC3yW6WDrjtuSGM66xyKmamkyr5NGQiuMUq=w1248-h832-s-no-gm?authuser=0"
                />
           </div>
       </div>
