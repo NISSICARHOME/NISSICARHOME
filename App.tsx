@@ -193,12 +193,15 @@ const App: React.FC = () => {
         )}
         {renderPage()}
         {!isLandingPage && (
-          <>
-            <Footer />
-            <Chatbot />
-          </>
+          <Footer />
         )}
       </div>
+
+      <Chatbot 
+        allProducts={allProducts}
+        onProductSelect={setSelectedProduct}
+      />
+
       {isCheckoutVisible && 
         <CheckoutForm 
           cart={cart} 

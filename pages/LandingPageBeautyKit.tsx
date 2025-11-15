@@ -73,8 +73,15 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
   );
 };
 
+const showcaseImages = [
+    'https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=0',
+    'https://lh3.googleusercontent.com/pw/AP1GczMRCg5IJKtk0Nsk4b0AmCpXgVJpOVau_j0unuT34A-ERi-VlNEM3dlql6qUOX1pO5XmmetvFX4K-iDa856iwZ758OQknG71I8TYGVqtMFeksWj6FGuoQNLwejhN_-aa3K9oC74pvfb3pbibxZfKvAz1=w991-h991-s-no-gm?authuser=0'
+];
+
 const LandingShowcase: React.FC = () => {
     const [offsetY, setOffsetY] = useState(0);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
     const handleScroll = () => {
       if (typeof window !== "undefined") {
         setOffsetY(window.scrollY * 0.2);
@@ -86,16 +93,27 @@ const LandingShowcase: React.FC = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentImageIndex((prevIndex) => (prevIndex + 1) % showcaseImages.length);
+        }, 5000); // Change image every 5 seconds
+        return () => clearInterval(timer);
+    }, []);
+
+
     return (
         <section className="relative h-[60vh] md:h-[80vh] flex flex-col items-center justify-center text-white text-center overflow-hidden">
             <div className="absolute inset-0 z-0">
-                <img
-                    src="https://lh3.googleusercontent.com/pw/AP1GczMRCg5IJKtk0Nsk4b0AmCpXgVJpOVau_j0unuT34A-ERi-VlNEM3dlql6qUOX1pO5XmmetvFX4K-iDa856iwZ758OQknG71I8TYGVqtMFeksWj6FGuoQNLwejhN_-aa3K9oC74pvfb3pbibxZfKvAz1=w991-h991-s-no-gm?authuser=0"
-                    alt="Vehículo detallado profesionalmente"
-                    className="absolute top-0 left-0 w-full min-h-[120vh] object-cover"
-                    style={{ transform: `translateY(${offsetY}px)` }}
-                />
-                <div className="absolute inset-0 bg-black opacity-60"></div>
+                 {showcaseImages.map((src, index) => (
+                    <img
+                        key={src}
+                        src={src}
+                        alt="Vehículo detallado profesionalmente"
+                        className={`absolute top-0 left-0 w-full min-h-[120vh] object-cover transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
+                        style={{ transform: `translateY(${offsetY}px)` }}
+                    />
+                ))}
+                <div className="absolute inset-0 bg-black opacity-60 water-overlay"></div>
             </div>
             <div className="relative z-10 p-8 max-w-4xl mx-auto bg-black/20 backdrop-blur-sm border border-white/20 rounded-2xl">
                 <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Un Acabado Que Habla Por Sí Mismo</h2>
@@ -266,6 +284,20 @@ const LandingPageBeautyKit: React.FC<LandingPageProps> = ({ onBuyNow }) => {
                 .scrollbar-hide {
                     -ms-overflow-style: none;
                     scrollbar-width: none;
+                }
+                @keyframes water-flow {
+                  0% { background-position: 0 0; }
+                  100% { background-position: -200px 400px; }
+                }
+                .water-overlay::after {
+                  content: '';
+                  position: absolute;
+                  inset: 0;
+                  background-image: url('https://www.transparenttextures.com/patterns/washi.png');
+                  background-repeat: repeat;
+                  opacity: 0.1;
+                  animation: water-flow 20s linear infinite;
+                  pointer-events: none;
                 }
             `}</style>
         </div>

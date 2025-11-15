@@ -1,5 +1,7 @@
 {
   "name": "Nissi Car Home",
   "description": "A showcase website for Nissi Car Home, detailing their innovative vehicle and home care products, professional detailing services, and company information. The site features product descriptions, service lists, FAQs, and contact details.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "microphone"
+  ]
 }

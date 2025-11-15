@@ -76,20 +76,20 @@ const ImageSlider: React.FC<{ beforeImage: string; afterImage: string }> = ({ be
   return (
     <div 
         ref={containerRef} 
-        className="relative w-full max-w-xl mx-auto aspect-video sm:aspect-[4/3] overflow-hidden rounded-lg select-none cursor-ew-resize shadow-lg"
+        className="relative w-full aspect-[3/4] sm:aspect-square md:aspect-[3/4] overflow-hidden rounded-lg select-none cursor-ew-resize shadow-lg bg-black"
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
     >
       <img 
         src={afterImage} 
         alt="Resultado Después" 
-        className="absolute w-full h-full object-cover pointer-events-none" 
+        className="absolute w-full h-full object-contain pointer-events-none" 
       />
       <div 
-        className="absolute w-full h-full object-cover overflow-hidden pointer-events-none" 
+        className="absolute w-full h-full object-contain overflow-hidden pointer-events-none" 
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
-        <img src={beforeImage} alt="Resultado Antes" className="w-full h-full object-cover pointer-events-none" />
+        <img src={beforeImage} alt="Resultado Antes" className="w-full h-full object-contain pointer-events-none" />
       </div>
       <div 
         className="absolute top-0 bottom-0 w-1.5 bg-white pointer-events-none" 
@@ -144,8 +144,8 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
           <div className="flex flex-col items-center">
                <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">ANTES / DESPUÉS</h2>
                <ImageSlider 
-                beforeImage="https://aluviarte.com/images/instalacion-vidrios/divisiones-de-bano-bogota-colombia.jpg"
-                afterImage="https://lh3.googleusercontent.com/pw/AP1GczMtiRvcWH7hX10fMo5IPK4tcUy6Fb9wStoN0ftTN-922XVKHbmAZIrmlMVjA8zY7vtwAM8QCwwmKBTAgaVxmDhnTsYiULO0HrjcWRemE2MStowsWe7AESE_JOeCsNQ_lfSGtEsHYkmsQR-trE53KaFV=w661-h991-s-no-gm?authuser=0"
+                beforeImage="https://lh3.googleusercontent.com/pw/AP1GczOrG-Nzr32_8v1Q7E9dnJp3_d_S1qLw-Tz-0sQkH_bA0h_x-aD4iWpM6ZzQ7sN-e8U5f_g_zI-kL9b-sE6g_vL7j-uV=w1080-h1920-no?authuser=0"
+                afterImage="https://lh3.googleusercontent.com/pw/AP1GczO2V64F0x3o4aF8a9J1j7d3e-A3g_s_F6m_iK5e8W3X9p2jQ1a_sF6a_zQ5m-tB3uV9c8b_R4n_X9d-dG9f_Y2Z_v=w1080-h1920-no?authuser=0"
                />
           </div>
       </div>
@@ -217,11 +217,11 @@ const LandingBenefits: React.FC = () => {
                         ))}
                     </ul>
                     <div className="grid grid-cols-6 gap-4">
-                        <img src={benefitsData[0].image} alt={benefitsData[0].title} className="col-span-3 rounded-lg shadow-md h-40 w-full object-cover" />
-                        <img src={benefitsData[1].image} alt={benefitsData[1].title} className="col-span-3 rounded-lg shadow-md h-40 w-full object-cover" />
-                        <img src={benefitsData[2].image} alt={benefitsData[2].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-cover" />
-                        <img src={benefitsData[3].image} alt={benefitsData[3].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-cover" />
-                        <img src={benefitsData[4].image} alt={benefitsData[4].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-cover" />
+                        <img src={benefitsData[0].image} alt={benefitsData[0].title} className="col-span-3 rounded-lg shadow-md h-40 w-full object-contain bg-white p-2" />
+                        <img src={benefitsData[1].image} alt={benefitsData[1].title} className="col-span-3 rounded-lg shadow-md h-40 w-full object-contain bg-white p-2" />
+                        <img src={benefitsData[2].image} alt={benefitsData[2].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-contain bg-white p-2" />
+                        <img src={benefitsData[3].image} alt={benefitsData[3].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-contain bg-white p-2" />
+                        <img src={benefitsData[4].image} alt={benefitsData[4].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-contain bg-white p-2" />
                     </div>
                 </div>
             </div>
