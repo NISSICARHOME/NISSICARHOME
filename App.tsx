@@ -17,6 +17,8 @@ import CheckoutForm from './components/checkout/CheckoutForm';
 import ProductModal from './components/shared/ProductModal';
 import { CartItem, Product, ActiveFilters } from './types';
 
+declare const fbq: (type: string, event: string, data?: object) => void;
+
 // This function reads the route from the URL's hash.
 const getRoute = () => {
   const hash = window.location.hash.substring(1); // Remove '#'
@@ -125,6 +127,22 @@ const App: React.FC = () => {
       body.style.overflow = 'auto';
     };
   }, [isCheckoutVisible, selectedProduct]);
+
+  useEffect(() => {
+    // This effect handles the InitiateCheckout event
+    if (isCheckoutVisible && cart.length > 0) {
+      if (typeof fbq === 'function') {
+        const content_ids = cart.map(item => item.id);
+        const value = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        fbq('track', 'InitiateCheckout', {
+          content_ids: content_ids,
+          currency: 'COP',
+          value: value,
+          num_items: cart.reduce((sum, item) => sum + item.quantity, 0)
+        });
+      }
+    }
+  }, [isCheckoutVisible, cart]);
   
   // This effect will trigger after a navigation to reveal a product from the chatbot
   useEffect(() => {
@@ -160,10 +178,26 @@ const App: React.FC = () => {
 
   const handleAddToCart = (product: Product) => {
     addToCart({ id: product.id, name: product.name, price: product.price, quantity: 1 });
+    if (typeof fbq === 'function') {
+      fbq('track', 'AddToCart', {
+        content_ids: [product.id],
+        content_name: product.name,
+        currency: 'COP',
+        value: product.price
+      });
+    }
   };
   
   const handleBuyNow = (itemToAdd: CartItem) => {
     addToCart(itemToAdd);
+    if (typeof fbq === 'function') {
+      fbq('track', 'AddToCart', {
+        content_ids: [itemToAdd.id],
+        content_name: itemToAdd.name,
+        currency: 'COP',
+        value: itemToAdd.price * itemToAdd.quantity
+      });
+    }
     setCheckoutVisible(true);
   };
 
@@ -175,6 +209,15 @@ const App: React.FC = () => {
   const isLandingPage = route === '/kit-vidrex-clarity-wash' || route === '/kit-embellecimiento';
 
   const handleProductSelect = (product: Product) => {
+    if (typeof fbq === 'function') {
+        fbq('track', 'ViewContent', {
+            content_ids: [product.id],
+            content_name: product.name,
+            content_type: 'product',
+            currency: 'COP',
+            value: product.price,
+        });
+    }
     if (isLandingPage) {
       // If on a landing page, navigate to home and let the useEffect handle the reveal
       setProductToReveal(product);

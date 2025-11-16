@@ -4,6 +4,8 @@ import { systemInstruction } from '../data/chatbotContext';
 import { Product } from '../types';
 import { SOCIAL_LINKS } from '../constants';
 
+declare const fbq: (type: string, event: string, data?: object) => void;
+
 // --- ICONS ---
 const ChatIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
@@ -222,6 +224,12 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
   const handleSendMessage = (messageText: string) => {
       if (!messageText.trim() || isLoading || !chat) return;
       
+      if (typeof fbq === 'function') {
+        fbq('track', 'Search', {
+          search_string: messageText
+        });
+      }
+
       if (autoSendTimer.current) {
           clearTimeout(autoSendTimer.current);
           autoSendTimer.current = null;

@@ -2,6 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { CartItem, OrderDetails } from '../../types';
 import { getAllProducts } from '../Products';
 
+declare const fbq: (type: string, event: string, data?: object) => void;
+
 interface CheckoutFormProps {
   cart: CartItem[];
   setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
@@ -52,6 +54,17 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, onClose }) =
     if (missingField) {
         alert(`Por favor, completa todos los campos requeridos para el envío.`);
         return;
+    }
+
+    if (typeof fbq === 'function') {
+        const content_ids = cart.map(item => item.id);
+        const num_items = cart.reduce((sum, item) => sum + item.quantity, 0);
+        fbq('track', 'Purchase', {
+            content_ids: content_ids,
+            currency: 'COP',
+            value: totalPrice,
+            num_items: num_items
+        });
     }
 
     let orderSummary = "¡Hola Nissi Car Home! Quisiera realizar el siguiente pedido:\n\n";
