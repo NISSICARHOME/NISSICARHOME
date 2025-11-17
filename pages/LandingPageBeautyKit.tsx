@@ -22,7 +22,7 @@ const ShareIcon: React.FC = () => (
 // --- PAGE SECTIONS ---
 
 const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNow }) => {
-  const beautyKit: CartItem = {id: 'kit-2', name: "Kit de Embellecimiento Profesional 6 en 1", price: 125000, quantity: 1};
+  const beautyKit: CartItem = {id: 'kit-2', name: "Kit de Embellecimiento Profesional 6 en 1", price: 135000, quantity: 1};
   const [copied, setCopied] = useState(false);
 
   const handleShare = () => {
@@ -49,7 +49,7 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
       <div className="max-w-md mx-auto flex items-center justify-center gap-4">
         <button
           onClick={() => onBuyNow(beautyKit)}
-          className="flex-grow bg-amber-500 text-white font-bold text-xl md:text-2xl py-4 px-6 rounded-lg shadow-lg hover:bg-amber-600 transition-all transform hover:scale-105 animate-pulse"
+          className="flex-grow bg-[#F77F00] text-white font-bold text-xl md:text-2xl py-4 px-6 rounded-lg shadow-lg hover:brightness-110 transition-all transform hover:scale-105 animate-pulse"
         >
           ¡LO QUIERO AHORA!
         </button>

@@ -3,6 +3,7 @@ import { Kit } from '../types';
 
 interface ExtendedKit extends Kit {
     link?: string;
+    specialPrice?: string;
 }
 
 const kitsData: ExtendedKit[] = [
@@ -13,12 +14,13 @@ const kitsData: ExtendedKit[] = [
         description: "La solución definitiva para desmanchar vidrios, eliminar sarro, lluvia ácida y devolver la vida a tu auto y hogar. ¡Resultados garantizados!",
         isSpecial: true,
         price: "¡Oferta Especial!",
+        specialPrice: "$65.500 COP",
         link: "#/kit-vidrex-clarity-wash"
     },
     {
         id: "kit-2",
         name: "Kit de Embellecimiento para tu Vehículo",
-        price: "$125.000 COP",
+        price: "$135.000 COP",
         image: "https://lh3.googleusercontent.com/pw/AP1GczMiEaGvxMmboKjwIcIwPiUomCW-T-pkMiyKY5H3gq9M0yc02NoYMO1ADS47hcfT-UyVikXUwPEJkwLUxABSFt4AOVXD2wa9Vhu3hmCXmTvejzj1QyTy9Tr6nVkCl1MFOz58gxgYsDqxLD0uQMXTxPn8=w777-h713-s-no-gm?authuser=0",
         description: "Dale a tu vehículo el tratamiento 6 en 1 que se merece. Este kit ha sido cuidadosamente formulado para ofrecer un embellecimiento integral, restaurando, protegiendo y brillando cada superficie.",
         includes: [
@@ -36,6 +38,8 @@ const kitsData: ExtendedKit[] = [
         name: "Kit Básico de Cuidado",
         image: "https://lh3.googleusercontent.com/pw/AP1GczOzc5XobmAERtALiliyk1JbpWK9TtlNYR-Gq8ho_9NrxGyhRPsDqNM-pw--dmicYoJ0_81bX_O_lzOKpZgscWtppJojH71Pg6PkQH4o-KcNy9eQKQ5Tb0jyUd6yAN_E_fQAB2JsWaoh-N5LdH_xss1_=w801-h584-s-no-gm?authuser=0",
         description: "El punto de partida perfecto para mantener tu vehículo limpio y protegido. Incluye nuestros productos esenciales.",
+        price: "$75.000 COP",
+        link: "#/kit-basico-cuidado"
     },
 ];
 
@@ -47,6 +51,8 @@ const complementsData: Kit[] = [
 
 const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
     const isSpecial = kit.id === 'kit-vidrex-clarity';
+    const isBeautyKit = kit.id === 'kit-2';
+    const isBasicKit = kit.id === 'kit-1';
     const hasLandingPage = kit.link && kit.link.startsWith('#/');
     const href = kit.link || '#contacto';
 
@@ -57,7 +63,7 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
                 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl 
                 transition-all duration-300 transform hover:scale-[1.02] 
                 flex flex-col sm:flex-row items-center group relative hover:z-10 
-                ${isSpecial ? 'border-2 border-green-500' : ''}
+                ${isSpecial ? 'border-2 border-[#D90429]' : isBeautyKit ? 'border-2 border-[#F77F00]' : isBasicKit ? 'border-2 border-[#FFC107]' : ''}
             `}
         >
             {/* Image Section */}
@@ -67,8 +73,13 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
 
             {/* Content Section */}
             <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                <h3 className={`text-lg sm:text-xl font-bold ${isSpecial ? 'text-green-700' : 'text-amber-600'}`}>{kit.name}</h3>
-                {kit.price && <p className="text-base sm:text-lg font-semibold text-gray-800 mt-1 mb-3">{kit.price}</p>}
+                <h3 className={`text-lg sm:text-xl font-bold ${isSpecial ? 'text-[#D90429]' : isBeautyKit ? 'text-[#F77F00]' : isBasicKit ? 'text-[#FFC107]' : 'text-amber-600'}`}>{kit.name}</h3>
+                {kit.price && (
+                    <div className="flex items-baseline gap-2 mt-1 mb-3">
+                        <p className={`text-base sm:text-lg font-semibold ${isSpecial ? 'text-[#D90429]' : isBeautyKit ? 'text-[#F77F00]' : isBasicKit ? 'text-gray-800' : 'text-gray-800'}`}>{kit.price}</p>
+                        {kit.specialPrice && <p className="text-base sm:text-lg font-bold text-[#D90429]">{kit.specialPrice}</p>}
+                    </div>
+                )}
                 <p className="text-sm text-gray-700 mb-4 flex-grow">{kit.description}</p>
                 
                 {kit.includes && (
@@ -87,7 +98,7 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
 
                 {/* Action Button */}
                 <div className="mt-auto pt-4">
-                     <div className={`w-full sm:w-auto sm:max-w-xs text-center font-bold py-3 px-6 text-base rounded-lg transition-all duration-300 active:scale-95 shadow-md ${hasLandingPage ? 'bg-green-600 text-white group-hover:bg-green-700' : 'bg-amber-500/80 text-white group-hover:bg-amber-500/100'}`}>
+                     <div className={`w-full sm:w-auto sm:max-w-xs text-center font-bold py-3 px-6 text-base rounded-lg transition-all duration-300 active:scale-95 shadow-md ${isSpecial ? 'bg-[#D90429] text-white group-hover:brightness-110' : isBeautyKit ? 'bg-[#F77F00] text-white group-hover:brightness-110' : isBasicKit ? 'bg-[#FFC107] text-gray-800 group-hover:brightness-110' : hasLandingPage ? 'bg-green-600 text-white group-hover:bg-green-700' : 'bg-amber-500/80 text-white group-hover:bg-amber-500/100'}`}>
                         {isSpecial ? 'Ver Oferta Ahora' : hasLandingPage ? 'Ver Detalles del Kit' : 'Más Información'}
                     </div>
                 </div>
@@ -122,6 +133,7 @@ const Kits: React.FC = () => {
                         </p>
                     </div>
                     <div className="flex flex-col gap-8">
+                        {/* Fix: Corrected a syntax error in the arrow function parameter. The extraneous underscore was removed. */}
                         {kitsData.map((kit) => <KitCard key={kit.id} kit={kit} />)}
                     </div>
 

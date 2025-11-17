@@ -13,6 +13,7 @@ import Footer from './components/Footer';
 import Chatbot from './components/Chatbot';
 import LandingPageVidrexClarityWash from './pages/LandingPageVidrexClarityWash';
 import LandingPageBeautyKit from './pages/LandingPageBeautyKit';
+import LandingPageBasicKit from './pages/LandingPageBasicKit';
 import CheckoutForm from './components/checkout/CheckoutForm';
 import ProductModal from './components/shared/ProductModal';
 import { CartItem, Product, ActiveFilters } from './types';
@@ -206,7 +207,7 @@ const App: React.FC = () => {
     setStartChatbotListening(true);
   };
   
-  const isLandingPage = route === '/kit-vidrex-clarity-wash' || route === '/kit-embellecimiento';
+  const isLandingPage = route === '/kit-vidrex-clarity-wash' || route === '/kit-embellecimiento' || route === '/kit-basico-cuidado';
 
   const handleProductSelect = (product: Product) => {
     if (typeof fbq === 'function') {
@@ -245,6 +246,10 @@ const App: React.FC = () => {
 
     if (route === '/kit-embellecimiento') {
       return <LandingPageBeautyKit onBuyNow={handleBuyNow} />;
+    }
+
+    if (route === '/kit-basico-cuidado') {
+      return <LandingPageBasicKit onBuyNow={handleBuyNow} />;
     }
 
     return (

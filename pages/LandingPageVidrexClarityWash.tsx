@@ -166,7 +166,7 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
       <div className="max-w-md mx-auto flex items-center justify-center gap-4">
         <button
           onClick={() => onBuyNow(defaultKit)}
-          className="flex-grow bg-green-600 text-white font-bold text-xl md:text-2xl py-4 px-6 rounded-lg shadow-lg hover:bg-green-700 transition-all transform hover:scale-105 animate-pulse"
+          className="flex-grow bg-[#D90429] text-white font-bold text-xl md:text-2xl py-4 px-6 rounded-lg shadow-lg hover:brightness-110 transition-all transform hover:scale-105 animate-pulse"
         >
           ¡PIDE AHORA Y PAGA EN CASA!
         </button>
