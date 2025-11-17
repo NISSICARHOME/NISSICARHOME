@@ -183,7 +183,7 @@ const LandingPageBasicKit: React.FC<LandingPageProps> = ({ onBuyNow }) => {
             'og:title': newTitle,
             'og:description': newDescription,
             'og:image': imageUrl,
-            'og:url': window.location.href,
+            'og:url': 'https://nissicarhome.netlify.app/#/kit-basico-cuidado',
             'twitter:card': 'summary_large_image',
         };
 

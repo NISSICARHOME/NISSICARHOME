@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -20,14 +21,7 @@ import { CartItem, Product, ActiveFilters } from './types';
 
 declare const fbq: (type: string, event: string, data?: object) => void;
 
-// This function reads the route from the URL's hash.
-const getRoute = () => {
-  const hash = window.location.hash.substring(1); // Remove '#'
-  return hash.startsWith('/') ? hash : '/'; // Ensure it's a valid route path like '/' or '/page'
-};
-
 const App: React.FC = () => {
-  const [route, setRoute] = useState(getRoute());
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isCheckoutVisible, setCheckoutVisible] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -41,81 +35,17 @@ const App: React.FC = () => {
   const [isChatbotOpen, setChatbotOpen] = useState(false);
   const [startChatbotListening, setStartChatbotListening] = useState(false);
 
-
   const allProducts = useMemo(() => getAllProducts(), []);
-
-  // This effect handles route changes from browser actions like back/forward buttons
-  // or manual URL hash editing.
-  useEffect(() => {
-    const handleLocationChange = () => {
-      setRoute(getRoute());
-    };
-    // 'popstate' is for back/forward buttons
-    window.addEventListener('popstate', handleLocationChange);
-    // 'hashchange' is a fallback for other cases
-    window.addEventListener('hashchange', handleLocationChange);
-    
-    // On initial load, check for and scroll to an anchor if present
-    const hash = window.location.hash;
-    if (hash && !hash.startsWith('#/')) {
-        const targetId = hash.substring(1);
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-            setTimeout(() => { // Timeout ensures layout is stable
-                const header = document.querySelector('header');
-                const headerHeight = header ? header.offsetHeight : 0;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
-                window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-            }, 100);
-        }
-    }
-    
-    return () => {
-      window.removeEventListener('popstate', handleLocationChange);
-      window.removeEventListener('hashchange', handleLocationChange);
-    };
-  }, []);
-
-  // This effect intercepts all clicks on `<a>` tags to provide smooth SPA navigation.
-  useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const anchor = target.closest('a');
-
-      // Ignore clicks that aren't on local `<a>` tags
-      if (!anchor || anchor.target === '_blank' || anchor.origin !== window.location.origin) return;
-      
-      const href = anchor.getAttribute('href');
-      if (!href) return;
-      
-      if (href.startsWith('#/')) {
-        // It's an SPA route link.
-        e.preventDefault();
-        // Use history.pushState to update the URL without a full page reload.
-        // This is more robust for preview environments than changing location.hash directly.
-        window.history.pushState({}, '', href);
-        // Manually update our component's state to reflect the new route.
-        setRoute(getRoute());
-        window.scrollTo(0, 0); // Go to top of new page
-      } else if (href.startsWith('#') && href.length > 1) {
-        // It's a same-page anchor link for smooth scrolling.
-        e.preventDefault();
-        const targetId = href.substring(1);
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          const header = document.querySelector('header');
-          const headerHeight = header ? header.offsetHeight : 0;
-          const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY - headerHeight;
-          window.scrollTo({ top: targetPosition, behavior: 'smooth' });
-          // Update the URL hash without adding a new history entry.
-          window.history.replaceState(null, '', href);
-        }
-      }
-    };
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
-  }, []);
+  const location = useLocation();
+  const navigate = useNavigate();
   
+  useEffect(() => {
+    // On route change, scroll to top, unless it's a hash link on the same page
+    if (!location.hash) {
+      window.scrollTo(0, 0);
+    }
+  }, [location.pathname]);
+
   useEffect(() => {
     const body = document.body;
     if (isCheckoutVisible || selectedProduct) {
@@ -130,7 +60,6 @@ const App: React.FC = () => {
   }, [isCheckoutVisible, selectedProduct]);
 
   useEffect(() => {
-    // This effect handles the InitiateCheckout event
     if (isCheckoutVisible && cart.length > 0) {
       if (typeof fbq === 'function') {
         const content_ids = cart.map(item => item.id);
@@ -145,9 +74,8 @@ const App: React.FC = () => {
     }
   }, [isCheckoutVisible, cart]);
   
-  // This effect will trigger after a navigation to reveal a product from the chatbot
   useEffect(() => {
-    if (productToReveal && route === '/') {
+    if (productToReveal && location.pathname === '/') {
       setSelectedProduct(productToReveal);
       
       setTimeout(() => {
@@ -158,10 +86,10 @@ const App: React.FC = () => {
           const elementPosition = element.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
           window.scrollTo({ top: elementPosition, behavior: 'smooth' });
         }
-        setProductToReveal(null); // Reset
-      }, 100); // Small delay for DOM to update
+        setProductToReveal(null);
+      }, 100);
     }
-  }, [productToReveal, route]);
+  }, [productToReveal, location.pathname]);
 
   const addToCart = (itemToAdd: CartItem) => {
     setCart(currentCart => {
@@ -207,7 +135,10 @@ const App: React.FC = () => {
     setStartChatbotListening(true);
   };
   
-  const isLandingPage = route === '/kit-vidrex-clarity-wash' || route === '/kit-embellecimiento' || route === '/kit-basico-cuidado';
+  const isLandingPage = useMemo(() => {
+      const landingRoutes = ['/kit-vidrex-clarity-wash', '/kit-embellecimiento', '/kit-basico-cuidado'];
+      return landingRoutes.includes(location.pathname);
+  }, [location.pathname]);
 
   const handleProductSelect = (product: Product) => {
     if (typeof fbq === 'function') {
@@ -220,12 +151,9 @@ const App: React.FC = () => {
         });
     }
     if (isLandingPage) {
-      // If on a landing page, navigate to home and let the useEffect handle the reveal
       setProductToReveal(product);
-      window.history.pushState({}, '', '#/');
-      setRoute(getRoute());
+      navigate('/');
     } else {
-      // Already on the main page, just show and scroll
       setSelectedProduct(product);
       const element = document.getElementById(`product-card-${product.id}`);
       if (element) {
@@ -239,20 +167,13 @@ const App: React.FC = () => {
 
   const totalItems = useMemo(() => cart.reduce((sum, item) => sum + item.quantity, 0), [cart]);
 
-  const renderPage = () => {
-    if (route === '/kit-vidrex-clarity-wash') {
-      return <LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />;
-    }
-
-    if (route === '/kit-embellecimiento') {
-      return <LandingPageBeautyKit onBuyNow={handleBuyNow} />;
-    }
-
-    if (route === '/kit-basico-cuidado') {
-      return <LandingPageBasicKit onBuyNow={handleBuyNow} />;
-    }
-
-    return (
+  const MainLayout = () => (
+    <>
+      <Header 
+        cartItemCount={totalItems} 
+        onCartClick={() => setCheckoutVisible(true)}
+        onVoiceSearchStart={handleVoiceSearchStart}
+      />
       <main>
         <Hero />
         <Filters activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
@@ -269,23 +190,19 @@ const App: React.FC = () => {
         <Policies />
         <PaymentMethods />
       </main>
-    );
-  };
+      <Footer />
+    </>
+  );
 
   return (
     <div className="bg-[#e0e5ec] min-h-screen text-gray-800">
       <div className={isCheckoutVisible || selectedProduct ? 'blur-sm pointer-events-none' : ''}>
-        {!isLandingPage && (
-          <Header 
-            cartItemCount={totalItems} 
-            onCartClick={() => setCheckoutVisible(true)}
-            onVoiceSearchStart={handleVoiceSearchStart}
-          />
-        )}
-        {renderPage()}
-        {!isLandingPage && (
-          <Footer />
-        )}
+        <Routes>
+          <Route path="/" element={<MainLayout />} />
+          <Route path="/kit-vidrex-clarity-wash" element={<LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />} />
+          <Route path="/kit-embellecimiento" element={<LandingPageBeautyKit onBuyNow={handleBuyNow} />} />
+          <Route path="/kit-basico-cuidado" element={<LandingPageBasicKit onBuyNow={handleBuyNow} />} />
+        </Routes>
       </div>
 
       <Chatbot 

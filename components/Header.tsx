@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { HashLink } from 'react-router-hash-link';
 
 const Logo = () => (
     <img 
@@ -9,9 +10,9 @@ const Logo = () => (
 );
 
 const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick: () => void; className?: string; }> = ({ href, children, onClick, className = '' }) => (
-  <a href={href} onClick={onClick} className={`block text-gray-700 rounded-lg transition-colors duration-300 font-semibold ${className}`}>
+  <HashLink smooth to={href} onClick={onClick} className={`block text-gray-700 rounded-lg transition-colors duration-300 font-semibold ${className}`}>
     {children}
-  </a>
+  </HashLink>
 );
 
 const ShoppingCartIcon: React.FC = () => (
@@ -44,13 +45,13 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
 
 
   const navItems = [
-    { href: '#/', label: 'Inicio' },
-    { href: '#productos', label: 'Productos' },
-    { href: '#kits', label: 'Kits' },
-    { href: '#nosotros', label: 'Nosotros' },
-    { href: '#servicios', label: 'Servicios' },
-    { href: '#faq', label: 'FAQ' },
-    { href: '#contacto', label: 'Contacto' },
+    { href: '/', label: 'Inicio' },
+    { href: '/#productos', label: 'Productos' },
+    { href: '/#kits', label: 'Kits' },
+    { href: '/#nosotros', label: 'Nosotros' },
+    { href: '/#servicios', label: 'Servicios' },
+    { href: '/#faq', label: 'FAQ' },
+    { href: '/#contacto', label: 'Contacto' },
   ];
   
   const handleLinkClick = () => {
@@ -82,9 +83,9 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
   return (
     <header className={`bg-white/20 backdrop-blur-md sticky top-0 z-40 border-b border-white/30 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
       <nav className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-2 md:p-4">
-        <a href="#/" onClick={handleLinkClick} className="flex items-center space-x-3 rtl:space-x-reverse">
+        <HashLink to="/" onClick={handleLinkClick} className="flex items-center space-x-3 rtl:space-x-reverse">
           <Logo />
-        </a>
+        </HashLink>
         <div className="flex items-center md:order-2 space-x-1 md:space-x-3">
             <button 
                 onClick={onVoiceSearchStart} 

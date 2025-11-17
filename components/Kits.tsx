@@ -1,4 +1,5 @@
 import React from 'react';
+import { HashLink } from 'react-router-hash-link';
 import { Kit } from '../types';
 
 interface ExtendedKit extends Kit {
@@ -53,12 +54,13 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
     const isSpecial = kit.id === 'kit-vidrex-clarity';
     const isBeautyKit = kit.id === 'kit-2';
     const isBasicKit = kit.id === 'kit-1';
+    
     const hasLandingPage = kit.link && kit.link.startsWith('#/');
-    const href = kit.link || '#contacto';
+    const to = hasLandingPage ? kit.link.substring(1) : '/#contacto';
 
     return (
-        <a 
-            href={href} 
+        <HashLink 
+            to={to}
             className={`
                 bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl 
                 transition-all duration-300 transform hover:scale-[1.02] 
@@ -73,7 +75,7 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
 
             {/* Content Section */}
             <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                <h3 className={`text-lg sm:text-xl font-bold ${isSpecial ? 'text-[#D90429]' : isBeautyKit ? 'text-[#F77F00]' : isBasicKit ? 'text-[#FFC107]' : 'text-amber-600'}`}>{kit.name}</h3>
+                <h3 className={`text-lg sm:text-xl font-bold ${isSpecial ? 'text-[#D90429]' : isBeautyKit ? 'text-[#F77F00]' : isBasicKit ? 'text-gray-800' : 'text-amber-600'}`}>{kit.name}</h3>
                 {kit.price && (
                     <div className="flex items-baseline gap-2 mt-1 mb-3">
                         <p className={`text-base sm:text-lg font-semibold ${isSpecial ? 'text-[#D90429]' : isBeautyKit ? 'text-[#F77F00]' : isBasicKit ? 'text-gray-800' : 'text-gray-800'}`}>{kit.price}</p>
@@ -103,19 +105,19 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
                     </div>
                 </div>
             </div>
-        </a>
+        </HashLink>
     );
 };
 
 const ComplementCard: React.FC<{ complement: Kit }> = ({ complement }) => (
-    <a href="#contacto" className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col text-center p-2 group items-center h-full">
+    <HashLink smooth to="/#contacto" className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col text-center p-2 group items-center h-full">
         <div className="h-20 w-full flex items-center justify-center">
             <img src={complement.image} alt={complement.name} className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300" />
         </div>
         <div className="flex flex-col flex-grow mt-2 w-full">
             <h4 className="font-bold text-xs text-gray-800 leading-tight">{complement.name}</h4>
         </div>
-    </a>
+    </HashLink>
 );
 
 
@@ -132,18 +134,17 @@ const Kits: React.FC = () => {
                             Soluciones completas y herramientas esenciales para llevar el cuidado de tu vehículo al siguiente nivel.
                         </p>
                     </div>
-                    <div className="flex flex-col gap-8">
-                        {/* Fix: Corrected a syntax error in the arrow function parameter. The extraneous underscore was removed. */}
-                        {kitsData.map((kit) => <KitCard key={kit.id} kit={kit} />)}
+                    <div className="space-y-8">
+                        {kitsData.map(kit => <KitCard key={kit.id} kit={kit} />)}
                     </div>
 
-                     <div className="text-center mt-12 sm:mt-20 mb-8 sm:mb-16">
-                        <h3 className="text-lg sm:text-2xl lg:text-3xl font-bold text-gray-800">
+                    <div className="mt-12 md:mt-20">
+                         <h3 className="text-center text-lg sm:text-2xl font-bold text-gray-800 mb-8">
                             Complementos Esenciales
                         </h3>
-                    </div>
-                    <div className="grid grid-cols-3 gap-4">
-                        {complementsData.map((complement) => <ComplementCard key={complement.id} complement={complement} />)}
+                        <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-lg mx-auto">
+                            {complementsData.map(comp => <ComplementCard key={comp.id} complement={comp} />)}
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { HashLink } from 'react-router-hash-link';
 
 const Hero: React.FC = () => {
   const [offsetY, setOffsetY] = useState(0);
@@ -35,18 +36,20 @@ const Hero: React.FC = () => {
           Pasión por el Detalle, Garantía de Calidad. Transformamos el cuidado de tu vehículo y tu hogar en una experiencia de excelencia.
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <a
-            href="#productos"
+          <HashLink
+            smooth
+            to="/#productos"
             className="bg-amber-500/80 text-white hover:bg-amber-500/100 border border-amber-400/50 backdrop-blur-sm font-bold py-3 px-8 rounded-full text-lg transition-all transform hover:scale-105 duration-300 shadow-lg"
           >
             Ver Productos
-          </a>
-          <a
-            href="#servicios"
+          </HashLink>
+          <HashLink
+            smooth
+            to="/#servicios"
             className="bg-white/10 border-2 border-white/50 text-white hover:bg-white/20 hover:border-white/80 backdrop-blur-sm font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 shadow-lg"
           >
             Nuestros Servicios
-          </a>
+          </HashLink>
         </div>
       </div>
     </section>
