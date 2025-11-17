@@ -5,6 +5,7 @@ import { Kit } from '../types';
 interface ExtendedKit extends Kit {
     link?: string;
     specialPrice?: string;
+    oldPrice?: string;
 }
 
 const kitsData: ExtendedKit[] = [
@@ -21,6 +22,7 @@ const kitsData: ExtendedKit[] = [
     {
         id: "kit-2",
         name: "Kit de Embellecimiento para tu Vehículo",
+        oldPrice: "$190.000 COP",
         price: "$135.000 COP",
         image: "https://lh3.googleusercontent.com/pw/AP1GczMiEaGvxMmboKjwIcIwPiUomCW-T-pkMiyKY5H3gq9M0yc02NoYMO1ADS47hcfT-UyVikXUwPEJkwLUxABSFt4AOVXD2wa9Vhu3hmCXmTvejzj1QyTy9Tr6nVkCl1MFOz58gxgYsDqxLD0uQMXTxPn8=w777-h713-s-no-gm?authuser=0",
         description: "Dale a tu vehículo el tratamiento 6 en 1 que se merece. Este kit ha sido cuidadosamente formulado para ofrecer un embellecimiento integral, restaurando, protegiendo y brillando cada superficie.",
@@ -76,12 +78,24 @@ const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
             {/* Content Section */}
             <div className="p-4 sm:p-6 flex flex-col flex-grow">
                 <h3 className={`text-lg sm:text-xl font-bold ${isSpecial ? 'text-[#D90429]' : isBeautyKit ? 'text-[#F77F00]' : isBasicKit ? 'text-gray-800' : 'text-amber-600'}`}>{kit.name}</h3>
-                {kit.price && (
-                    <div className="flex items-baseline gap-2 mt-1 mb-3">
-                        <p className={`text-base sm:text-lg font-semibold ${isSpecial ? 'text-[#D90429]' : isBeautyKit ? 'text-[#F77F00]' : isBasicKit ? 'text-gray-800' : 'text-gray-800'}`}>{kit.price}</p>
-                        {kit.specialPrice && <p className="text-base sm:text-lg font-bold text-[#D90429]">{kit.specialPrice}</p>}
+                
+                {isBeautyKit && kit.oldPrice ? (
+                    <div className="mt-1 mb-3">
+                        <p className="text-lg font-bold text-[#F77F00]">¡OFERTA ESPECIAL!</p>
+                        <p className="text-base text-gray-500 line-through">Antes {kit.oldPrice}</p>
+                        <p className="text-2xl md:text-3xl font-bold text-[#F77F00] animate-pulse-scale">
+                            AHORA {kit.price}
+                        </p>
                     </div>
+                ) : (
+                    kit.price && (
+                        <div className="flex items-baseline gap-2 mt-1 mb-3">
+                            <p className={`text-base sm:text-lg font-semibold ${isSpecial ? 'text-[#D90429]' : isBasicKit ? 'text-gray-800' : 'text-gray-800'}`}>{kit.price}</p>
+                            {kit.specialPrice && <p className="text-base sm:text-lg font-bold text-[#D90429]">{kit.specialPrice}</p>}
+                        </div>
+                    )
                 )}
+
                 <p className="text-sm text-gray-700 mb-4 flex-grow">{kit.description}</p>
                 
                 {kit.includes && (

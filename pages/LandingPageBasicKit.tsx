@@ -4,13 +4,14 @@ import { CartItem } from '../types';
 
 // --- HELPER COMPONENTS ---
 const CheckListItem: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <li className="flex items-start text-lg">
-    <svg className="h-7 w-7 text-green-500 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+  <li className="flex items-start text-lg mb-3">
+    <svg className="h-6 w-6 text-green-500 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
-    <span>{children}</span>
+    <span className="text-gray-700">{children}</span>
   </li>
 );
+
 
 const ShareIcon: React.FC = () => (
     <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -96,25 +97,26 @@ const LandingVideo: React.FC = () => {
 
 const LandingWhatYouGet: React.FC = () => {
     const kitItems = [
-        { name: '1. Shampoo pH Neutro', content: "Lava tu auto de forma segura, eliminando la suciedad sin dañar la pintura ni los tratamientos de cera previos.", image: 'https://lh3.googleusercontent.com/pw/AP1GczOoQ2FzQzw_XT_wjt3OwSHwF7eKa7UU9JvuVHye01TYVTOIoC5souIqz7GOZ685LZ5qEnFVdveH7TvsX6erA6EkdHQex7x08fe1RCkUnVsRtQiMpv09PT3_TBP1aPYyV9K1FHhg54gjSjUFQUbdkB0i=w207-h560-s-no-gm?authuser=0' },
-        { name: '2. Cera Hyper Diamond', content: "Aplica una capa de brillo intenso y protección duradera. Su efecto hidrofóbico repele el agua y mantiene tu auto limpio por más tiempo.", image: 'https://lh3.googleusercontent.com/pw/AP1GczN-zXHr14d1RfpvNWQ9Zn6Y1vdjBlCgnsiDyT57kpTfA81-h5eZtRvzJmEPvxDcbGw5IBYvDqMEhlwuq7W6VpM7E-z3xtq6QOjAZN0tYTtQtIoGklEpD9Iufe8YT9ajvLN7jX8LUHoewgAhTKf64xRX=w1040-h800-s-no-gm?authuser=0' },
-        { name: '3. Aplicador Media Luna', content: "La herramienta ergonómica y segura para aplicar la cera de manera uniforme, logrando una cobertura perfecta sin esfuerzo.", image: 'https://lh3.googleusercontent.com/pw/AP1GczMQ4EUxiH3Ndfgs385HG6O8xSn6tRe-hKzmI2RX2bfziUZzV8TqTzEF66DO7c7FINzqGNj2Wx3_0o6NghBXnC8Dad4V81LJDDqU3n5vrv01KuPR8Lyn4jgayBDxS21B9l28P6ozJt6UZ2skGHKMhLkZ=w500-h717-s-no-gm?authuser=0' },
-        { name: '4. Toalla de Microfibra', content: "Ultra suave y súper absorbente, es el complemento ideal para secar y pulir, garantizando un acabado final brillante y sin rayones.", image: 'https://lh3.googleusercontent.com/pw/AP1GczPn8Nx3WgdMKOguR8-_ISl7lyhdrJoWEWxaFuy3-po0uM7NAQAT4vSdBSj2LZkpNQ52hEvJ-Kgd3TG1WPCaaGklZSukEoquViMAuPeEImOPVd39drDoagydRag8yKyCAPh63Er63riRmEKFJLwZ_nv2=w354-h372-s-no-gm?authuser=0' },
+        "1 Cera Hyper Diamond",
+        "1 Ultra Restorer",
+        "1 Perfect Llantix",
+        "¡GRATIS! 2 Aplicadores de Espuma",
+        "¡GRATIS! 1 Toalla de Microfibra Profesional",
     ];
 
     return (
         <section className="bg-white py-16 px-4">
-            <div className="max-w-6xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-4">Todo lo Esencial en un Solo Paquete</h2>
-                <p className="text-center text-xl text-gray-600 mb-12">Seleccionamos nuestros mejores productos para que empieces a cuidar tu auto como se merece.</p>
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {kitItems.map(item => (
-                        <div key={item.name} className="flex flex-col items-center text-center bg-gray-50 p-6 rounded-lg shadow-md h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-                            <img src={item.image} alt={item.name} className="h-40 object-contain mb-4" />
-                            <h3 className="text-xl font-bold text-amber-600 flex-grow">{item.name}</h3>
-                            <p className="text-gray-700">{item.content}</p>
-                        </div>
-                    ))}
+            <div className="max-w-4xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-4">¿Qué Contiene tu Kit Básico de Cuidado?</h2>
+                <p className="text-center text-xl text-gray-600 mb-12">Un arsenal completo con nuestros productos estrella para que obtengas resultados de nivel profesional.</p>
+                <div className="bg-gray-50 p-8 rounded-lg shadow-md max-w-2xl mx-auto">
+                    <ul className="space-y-4">
+                        {kitItems.map((item, index) => (
+                             <CheckListItem key={index}>
+                                <strong>{item}</strong>
+                            </CheckListItem>
+                        ))}
+                    </ul>
                 </div>
             </div>
         </section>

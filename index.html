@@ -34,6 +34,17 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+  @keyframes pulse-scale {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.08);
+    }
+  }
+  .animate-pulse-scale {
+    animation: pulse-scale 2s infinite ease-in-out;
+  }
 </style>
 </head>
   <body>

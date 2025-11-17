@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
     { href: '/#productos', label: 'Productos' },
     { href: '/#kits', label: 'Kits' },
     { href: '/#nosotros', label: 'Nosotros' },
-    { href: '/#servicios', label: 'Servicios' },
+    { href: '/servicios-spa', label: 'Spa Automotriz' },
     { href: '/#faq', label: 'FAQ' },
     { href: '/#contacto', label: 'Contacto' },
   ];

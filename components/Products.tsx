@@ -6,7 +6,7 @@ const productsData: Product[] = [
   {
     id: 'prod-vidrex',
     name: 'VIDREX Bloqueador de Manchas',
-    price: 25000,
+    price: 45000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczMtiRvcWH7hX10fMo5IPK4tcUy6Fb9wStoN0ftTN-922XVKHbmAZIrmlMVjA8zY7vtwAM8QCwwmKBTAgaVxmDhnTsYiULO0HrjcWRemE2MStowsWe7AESE_JOeCsNQ_lfSGtEsHYkmsQR-trE53KaFV=w661-h991-s-no-gm?authuser=0',
     shortDesc: 'Gel de rápido efecto para eliminar manchas en vidrios, acrílico, aluminio y cromo.',
     category: 'Limpieza Profunda',
@@ -23,7 +23,7 @@ const productsData: Product[] = [
   {
     id: 'prod-clarity',
     name: 'Clarity Wash',
-    price: 35000,
+    price: 45000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczN7SItDwQo-iusQyZ3VRyk07V5fgirL3EjHV2kCnlv0_Ds3BxBF6Es6UySi5dkslDK7iDMb7ziWDdhNcISf7dZfEtJqUHaA0dfLwPQpIm0FtLFwx8p4bnbYzP3l8KU68p0EgLNwbJRtSaXzZO4pYlAV=w1040-h800-s-no-gm?authuser=0',
     shortDesc: 'Desmancha vidrios, elimina tallones en pintura y desmancha farolas externamente.',
     category: 'Pulido',
@@ -40,7 +40,7 @@ const productsData: Product[] = [
   {
     id: 'prod-hyper-diamond',
     name: 'Cera Hyper Diamond',
-    price: 45000,
+    price: 65000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczN-zXHr14d1RfpvNWQ9Zn6Y1vdjBlCgnsiDyT57kpTfA81-h5eZtRvzJmEPvxDcbGw5IBYvDqMEhlwuq7W6VpM7E-z3xtq6QOjAZN0tYTtQtIoGklEpD9Iufe8YT9ajvLN7jX8LUHoewgAhTKf64xRX=w1040-h800-s-no-gm?authuser=0',
     shortDesc: 'Cera con nanotecnología para ultra protección e hiper brillo en la pintura de tu vehículo.',
     category: 'Protección',
@@ -58,7 +58,7 @@ const productsData: Product[] = [
   {
     id: 'prod-llantix',
     name: 'Perfect Llantix',
-    price: 20000,
+    price: 45000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczOjiJJeZc6HIutbfWKJGXISSyYp6uFOXne3E4Bxw8mZijJQzpOBRpjiyvtjQi4tw0SZ2Bg6aT5bjQ559BIZ4UO1DXvcZMjqXGHDQaAsGvyDdphGMwjNdb8QM0AKlue18DUnkhu6IjMw6Z9q3H5BVFW0=w1080-h800-s-no-gm?authuser=0',
     shortDesc: 'Fórmula para un excelente brillo y un acabado definido que protege la superficie de las llantas.',
     category: 'Acabado',
@@ -74,7 +74,7 @@ const productsData: Product[] = [
   {
     id: 'prod-perfume-iq',
     name: 'Perfume para Auto IQ 250',
-    price: 15000,
+    price: 49000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczNGm09XudSQyCC9Y5VONBw73KefzfMTKgBpYO3NtdLHEeAd1ZdBG4gIyWJBWhlt5FaipkPqazrm2yLlKuFNQu7H3bxHw8gjeNEUH-hDYSR_xoSceSMeyIHajfC7rePHuj5tBrDR19SXBRRQXzjz-rnV=w454-h624-s-no-gm?authuser=0',
     shortDesc: 'Aroma con mayor duración para restablecer la armonía de tu cuerpo y mente mientras conduces.',
     category: 'Accesorios',
@@ -90,7 +90,7 @@ const productsData: Product[] = [
   {
     id: 'prod-restorer',
     name: 'Ultra Restorer',
-    price: 28000,
+    price: 47000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczN4wvAxjKsz_jeB8jpHUVAbL7aeEqGSpXjqjbWbyapjHRzrU54da2aT8lFBEtDIvAfP4Hj7TL8MMkdNivvoS5L0M6CzftY_g8nwRtX6fPBm6arqinMCSNrYQQcWxiAkCKR5zD60S_HNhq7iCLfBNumL=w1080-h800-s-no-gm?authuser=0',
     shortDesc: 'Restaura piezas plásticas grises y negras, devolviendo un acabado perfecto con ultra protección.',
     category: 'Restauración',
@@ -105,7 +105,7 @@ const productsData: Product[] = [
   {
     id: 'prod-rayones-cero',
     name: 'RAYONES-CERO Eliminador de rayones',
-    price: 30000,
+    price: 65000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczOk00JOL8Il_ZxU7w1AhMjKM8S0GxAQJqVhGp2osNYpOVQSu4b4sYdi9d6RHiLDfbo4bDU04WreZ-a5hBq8X8ZnZy8dmXPmn8rI0DkHMZf0y6wNn8usimpnql8u93xjg__FAYTBSzEwvv8oNGg_oJW9=w1184-h864-s-no-gm?authuser=0',
     shortDesc: 'Fórmula avanzada para corregir pequeños arañazos en la pintura de tu vehículo.',
     category: 'Pulido',
@@ -119,7 +119,7 @@ const productsData: Product[] = [
   {
     id: 'prod-shampoo',
     name: 'Shampoo PH Neutro',
-    price: 22000,
+    price: 45000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczOoQ2FzQzw_XT_wjt3OwSHwF7eKa7UU9JvuVHye01TYVTOIoC5souIqz7GOZ685LZ5qEnFVdveH7TvsX6erA6EkdHQex7x08fe1RCkUnVsRtQiMpv09PT3_TBP1aPYyV9K1FHhg54gjSjUFQUbdkB0i=w207-h560-s-no-gm?authuser=0',
     shortDesc: 'Limpieza suave y segura para todas las superficies de tu vehículo, sin dañar ceras o selladores.',
     category: 'Limpieza General',
@@ -133,7 +133,7 @@ const productsData: Product[] = [
   {
     id: 'prod-aplicador',
     name: 'Aplicador Media Luna',
-    price: 8000,
+    price: 15000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczMQ4EUxiH3Ndfgs385HG6O8xSn6tRe-hKzmI2RX2bfziUZzV8TqTzEF66DO7c7FINzqGNj2Wx3_0o6NghBXnC8Dad4V81LJDDqU3n5vrv01KuPR8Lyn4jgayBDxS21B9l28P6ozJt6UZ2skGHKMhLkZ=w500-h717-s-no-gm?authuser=0',
     shortDesc: 'Espuma de densidad blanda y estructura absorbente, ideal para ceras y selladores.',
     category: 'Accesorios',
@@ -147,7 +147,7 @@ const productsData: Product[] = [
   {
     id: 'prod-toalla',
     name: 'Toalla de Microfibra',
-    price: 12000,
+    price: 18000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczPn8Nx3WgdMKOguR8-_ISl7lyhdrJoWEWxaFuy3-po0uM7NAQAT4vSdBSj2LZkpNQ52hEvJ-Kgd3TG1WPCaaGklZSukEoquViMAuPeEImOPVd39drDoagydRag8yKyCAPh63Er63riRmEKFJLwZ_nv2=w354-h372-s-no-gm?authuser=0',
     shortDesc: 'Ultra suave y absorbente, esencial para retirar ceras y secar sin dejar rayones.',
     category: 'Accesorios',
@@ -156,6 +156,20 @@ const productsData: Product[] = [
       howToUse: 'Utilizar seca para retirar residuos de cera o pulimento. Utilizar húmeda para limpieza general o seca para el secado final del vehículo. Lavar con detergentes neutros y no usar suavizantes.',
       precautions: 'Lavar por separado para evitar que atrape pelusa de otras prendas. No usar cloro ni suavizantes.',
       composition: '80% Poliéster, 20% Poliamida.'
+    }
+  },
+  {
+    id: 'prod-aplicador-redondo',
+    name: 'Aplicador Redondo Profesional',
+    price: 22000,
+    image: 'https://lh3.googleusercontent.com/pw/AP1GczMl24J1GR_orR_Xw7thAwrMe8WBWVwB34ijfSM85dxWbmthn2KnKu7VXF7P4EablqqNSGyfBjaMzlpMYP4kHZFPD_6vesv2Tp_IMajMs2tLGXJtKNZiQ53rWRS2f4G86KxNP6kYH6BBaCqXutbfYcST=w466-h366-s-no-gm?authuser=0',
+    shortDesc: 'Aplicador de textura blanda para una aplicación uniforme y segura de productos.',
+    category: 'Accesorios',
+    details: {
+      description: 'Aplicador redondo profesional de textura blanda, diseñado para la aplicación segura y uniforme de ceras, selladores y acondicionadores. Su ergonomía permite un control superior.',
+      howToUse: 'Coloque una pequeña cantidad del producto deseado sobre el aplicador. Distribuya sobre la superficie con movimientos suaves y circulares. Lave con agua y jabón neutro después de cada uso y deje secar al aire.',
+      precautions: 'No usar con solventes fuertes. Mantener limpio para evitar contaminación cruzada de productos.',
+      composition: 'Espuma de poliuretano de alta calidad y densidad controlada.'
     }
   }
 ];
