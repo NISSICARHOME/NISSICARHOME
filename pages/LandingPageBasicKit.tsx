@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem } from '../types';
 
@@ -22,7 +22,7 @@ const ShareIcon: React.FC = () => (
 // --- PAGE SECTIONS ---
 
 const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNow }) => {
-  const basicKit: CartItem = {id: 'kit-1', name: "Kit Básico de Cuidado", price: 75000, quantity: 1};
+  const basicKit: CartItem = {id: 'kit-1', name: "Kit Básico de Cuidado", price: 95000, quantity: 1};
   const [copied, setCopied] = useState(false);
 
   const handleShare = () => {
@@ -45,7 +45,7 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
       </div>
       <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4">Kit Básico de Cuidado: El Comienzo Perfecto</h1>
       <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Te damos las herramientas esenciales para una limpieza profunda y una protección brillante. ¡Fácil de usar, con resultados que enamoran!</p>
-       <p className="text-2xl md:text-3xl font-bold text-gray-800 mb-8">Precio Especial: $75.000 COP</p>
+       <p className="text-2xl md:text-3xl font-bold text-gray-800 mb-8">Precio Especial: $95.000 COP</p>
 
       <div className="max-w-md mx-auto flex items-center justify-center gap-4">
         <button

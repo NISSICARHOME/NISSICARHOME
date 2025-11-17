@@ -38,7 +38,7 @@ const kitsData: ExtendedKit[] = [
         name: "Kit Básico de Cuidado",
         image: "https://lh3.googleusercontent.com/pw/AP1GczOzc5XobmAERtALiliyk1JbpWK9TtlNYR-Gq8ho_9NrxGyhRPsDqNM-pw--dmicYoJ0_81bX_O_lzOKpZgscWtppJojH71Pg6PkQH4o-KcNy9eQKQ5Tb0jyUd6yAN_E_fQAB2JsWaoh-N5LdH_xss1_=w801-h584-s-no-gm?authuser=0",
         description: "El punto de partida perfecto para mantener tu vehículo limpio y protegido. Incluye nuestros productos esenciales.",
-        price: "$75.000 COP",
+        price: "$95.000 COP",
         link: "#/kit-basico-cuidado"
     },
 ];
