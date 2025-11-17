@@ -1,4 +1,5 @@
 import React from 'react';
+import { HashLink } from 'react-router-hash-link';
 
 const servicesData = [
   { name: 'Detailing Automotriz', description: 'Limpieza profunda y restauración interna de vehículos.' },
@@ -44,6 +45,16 @@ const Services: React.FC = () => {
               ))}
             </dl>
           </div>
+
+          <div className="mt-16 text-center">
+            <HashLink
+              to="/servicios-adicionales-y-soporte"
+              className="inline-block bg-amber-500/80 text-white hover:bg-amber-500/100 border border-amber-400/50 backdrop-blur-sm font-bold py-3 px-8 rounded-full text-lg transition-all transform hover:scale-105 duration-300 shadow-lg"
+            >
+              Conoce Nuestro Spa Automotriz Profesional
+            </HashLink>
+          </div>
+
         </div>
       </div>
     </section>

@@ -25,6 +25,7 @@ import LandingPageVidrexClarityWash from './pages/LandingPageVidrexClarityWash';
 import LandingPageBeautyKit from './pages/LandingPageBeautyKit';
 import LandingPageBasicKit from './pages/LandingPageBasicKit';
 import LandingPageServices from './pages/LandingPageServices';
+import LandingPageAdditionalServices from './pages/LandingPageAdditionalServices';
 
 // --- Helper component to scroll to top on route change ---
 const ScrollToTop = () => {
@@ -149,6 +150,7 @@ const App: React.FC = () => {
           <Route path="/kit-embellecimiento" element={<LandingPageBeautyKit onBuyNow={handleBuyNow} />} />
           <Route path="/kit-basico-cuidado" element={<LandingPageBasicKit onBuyNow={handleBuyNow} />} />
           <Route path="/servicios-spa" element={<LandingPageServices />} />
+          <Route path="/servicios-adicionales-y-soporte" element={<LandingPageAdditionalServices />} />
         </Route>
       </Routes>
       
