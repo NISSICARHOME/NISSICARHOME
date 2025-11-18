@@ -137,35 +137,41 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
             aria-hidden="true"
         ></div>
 
-        {/* Mobile Menu Panel */}
+        {/* Mobile Menu Panel - Styled as White Translucent */}
         <div 
             id="mobile-menu"
-            className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white/80 backdrop-blur-xl shadow-2xl z-50 transition-transform duration-300 ease-in-out md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white/95 backdrop-blur-2xl shadow-2xl border-l border-white/50 z-50 transition-transform duration-300 ease-in-out md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
         >
-            <div className="flex justify-between items-center p-4 border-b border-white/30">
-                <h2 className="font-bold text-lg text-gray-800">Menú</h2>
-                <button onClick={() => setIsOpen(false)} className="p-2 -mr-2" aria-label="Cerrar menú">
-                    <CloseIcon className="w-6 h-6 text-gray-700" />
+            <div className="flex justify-between items-center p-5 border-b border-gray-200/50">
+                <h2 className="font-bold text-xl text-gray-800 tracking-tight">Menú</h2>
+                <button onClick={() => setIsOpen(false)} className="p-2 -mr-2 hover:bg-gray-100 rounded-full transition-colors" aria-label="Cerrar menú">
+                    <CloseIcon className="w-6 h-6 text-gray-600" />
                 </button>
             </div>
             
-            <div className="p-4">
+            <div className="p-5 flex flex-col h-full overflow-y-auto">
                 <button 
                     onClick={() => {
                         onVoiceSearchStart();
                         handleLinkClick(); // Close menu after activating
                     }} 
-                    className="w-full flex items-center justify-center gap-3 p-3 mb-4 rounded-lg bg-white/50 hover:bg-white/70 transition-colors shadow-sm active:scale-95"
+                    className="w-full flex items-center justify-center gap-3 p-3 mb-6 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors shadow-sm active:scale-95 border border-gray-200"
                     aria-label="Iniciar búsqueda por voz"
                 >
-                    <MicIcon className="w-6 h-6 text-gray-700" />
-                    <span className="font-semibold text-gray-800">Búsqueda por Voz</span>
+                    <MicIcon className="w-5 h-5 text-amber-600" />
+                    <span className="font-bold text-gray-800">Búsqueda por Voz</span>
                 </button>
 
-                <ul className="flex flex-col">
+                <ul className="flex flex-col space-y-2">
                     {navItems.map(item => (
                         <li key={item.href}>
-                            <NavLink href={item.href} onClick={handleLinkClick} className="py-3 px-4 text-lg hover:bg-white/50">{item.label}</NavLink>
+                            <NavLink 
+                                href={item.href} 
+                                onClick={handleLinkClick} 
+                                className="py-3 px-4 text-lg font-medium text-gray-800 hover:bg-gray-100/80 hover:text-amber-600 rounded-xl transition-all"
+                            >
+                                {item.label}
+                            </NavLink>
                         </li>
                     ))}
                 </ul>

@@ -47,7 +47,7 @@ const productsData: Product[] = [
     details: {
       title: 'CERA HYPER DIAMOND CON CARNAUBA',
       brand: 'ECOCLEAR nanotechnology',
-      content: '220 G',
+      content: '400 gr',
       features: ['Resultados Inmediatos', 'Máxima Protección', 'Hiper Brillo'],
       description: 'Esta composición contiene polímeros con nanotecnología especializados en ultra protección e hiper brillo para la pintura de tu vehículo.',
       howToUse: 'Aplique la cera hyperdiamond sobre la pintura que desea blindar, con un aplicador de espuma esparza el producto por secciones. Luego retire con máquina pulidora o con toalla de microfibra para dar el acabado.',
