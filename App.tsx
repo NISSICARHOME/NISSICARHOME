@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { HashRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 
@@ -16,6 +17,7 @@ import Policies from './components/Policies';
 import PaymentMethods from './components/PaymentMethods';
 import Footer from './components/Footer';
 import ProductModal from './components/shared/ProductModal';
+import QuickBuyModal from './components/shared/QuickBuyModal'; // Import the new Modal
 import CheckoutForm from './components/checkout/CheckoutForm';
 import Chatbot from './components/Chatbot';
 import Filters from './components/Filters';
@@ -76,7 +78,9 @@ const HomePage: React.FC<{
 // --- Main App Component ---
 const App: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null); // For Full Details Modal
+  const [quickBuyProduct, setQuickBuyProduct] = useState<Product | null>(null); // For Quick Buy Modal
+  
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [startVoiceSearch, setStartVoiceSearch] = useState(false);
@@ -125,8 +129,33 @@ const App: React.FC = () => {
     setIsCheckoutOpen(true);
   };
   
-  const handleProductSelect = (product: Product) => setSelectedProduct(product);
+  // Triggered by clicking on a Product Card - Opens Quick Buy Modal OR Navigates to Landing Page
+  const handleProductSelect = (product: Product) => {
+      if (product.id === 'prod-hyper-diamond') {
+          // Direct navigation for Hyper Diamond Landing Page
+          window.location.hash = "/Cera-Hyper-Diamond";
+      } else {
+          setQuickBuyProduct(product);
+      }
+  };
+
+  // Triggered from Quick Buy Modal "Add to Cart & Checkout"
+  const handleQuickBuyAction = (product: Product) => {
+      handleAddToCart(product);
+      setQuickBuyProduct(null); // Close quick modal
+      setIsCheckoutOpen(true); // Open checkout directly
+  };
+
+  // Triggered from Quick Buy Modal "View Details"
+  const handleSwitchToDetails = () => {
+      if (quickBuyProduct) {
+          setSelectedProduct(quickBuyProduct);
+          setQuickBuyProduct(null);
+      }
+  };
+
   const handleCloseModal = () => setSelectedProduct(null);
+  const handleCloseQuickBuy = () => setQuickBuyProduct(null);
   const handleCartClick = () => setIsCheckoutOpen(true);
 
   const handleVoiceSearchStart = () => {
@@ -150,13 +179,25 @@ const App: React.FC = () => {
           <Route path="/kit-vidrex-clarity-wash" element={<LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />} />
           <Route path="/kit-embellecimiento" element={<LandingPageBeautyKit onBuyNow={handleBuyNow} />} />
           <Route path="/kit-basico-cuidado" element={<LandingPageBasicKit onBuyNow={handleBuyNow} />} />
-          <Route path="/servicios-spa" element={<LandingPageServices />} />
+          <Route path="/spa-automotriz" element={<LandingPageServices />} />
           <Route path="/servicios-adicionales-y-soporte" element={<LandingPageAdditionalServices />} />
           <Route path="/Cera-Hyper-Diamond" element={<LandingPageHyperDiamond onBuyNow={handleBuyNow} />} />
         </Route>
       </Routes>
       
+      {/* Render Quick Buy Modal if a product is selected for quick view */}
+      {quickBuyProduct && (
+        <QuickBuyModal 
+            product={quickBuyProduct} 
+            onClose={handleCloseQuickBuy} 
+            onAddToCartAndCheckout={handleQuickBuyAction}
+            onViewDetails={handleSwitchToDetails}
+        />
+      )}
+
+      {/* Render Full Detail Modal if explicitly requested */}
       {selectedProduct && <ProductModal product={selectedProduct} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
+      
       {isCheckoutOpen && <CheckoutForm cart={cart} setCart={setCart} onClose={() => setIsCheckoutOpen(false)} />}
       <Chatbot allProducts={allProducts} onProductSelect={handleProductSelect} isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} startListening={startVoiceSearch} onListeningEnd={handleListeningEnd} />
     </HashRouter>

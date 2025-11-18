@@ -48,10 +48,10 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
     { href: '/', label: 'Inicio' },
     { href: '/#productos', label: 'Productos' },
     { href: '/#kits', label: 'Kits' },
+    { href: '/spa-automotriz', label: 'Spa Automotriz' },
     { href: '/#nosotros', label: 'Nosotros' },
-    { href: '/servicios-spa', label: 'Spa Automotriz' },
-    { href: '/#faq', label: 'FAQ' },
     { href: '/#contacto', label: 'Contacto' },
+    { href: '/#faq', label: 'FAQ' },
   ];
   
   const handleLinkClick = () => {
@@ -143,10 +143,10 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
             aria-hidden="true"
         ></div>
 
-        {/* Mobile Menu Panel - Right Side Drawer */}
+        {/* Mobile Menu Panel - Left Side Drawer */}
         <div 
             id="mobile-menu"
-            className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white/95 backdrop-blur-2xl shadow-2xl border-l border-white/50 z-50 transition-transform duration-300 ease-in-out md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+            className={`fixed top-0 left-0 h-full w-4/5 max-w-sm bg-white/95 backdrop-blur-2xl shadow-2xl border-r border-white/50 z-50 transition-transform duration-300 ease-in-out md:hidden ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
         >
             <div className="flex justify-between items-center p-5 border-b border-gray-200/50">
                 <h2 className="font-bold text-xl text-gray-800 tracking-tight">Menú</h2>

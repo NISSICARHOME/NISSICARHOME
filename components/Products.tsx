@@ -73,14 +73,14 @@ const productsData: Product[] = [
   },
   {
     id: 'prod-perfume-iq',
-    name: 'Perfume para Auto IQ 250',
+    name: 'Perfume Exclusive NISSI Para Auto Máxima Duración',
     price: 49000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczNGm09XudSQyCC9Y5VONBw73KefzfMTKgBpYO3NtdLHEeAd1ZdBG4gIyWJBWhlt5FaipkPqazrm2yLlKuFNQu7H3bxHw8gjeNEUH-hDYSR_xoSceSMeyIHajfC7rePHuj5tBrDR19SXBRRQXzjz-rnV=w454-h624-s-no-gm?authuser=0',
     shortDesc: 'Aroma con mayor duración para restablecer la armonía de tu cuerpo y mente mientras conduces.',
     category: 'Accesorios',
     details: {
-      title: 'IQ 250 - 300 LOCIÓN',
-      content: '60ML',
+      title: 'Perfume Exclusive NISSI Para Auto Máxima Duración',
+      content: '160 ml',
       description: 'Disfruta de un aroma con mayor duración para restablecer la armonía de tu cuerpo y mente mientras conduces.',
       howToUse: 'Agite antes de usar, active el spray para disfrutar de una fragancia agradable de larga duración.',
       precautions: 'Mantener fuera del alcance de los niños. Si entra en contacto con los ojos, enjuague con abundante agua. En caso de ingerir acuda a su médico.',
@@ -177,7 +177,7 @@ const productsData: Product[] = [
 export const getAllProducts = () => productsData;
 
 const ListIcon: React.FC = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>;
-const GridIcon: React.FC = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>;
+const GridIcon: React.FC = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>;
 
 
 interface ProductCardProps {
