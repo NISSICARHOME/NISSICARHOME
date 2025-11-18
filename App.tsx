@@ -26,6 +26,7 @@ import LandingPageBeautyKit from './pages/LandingPageBeautyKit';
 import LandingPageBasicKit from './pages/LandingPageBasicKit';
 import LandingPageServices from './pages/LandingPageServices';
 import LandingPageAdditionalServices from './pages/LandingPageAdditionalServices';
+import LandingPageHyperDiamond from './pages/LandingPageHyperDiamond';
 
 // --- Helper component to scroll to top on route change ---
 const ScrollToTop = () => {
@@ -151,6 +152,7 @@ const App: React.FC = () => {
           <Route path="/kit-basico-cuidado" element={<LandingPageBasicKit onBuyNow={handleBuyNow} />} />
           <Route path="/servicios-spa" element={<LandingPageServices />} />
           <Route path="/servicios-adicionales-y-soporte" element={<LandingPageAdditionalServices />} />
+          <Route path="/Cera-Hyper-Diamond" element={<LandingPageHyperDiamond onBuyNow={handleBuyNow} />} />
         </Route>
       </Routes>
       
