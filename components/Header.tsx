@@ -60,9 +60,11 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
   
   const controlNavbar = () => {
     if (typeof window !== 'undefined') {
+      // Do not hide navbar if menu is open
+      if (isOpen) return;
+
       if (window.scrollY > lastScrollY && window.scrollY > 100) { // if scroll down hide the navbar
         setIsVisible(false);
-        setIsOpen(false);
       } else { // if scroll up show the navbar
         setIsVisible(true);
       }
@@ -77,67 +79,71 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
         window.removeEventListener('scroll', controlNavbar);
       };
     }
-  }, [lastScrollY]);
+  }, [lastScrollY, isOpen]);
 
 
   return (
-    <header className={`bg-white/20 backdrop-blur-md sticky top-0 z-40 border-b border-white/30 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-      <nav className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-2 md:p-4">
-        <HashLink to="/" onClick={handleLinkClick} className="flex items-center space-x-3 rtl:space-x-reverse">
-          <Logo />
-        </HashLink>
-        <div className="flex items-center md:order-2 space-x-1 md:space-x-3">
-            <button 
-                onClick={onVoiceSearchStart} 
-                className="p-2 text-gray-600 rounded-lg hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
-                aria-label="Buscar por voz"
-            >
-                <MicIcon className="w-6 h-6" />
-            </button>
-            <button 
-              onClick={onCartClick} 
-              className="relative p-2 text-gray-600 rounded-lg hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
-              aria-label="Ver carrito"
-            >
-                <ShoppingCartIcon />
-                {cartItemCount > 0 && (
-                    <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-white">
-                        {cartItemCount}
-                    </span>
-                )}
-            </button>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              type="button"
-              className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-600 rounded-lg md:hidden hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
-              aria-controls="mobile-menu"
-              aria-expanded={isOpen}
-            >
-              <span className="sr-only">Open main menu</span>
-              <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
-              </svg>
-            </button>
-        </div>
-        <div className="hidden w-full md:block md:w-auto md:order-1" id="navbar-default">
-          <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-white/20 rounded-lg bg-white/20 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent">
-            {navItems.map(item => (
-              <li key={item.href}>
-                <NavLink href={item.href} onClick={handleLinkClick} className="py-2 px-3 hover:bg-white/20 md:hover:bg-transparent md:border-0 md:hover:text-amber-500 md:p-0">{item.label}</NavLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </nav>
+    <>
+        <header className={`bg-white/20 backdrop-blur-md sticky top-0 z-40 border-b border-white/30 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+          <nav className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-2 md:p-4">
+            <HashLink to="/" onClick={handleLinkClick} className="flex items-center space-x-3 rtl:space-x-reverse">
+              <Logo />
+            </HashLink>
+            <div className="flex items-center md:order-2 space-x-1 md:space-x-3">
+                <button 
+                    onClick={onVoiceSearchStart} 
+                    className="p-2 text-gray-800 rounded-lg hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    aria-label="Buscar por voz"
+                >
+                    <MicIcon className="w-6 h-6" />
+                </button>
+                <button 
+                  onClick={onCartClick} 
+                  className="relative p-2 text-gray-800 rounded-lg hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  aria-label="Ver carrito"
+                >
+                    <ShoppingCartIcon />
+                    {cartItemCount > 0 && (
+                        <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-white">
+                            {cartItemCount}
+                        </span>
+                    )}
+                </button>
+                {/* Hamburger Menu Button - Visible on Mobile */}
+                <button
+                  onClick={() => setIsOpen(true)}
+                  type="button"
+                  className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-800 rounded-lg md:hidden hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  aria-controls="mobile-menu"
+                  aria-expanded={isOpen}
+                  aria-label="Abrir menú"
+                >
+                  <span className="sr-only">Open main menu</span>
+                  <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
+                  </svg>
+                </button>
+            </div>
+            <div className="hidden w-full md:block md:w-auto md:order-1" id="navbar-default">
+              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-white/20 rounded-lg bg-white/20 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent">
+                {navItems.map(item => (
+                  <li key={item.href}>
+                    <NavLink href={item.href} onClick={handleLinkClick} className="py-2 px-3 hover:bg-white/20 md:hover:bg-transparent md:border-0 md:hover:text-amber-500 md:p-0">{item.label}</NavLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </nav>
+        </header>
 
-        {/* Mobile Menu Overlay */}
+        {/* Mobile Menu Overlay - Outside Header to avoid Transform/Fixed conflict */}
         <div 
-            className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-40 transition-opacity md:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+            className={`fixed inset-0 bg-black/40 backdrop-blur-sm z-50 transition-opacity duration-300 md:hidden ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
             onClick={() => setIsOpen(false)}
             aria-hidden="true"
         ></div>
 
-        {/* Mobile Menu Panel - Styled as White Translucent */}
+        {/* Mobile Menu Panel - Right Side Drawer */}
         <div 
             id="mobile-menu"
             className={`fixed top-0 right-0 h-full w-4/5 max-w-sm bg-white/95 backdrop-blur-2xl shadow-2xl border-l border-white/50 z-50 transition-transform duration-300 ease-in-out md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
@@ -162,7 +168,7 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
                     <span className="font-bold text-gray-800">Búsqueda por Voz</span>
                 </button>
 
-                <ul className="flex flex-col space-y-2">
+                <ul className="flex flex-col space-y-2 pb-20">
                     {navItems.map(item => (
                         <li key={item.href}>
                             <NavLink 
@@ -177,7 +183,7 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
                 </ul>
             </div>
         </div>
-    </header>
+    </>
   );
 };
 
