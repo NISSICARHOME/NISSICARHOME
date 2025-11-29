@@ -1,76 +1,119 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 
-const purchaseNotifications = [
-    {
-        name: "Andrea Z.",
-        location: "Pereira",
-        product: "Cera Hyper Diamond con Blindaje",
-        time: "hace 3 min"
-    },
-    {
-        name: "Andrés M.",
-        location: "Medellín",
-        product: "Kit de Embellecimiento Básico",
-        time: "hace 5 min"
-    },
-    {
-        name: "Catherine M.",
-        location: "Bogotá",
-        product: "Kit Completo Full Detailing",
-        time: "hace 1 min"
-    },
-    {
-        name: "Juan David G.",
-        location: "Cali",
-        product: "Kit Desmanchador de Vidrios",
-        time: "hace 7 min"
-    },
-    {
-        name: "Sofía L.",
-        location: "Manizales",
-        product: "Cera Hyper Diamond",
-        time: "hace 2 min"
-    },
-    {
-        name: "Nuevo Cliente",
-        location: "Bucaramanga",
-        product: "Kit de Limpieza Interna",
-        time: "hace 4 min"
-    }
+// --- 1. DEFINICIÓN DE TIEMPOS ---
+const DISPLAY_DURATION = 3000; // 3 segundos visible
+const WAIT_DURATION = 6000;    // 6 segundos oculto
+const CYCLE_TOTAL = DISPLAY_DURATION + WAIT_DURATION; // 9000ms total del ciclo
+const NOTIFICATION_COUNT = 500;
+
+// --- 2. GENERACIÓN DE DATA ---
+
+const firstNames = [
+  "Juan", "Carlos", "Luis", "José", "Andrés", "David", "Miguel", "Santiago", "Sebastián", "Alejandro",
+  "María", "Ana", "Laura", "Andrea", "Paula", "Daniela", "Sofía", "Valentina", "Camila", "Natalia",
+  "Diego", "Jorge", "Fernando", "Ricardo", "Gabriel", "Mateo", "Nicolás", "Samuel", "Felipe", "Pablo",
+  "Javier", "Manuel", "Cristian", "Camilo", "Esteban", "Julián", "Héctor", "Francisco", "Alberto", "Roberto"
 ];
 
+const lastInitials = [
+  "G.", "M.", "R.", "L.", "P.", "S.", "C.", "V.", "H.", "D.", "T.", "Z.", "B.", "F.", "A.", "J.", "Q.", "E.", "O.", "N.",
+  "X.", "Y.", "U.", "I.", "K."
+];
+
+const cities = [
+  "Pereira", "Bogotá", "Medellín", "Cali", "Barranquilla", "Cartagena", "Bucaramanga", "Manizales", "Ibagué", "Villavicencio",
+  "Santa Marta", "Cúcuta", "Armenia", "Neiva", "Pasto", "Montería", "Valledupar", "Popayán", "Sincelejo", "Tunja"
+];
+
+const products = [
+  "Cera Hyper Diamond con Blindaje",
+  "Kit de Embellecimiento Básico",
+  "Kit Completo Full Detailing",
+  "Kit Desmanchador de Vidrios",
+  "Cera Hyper Diamond",
+  "Kit de Limpieza Interna",
+  "Shampoo pH Neutro",
+  "Restaurador de Partes Negras",
+  "Eliminador de Rayones",
+  "Perfect Llantix",
+  "Vidrex Bloqueador de Manchas"
+];
+
+interface Notification {
+  name: string;
+  location: string;
+  product: string;
+  time: string;
+}
+
+const getRandomTime = () => `hace ${Math.floor(Math.random() * 12) + 1} min`;
+
+const generateNotifications = (count: number): Notification[] => {
+  const notifications: Notification[] = [];
+  
+  for (let i = 0; i < count; i++) {
+    const name = `${firstNames[Math.floor(Math.random() * firstNames.length)]} ${lastInitials[Math.floor(Math.random() * lastInitials.length)]}`;
+    const city = cities[Math.floor(Math.random() * cities.length)];
+    const product = products[Math.floor(Math.random() * products.length)];
+    
+    notifications.push({
+      name,
+      location: city,
+      product,
+      time: getRandomTime()
+    });
+  }
+  return notifications;
+};
+
+// Algoritmo de Fisher-Yates para mezclar
+const shuffleArray = (array: Notification[]) => {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+  }
+  return newArray;
+};
+
 const SocialProofToast: React.FC = () => {
-    const [currentNotification, setCurrentNotification] = useState<typeof purchaseNotifications[0] | null>(null);
+    const [currentNotification, setCurrentNotification] = useState<Notification | null>(null);
     const [isVisible, setIsVisible] = useState(false);
+    
+    // Generar y mezclar las notificaciones una sola vez al montar el componente
+    const notifications = useMemo(() => shuffleArray(generateNotifications(NOTIFICATION_COUNT)), []);
 
     useEffect(() => {
         let index = 0;
         let showTimeout: ReturnType<typeof setTimeout>;
+        let interval: ReturnType<typeof setInterval>;
 
         const cycleNotification = () => {
-            setCurrentNotification(purchaseNotifications[index]);
+            // 1. Mostrar la notificación actual
+            setCurrentNotification(notifications[index]);
             setIsVisible(true);
 
-            // Hide after 6 seconds
+            // 2. Programar ocultamiento
             showTimeout = setTimeout(() => {
                 setIsVisible(false);
-            }, 6000);
+            }, DISPLAY_DURATION);
 
-            index = (index + 1) % purchaseNotifications.length;
+            // 3. Pasar al siguiente índice
+            index = (index + 1) % notifications.length;
         };
 
-        // Initial call
+        // Iniciar el ciclo inmediatamente
         cycleNotification();
 
-        // Cycle every 18 seconds (6s visible + 12s hidden)
-        const interval = setInterval(cycleNotification, 18000);
+        // Configurar el intervalo para las siguientes iteraciones
+        interval = setInterval(cycleNotification, CYCLE_TOTAL);
 
         return () => {
             clearInterval(interval);
             clearTimeout(showTimeout);
         };
-    }, []);
+    }, [notifications]);
 
     if (!currentNotification) return null;
 
