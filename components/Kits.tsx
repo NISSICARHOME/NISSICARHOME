@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { Kit } from '../types';
@@ -145,7 +146,7 @@ const Kits: React.FC = () => {
                             Kits y Complementos
                         </h2>
                         <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-lg text-gray-600">
-                            Soluciones completas y herramientas esenciales para llevar el cuidado de tu vehículo al siguiente nivel.
+                            Soluciones completas y herramientas esenciales para llevar el cuidado de tu vehículo y hogar al siguiente nivel.
                         </p>
                     </div>
                     <div className="space-y-8">

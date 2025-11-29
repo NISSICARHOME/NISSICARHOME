@@ -21,6 +21,7 @@ import QuickBuyModal from './components/shared/QuickBuyModal'; // Import the new
 import CheckoutForm from './components/checkout/CheckoutForm';
 import Chatbot from './components/Chatbot';
 import Filters from './components/Filters';
+import SocialProofToast from './components/shared/SocialProofToast';
 
 // --- Page Imports ---
 import LandingPageVidrexClarityWash from './pages/LandingPageVidrexClarityWash';
@@ -170,6 +171,7 @@ const App: React.FC = () => {
   return (
     <HashRouter>
       <ScrollToTop />
+      <SocialProofToast />
       <Routes>
         <Route path="/" element={<MainLayout cartItemCount={cartItemCount} onCartClick={handleCartClick} onVoiceSearchStart={handleVoiceSearchStart} />}>
           <Route 

@@ -1,3 +1,4 @@
+
 import React, { useMemo, useState } from 'react';
 import { Product, ActiveFilters } from '../types';
 import ProductCarousel from './ProductCarousel';
@@ -73,13 +74,13 @@ const productsData: Product[] = [
   },
   {
     id: 'prod-perfume-iq',
-    name: 'Perfume Exclusive NISSI Para Auto Máxima Duración',
+    name: 'Perfum NISSI CAR',
     price: 49000,
     image: 'https://lh3.googleusercontent.com/pw/AP1GczNGm09XudSQyCC9Y5VONBw73KefzfMTKgBpYO3NtdLHEeAd1ZdBG4gIyWJBWhlt5FaipkPqazrm2yLlKuFNQu7H3bxHw8gjeNEUH-hDYSR_xoSceSMeyIHajfC7rePHuj5tBrDR19SXBRRQXzjz-rnV=w454-h624-s-no-gm?authuser=0',
     shortDesc: 'Aroma con mayor duración para restablecer la armonía de tu cuerpo y mente mientras conduces.',
     category: 'Accesorios',
     details: {
-      title: 'Perfume Exclusive NISSI Para Auto Máxima Duración',
+      title: 'Perfum NISSI CAR',
       content: '160 ml',
       description: 'Disfruta de un aroma con mayor duración para restablecer la armonía de tu cuerpo y mente mientras conduces.',
       howToUse: 'Agite antes de usar, active el spray para disfrutar de una fragancia agradable de larga duración.',
@@ -187,47 +188,106 @@ interface ProductCardProps {
     viewMode: 'list' | 'grid';
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCart, viewMode }) => (
-  <div id={`product-card-${product.id}`} className={`
-    bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl 
-    transition-all duration-300 transform flex group relative hover:z-10 
-    sm:flex-col sm:hover:-translate-y-2 sm:hover:scale-105
-    ${viewMode === 'list' 
-      ? 'flex-row items-center p-2 gap-3' 
-      : 'flex-col hover:-translate-y-2 hover:scale-105'
-    }`
-  }>
+const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCart, viewMode }) => {
+  const [rotate, setRotate] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+
+  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (viewMode === 'list') return;
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // Calculate rotation: center is (0,0)
+    // Limits: +/- 15 degrees tilt
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const rotateY = ((x - centerX) / centerX) * 15; 
+    const rotateX = ((centerY - y) / centerY) * 15;
+
+    setRotate({ x: rotateX, y: rotateY });
+  };
+
+  const onMouseLeave = () => {
+    setIsHovering(false);
+    setRotate({ x: 0, y: 0 });
+  };
+  
+  const onMouseEnter = () => setIsHovering(true);
+
+  return (
     <div 
-      className={`cursor-pointer flex-shrink-0 sm:w-full ${viewMode === 'list' ? 'w-24' : 'w-full'}`} 
-      onClick={onSelect}
+        id={`product-card-${product.id}`}
+        className={`relative z-0 ${viewMode === 'grid' ? 'h-full perspective-container' : 'w-full'}`}
+        style={{ perspective: '1000px' }}
     >
-      <img src={product.image} alt={product.name} className={`
-        w-full object-contain transition-transform duration-500 
-        sm:h-56 sm:p-4 sm:group-hover:scale-125
-        ${viewMode === 'list' ? 'h-24' : 'h-36 p-2 group-hover:scale-110'}`
-      } />
-    </div>
-    <div className={`flex flex-col flex-grow ${viewMode === 'grid' ? 'p-3' : ''}`}>
-      <h3 className={`font-bold text-gray-800 sm:text-xl ${viewMode === 'list' ? 'text-base' : 'text-base mb-1'}`}>{product.name}</h3>
-      <p className={`text-gray-600 flex-grow ${viewMode === 'list' ? 'text-sm hidden sm:block' : 'text-xs block'}`}>{product.shortDesc}</p>
-      <p className={`font-bold text-gray-800 sm:text-lg ${viewMode === 'list' ? 'my-1' : 'mt-2'}`}>{product.price.toLocaleString('es-CO')}</p>
-      <div className="flex gap-1 mt-1">
-        <button 
-            onClick={onSelect} 
-            className="flex-1 bg-white/40 text-gray-800 hover:bg-white/60 backdrop-blur-sm border border-white/50 font-bold rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg text-xs py-1 px-2 sm:text-base sm:py-2 sm:px-4"
+        <div 
+            onMouseMove={onMouseMove}
+            onMouseLeave={onMouseLeave}
+            onMouseEnter={onMouseEnter}
+            onClick={onSelect}
+            className={`
+                cursor-pointer transition-all duration-200 ease-out transform-style-3d
+                ${viewMode === 'list' 
+                    ? 'flex flex-row items-center p-2 gap-3 bg-white/40 backdrop-blur-md border border-white/30 rounded-lg hover:shadow-lg' 
+                    : 'flex flex-col h-full bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-xl'
+                }
+            `}
+            style={viewMode === 'grid' ? {
+                transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(${isHovering ? 1.05 : 1}, ${isHovering ? 1.05 : 1}, ${isHovering ? 1.05 : 1})`,
+                boxShadow: isHovering 
+                    ? '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.2)' 
+                    : '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            } : {}}
         >
-            Detalles
-        </button>
-        <button 
-            onClick={() => onAddToCart(product)} 
-            className="flex-1 bg-amber-500/80 text-white hover:bg-amber-500/100 backdrop-blur-sm border border-amber-400/50 font-bold rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg text-xs py-1 px-2 sm:text-base sm:py-2 sm:px-4"
-        >
-            Añadir
-        </button>
-      </div>
+            <div className={`flex-shrink-0 ${viewMode === 'list' ? 'w-24' : 'w-full p-6'}`}>
+                <div style={{ transform: viewMode === 'grid' && isHovering ? 'translateZ(50px)' : 'translateZ(0)', transition: 'transform 0.2s' }}>
+                    <img src={product.image} alt={product.name} className={`
+                        w-full object-contain drop-shadow-lg
+                        ${viewMode === 'list' ? 'h-24' : 'h-48'}`
+                    } />
+                </div>
+            </div>
+            
+            <div className={`flex flex-col flex-grow ${viewMode === 'grid' ? 'p-5 pt-0' : ''}`} style={{ transform: viewMode === 'grid' && isHovering ? 'translateZ(30px)' : 'translateZ(0)', transition: 'transform 0.2s' }}>
+                <h3 className={`font-bold text-gray-800 ${viewMode === 'list' ? 'text-base' : 'text-lg mb-2 leading-tight'}`}>{product.name}</h3>
+                <p className={`text-gray-600 flex-grow ${viewMode === 'list' ? 'text-sm hidden sm:block' : 'text-xs mb-3'}`}>{product.shortDesc}</p>
+                
+                <div className={`${viewMode === 'list' ? 'flex items-center gap-4' : 'mt-auto'}`}>
+                    <p className={`font-bold text-amber-600 ${viewMode === 'list' ? 'text-lg' : 'text-xl mb-3'}`}>{product.price.toLocaleString('es-CO')}</p>
+                    
+                    <div className={`flex gap-2 ${viewMode === 'list' ? 'flex-1' : 'w-full'}`}>
+                        <button 
+                            onClick={(e) => { e.stopPropagation(); onSelect(); }} 
+                            className="flex-1 bg-white/50 text-gray-800 hover:bg-white/80 backdrop-blur-sm border border-white/50 font-bold rounded-lg transition-all duration-300 active:scale-95 shadow-sm hover:shadow-md text-xs py-2 px-3 sm:text-sm"
+                        >
+                            Detalles
+                        </button>
+                        <button 
+                            onClick={(e) => { e.stopPropagation(); onAddToCart(product); }} 
+                            className="flex-1 bg-amber-500 text-white hover:bg-amber-600 backdrop-blur-sm border border-amber-400 font-bold rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg text-xs py-2 px-3 sm:text-sm"
+                        >
+                            Añadir
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            {/* Glossy reflection effect for grid view */}
+            {viewMode === 'grid' && (
+                <div 
+                    className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{
+                        background: `linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.05) 100%)`
+                    }}
+                />
+            )}
+        </div>
     </div>
-  </div>
-);
+  );
+};
 
 interface ProductsProps {
     onAddToCart: (product: Product) => void;
@@ -237,7 +297,7 @@ interface ProductsProps {
 }
 
 const Products: React.FC<ProductsProps> = ({ onAddToCart, searchTerm, activeFilters, onProductSelect }) => {
-  const [viewMode, setViewMode] = useState<'list' | 'grid'>('list');
+  const [viewMode, setViewMode] = useState<'list' | 'grid'>('grid');
 
   const filteredProducts = useMemo(() => {
     return productsData
@@ -294,7 +354,7 @@ const Products: React.FC<ProductsProps> = ({ onAddToCart, searchTerm, activeFilt
               </button>
             </div>
 
-            <div className={`grid gap-4 sm:gap-8 ${viewMode === 'list' ? 'grid-cols-1' : 'grid-cols-2'} sm:grid-cols-2 lg:grid-cols-4`}>
+            <div className={`grid gap-6 sm:gap-10 ${viewMode === 'list' ? 'grid-cols-1' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'}`}>
               {filteredProducts.map((product) => (
                 <ProductCard key={product.id} product={product} onSelect={() => onProductSelect(product)} onAddToCart={onAddToCart} viewMode={viewMode} />
               ))}
@@ -308,6 +368,11 @@ const Products: React.FC<ProductsProps> = ({ onAddToCart, searchTerm, activeFilt
           </div>
         </div>
       </section>
+      <style>{`
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+      `}</style>
     </>
   );
 };
