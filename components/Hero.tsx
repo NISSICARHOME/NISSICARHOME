@@ -1,18 +1,16 @@
+
 import React, { useState, useEffect } from 'react';
 import { HashLink } from 'react-router-hash-link';
 
 const Hero: React.FC = () => {
   const [offsetY, setOffsetY] = useState(0);
 
-  // The parallax effect will be more pronounced, moving the image at 50% of the scroll speed.
   const handleScroll = () => {
       setOffsetY(window.scrollY * 0.5);
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-
-    // Cleanup function to remove the event listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -21,10 +19,11 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 z-0">
         <img
           src="https://lh3.googleusercontent.com/pw/AP1GczNIHbCiguqpiOuBUgDaCQ-J9cc5bGgxOZRQ44AnIGcJ7fJeZa35oyUR7OPjtMWN9bGjx6WJP923lmTmfbxXaULHqx5u9TknTxnV7PsTWfj-FmvfZ9V4Of5YF-7KJubKHECYkm4LdpBiPNLBFd403KU=w1487-h991-s-no-gm?authuser=0"
-          alt="Vehículo detallado"
-          // Make image taller and position it absolutely to allow for parallax movement without showing edges.
+          alt="Vehículo detallado profesionalmente"
           className="absolute top-0 left-0 w-full min-h-[120vh] object-cover"
           style={{ transform: `translateY(${offsetY}px)` }}
+          fetchpriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-black opacity-50"></div>
       </div>

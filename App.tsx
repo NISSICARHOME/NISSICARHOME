@@ -1,35 +1,45 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 
 // --- Type Imports ---
 import { Product, CartItem, ActiveFilters } from './types';
 
-// --- Component Imports ---
+// --- Static Component Imports (Critical Path) ---
 import Header from './components/Header';
 import Hero from './components/Hero';
-import About from './components/About';
-import Products, { getAllProducts } from './components/Products';
-import Kits from './components/Kits';
-import Services from './components/Services';
-import FAQ from './components/FAQ';
-import Policies from './components/Policies';
-import PaymentMethods from './components/PaymentMethods';
 import Footer from './components/Footer';
-import ProductModal from './components/shared/ProductModal';
-import QuickBuyModal from './components/shared/QuickBuyModal'; // Import the new Modal
-import CheckoutForm from './components/checkout/CheckoutForm';
-import Chatbot from './components/Chatbot';
 import Filters from './components/Filters';
 import SocialProofToast from './components/shared/SocialProofToast';
+import { getAllProducts } from './components/Products';
 
-// --- Page Imports ---
-import LandingPageVidrexClarityWash from './pages/LandingPageVidrexClarityWash';
-import LandingPageBeautyKit from './pages/LandingPageBeautyKit';
-import LandingPageBasicKit from './pages/LandingPageBasicKit';
-import LandingPageServices from './pages/LandingPageServices';
-import LandingPageAdditionalServices from './pages/LandingPageAdditionalServices';
-import LandingPageHyperDiamond from './pages/LandingPageHyperDiamond';
+// --- Lazy Loaded Components (Optimized Path) ---
+const About = lazy(() => import('./components/About'));
+const Products = lazy(() => import('./components/Products'));
+const Kits = lazy(() => import('./components/Kits'));
+const Services = lazy(() => import('./components/Services'));
+const FAQ = lazy(() => import('./components/FAQ'));
+const Policies = lazy(() => import('./components/Policies'));
+const PaymentMethods = lazy(() => import('./components/PaymentMethods'));
+const ProductModal = lazy(() => import('./components/shared/ProductModal'));
+const QuickBuyModal = lazy(() => import('./components/shared/QuickBuyModal'));
+const CheckoutForm = lazy(() => import('./components/checkout/CheckoutForm'));
+const Chatbot = lazy(() => import('./components/Chatbot'));
+
+// --- Lazy Loaded Pages ---
+const LandingPageVidrexClarityWash = lazy(() => import('./pages/LandingPageVidrexClarityWash'));
+const LandingPageBeautyKit = lazy(() => import('./pages/LandingPageBeautyKit'));
+const LandingPageBasicKit = lazy(() => import('./pages/LandingPageBasicKit'));
+const LandingPageServices = lazy(() => import('./pages/LandingPageServices'));
+const LandingPageAdditionalServices = lazy(() => import('./pages/LandingPageAdditionalServices'));
+const LandingPageHyperDiamond = lazy(() => import('./pages/LandingPageHyperDiamond'));
+
+// --- Simple Loading Component ---
+const SectionLoader = () => (
+  <div className="w-full py-20 flex justify-center items-center">
+    <div className="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
 // --- Helper component to scroll to top on route change ---
 const ScrollToTop = () => {
@@ -63,7 +73,7 @@ const HomePage: React.FC<{
   activeFilters: ActiveFilters;
   setActiveFilters: React.Dispatch<React.SetStateAction<ActiveFilters>>;
 }> = ({ onProductSelect, onAddToCart, searchTerm, activeFilters, setActiveFilters }) => (
-  <>
+  <Suspense fallback={<SectionLoader />}>
     <Hero />
     <Filters activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
     <Products onProductSelect={onProductSelect} onAddToCart={onAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} />
@@ -73,15 +83,14 @@ const HomePage: React.FC<{
     <FAQ />
     <Policies />
     <PaymentMethods />
-  </>
+  </Suspense>
 );
 
 // --- Main App Component ---
 const App: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null); // For Full Details Modal
-  const [quickBuyProduct, setQuickBuyProduct] = useState<Product | null>(null); // For Quick Buy Modal
-  
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [quickBuyProduct, setQuickBuyProduct] = useState<Product | null>(null);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [startVoiceSearch, setStartVoiceSearch] = useState(false);
@@ -99,55 +108,38 @@ const App: React.FC = () => {
       const existingItem = prevCart.find(item => item.id === productToAdd.id);
       if (existingItem) {
         return prevCart.map(item =>
-          item.id === productToAdd.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
+          item.id === productToAdd.id ? { ...item, quantity: item.quantity + quantity } : item
         );
-      } else {
-        return [...prevCart, {
-          id: productToAdd.id,
-          name: productToAdd.name,
-          price: productToAdd.price,
-          quantity: quantity
-        }];
       }
+      return [...prevCart, { id: productToAdd.id, name: productToAdd.name, price: productToAdd.price, quantity }];
     });
   };
 
   const handleBuyNow = (item: CartItem) => {
-    // Adds a specific item (usually a kit from a landing page) and opens checkout
     setCart(prevCart => {
         const existingItem = prevCart.find(i => i.id === item.id);
         if (existingItem) {
-            return prevCart.map(i => 
-                i.id === item.id 
-                ? { ...i, quantity: i.quantity + item.quantity } 
-                : i
-            );
+            return prevCart.map(i => i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i);
         }
         return [...prevCart, item];
     });
     setIsCheckoutOpen(true);
   };
   
-  // Triggered by clicking on a Product Card - Opens Quick Buy Modal OR Navigates to Landing Page
   const handleProductSelect = (product: Product) => {
       if (product.id === 'prod-hyper-diamond') {
-          // Direct navigation for Hyper Diamond Landing Page
           window.location.hash = "/Cera-Hyper-Diamond";
       } else {
           setQuickBuyProduct(product);
       }
   };
 
-  // Triggered from Quick Buy Modal "Add to Cart & Checkout"
   const handleQuickBuyAction = (product: Product) => {
       handleAddToCart(product);
-      setQuickBuyProduct(null); // Close quick modal
-      setIsCheckoutOpen(true); // Open checkout directly
+      setQuickBuyProduct(null);
+      setIsCheckoutOpen(true);
   };
 
-  // Triggered from Quick Buy Modal "View Details"
   const handleSwitchToDetails = () => {
       if (quickBuyProduct) {
           setSelectedProduct(quickBuyProduct);
@@ -165,43 +157,39 @@ const App: React.FC = () => {
   };
 
   const handleListeningEnd = () => setStartVoiceSearch(false);
-  
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <HashRouter>
       <ScrollToTop />
       <SocialProofToast />
-      <Routes>
-        <Route path="/" element={<MainLayout cartItemCount={cartItemCount} onCartClick={handleCartClick} onVoiceSearchStart={handleVoiceSearchStart} />}>
-          <Route 
-            index 
-            element={<HomePage onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} setActiveFilters={setActiveFilters} />} 
+      <Suspense fallback={<SectionLoader />}>
+        <Routes>
+          <Route path="/" element={<MainLayout cartItemCount={cartItemCount} onCartClick={handleCartClick} onVoiceSearchStart={handleVoiceSearchStart} />}>
+            <Route index element={<HomePage onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} setActiveFilters={setActiveFilters} />} />
+            <Route path="/kit-vidrex-clarity-wash" element={<LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />} />
+            <Route path="/kit-embellecimiento" element={<LandingPageBeautyKit onBuyNow={handleBuyNow} />} />
+            <Route path="/kit-basico-cuidado" element={<LandingPageBasicKit onBuyNow={handleBuyNow} />} />
+            <Route path="/spa-automotriz" element={<LandingPageServices />} />
+            <Route path="/servicios-adicionales-y-soporte" element={<LandingPageAdditionalServices />} />
+            <Route path="/Cera-Hyper-Diamond" element={<LandingPageHyperDiamond onBuyNow={handleBuyNow} />} />
+          </Route>
+        </Routes>
+      </Suspense>
+      
+      <Suspense fallback={null}>
+        {quickBuyProduct && (
+          <QuickBuyModal 
+              product={quickBuyProduct} 
+              onClose={handleCloseQuickBuy} 
+              onAddToCartAndCheckout={handleQuickBuyAction}
+              onViewDetails={handleSwitchToDetails}
           />
-          <Route path="/kit-vidrex-clarity-wash" element={<LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />} />
-          <Route path="/kit-embellecimiento" element={<LandingPageBeautyKit onBuyNow={handleBuyNow} />} />
-          <Route path="/kit-basico-cuidado" element={<LandingPageBasicKit onBuyNow={handleBuyNow} />} />
-          <Route path="/spa-automotriz" element={<LandingPageServices />} />
-          <Route path="/servicios-adicionales-y-soporte" element={<LandingPageAdditionalServices />} />
-          <Route path="/Cera-Hyper-Diamond" element={<LandingPageHyperDiamond onBuyNow={handleBuyNow} />} />
-        </Route>
-      </Routes>
-      
-      {/* Render Quick Buy Modal if a product is selected for quick view */}
-      {quickBuyProduct && (
-        <QuickBuyModal 
-            product={quickBuyProduct} 
-            onClose={handleCloseQuickBuy} 
-            onAddToCartAndCheckout={handleQuickBuyAction}
-            onViewDetails={handleSwitchToDetails}
-        />
-      )}
-
-      {/* Render Full Detail Modal if explicitly requested */}
-      {selectedProduct && <ProductModal product={selectedProduct} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
-      
-      {isCheckoutOpen && <CheckoutForm cart={cart} setCart={setCart} onClose={() => setIsCheckoutOpen(false)} />}
-      <Chatbot allProducts={allProducts} onProductSelect={handleProductSelect} isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} startListening={startVoiceSearch} onListeningEnd={handleListeningEnd} />
+        )}
+        {selectedProduct && <ProductModal product={selectedProduct} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
+        {isCheckoutOpen && <CheckoutForm cart={cart} setCart={setCart} onClose={() => setIsCheckoutOpen(false)} />}
+        <Chatbot allProducts={allProducts} onProductSelect={handleProductSelect} isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} startListening={startVoiceSearch} onListeningEnd={handleListeningEnd} />
+      </Suspense>
     </HashRouter>
   );
 };

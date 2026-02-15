@@ -66,7 +66,7 @@ const productsData: Product[] = [
     details: {
       content: '250 ml',
       description: 'Esta fórmula de un excelente brillo, un acabado definido que protege la superficie.',
-      howToUse: 'Agite antes de usar, aplique directamente sobre la superficie y frote con una espuma para lograr un buen acabado.',
+      howToUse: 'Agite antes de usar, aplique directamente sobre la superficie and frote con una espuma para lograr un buen acabado.',
       precautions: 'Mantener fuera del alcance de los niños. si entra en contacto con los ojos enjuague con abundante agua, en caso de ingestión acuda a su médico.',
       composition: 'Agua, goma hidratante, filtro UV, cera carnauba, polímero, propilenglicol, color y fragancia.',
       barcode: '7708329918897'
@@ -189,69 +189,34 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCart, viewMode }) => {
-  const [rotate, setRotate] = useState({ x: 0, y: 0 });
-  const [isHovering, setIsHovering] = useState(false);
-
-  const onMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (viewMode === 'list') return;
-    const card = e.currentTarget;
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    // Calculate rotation: center is (0,0)
-    // Limits: +/- 15 degrees tilt
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    const rotateY = ((x - centerX) / centerX) * 15; 
-    const rotateX = ((centerY - y) / centerY) * 15;
-
-    setRotate({ x: rotateX, y: rotateY });
-  };
-
-  const onMouseLeave = () => {
-    setIsHovering(false);
-    setRotate({ x: 0, y: 0 });
-  };
-  
-  const onMouseEnter = () => setIsHovering(true);
-
   return (
     <div 
         id={`product-card-${product.id}`}
-        className={`relative z-0 ${viewMode === 'grid' ? 'h-full perspective-container' : 'w-full'}`}
-        style={{ perspective: '1000px' }}
+        className={`relative z-0 ${viewMode === 'grid' ? 'h-full hover:z-10' : 'w-full'}`}
     >
         <div 
-            onMouseMove={onMouseMove}
-            onMouseLeave={onMouseLeave}
-            onMouseEnter={onMouseEnter}
             onClick={onSelect}
             className={`
-                cursor-pointer transition-all duration-200 ease-out transform-style-3d
+                cursor-pointer transition-all duration-300 ease-out
                 ${viewMode === 'list' 
                     ? 'flex flex-row items-center p-2 gap-3 bg-white/40 backdrop-blur-md border border-white/30 rounded-lg hover:shadow-lg' 
-                    : 'flex flex-col h-full bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-xl'
+                    : 'flex flex-col h-full bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-110'
                 }
             `}
-            style={viewMode === 'grid' ? {
-                transform: `rotateX(${rotate.x}deg) rotateY(${rotate.y}deg) scale3d(${isHovering ? 1.05 : 1}, ${isHovering ? 1.05 : 1}, ${isHovering ? 1.05 : 1})`,
-                boxShadow: isHovering 
-                    ? '0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.2)' 
-                    : '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-            } : {}}
         >
             <div className={`flex-shrink-0 ${viewMode === 'list' ? 'w-24' : 'w-full p-6'}`}>
-                <div style={{ transform: viewMode === 'grid' && isHovering ? 'translateZ(50px)' : 'translateZ(0)', transition: 'transform 0.2s' }}>
+                <div>
                     <img src={product.image} alt={product.name} className={`
                         w-full object-contain drop-shadow-lg
                         ${viewMode === 'list' ? 'h-24' : 'h-48'}`
-                    } />
+                    } 
+                    loading="lazy"
+                    decoding="async"
+                    />
                 </div>
             </div>
             
-            <div className={`flex flex-col flex-grow ${viewMode === 'grid' ? 'p-5 pt-0' : ''}`} style={{ transform: viewMode === 'grid' && isHovering ? 'translateZ(30px)' : 'translateZ(0)', transition: 'transform 0.2s' }}>
+            <div className={`flex flex-col flex-grow ${viewMode === 'grid' ? 'p-5 pt-0' : ''}`}>
                 <h3 className={`font-bold text-gray-800 ${viewMode === 'list' ? 'text-base' : 'text-lg mb-2 leading-tight'}`}>{product.name}</h3>
                 <p className={`text-gray-600 flex-grow ${viewMode === 'list' ? 'text-sm hidden sm:block' : 'text-xs mb-3'}`}>{product.shortDesc}</p>
                 
@@ -274,16 +239,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCar
                     </div>
                 </div>
             </div>
-            
-            {/* Glossy reflection effect for grid view */}
-            {viewMode === 'grid' && (
-                <div 
-                    className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                    style={{
-                        background: `linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.05) 100%)`
-                    }}
-                />
-            )}
         </div>
     </div>
   );
@@ -368,11 +323,6 @@ const Products: React.FC<ProductsProps> = ({ onAddToCart, searchTerm, activeFilt
           </div>
         </div>
       </section>
-      <style>{`
-        .transform-style-3d {
-            transform-style: preserve-3d;
-        }
-      `}</style>
     </>
   );
 };
