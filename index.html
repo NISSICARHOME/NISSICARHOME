@@ -1,15 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Nissi Car Home | Detailing y Cuidado Profesional</title>
-    
-    <!-- Preconectar a dominios de activos externos para ahorrar tiempo de red -->
-    <link rel="preconnect" href="https://lh3.googleusercontent.com">
-    <link rel="preconnect" href="https://aistudiocdn.com">
-    
+    <title>Nissi car-homes</title>
     <script src="https://cdn.tailwindcss.com"></script>
   <script type="importmap">
 {
@@ -24,14 +18,11 @@
 }
 </script>
 <style>
-  :root {
-    --bg-color: #e0e5ec;
-  }
   body {
-    background-color: var(--bg-color);
-    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #e0e5ec;
+    font-family: sans-serif;
     -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
+    -moz-osx-font-smoothing: grayscale;
   }
   .shadow-neumorphic-outset {
     box-shadow: 12px 12px 24px #babecc, -12px -12px 24px #ffffff;
@@ -44,19 +35,15 @@
     scrollbar-width: none;
   }
   @keyframes pulse-scale {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.08); }
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.08);
+    }
   }
   .animate-pulse-scale {
     animation: pulse-scale 2s infinite ease-in-out;
-  }
-  /* Optimización para renderizado de contenido largo */
-  section {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 500px;
-  }
-  #inicio {
-    content-visibility: visible;
   }
 </style>
 </head>

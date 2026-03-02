@@ -1,7 +1,6 @@
 
 import React, { useMemo, useState } from 'react';
 import { Product, ActiveFilters } from '../types';
-import ProductCarousel from './ProductCarousel';
 
 const productsData: Product[] = [
   {
@@ -32,7 +31,7 @@ const productsData: Product[] = [
       content: '300Gr',
       features: ['Desaparece depósitos de minerales', 'Suprime manchas en acrílico', 'Elimina moho y hongos', 'Mejor precio 100% garantizado'],
       description: 'Desmancha los vidrios devolviendo el brillo, permitiendo una visualización clara; elimina tallones en la pintura y desmancha las farolas externamente.',
-      howToUse: 'Aplique el producto a la zona que desee tratar. Frote el GLASS POLISHER uniformemente por secciones. Si el producto se seca hidrátelo con agua las veces que desee hasta lograr el resultado deseado.',
+      howToUse: 'Aplique el producto a la zona que desee tratar. Frote el GLASS POLISHER uniformemente por secciones. Si el producto se seca hidrátelo con agua las veces que desee hasta lograr el resultado deaseado.',
       precautions: 'Mantener fuera del alcance de los niños. Si entra en contacto con los ojos enjuague con abundante agua. En caso de ingerir acuda a su médico.',
       composition: 'Monóxido de dihidrógeno, antiempañante, desengrasante, preservante, color y fragancia.',
       barcode: '7708329910354'
@@ -66,7 +65,7 @@ const productsData: Product[] = [
     details: {
       content: '250 ml',
       description: 'Esta fórmula de un excelente brillo, un acabado definido que protege la superficie.',
-      howToUse: 'Agite antes de usar, aplique directamente sobre la superficie and frote con una espuma para lograr un buen acabado.',
+      howToUse: 'Agite antes de usar, aplique directamente sobre la superficie y frote con una espuma para lograr un buen acabado.',
       precautions: 'Mantener fuera del alcance de los niños. si entra en contacto con los ojos enjuague con abundante agua, en caso de ingestión acuda a su médico.',
       composition: 'Agua, goma hidratante, filtro UV, cera carnauba, polímero, propilenglicol, color y fragancia.',
       barcode: '7708329918897'
@@ -168,7 +167,7 @@ const productsData: Product[] = [
     category: 'Accesorios',
     details: {
       description: 'Aplicador redondo profesional de textura blanda, diseñado para la aplicación segura y uniforme de ceras, selladores y acondicionadores. Su ergonomía permite un control superior.',
-      howToUse: 'Coloque una pequeña cantidad del producto deseado sobre el aplicador. Distribuya sobre la superficie con movimientos suaves y circulares. Lave con agua y jabón neutro después de cada uso y deje secar al aire.',
+      howToUse: 'Coloque una pequeña cantidad del producto deseado sobre el aplicador. Distribuya sobre la superficie con movimientos suaves y circulares. Lave con agua and jabón neutro después de cada uso y deje secar al aire.',
       precautions: 'No usar con solventes fuertes. Mantener limpio para evitar contaminación cruzada de productos.',
       composition: 'Espuma de poliuretano de alta calidad y densidad controlada.'
     }
@@ -209,10 +208,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCar
                     <img src={product.image} alt={product.name} className={`
                         w-full object-contain drop-shadow-lg
                         ${viewMode === 'list' ? 'h-24' : 'h-48'}`
-                    } 
-                    loading="lazy"
-                    decoding="async"
-                    />
+                    } />
                 </div>
             </div>
             
@@ -275,11 +271,7 @@ const Products: React.FC<ProductsProps> = ({ onAddToCart, searchTerm, activeFilt
 
   return (
     <>
-      <section className="py-10">
-        <ProductCarousel products={productsData} onProductSelect={onProductSelect} />
-      </section>
-
-      <section id="productos" className="pb-20">
+      <section id="productos" className="pb-20 pt-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset">
             <div className="text-center mb-8 sm:mb-16">
