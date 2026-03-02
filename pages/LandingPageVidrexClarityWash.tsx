@@ -233,26 +233,53 @@ const LandingHowToUse: React.FC = () => {
     return (
         <section className="bg-white py-16 px-4">
             <div className="max-w-6xl mx-auto">
-                 <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">KIT VIDEX + CLARITY WASH vs. LIMPIADORES COMUNES</h2>
-                 <div className="grid md:grid-cols-2 gap-8 text-lg mb-16">
-                     <div className="border-2 border-green-500 p-6 rounded-lg">
-                         <h3 className="text-2xl font-bold text-green-700 mb-4">KIT NISSI CAR HOME</h3>
-                         <ul className="space-y-3">
-                             <li className="flex items-start"><span className="text-green-500 font-bold mr-2">✅</span> Elimina sarro, lluvia ácida y moho</li>
-                             <li className="flex items-start"><span className="text-green-500 font-bold mr-2">✅</span> Pule y restaura (farolas, acrílicos)</li>
-                             <li className="flex items-start"><span className="text-green-500 font-bold mr-2">✅</span> Crea una capa protectora (Protección Anti Manchas)</li>
-                             <li className="flex items-start"><span className="text-green-500 font-bold mr-2">✅</span> Resultados garantizados por 365 días</li>
-                             <li className="flex items-start"><span className="text-green-500 font-bold mr-2">✅</span> Resultados inmediatos</li>
+                 <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">KIT VIDREX + CLARITY WASH vs. LIMPIADORES COMUNES</h2>
+                 
+                 <div className="max-w-5xl mx-auto mb-16 overflow-hidden rounded-2xl shadow-xl border border-gray-100 flex flex-col md:flex-row">
+                     {/* Nissi Side */}
+                     <div className="flex-1 bg-green-50/30 p-8 border-b md:border-b-0 md:border-r border-gray-100">
+                         <div className="flex flex-col items-center mb-6">
+                             <div className="w-full aspect-video mb-4 rounded-lg overflow-hidden shadow-sm flex items-center justify-center bg-white">
+                                 <img 
+                                     src="https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0" 
+                                     alt="Kit Nissi" 
+                                     className="w-full h-full object-contain drop-shadow-md"
+                                     referrerPolicy="no-referrer"
+                                 />
+                             </div>
+                             <h3 className="text-2xl font-bold text-green-700">KIT VIDREX - CLARITY WASH</h3>
+                             <p className="text-sm text-green-600 font-medium">La Solución Profesional</p>
+                         </div>
+                         <ul className="space-y-4 text-lg">
+                             <li className="flex items-start"><span className="text-green-500 font-bold mr-3 text-xl">✅</span> <span className="text-gray-700">Elimina sarro, lluvia ácida y moho</span></li>
+                             <li className="flex items-start"><span className="text-green-500 font-bold mr-3 text-xl">✅</span> <span className="text-gray-700">Pule y restaura (farolas, acrílicos)</span></li>
+                             <li className="flex items-start"><span className="text-green-500 font-bold mr-3 text-xl">✅</span> <span className="text-gray-700">Crea una capa protectora duradera</span></li>
+                             <li className="flex items-start"><span className="text-green-500 font-bold mr-3 text-xl">✅</span> <span className="text-gray-700">Resultados garantizados por 365 días</span></li>
+                             <li className="flex items-start"><span className="text-green-500 font-bold mr-3 text-xl">✅</span> <span className="text-gray-700">Resultados inmediatos y profundos</span></li>
                          </ul>
                      </div>
-                     <div className="border-2 border-red-500 p-6 rounded-lg">
-                         <h3 className="text-2xl font-bold text-red-700 mb-4">Limpiavidrios Comunes</h3>
-                         <ul className="space-y-3">
-                             <li className="flex items-start"><span className="text-red-500 font-bold mr-2">❌</span> Solo limpian polvo superficial</li>
-                             <li className="flex items-start"><span className="text-red-500 font-bold mr-2">❌</span> No tienen poder de pulido</li>
-                             <li className="flex items-start"><span className="text-red-500 font-bold mr-2">❌</span> Se mancha con la primera lluvia</li>
-                             <li className="flex items-start"><span className="text-red-500 font-bold mr-2">❌</span> Sin garantía de resultados</li>
-                             <li className="flex items-start"><span className="text-red-500 font-bold mr-2">❌</span> Requieren múltiples pasadas</li>
+
+                     {/* Common Side */}
+                     <div className="flex-1 bg-gray-50/50 p-8">
+                         <div className="flex flex-col items-center mb-6">
+                             <div className="w-full aspect-video mb-4 rounded-lg overflow-hidden shadow-sm">
+                                 <iframe 
+                                     src="https://drive.google.com/file/d/1CVHZLXYfA_CEWU5sMwNgRzUzNqt4cHnt/preview" 
+                                     width="100%" 
+                                     height="100%" 
+                                     allow="autoplay"
+                                     className="border-0"
+                                 ></iframe>
+                             </div>
+                             <h3 className="text-2xl font-bold text-gray-500">Limpiavidrios Comunes</h3>
+                             <p className="text-sm text-gray-400 font-medium">Productos de Supermercado</p>
+                         </div>
+                         <ul className="space-y-4 text-lg">
+                             <li className="flex items-start"><span className="text-red-400 font-bold mr-3 text-xl">❌</span> <span className="text-gray-500 italic">Solo limpian polvo superficial</span></li>
+                             <li className="flex items-start"><span className="text-red-400 font-bold mr-3 text-xl">❌</span> <span className="text-gray-500 italic">No tienen poder de pulido</span></li>
+                             <li className="flex items-start"><span className="text-red-400 font-bold mr-3 text-xl">❌</span> <span className="text-gray-500 italic">Se mancha con la primera lluvia</span></li>
+                             <li className="flex items-start"><span className="text-red-400 font-bold mr-3 text-xl">❌</span> <span className="text-gray-500 italic">Sin garantía de resultados</span></li>
+                             <li className="flex items-start"><span className="text-red-400 font-bold mr-3 text-xl">❌</span> <span className="text-gray-500 italic">Requieren múltiples pasadas</span></li>
                          </ul>
                      </div>
                  </div>
@@ -286,22 +313,39 @@ const LandingHowToUse: React.FC = () => {
 
 const LandingOffer: React.FC = () => {
     return (
-        <section className="bg-gray-800 text-white py-16 px-4">
-            <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl md:text-4xl font-extrabold mb-4">¡PROMOCIÓN POR TIEMPO LIMITADO!</h2>
-                <p className="text-xl text-yellow-300 mb-2">PIDE EL TUYO HOY Y PAGA AL RECIBIR</p>
-                <p className="text-lg text-red-400 font-bold mb-8">STOCK LIMITADO - QUEDAN POCAS UNIDADES</p>
-                <div className="bg-white text-gray-800 rounded-lg p-8 text-left max-w-2xl mx-auto">
-                    <h3 className="text-2xl font-bold text-center mb-6">¿QUÉ INCLUYE TU COMPRA?</h3>
-                    <ul className="space-y-4">
-                        <CheckListItem><strong>1 Crema Pulidora CLARITY WASH (300gr):</strong> La base para desmanchar y pulir.</CheckListItem>
-                        <CheckListItem><strong>1 Gel Sellador VIDREX BLOQUEADOR DE MANCHAS (120ml):</strong> El poder para eliminar lo imposible y proteger.</CheckListItem>
-                        <CheckListItem><span className="bg-yellow-300 px-2 py-1 rounded">GRATIS:</span> 2 Aplicadores de espuma (blanda).</CheckListItem>
-                        <CheckListItem><span className="bg-yellow-300 px-2 py-1 rounded">GRATIS (OBSEQUIO ADICIONAL):</span> 1 Toalla de Microfibra.</CheckListItem>
-                        <CheckListItem><span className="bg-yellow-300 px-2 py-1 rounded">GRATIS:</span> Manual rápido de aplicación.</CheckListItem>
-                        <CheckListItem><span className="bg-yellow-300 px-2 py-1 rounded">GRATIS:</span> Envío a toda Colombia.</CheckListItem>
-                        <CheckListItem><span className="font-bold">GARANTÍA:</span> Compra 100% segura y garantizada por 365 días.</CheckListItem>
+        <section className="bg-gray-50 py-20 px-4">
+            <div className="max-w-5xl mx-auto text-center">
+                <h2 className="text-3xl md:text-4xl font-extrabold mb-3 text-gray-900 tracking-tight">¡PROMOCIÓN POR TIEMPO LIMITADO!</h2>
+                <p className="text-xl text-gray-600 mb-2 font-medium">PIDE EL TUYO HOY Y PAGA AL RECIBIR</p>
+                <p className="text-lg text-red-600 font-semibold mb-12 animate-pulse">STOCK LIMITADO - QUEDAN POCAS UNIDADES</p>
+                
+                <div className="bg-white text-gray-800 rounded-3xl p-8 md:p-12 text-left max-w-3xl mx-auto shadow-xl border border-gray-100">
+                    <h3 className="text-2xl md:text-3xl font-bold text-center mb-10 text-gray-900 tracking-tight">¿QUÉ INCLUYE EL KIT?</h3>
+                    <ul className="space-y-6">
+                        <CheckListItem>
+                            <span className="font-bold text-lg text-gray-800">Activador y Porcelanizador:</span> 1 Crema Clarity Wash (300 gr).
+                        </CheckListItem>
+                        <CheckListItem>
+                            <span className="font-bold text-lg text-gray-800">Potencializador y Bloqueador:</span> 1 Vidrex (120 ml).
+                        </CheckListItem>
+                        <CheckListItem>
+                            <span className="bg-yellow-400 px-3 py-1 rounded-full font-bold text-xs uppercase tracking-wider mr-2">GRATIS</span> 
+                            <span className="font-bold text-lg text-gray-800">Segundo Potencializador</span> de obsequio.
+                        </CheckListItem>
+                        <CheckListItem>
+                            <span className="bg-yellow-400 px-3 py-1 rounded-full font-bold text-xs uppercase tracking-wider mr-2">GRATIS</span> 
+                            <span className="font-bold text-lg text-gray-800">Aplicador Profesional</span> de espuma.
+                        </CheckListItem>
+                        <CheckListItem>
+                            <span className="font-bold text-lg text-gray-800">Asesoría:</span> Acompañamiento y soporte completo.
+                        </CheckListItem>
+                        <CheckListItem>
+                            <span className="font-bold text-lg text-gray-800">Garantía:</span> Efectividad y satisfacción total.
+                        </CheckListItem>
                     </ul>
+                    <div className="mt-10 pt-8 border-t border-gray-100 text-center">
+                        <p className="text-gray-500 font-medium italic text-sm">"Todo lo que necesitas para un acabado profesional en casa"</p>
+                    </div>
                 </div>
             </div>
         </section>
