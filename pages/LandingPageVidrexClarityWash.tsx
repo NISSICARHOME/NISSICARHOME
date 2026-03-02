@@ -235,52 +235,83 @@ const LandingHowToUse: React.FC = () => {
             <div className="max-w-6xl mx-auto">
                  <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">KIT VIDREX + CLARITY WASH vs. LIMPIADORES COMUNES</h2>
                  
-                 <div className="max-w-5xl mx-auto mb-16 overflow-hidden rounded-2xl shadow-xl border border-gray-100 flex flex-col md:flex-row">
-                     {/* Nissi Side */}
-                     <div className="flex-1 bg-green-50/30 p-8 border-b md:border-b-0 md:border-r border-gray-100">
-                         <div className="flex flex-col items-center mb-6">
-                             <div className="w-full aspect-video mb-4 rounded-lg overflow-hidden shadow-sm flex items-center justify-center bg-white">
-                                 <img 
-                                     src="https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0" 
-                                     alt="Kit Nissi" 
-                                     className="w-full h-full object-contain drop-shadow-md"
-                                     referrerPolicy="no-referrer"
-                                 />
-                             </div>
-                             <h3 className="text-2xl font-bold text-green-700">KIT VIDREX - CLARITY WASH</h3>
-                             <p className="text-sm text-green-600 font-medium">La Solución Profesional</p>
-                         </div>
-                         <ul className="space-y-4 text-lg">
-                             <li className="flex items-start"><span className="text-green-500 font-bold mr-3 text-xl">✅</span> <span className="text-gray-700">Elimina sarro, lluvia ácida y moho</span></li>
-                             <li className="flex items-start"><span className="text-green-500 font-bold mr-3 text-xl">✅</span> <span className="text-gray-700">Pule y restaura (farolas, acrílicos)</span></li>
-                             <li className="flex items-start"><span className="text-green-500 font-bold mr-3 text-xl">✅</span> <span className="text-gray-700">Crea una capa protectora duradera</span></li>
-                             <li className="flex items-start"><span className="text-green-500 font-bold mr-3 text-xl">✅</span> <span className="text-gray-700">Resultados garantizados por 365 días</span></li>
-                             <li className="flex items-start"><span className="text-green-500 font-bold mr-3 text-xl">✅</span> <span className="text-gray-700">Resultados inmediatos y profundos</span></li>
-                         </ul>
+                 <div className="max-w-5xl mx-auto mb-16 relative">
+                     {/* VS Badge */}
+                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 bg-gradient-to-br from-white to-gray-100 shadow-2xl rounded-full w-20 h-20 flex items-center justify-center border-4 border-white hidden md:flex">
+                         <span className="text-3xl font-black bg-clip-text text-transparent bg-gradient-to-r from-gray-400 to-gray-600">VS</span>
                      </div>
 
-                     {/* Common Side */}
-                     <div className="flex-1 bg-gray-50/50 p-8">
-                         <div className="flex flex-col items-center mb-6">
-                             <div className="w-full aspect-video mb-4 rounded-lg overflow-hidden shadow-sm">
-                                 <iframe 
-                                     src="https://drive.google.com/file/d/1CVHZLXYfA_CEWU5sMwNgRzUzNqt4cHnt/preview" 
-                                     width="100%" 
-                                     height="100%" 
-                                     allow="autoplay"
-                                     className="border-0"
-                                 ></iframe>
+                     <div className="overflow-hidden rounded-[2rem] shadow-[0_20px_50px_rgba(0,0,0,0.1)] flex flex-col md:flex-row bg-white border border-gray-100">
+                         {/* Nissi Side */}
+                         <div className="flex-1 bg-gradient-to-br from-green-50/80 via-white to-white p-12 border-b md:border-b-0 md:border-r border-gray-100 relative overflow-hidden">
+                             <div className="absolute top-0 left-0 w-full h-1 bg-green-500"></div>
+                             <div className="flex flex-col items-center mb-10">
+                                 <div className="w-full aspect-video mb-8 rounded-2xl overflow-hidden shadow-2xl flex items-center justify-center bg-white border border-green-100 group transition-all duration-500 hover:scale-[1.03] hover:shadow-green-100/50">
+                                     <img 
+                                         src="https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0" 
+                                         alt="Kit Nissi" 
+                                         className="w-full h-full object-contain p-6 drop-shadow-[0_10px_15px_rgba(34,197,94,0.2)]"
+                                         referrerPolicy="no-referrer"
+                                     />
+                                 </div>
+                                 <h3 className="text-3xl font-black text-green-700 tracking-tighter leading-none">KIT VIDREX - CLARITY WASH</h3>
+                                 <div className="mt-2 px-4 py-1 bg-green-100 rounded-full">
+                                     <p className="text-xs text-green-700 font-black uppercase tracking-widest">LA SOLUCIÓN PROFESIONAL</p>
+                                 </div>
                              </div>
-                             <h3 className="text-2xl font-bold text-gray-500">Limpiavidrios Comunes</h3>
-                             <p className="text-sm text-gray-400 font-medium">Productos de Supermercado</p>
+                             <ul className="space-y-6">
+                                 {[
+                                     'Elimina sarro, lluvia ácida y moho',
+                                     'Pule y restaura (farolas, acrílicos)',
+                                     'Crea una capa protectora duradera',
+                                     'Resultados garantizados por 365 días',
+                                     'Resultados inmediatos y profundos'
+                                 ].map((text, i) => (
+                                     <li key={i} className="flex items-center group">
+                                         <div className="mr-4 flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 transition-colors group-hover:bg-green-500 group-hover:text-white">
+                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
+                                         </div>
+                                         <span className="text-lg text-gray-800 font-semibold tracking-tight">{text}</span>
+                                     </li>
+                                 ))}
+                             </ul>
                          </div>
-                         <ul className="space-y-4 text-lg">
-                             <li className="flex items-start"><span className="text-red-400 font-bold mr-3 text-xl">❌</span> <span className="text-gray-500 italic">Solo limpian polvo superficial</span></li>
-                             <li className="flex items-start"><span className="text-red-400 font-bold mr-3 text-xl">❌</span> <span className="text-gray-500 italic">No tienen poder de pulido</span></li>
-                             <li className="flex items-start"><span className="text-red-400 font-bold mr-3 text-xl">❌</span> <span className="text-gray-500 italic">Se mancha con la primera lluvia</span></li>
-                             <li className="flex items-start"><span className="text-red-400 font-bold mr-3 text-xl">❌</span> <span className="text-gray-500 italic">Sin garantía de resultados</span></li>
-                             <li className="flex items-start"><span className="text-red-400 font-bold mr-3 text-xl">❌</span> <span className="text-gray-500 italic">Requieren múltiples pasadas</span></li>
-                         </ul>
+
+                         {/* Common Side */}
+                         <div className="flex-1 bg-gradient-to-br from-gray-50 to-white p-12 relative overflow-hidden">
+                             <div className="absolute top-0 left-0 w-full h-1 bg-gray-300"></div>
+                             <div className="flex flex-col items-center mb-10">
+                                 <div className="w-full aspect-video mb-8 rounded-2xl overflow-hidden shadow-inner bg-gray-100 border-2 border-dashed border-gray-200 group transition-all duration-500 hover:border-gray-300">
+                                     <iframe 
+                                         src="https://drive.google.com/file/d/1-WDCql1yhbATg8mcKTW-IBFkfsod9Epa/preview" 
+                                         width="100%" 
+                                         height="100%" 
+                                         allow="autoplay"
+                                         className="border-0 opacity-80 group-hover:opacity-100 transition-opacity"
+                                     ></iframe>
+                                 </div>
+                                 <h3 className="text-3xl font-black text-gray-400 tracking-tighter leading-none">LIMPIADORES COMUNES</h3>
+                                 <div className="mt-2 px-4 py-1 bg-gray-100 rounded-full">
+                                     <p className="text-xs text-gray-400 font-black uppercase tracking-widest">PRODUCTOS DE SUPERMERCADO</p>
+                                 </div>
+                             </div>
+                             <ul className="space-y-6">
+                                 { [
+                                     'Solo limpian polvo superficial',
+                                     'No tienen poder de pulido',
+                                     'Se mancha con la primera lluvia',
+                                     'Sin garantía de resultados',
+                                     'Requieren múltiples pasadas'
+                                 ].map((text, i) => (
+                                     <li key={i} className="flex items-center">
+                                         <div className="mr-4 flex-shrink-0 w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-red-500">
+                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                         </div>
+                                         <span className="text-lg text-gray-800 font-semibold tracking-tight">{text}</span>
+                                     </li>
+                                 ))}
+                             </ul>
+                         </div>
                      </div>
                  </div>
 

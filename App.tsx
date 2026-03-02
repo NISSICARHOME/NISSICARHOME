@@ -83,6 +83,8 @@ const App: React.FC = () => {
   const [quickBuyProduct, setQuickBuyProduct] = useState<Product | null>(null); // For Quick Buy Modal
   
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [viewedProductIds, setViewedProductIds] = useState<string[]>([]);
+  const [lastAddedProductId, setLastAddedProductId] = useState<string | null>(null);
   const [isChatbotOpen, setIsChatbotOpen] = useState(false);
   const [startVoiceSearch, setStartVoiceSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -95,6 +97,8 @@ const App: React.FC = () => {
   const allProducts = getAllProducts();
 
   const handleAddToCart = (productToAdd: Product, quantity: number = 1) => {
+    setViewedProductIds(prev => Array.from(new Set([...prev, productToAdd.id])));
+    setLastAddedProductId(productToAdd.id);
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.id === productToAdd.id);
       if (existingItem) {
@@ -116,6 +120,8 @@ const App: React.FC = () => {
 
   const handleBuyNow = (item: CartItem) => {
     // Adds a specific item (usually a kit from a landing page) and opens checkout
+    setViewedProductIds(prev => Array.from(new Set([...prev, item.id])));
+    setLastAddedProductId(item.id);
     setCart(prevCart => {
         const existingItem = prevCart.find(i => i.id === item.id);
         if (existingItem) {
@@ -132,6 +138,7 @@ const App: React.FC = () => {
   
   // Triggered by clicking on a Product Card - Opens Quick Buy Modal OR Navigates to Landing Page
   const handleProductSelect = (product: Product) => {
+      setViewedProductIds(prev => Array.from(new Set([...prev, product.id])));
       if (product.id === 'prod-hyper-diamond') {
           // Direct navigation for Hyper Diamond Landing Page
           window.location.hash = "/Cera-Hyper-Diamond";
@@ -200,7 +207,7 @@ const App: React.FC = () => {
       {/* Render Full Detail Modal if explicitly requested */}
       {selectedProduct && <ProductModal product={selectedProduct} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
       
-      {isCheckoutOpen && <CheckoutForm cart={cart} setCart={setCart} onClose={() => setIsCheckoutOpen(false)} />}
+      {isCheckoutOpen && <CheckoutForm cart={cart} setCart={setCart} viewedProductIds={viewedProductIds} lastAddedProductId={lastAddedProductId} onClose={() => setIsCheckoutOpen(false)} />}
       <Chatbot allProducts={allProducts} onProductSelect={handleProductSelect} isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} startListening={startVoiceSearch} onListeningEnd={handleListeningEnd} />
     </HashRouter>
   );

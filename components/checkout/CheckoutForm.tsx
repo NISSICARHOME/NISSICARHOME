@@ -4,20 +4,76 @@ import { getAllProducts } from '../Products';
 
 declare const fbq: (type: string, event: string, data?: object) => void;
 
+// Mapping for kit images that might not be in the main products list
+const kitImages: Record<string, string> = {
+  'kit-vidrex-clarity': 'https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0',
+  'kit-1': 'https://lh3.googleusercontent.com/pw/AP1GczOzc5XobmAERtALiliyk1JbpWK9TtlNYR-Gq8ho_9NrxGyhRPsDqNM-pw--dmicYoJ0_81bX_O_lzOKpZgscWtppJojH71Pg6PkQH4o-KcNy9eQKQ5Tb0jyUd6yAN_E_fQAB2JsWaoh-N5LdH_xss1_=w801-h584-s-no-gm?authuser=0',
+  'kit-2': 'https://lh3.googleusercontent.com/pw/AP1GczPOSFnFflE6hcsTtHPybBLPUfECVYU5rzmbCHYRlWK8KomBZvI4N_SVy_knMkpVVRf7lUQ7jdtf3I1thYkuVCyIlqyy1n1Ws34eahtILybAJVbqxTBWECpEFzjcbt8co6QbWA-7F9lKGZmXw26CK57k=w777-h798-s-no-gm?authuser=0',
+  'kit-vidrex-clarity-wash': 'https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0'
+};
+
 interface CheckoutFormProps {
   cart: CartItem[];
   setCart: React.Dispatch<React.SetStateAction<CartItem[]>>;
+  viewedProductIds?: string[];
+  lastAddedProductId?: string | null;
   onClose: () => void;
 }
 
-const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, onClose }) => {
+const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, viewedProductIds = [], lastAddedProductId, onClose }) => {
   const [orderDetails, setOrderDetails] = useState<OrderDetails>({
     name: '', phone: '', address: '', city: '', state: '', housingType: '', notes: ''
   });
   
+  const [showDiscountAlert, setShowDiscountAlert] = useState(false);
+  
   const allProducts = useMemo(() => getAllProducts(), []);
 
   const totalPrice = useMemo(() => cart.reduce((sum, item) => sum + (item.price * item.quantity), 0), [cart]);
+
+  // Identify the primary item for dynamic UI (last added or first kit or first item)
+  const primaryItem = useMemo(() => {
+    if (cart.length === 0) return null;
+    
+    // If we have a specific last added product, prioritize it
+    if (lastAddedProductId) {
+        const item = cart.find(i => i.id === lastAddedProductId);
+        if (item) return item;
+    }
+    
+    // Fallback: prioritize kits, then first item
+    const kit = cart.find(item => item.id.includes('kit'));
+    return kit || cart[0];
+  }, [cart, lastAddedProductId]);
+
+  const primaryImage = useMemo(() => {
+    if (!primaryItem) return '';
+    const product = allProducts.find(p => p.id === primaryItem.id);
+    return product?.image || kitImages[primaryItem.id] || '';
+  }, [primaryItem, allProducts]);
+
+  // Dynamic suggestions based on viewed products and cart content
+  const suggestions = useMemo(() => {
+    const cartIds = new Set(cart.map(item => item.id));
+    
+    // Priority 1: Viewed products not in cart
+    const viewedSuggestions = viewedProductIds
+      .filter(id => !cartIds.has(id))
+      .map(id => allProducts.find(p => p.id === id))
+      .filter((p): p is NonNullable<typeof p> => !!p);
+
+    // Priority 2: Complementary products (if they have a kit, suggest accessories)
+    const hasKit = cart.some(item => item.id.includes('kit'));
+    const complementaryIds = hasKit ? ['prod-toalla', 'prod-aplicador', 'prod-shampoo'] : ['prod-toalla', 'prod-hyper-diamond'];
+    
+    const complementarySuggestions = complementaryIds
+      .filter(id => !cartIds.has(id) && !viewedProductIds.includes(id))
+      .map(id => allProducts.find(p => p.id === id))
+      .filter((p): p is NonNullable<typeof p> => !!p);
+
+    // Combine and limit to 3-4 suggestions
+    return [...viewedSuggestions, ...complementarySuggestions].slice(0, 4);
+  }, [cart, viewedProductIds, allProducts]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -87,10 +143,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, onClose }) =
   };
 
   const handleCloseAttempt = () => {
-    if (cart.length > 0) {
-      if (window.confirm("¿Estás seguro de que quieres cerrar? Se perderá el progreso de tu pedido.")) {
-        onClose();
-      }
+    if (cart.length > 0 && !showDiscountAlert) {
+      setShowDiscountAlert(true);
     } else {
       onClose();
     }
@@ -126,16 +180,32 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, onClose }) =
                 {/* Order Summary */}
                 <div className="p-6 border-b md:border-b-0 md:border-r border-white/30">
                     <h3 className="text-xl font-semibold border-b border-gray-400/50 pb-2 mb-4">1. Resumen de tu Pedido</h3>
+                    
+                    {/* Featured Product/Kit Image */}
+                    {primaryImage && (
+                        <div className="mb-6 rounded-xl overflow-hidden bg-white/40 p-2 border border-white/50 shadow-inner">
+                            <img 
+                                src={primaryImage} 
+                                alt={primaryItem?.name} 
+                                className="w-full h-32 object-contain drop-shadow-md"
+                            />
+                        </div>
+                    )}
+
                     {cart.length > 0 ? (
                         <div className="space-y-4">
                             {cart.map(item => {
                                 const product = allProducts.find(p => p.id === item.id);
+                                const displayImage = product?.image || kitImages[item.id] || '';
+                                
                                 return (
-                                    <div key={item.id} className="flex items-center gap-4">
-                                        <img src={product?.image} alt={item.name} className="w-16 h-16 object-contain rounded-md bg-white/40 p-1" />
+                                    <div key={item.id} className="flex items-center gap-4 bg-white/40 p-3 rounded-xl border border-white/60 shadow-sm transition-all hover:shadow-md">
+                                        <div className="w-20 h-20 flex-shrink-0 bg-white rounded-lg p-1 shadow-inner flex items-center justify-center overflow-hidden">
+                                            <img src={displayImage} alt={item.name} className="w-full h-full object-contain drop-shadow-sm" />
+                                        </div>
                                         <div className="flex-grow">
-                                            <p className="font-semibold text-sm text-gray-800">{item.name}</p>
-                                            <p className="text-xs text-gray-600">${item.price.toLocaleString('es-CO')} c/u</p>
+                                            <p className="font-black text-sm md:text-base text-gray-900 leading-tight uppercase tracking-tight">{item.name}</p>
+                                            <p className="text-sm text-green-700 font-bold mt-1">${item.price.toLocaleString('es-CO')} c/u</p>
                                         </div>
                                         <div className="flex items-center gap-2">
                                             <button type="button" onClick={() => handleQuantityChange(item.id, -1)} className="w-7 h-7 bg-white/40 hover:bg-white/60 rounded-full transition-colors text-lg flex items-center justify-center shadow-sm">-</button>
@@ -145,8 +215,46 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, onClose }) =
                                     </div>
                                 );
                             })}
-                             <div className="text-right font-bold text-lg border-t border-gray-400/50 pt-3 mt-4">
-                                Total: ${totalPrice.toLocaleString('es-CO')}
+
+                            {/* Upsell Section: Dynamic Suggestions */}
+                            {suggestions.length > 0 && (
+                                <div className="mt-8 p-4 bg-amber-50/50 rounded-2xl border-2 border-dashed border-amber-200">
+                                    <h4 className="text-sm font-black text-amber-800 uppercase tracking-widest mb-3 flex items-center gap-2">
+                                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                                        Complementa tu Pedido
+                                    </h4>
+                                    <div className="space-y-3">
+                                        {suggestions.map(product => (
+                                            <div key={product.id} className="flex items-center gap-4 bg-white/60 p-3 rounded-xl border border-white shadow-sm transition-all hover:bg-white/80">
+                                                <div className="w-14 h-14 flex-shrink-0 bg-white rounded-lg p-1 shadow-inner flex items-center justify-center overflow-hidden">
+                                                    <img 
+                                                        src={product.image} 
+                                                        alt={product.name} 
+                                                        className="w-full h-full object-contain"
+                                                    />
+                                                </div>
+                                                <div className="flex-grow">
+                                                    <p className="font-bold text-[10px] md:text-xs text-gray-900 leading-tight">{product.name}</p>
+                                                    <p className="text-[10px] text-amber-700 font-black mt-0.5">${product.price.toLocaleString('es-CO')}</p>
+                                                </div>
+                                                <button 
+                                                    type="button" 
+                                                    onClick={() => {
+                                                        setCart(prev => [...prev, { id: product.id, name: product.name, price: product.price, quantity: 1 }]);
+                                                    }}
+                                                    className="bg-amber-500 text-white text-[9px] font-black px-3 py-1.5 rounded-lg shadow-md hover:bg-amber-600 transition-all active:scale-95 uppercase tracking-tighter"
+                                                >
+                                                    Agregar
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <p className="text-[9px] text-amber-600 font-bold mt-3 text-center italic tracking-tight">"Aprovecha y lleva todo en un solo envío"</p>
+                                </div>
+                            )}
+
+                             <div className="text-right font-black text-xl border-t-2 border-gray-200 pt-4 mt-6 text-gray-900">
+                                Total a Pagar: ${totalPrice.toLocaleString('es-CO')}
                             </div>
                         </div>
                     ) : <p className="text-gray-500 text-center py-4">Tu carrito está vacío.</p>}
@@ -184,6 +292,41 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, onClose }) =
               </button>
                <p className="text-xs text-center text-gray-600 mt-2">Serás redirigido a WhatsApp para enviar tu pedido a un asesor.</p>
             </footer>
+        )}
+
+        {/* Discount Alert Modal */}
+        {showDiscountAlert && (
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-md flex justify-center items-center z-[60] p-4 animate-fade-in">
+            <div className="bg-white rounded-3xl p-8 max-w-md w-full text-center shadow-2xl transform scale-95 animate-scale-in">
+              <div className="mb-6">
+                <img 
+                  src={primaryImage} 
+                  alt={primaryItem?.name} 
+                  className="w-48 h-48 mx-auto object-contain drop-shadow-xl"
+                />
+              </div>
+              <h2 className="text-3xl font-black text-red-600 mb-2 tracking-tight uppercase">¡ESPERA!</h2>
+              <p className="text-xl font-bold text-gray-800 mb-4">No te vayas sin tu beneficio especial en tu {primaryItem?.name}</p>
+              <div className="bg-yellow-100 border-2 border-yellow-400 rounded-2xl p-4 mb-6">
+                <p className="text-2xl font-black text-gray-900">10% DE DESCUENTO</p>
+                <p className="text-sm font-bold text-gray-700 uppercase tracking-wider">Si completas tu pedido ahora mismo</p>
+              </div>
+              <div className="flex flex-col gap-4">
+                <button 
+                  onClick={() => setShowDiscountAlert(false)}
+                  className="w-full bg-green-600 text-white font-black py-5 rounded-2xl shadow-xl hover:bg-green-700 transition-all transform hover:scale-105 active:scale-95 text-lg uppercase tracking-tight"
+                >
+                  ¡SÍ, QUIERO MI DESCUENTO!
+                </button>
+                <button 
+                  onClick={onClose}
+                  className="w-full bg-gray-200 text-gray-600 font-black py-4 rounded-2xl hover:bg-gray-300 transition-all mb-20 uppercase text-sm tracking-widest border-2 border-gray-300 shadow-sm"
+                >
+                  No Gracias
+                </button>
+              </div>
+            </div>
+          </div>
         )}
       </div>
       <style>{`
