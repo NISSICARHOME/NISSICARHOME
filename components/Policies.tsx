@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Policy } from '../types';
 import Accordion from './shared/Accordion';
 
@@ -51,24 +51,47 @@ Usted tiene derecho a conocer, actualizar, rectificar y solicitar la supresión 
 ];
 
 const Policies: React.FC = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <section id="policies" className="py-10 md:py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-xl font-extrabold text-gray-800 sm:text-4xl">
-              Políticas y Condiciones
-            </h2>
-            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
-              Nuestros compromisos de calidad, servicio y protección de tu información.
-            </p>
+        <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden">
+          <div 
+            className="text-center cursor-pointer group"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            <div className="flex flex-col items-center">
+              <h2 className="text-xl font-extrabold text-gray-800 sm:text-4xl flex items-center gap-3">
+                Políticas y Condiciones
+                <svg 
+                  className={`w-6 h-6 sm:w-8 sm:h-8 text-amber-500 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+                </svg>
+              </h2>
+              <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
+                {isExpanded 
+                  ? "Haz clic en cada política para ver los detalles completos."
+                  : "Nuestros compromisos de calidad, servicio y protección de tu información. Haz clic para ver las políticas."
+                }
+              </p>
+            </div>
           </div>
-          <div className="space-y-4">
-            {policiesData.map((policy, index) => (
-              <Accordion key={index} title={policy.title}>
-                <p className="text-gray-700 text-sm whitespace-pre-wrap">{policy.content}</p>
-              </Accordion>
-            ))}
+
+          <div className={`grid transition-all duration-500 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-8 sm:mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
+            <div className="overflow-hidden">
+              <div className="space-y-4">
+                {policiesData.map((policy, index) => (
+                  <Accordion key={index} title={policy.title}>
+                    <p className="text-gray-700 text-sm whitespace-pre-wrap">{policy.content}</p>
+                  </Accordion>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
