@@ -1,4 +1,5 @@
 import React from 'react';
+import { siteContent } from '../data/siteContent';
 
 const InfoCard: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
     <div className="bg-white/20 backdrop-blur-md border border-white/30 p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 h-full">
@@ -9,17 +10,20 @@ const InfoCard: React.FC<{ title: string; children: React.ReactNode }> = ({ titl
 
 
 const About: React.FC = () => {
+    const { about } = siteContent;
+
     return (
         <section id="nosotros" className="py-12 md:py-20">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-12 md:mb-16 p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset">
                     <h2 className="text-2xl font-extrabold text-gray-800 sm:text-4xl">
-                       ¿Quiénes Somos?
+                       {about.title}
                     </h2>
                     <p className="mt-4 max-w-3xl mx-auto text-base text-gray-600 sm:text-lg">
-                       Somos una empresa colombiana, con casa matriz en Pereira y sedes en Ibagué y El Espinal, apasionada por la innovación en el cuidado estético. Nuestro equipo se especializa en la formulación de recubrimientos y productos de limpieza basados en materias primas de vanguardia, garantizando protección, brillo y una vida útil prolongada para las superficies de su vehículo y hogar.
+                       {about.description}
                     </p>
                 </div>
+
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <InfoCard title="Misión">
                         Desarrollar, fabricar y comercializar productos de la más alta calidad para el embellecimiento y cuidado estético de vehículos y hogares. A través de la investigación continua y el uso de materias primas superiores, ofrecemos soluciones innovadoras y servicios de detallado especializados que garantizan resultados excepcionales.

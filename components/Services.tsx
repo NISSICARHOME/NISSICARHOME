@@ -1,14 +1,6 @@
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
-
-const servicesData = [
-  { name: 'Detailing Automotriz', description: 'Limpieza profunda y restauración interna de vehículos.' },
-  { name: 'Spa para Vehículos', description: 'Tratamientos completos para el cuidado interior y exterior de tu automóvil.' },
-  { name: 'Aplicación de Recubrimiento Cerámico y Porcelanizado', description: 'Revestimientos de protección avanzados para la carrocería y pintura.' },
-  { name: 'Desmanchado de Vidrios', description: 'Servicio especializado para hoteles, unidades residenciales, casas campestres y piscinas.' },
-  { name: 'Asesoría personalizada', description: 'Brindamos soporte uno a uno con cada cliente para garantizar los mejores resultados.' },
-  { name: 'Garantía de 365 días', description: 'Respaldamos nuestros productos con una política de garantía en el resultado final.' },
-];
+import { siteContent } from '../data/siteContent';
 
 const ServiceItem: React.FC<{ name: string; description: string; }> = ({ name, description }) => (
   <div className="flex">
@@ -27,24 +19,44 @@ const ServiceItem: React.FC<{ name: string; description: string; }> = ({ name, d
 );
 
 const Services: React.FC = () => {
+  const { services } = siteContent;
+
   return (
     <section id="servicios" className="py-10 md:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset">
           <div className="text-center">
-            <h2 className="text-xl font-extrabold text-gray-800 sm:text-4xl">Servicios Adicionales y Soporte</h2>
+            <h2 className="text-3xl md:text-5xl font-black text-gray-900 mb-6 uppercase tracking-tighter italic">
+              {services.title.split(' ').map((word, i) => 
+                word === 'ESTÉTICA' || word === 'AUTOMOTRIZ' ? <span key={i} className="text-amber-500">{word} </span> : word + ' '
+              )}
+            </h2>
             <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
-              No solo ofrecemos productos, sino también servicios especializados y el mejor soporte para ti.
+              {services.subtitle}
             </p>
+          </div>
+
+          {/* Multimedia Space */}
+          <div className="mt-10 w-full max-w-5xl mx-auto rounded-[2rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] border-8 border-white ring-1 ring-gray-200 bg-white aspect-video relative group transition-transform duration-500 hover:scale-[1.01]">
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-gray-50/50">
+                  <iframe 
+                      src={services.multimediaUrl} 
+                      width="100%" 
+                      height="100%" 
+                      allow="autoplay"
+                      className="border-0 w-full h-full"
+                  ></iframe>
+              </div>
           </div>
 
           <div className="mt-12 md:mt-16">
             <dl className="space-y-8 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
-              {servicesData.map(service => (
+              {services.items.map(service => (
                 <ServiceItem key={service.name} name={service.name} description={service.description} />
               ))}
             </dl>
           </div>
+
 
           <div className="mt-16 text-center">
             <HashLink

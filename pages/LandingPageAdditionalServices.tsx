@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { siteContent } from '../data/siteContent';
 
 // --- Accordion Component (scoped for this page) ---
 const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
@@ -66,7 +67,7 @@ const LandingPageAdditionalServices: React.FC = () => {
                     />
                 </div>
                 <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Renace tu Vehículo: Spa Automotriz Profesional</h1>
-                <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 text-justify hyphens-auto break-words">
                     Más que un lavado, es una restauración. Desde corrección de pintura y cerámica, hasta limpieza interna profunda.
                     Devolvemos tu auto a su estado de fábrica con tecnología de punta.
                 </p>
@@ -109,7 +110,7 @@ const LandingPageAdditionalServices: React.FC = () => {
             <section className="bg-gray-50 py-16 px-4">
                 <div className="max-w-6xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-4">Nuestros Servicios Especializados</h2>
-                    <p className="text-center text-xl text-gray-600 mb-12">Utilizamos insumos profesionales y técnicas avanzadas para garantizar resultados de exhibición.</p>
+                    <p className="text-center text-xl text-gray-600 mb-12 text-justify hyphens-auto break-words max-w-3xl mx-auto">Utilizamos insumos profesionales y técnicas avanzadas para garantizar resultados de exhibición.</p>
                     
                     <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
                         
@@ -117,7 +118,7 @@ const LandingPageAdditionalServices: React.FC = () => {
                             <img src="https://placehold.co/400x300/60a5fa/FFF?text=Farolas" alt="Restauración de Farolas" className="w-full md:w-1/3 h-40 object-cover rounded-md flex-shrink-0" />
                             <div className="w-full">
                                 <h3 className="text-2xl font-bold mb-2 text-blue-700">1. Restauración de Farolas & Personalización</h3>
-                                <p className="text-gray-600">Recuperamos la transparencia eliminando opacidad y rayones. También personalizamos el estilo de tus luces al gusto (modificaciones visuales).</p>
+                                <p className="text-gray-600 text-justify hyphens-auto break-words">Recuperamos la transparencia eliminando opacidad y rayones. También personalizamos el estilo de tus luces al gusto (modificaciones visuales).</p>
                             </div>
                         </div>
                        
@@ -125,7 +126,7 @@ const LandingPageAdditionalServices: React.FC = () => {
                             <img src="https://placehold.co/400x300/f87171/FFF?text=Exterior" alt="Detailing Exterior" className="w-full md:w-1/3 h-40 object-cover rounded-md flex-shrink-0" />
                             <div className="w-full">
                                 <h3 className="text-2xl font-bold mb-2 text-blue-700">2. Detailing Exterior (Cerámico)</h3>
-                                <p className="text-gray-600">Proceso de 4 fases: Lavado pH neutro, Descontaminación, Corrección de pintura y Protección Cerámica (escudo hidrofóbico).</p>
+                                <p className="text-gray-600 text-justify hyphens-auto break-words">Proceso de 4 fases: Lavado pH neutro, Descontaminación, Corrección de pintura y Protección Cerámica (escudo hidrofóbico).</p>
                             </div>
                         </div>
                         
@@ -133,7 +134,7 @@ const LandingPageAdditionalServices: React.FC = () => {
                             <img src="https://placehold.co/400x300/34d399/FFF?text=Interior" alt="Detailing Interno" className="w-full md:w-1/3 h-40 object-cover rounded-md flex-shrink-0" />
                             <div className="w-full">
                                 <h3 className="text-2xl font-bold mb-2 text-blue-700">3. Detailing Interno Profundo</h3>
-                                <p className="text-gray-600">Desmontamos sillas y alfombras. Limpiamos ductos de aire, eliminamos olores, bacterias y manchas orgánicas. Tu interior queda desinfectado.</p>
+                                <p className="text-gray-600 text-justify hyphens-auto break-words">Desmontamos sillas y alfombras. Limpiamos ductos de aire, eliminamos olores, bacterias y manchas orgánicas. Tu interior queda desinfectado.</p>
                             </div>
                         </div>
                         
@@ -141,7 +142,7 @@ const LandingPageAdditionalServices: React.FC = () => {
                             <img src="https://placehold.co/400x300/c084fc/FFF?text=Vidrios" alt="Tratamiento de Vidrios" className="w-full md:w-1/3 h-40 object-cover rounded-md flex-shrink-0" />
                             <div className="w-full">
                                 <h3 className="text-2xl font-bold mb-2 text-blue-700">4. Tratamiento de Vidrios (Lluvia Ácida)</h3>
-                                <p className="text-gray-600">Eliminación de sarro, minerales incrustados y gotas secas. Restauramos la visibilidad cristalina.</p>
+                                <p className="text-gray-600 text-justify hyphens-auto break-words">Eliminación de sarro, minerales incrustados y gotas secas. Restauramos la visibilidad cristalina.</p>
                             </div>
                         </div>
                         
@@ -149,7 +150,7 @@ const LandingPageAdditionalServices: React.FC = () => {
                             <img src="https://placehold.co/400x300/F77F00/FFF?text=GOLD" alt="Servicio GOLD" className="w-full md:w-1/3 h-40 object-cover rounded-md flex-shrink-0" />
                             <div className="w-full">
                                 <h3 className="text-3xl font-bold mb-2 text-[#F77F00]">🌟 5. Servicio GOLD Full Vehículo</h3>
-                                <p className="text-gray-300 text-lg">La experiencia definitiva. Incluye TODOS los servicios anteriores en un solo paquete premium para una transformación total de tu automóvil.</p>
+                                <p className="text-gray-300 text-lg text-justify hyphens-auto break-words">La experiencia definitiva. Incluye TODOS los servicios anteriores en un solo paquete premium para una transformación total de tu automóvil.</p>
                             </div>
                         </div>
                     </div>
@@ -164,13 +165,13 @@ const LandingPageAdditionalServices: React.FC = () => {
                         
                         <div className="bg-gray-50 p-6 rounded-lg shadow border border-gray-100">
                             <div className="flex text-yellow-400 mb-2 text-xl">★★★★★</div>
-                            <p className="text-gray-600 italic mb-4">"Llevé mi camioneta para el Servicio Gold y no podía creerlo. Los rayones desaparecieron y el interior quedó impecable, como sacado del concesionario."</p>
+                            <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"Llevé mi camioneta para el Servicio Gold y no podía creerlo. Los rayones desaparecieron y el interior quedó impecable, como sacado del concesionario."</p>
                             <p className="font-bold text-gray-800 text-right">- Carlos M. (Pereira)</p>
                         </div>
                         
                         <div className="bg-gray-50 p-6 rounded-lg shadow border border-gray-100">
                             <div className="flex text-yellow-400 mb-2 text-xl">★★★★★</div>
-                            <p className="text-gray-600 italic mb-4">"Mis farolas estaban tan opacas que no alumbraban nada. En Nissi las dejaron transparentes y con un estilo personalizado increíble. ¡Recomendados!"</p>
+                            <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"Mis farolas estaban tan opacas que no alumbraban nada. En Nissi las dejaron transparentes y con un estilo personalizado increíble. ¡Recomendados!"</p>
                             <p className="font-bold text-gray-800 text-right">- Juliana R. (Ibagué)</p>
                         </div>
                     </div>
@@ -191,7 +192,7 @@ const LandingPageAdditionalServices: React.FC = () => {
                 <h2 className="text-3xl font-bold text-white mb-4">¿Listo para que tu auto renazca?</h2>
                 <p className="text-gray-300 text-lg mb-8">No esperes más. Dale a tu vehículo el tratamiento que merece.</p>
                 <a
-                    href="https://wa.me/573103754727"
+                    href={`https://wa.me/${siteContent.footer.phone.replace(/\D/g, '')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block bg-[#F77F00] text-white font-bold text-xl py-4 px-8 rounded-lg shadow-lg hover:brightness-110 transition-all transform hover:scale-105"

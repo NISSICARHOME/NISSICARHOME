@@ -182,8 +182,11 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
         try {
             const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
             const chatInstance = ai.chats.create({
-                model: 'gemini-2.5-flash',
-                config: { systemInstruction: systemInstruction },
+                model: 'gemini-2.0-flash',
+                config: { 
+                    systemInstruction: systemInstruction,
+                    tools: [{ googleSearch: {} }]
+                },
             });
             setChat(chatInstance);
             if (messages.length === 0) {
@@ -288,13 +291,13 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
     <>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 bg-amber-500/50 backdrop-blur-md border border-white/30 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-500/80 transition-all transform hover:scale-110 z-50"
+        className="fixed bottom-24 right-6 md:bottom-6 bg-amber-500/50 backdrop-blur-md border border-white/30 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-500/80 transition-all transform hover:scale-110 z-50"
         aria-label="Abrir chat de ayuda"
       >
         {isOpen ? <CloseIcon className="w-8 h-8"/> : <ChatIcon className="w-8 h-8" />}
       </button>
 
-      <div className={`fixed bottom-24 right-6 w-[calc(100vw-3rem)] max-w-sm h-[70vh] max-h-[600px] bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl flex flex-col transition-all duration-300 ease-out z-50 ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+      <div className={`fixed bottom-44 right-6 md:bottom-24 w-[calc(100vw-3rem)] max-w-sm h-[70vh] max-h-[600px] bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl flex flex-col transition-all duration-300 ease-out z-50 ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
         <header className="bg-white/10 p-4 rounded-t-2xl flex justify-between items-center border-b border-white/20 flex-shrink-0">
             <h3 className="text-lg font-bold text-gray-800">Asistente Virtual</h3>
         </header>

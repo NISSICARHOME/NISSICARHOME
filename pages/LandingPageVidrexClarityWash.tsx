@@ -127,8 +127,8 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
               className="w-full h-auto" 
           />
       </div>
-      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4">¡NO CAMBIES TUS VIDRIOS, DESMANCHALOS!</h1>
-      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Recupera la transparencia y el brillo de tus vidrios fácil y sin esfuerzo. Descubre la solución definitiva para eliminar manchas de sarro, lluvia ácida y depósitos minerales en tu auto y hogar.</p>
+      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4 text-center">¡NO CAMBIES TUS VIDRIOS, DESMANCHALOS!</h1>
+      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 text-justify hyphens-auto break-words">Recupera la transparencia y el brillo de tus vidrios fácil y sin esfuerzo. Descubre la solución definitiva para eliminar manchas de sarro, lluvia ácida y depósitos minerales en tu auto y hogar.</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-10 text-left items-center">
           <div>
@@ -217,11 +217,21 @@ const LandingBenefits: React.FC = () => {
                         ))}
                     </ul>
                     <div className="grid grid-cols-6 gap-4">
-                        <img src={benefitsData[0].image} alt={benefitsData[0].title} className="col-span-3 rounded-lg shadow-md h-40 w-full object-contain bg-white p-2" />
-                        <img src={benefitsData[1].image} alt={benefitsData[1].title} className="col-span-3 rounded-lg shadow-md h-40 w-full object-contain bg-white p-2" />
-                        <img src={benefitsData[2].image} alt={benefitsData[2].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-contain bg-white p-2" />
-                        <img src={benefitsData[3].image} alt={benefitsData[3].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-contain bg-white p-2" />
-                        <img src={benefitsData[4].image} alt={benefitsData[4].title} className="col-span-2 rounded-lg shadow-md h-40 w-full object-contain bg-white p-2" />
+                        <div className="col-span-3 rounded-2xl shadow-2xl aspect-[4/3] w-full overflow-hidden bg-white border-4 border-white ring-1 ring-gray-200 relative">
+                            <div className="absolute inset-0 scale-[1.15] origin-center">
+                                <iframe 
+                                    src="https://drive.google.com/file/d/1YMmclQnmZ0PpsNY3D6dpgrqzNc9bp78k/preview" 
+                                    width="100%" 
+                                    height="100%" 
+                                    allow="autoplay"
+                                    className="border-0 w-full h-full"
+                                ></iframe>
+                            </div>
+                        </div>
+                        <img src={benefitsData[1].image} alt={benefitsData[1].title} className="col-span-3 rounded-2xl shadow-lg h-full w-full object-cover bg-white border-4 border-white ring-1 ring-gray-200" />
+                        <img src={benefitsData[2].image} alt={benefitsData[2].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" />
+                        <img src={benefitsData[3].image} alt={benefitsData[3].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" />
+                        <img src={benefitsData[4].image} alt={benefitsData[4].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" />
                     </div>
                 </div>
             </div>
@@ -271,45 +281,45 @@ const LandingHowToUse: React.FC = () => {
                                          <div className="mr-4 flex-shrink-0 w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 transition-colors group-hover:bg-green-500 group-hover:text-white">
                                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
                                          </div>
-                                         <span className="text-lg text-gray-800 font-semibold tracking-tight">{text}</span>
-                                     </li>
-                                 ))}
-                             </ul>
-                         </div>
+                                         <span className="text-lg text-gray-800 font-semibold tracking-tight text-justify hyphens-auto break-words">{text}</span>
+                                      </li>
+                                  ))}
+                              </ul>
+                          </div>
 
-                         {/* Common Side */}
-                         <div className="flex-1 bg-gradient-to-br from-gray-50 to-white p-12 relative overflow-hidden">
-                             <div className="absolute top-0 left-0 w-full h-1 bg-gray-300"></div>
-                             <div className="flex flex-col items-center mb-10">
-                                 <div className="w-full aspect-video mb-8 rounded-2xl overflow-hidden shadow-inner bg-gray-100 border-2 border-dashed border-gray-200 group transition-all duration-500 hover:border-gray-300">
-                                     <iframe 
-                                         src="https://drive.google.com/file/d/1-WDCql1yhbATg8mcKTW-IBFkfsod9Epa/preview" 
-                                         width="100%" 
-                                         height="100%" 
-                                         allow="autoplay"
-                                         className="border-0 opacity-80 group-hover:opacity-100 transition-opacity"
-                                     ></iframe>
-                                 </div>
-                                 <h3 className="text-3xl font-black text-gray-400 tracking-tighter leading-none">LIMPIADORES COMUNES</h3>
-                                 <div className="mt-2 px-4 py-1 bg-gray-100 rounded-full">
-                                     <p className="text-xs text-gray-400 font-black uppercase tracking-widest">PRODUCTOS DE SUPERMERCADO</p>
-                                 </div>
-                             </div>
-                             <ul className="space-y-6">
-                                 { [
-                                     'Solo limpian polvo superficial',
-                                     'No tienen poder de pulido',
-                                     'Se mancha con la primera lluvia',
-                                     'Sin garantía de resultados',
-                                     'Requieren múltiples pasadas'
-                                 ].map((text, i) => (
-                                     <li key={i} className="flex items-center">
-                                         <div className="mr-4 flex-shrink-0 w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-red-500">
-                                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                         </div>
-                                         <span className="text-lg text-gray-800 font-semibold tracking-tight">{text}</span>
-                                     </li>
-                                 ))}
+                          {/* Common Side */}
+                          <div className="flex-1 bg-gradient-to-br from-gray-50 to-white p-12 relative overflow-hidden">
+                              <div className="absolute top-0 left-0 w-full h-1 bg-gray-300"></div>
+                              <div className="flex flex-col items-center mb-10">
+                                  <div className="w-full aspect-video mb-8 rounded-2xl overflow-hidden shadow-inner bg-gray-100 border-2 border-dashed border-gray-200 group transition-all duration-500 hover:border-gray-300">
+                                      <iframe 
+                                          src="https://drive.google.com/file/d/1-WDCql1yhbATg8mcKTW-IBFkfsod9Epa/preview" 
+                                          width="100%" 
+                                          height="100%" 
+                                          allow="autoplay"
+                                          className="border-0 opacity-80 group-hover:opacity-100 transition-opacity"
+                                      ></iframe>
+                                  </div>
+                                  <h3 className="text-3xl font-black text-gray-400 tracking-tighter leading-none text-center">LIMPIADORES COMUNES</h3>
+                                  <div className="mt-2 px-4 py-1 bg-gray-100 rounded-full">
+                                      <p className="text-xs text-gray-400 font-black uppercase tracking-widest">PRODUCTOS DE SUPERMERCADO</p>
+                                  </div>
+                              </div>
+                              <ul className="space-y-6">
+                                  { [
+                                      'Solo limpian polvo superficial',
+                                      'No tienen poder de pulido',
+                                      'Se mancha con la primera lluvia',
+                                      'Sin garantía de resultados',
+                                      'Requieren múltiples pasadas'
+                                  ].map((text, i) => (
+                                      <li key={i} className="flex items-center">
+                                          <div className="mr-4 flex-shrink-0 w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-red-500">
+                                              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                          </div>
+                                          <span className="text-lg text-gray-800 font-semibold tracking-tight text-justify hyphens-auto break-words">{text}</span>
+                                      </li>
+                                  ))}
                              </ul>
                          </div>
                      </div>
@@ -329,8 +339,8 @@ const LandingHowToUse: React.FC = () => {
                                 <img src={step.img} alt={`Paso ${step.num}`} className="rounded-lg shadow-md w-full h-48 object-cover"/>
                                 <div className="absolute -top-4 -left-4 bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold border-4 border-white">{step.num}</div>
                              </div>
-                             <h3 className="text-xl font-bold text-gray-800">{step.title}</h3>
-                             <p className="text-gray-600">{step.desc}</p>
+                             <h3 className="text-xl font-bold text-gray-800 text-center">{step.title}</h3>
+                             <p className="text-gray-600 text-justify hyphens-auto break-words">{step.desc}</p>
                          </div>
                     ))}
                  </div>
@@ -404,8 +414,8 @@ const LandingSocialProofFAQ: React.FC = () => (
                      {name: "Laura G.", city: "Medellín", quote: "El soporte técnico es de lo mejor. Tenía dudas con la aplicación, me contacté por WhatsApp y me guiaron paso a paso. ¡Qué gran servicio!"},
                  ].map(testimonial => (
                     <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
-                        <div className="flex text-yellow-400 mb-2">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
-                        <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
+                        <div className="flex text-yellow-400 mb-2 justify-center">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
+                        <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"{testimonial.quote}"</p>
                         <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
                     </div>
                  ))}
@@ -428,7 +438,7 @@ const LandingSocialProofFAQ: React.FC = () => (
              <div className="space-y-4">
                 {faqData.map((item, index) => (
                   <Accordion key={index} title={item.question}>
-                    <p className="text-gray-700">{item.answer}</p>
+                    <p className="text-gray-700 text-justify hyphens-auto break-words">{item.answer}</p>
                   </Accordion>
                 ))}
              </div>

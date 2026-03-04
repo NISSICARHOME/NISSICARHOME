@@ -43,8 +43,8 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
               className="w-full h-auto" 
           />
       </div>
-      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4">Kit de Embellecimiento Profesional 6 en 1</h1>
-      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Todo lo que necesitas para restaurar, proteger y brillar tu vehículo como un profesional. ¡Resultados garantizados que deslumbran y duran!</p>
+      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4 text-center">Kit de Embellecimiento Profesional 6 en 1</h1>
+      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 text-justify hyphens-auto break-words">Todo lo que necesitas para restaurar, proteger y brillar tu vehículo como un profesional. ¡Resultados garantizados que deslumbran y duran!</p>
 
       <div className="max-w-md mx-auto flex items-center justify-center gap-4">
         <button
@@ -143,8 +143,8 @@ const LandingWhatYouGet: React.FC = () => {
                     {kitItems.map(item => (
                         <div key={item.name} className="flex flex-col items-center text-center bg-white p-6 rounded-lg shadow-md h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
                             <img src={item.image} alt={item.name} className="h-40 object-contain mb-4" />
-                            <h3 className="text-xl font-bold text-amber-600 flex-grow">{item.name}</h3>
-                            <p className="text-gray-700">{item.content}</p>
+                            <h3 className="text-xl font-bold text-amber-600 flex-grow text-center">{item.name}</h3>
+                            <p className="text-gray-700 text-justify hyphens-auto break-words">{item.content}</p>
                         </div>
                     ))}
                 </div>
@@ -194,8 +194,8 @@ const LandingSocialProofFAQ: React.FC = () => (
                      {name: "Carolina V.", city: "Bogotá", quote: "Me encantó el detalle de los aplicadores y la toalla. Se nota que piensan en todo. El shampoo quita las manchas de la cojinería súper fácil."},
                  ].map(testimonial => (
                     <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
-                        <div className="flex text-yellow-400 mb-2">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
-                        <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
+                        <div className="flex text-yellow-400 mb-2 justify-center">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
+                        <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"{testimonial.quote}"</p>
                         <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
                     </div>
                  ))}
@@ -205,7 +205,7 @@ const LandingSocialProofFAQ: React.FC = () => (
              <div className="space-y-4">
                 {faqBeautyKitData.map((item, index) => (
                   <Accordion key={index} title={item.question}>
-                    <p className="text-gray-700">{item.answer}</p>
+                    <p className="text-gray-700 text-justify hyphens-auto break-words">{item.answer}</p>
                   </Accordion>
                 ))}
              </div>

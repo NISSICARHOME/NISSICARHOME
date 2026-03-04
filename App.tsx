@@ -22,6 +22,8 @@ import CheckoutForm from './components/checkout/CheckoutForm';
 import Chatbot from './components/Chatbot';
 import Filters from './components/Filters';
 import SocialProofToast from './components/shared/SocialProofToast';
+import SEOManager from './components/shared/SEOManager';
+import WhatsAppButton from './components/shared/WhatsAppButton';
 
 // --- Page Imports ---
 import LandingPageVidrexClarityWash from './pages/LandingPageVidrexClarityWash';
@@ -30,6 +32,10 @@ import LandingPageBasicKit from './pages/LandingPageBasicKit';
 import LandingPageServices from './pages/LandingPageServices';
 import LandingPageAdditionalServices from './pages/LandingPageAdditionalServices';
 import LandingPageHyperDiamond from './pages/LandingPageHyperDiamond';
+import ProductLandingPage, { idToSlug } from './pages/ProductLandingPage';
+import AdminDashboard from './pages/AdminDashboard';
+
+import { siteContent } from './data/siteContent';
 
 // --- Helper component to scroll to top on route change ---
 const ScrollToTop = () => {
@@ -95,6 +101,7 @@ const App: React.FC = () => {
   });
 
   const allProducts = getAllProducts();
+  const { optimization } = siteContent;
 
   const handleAddToCart = (productToAdd: Product, quantity: number = 1) => {
     setViewedProductIds(prev => Array.from(new Set([...prev, productToAdd.id])));
@@ -136,12 +143,12 @@ const App: React.FC = () => {
     setIsCheckoutOpen(true);
   };
   
-  // Triggered by clicking on a Product Card - Opens Quick Buy Modal OR Navigates to Landing Page
+  // Triggered by clicking on a Product Card - Navigates to Landing Page
   const handleProductSelect = (product: Product) => {
       setViewedProductIds(prev => Array.from(new Set([...prev, product.id])));
-      if (product.id === 'prod-hyper-diamond') {
-          // Direct navigation for Hyper Diamond Landing Page
-          window.location.hash = "/Cera-Hyper-Diamond";
+      const slug = idToSlug[product.id];
+      if (slug) {
+          window.location.hash = `/${slug}`;
       } else {
           setQuickBuyProduct(product);
       }
@@ -178,7 +185,9 @@ const App: React.FC = () => {
   return (
     <HashRouter>
       <ScrollToTop />
-      <SocialProofToast />
+      <SEOManager />
+      <WhatsAppButton />
+      {optimization.socialProof && <SocialProofToast />}
       <Routes>
         <Route path="/" element={<MainLayout cartItemCount={cartItemCount} onCartClick={handleCartClick} onVoiceSearchStart={handleVoiceSearchStart} />}>
           <Route 
@@ -191,6 +200,8 @@ const App: React.FC = () => {
           <Route path="/spa-automotriz" element={<LandingPageServices />} />
           <Route path="/servicios-adicionales-y-soporte" element={<LandingPageAdditionalServices />} />
           <Route path="/Cera-Hyper-Diamond" element={<LandingPageHyperDiamond onBuyNow={handleBuyNow} />} />
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/:slug" element={<ProductLandingPage onBuyNow={handleBuyNow} />} />
         </Route>
       </Routes>
       
@@ -208,9 +219,12 @@ const App: React.FC = () => {
       {selectedProduct && <ProductModal product={selectedProduct} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
       
       {isCheckoutOpen && <CheckoutForm cart={cart} setCart={setCart} viewedProductIds={viewedProductIds} lastAddedProductId={lastAddedProductId} onClose={() => setIsCheckoutOpen(false)} />}
-      <Chatbot allProducts={allProducts} onProductSelect={handleProductSelect} isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} startListening={startVoiceSearch} onListeningEnd={handleListeningEnd} />
+      {optimization.chatbotEnabled && (
+        <Chatbot allProducts={allProducts} onProductSelect={handleProductSelect} isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} startListening={startVoiceSearch} onListeningEnd={handleListeningEnd} />
+      )}
     </HashRouter>
   );
 };
+
 
 export default App;

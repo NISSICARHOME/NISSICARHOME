@@ -44,8 +44,8 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
               className="w-full h-auto" 
           />
       </div>
-      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4">Kit Básico de Cuidado: El Comienzo Perfecto</h1>
-      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Te damos las herramientas esenciales para una limpieza profunda y una protección brillante. ¡Fácil de usar, con resultados que enamoran!</p>
+      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4 text-center">Kit Básico de Cuidado: El Comienzo Perfecto</h1>
+      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 text-justify hyphens-auto break-words">Te damos las herramientas esenciales para una limpieza profunda y una protección brillante. ¡Fácil de usar, con resultados que enamoran!</p>
        <p className="text-2xl md:text-3xl font-bold text-gray-800 mb-8">Precio Especial: $95.000 COP</p>
 
       <div className="max-w-md mx-auto flex items-center justify-center gap-4">
@@ -108,7 +108,7 @@ const LandingWhatYouGet: React.FC = () => {
         <section className="bg-white py-16 px-4">
             <div className="max-w-4xl mx-auto">
                 <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-4">¿Qué Contiene tu Kit Básico de Cuidado?</h2>
-                <p className="text-center text-xl text-gray-600 mb-12">Un arsenal completo con nuestros productos estrella para que obtengas resultados de nivel profesional.</p>
+                <p className="text-center text-xl text-gray-600 mb-12 text-justify hyphens-auto break-words">Un arsenal completo con nuestros productos estrella para que obtengas resultados de nivel profesional.</p>
                 <div className="bg-gray-50 p-8 rounded-lg shadow-md max-w-2xl mx-auto">
                     <ul className="space-y-4">
                         {kitItems.map((item, index) => (
@@ -140,8 +140,8 @@ const LandingSocialProofFAQ: React.FC = () => (
                      {name: "Felipe M.", city: "Pereira", quote: "La cera es de otro nivel. Deja un brillo muy profundo y el agua simplemente se desliza por la pintura. Una excelente compra, vale cada peso."},
                  ].map(testimonial => (
                     <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
-                        <div className="flex text-yellow-400 mb-2">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
-                        <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
+                        <div className="flex text-yellow-400 mb-2 justify-center">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
+                        <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"{testimonial.quote}"</p>
                         <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
                     </div>
                  ))}
@@ -151,7 +151,7 @@ const LandingSocialProofFAQ: React.FC = () => (
              <div className="space-y-4">
                 {faqBasicKitData.map((item, index) => (
                   <Accordion key={index} title={item.question}>
-                    <p className="text-gray-700">{item.answer}</p>
+                    <p className="text-gray-700 text-justify hyphens-auto break-words">{item.answer}</p>
                   </Accordion>
                 ))}
              </div>

@@ -9,8 +9,8 @@ const FeatureCard: React.FC<{ title: string; desc: string; icon: React.ReactNode
     <div className="p-4 bg-white border border-gray-100 rounded-full text-amber-500 mb-4 shadow-sm group-hover:scale-110 transition-transform duration-300">
       {icon}
     </div>
-    <h3 className="text-lg font-bold text-gray-900 mb-2">{title}</h3>
-    <p className="text-gray-600 text-sm leading-relaxed">{desc}</p>
+    <h3 className="text-lg font-bold text-gray-900 mb-2 text-center">{title}</h3>
+    <p className="text-gray-600 text-sm leading-relaxed text-justify hyphens-auto break-words">{desc}</p>
   </div>
 );
 
@@ -57,10 +57,10 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
           <span className="inline-block py-1 px-3 rounded-full bg-amber-500/20 border border-amber-500/50 text-amber-400 text-sm font-bold tracking-wide mb-4">
             NUEVA TECNOLOGÍA DE BLINDAJE
           </span>
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+          <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-center md:text-center">
             Cera Hyper Diamond: <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-yellow-500">Protección Total</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl">
+          <p className="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed max-w-2xl text-justify hyphens-auto break-words mx-auto md:mx-0">
             La evolución del encerado. Recubre, sella y protege la pintura de tu vehículo con tecnología hidrofóbica de alto brillo.
           </p>
           
@@ -198,8 +198,8 @@ const LandingSocialProofFAQ: React.FC = () => {
                      {name: "Andrea R.", city: "Medellín", quote: "Llevo 2 meses con la cera aplicada y sigue repeliendo el polvo. Excelente producto de Nissi."},
                  ].map((testimonial, i) => (
                     <div key={i} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                        <div className="flex text-amber-400 mb-3 text-lg">★★★★★</div>
-                        <p className="text-gray-700 italic mb-4 text-sm">"{testimonial.quote}"</p>
+                        <div className="flex text-amber-400 mb-3 text-lg justify-center">★★★★★</div>
+                        <p className="text-gray-700 italic mb-4 text-sm text-justify hyphens-auto break-words">"{testimonial.quote}"</p>
                         <p className="font-bold text-gray-900 text-right text-sm">- {testimonial.name}, {testimonial.city}</p>
                     </div>
                  ))}
@@ -210,7 +210,7 @@ const LandingSocialProofFAQ: React.FC = () => {
                 <div className="space-y-4">
                     {faqData.map((item, index) => (
                     <Accordion key={index} title={item.question}>
-                        <p className="text-gray-700">{item.answer}</p>
+                        <p className="text-gray-700 text-justify hyphens-auto break-words">{item.answer}</p>
                     </Accordion>
                     ))}
                 </div>
