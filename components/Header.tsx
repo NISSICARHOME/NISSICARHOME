@@ -5,12 +5,13 @@ const Logo = () => (
     <img 
         src="https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=w1344-h768-s-no-gm?authuser=0" 
         alt="Nissi Car Home Logo" 
-        className="h-12 md:h-32 object-contain transition-all duration-500 ease-in-out filter drop-shadow-lg hover:scale-110 hover:brightness-125 hover:drop-shadow-[0_0_15px_rgba(251,191,36,0.8)]"
+        className="h-10 md:h-16 object-contain transition-all duration-500 ease-in-out filter drop-shadow-md hover:scale-105"
+        fetchPriority="high"
     />
 );
 
 const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick: () => void; className?: string; }> = ({ href, children, onClick, className = '' }) => (
-  <HashLink smooth to={href} onClick={onClick} className={`block text-gray-700 rounded-lg transition-colors duration-300 font-semibold ${className}`}>
+  <HashLink smooth to={href} onClick={onClick} className={`text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:text-amber-500 ${className}`}>
     {children}
   </HashLink>
 );
@@ -58,14 +59,16 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
     setIsOpen(false);
   };
   
+  const [isScrolled, setIsScrolled] = useState(false);
+
   const controlNavbar = () => {
     if (typeof window !== 'undefined') {
-      // Do not hide navbar if menu is open
+      setIsScrolled(window.scrollY > 50);
+      
       if (isOpen) return;
-
-      if (window.scrollY > lastScrollY && window.scrollY > 100) { // if scroll down hide the navbar
+      if (window.scrollY > lastScrollY && window.scrollY > 100) {
         setIsVisible(false);
-      } else { // if scroll up show the navbar
+      } else {
         setIsVisible(true);
       }
       setLastScrollY(window.scrollY);
@@ -84,51 +87,51 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
 
   return (
     <>
-        <header className={`bg-white/20 backdrop-blur-md sticky top-0 z-40 border-b border-white/30 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
-          <nav className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4 py-2 md:p-4">
+        <header className={`fixed top-0 left-0 right-0 z-40 transition-all duration-500 ${isVisible ? 'translate-y-0' : '-translate-y-full'} ${isScrolled ? 'bg-white/90 backdrop-blur-xl shadow-xl py-2' : 'bg-transparent py-4'}`}>
+          <nav className="max-w-7xl flex items-center justify-between mx-auto px-6">
             <HashLink to="/" onClick={handleLinkClick} className="flex items-center space-x-3 rtl:space-x-reverse">
               <Logo />
             </HashLink>
             <div className="flex items-center md:order-2 space-x-1 md:space-x-3">
                 <button 
                     onClick={onVoiceSearchStart} 
-                    className="p-2 text-gray-800 rounded-lg hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+                    className={`p-2 rounded-xl transition-colors ${isScrolled ? 'text-gray-900 hover:bg-gray-100' : 'text-white hover:bg-white/10'}`}
                     aria-label="Buscar por voz"
                 >
                     <MicIcon className="w-6 h-6" />
                 </button>
                 <button 
                   onClick={onCartClick} 
-                  className="relative p-2 text-gray-800 rounded-lg hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className={`relative p-2 rounded-xl transition-colors ${isScrolled ? 'text-gray-900 hover:bg-gray-100' : 'text-white hover:bg-white/10'}`}
                   aria-label="Ver carrito"
                 >
                     <ShoppingCartIcon />
                     {cartItemCount > 0 && (
-                        <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-xs font-bold text-white">
+                        <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-500 text-[10px] font-black text-white shadow-lg">
                             {cartItemCount}
                         </span>
                     )}
                 </button>
-                {/* Hamburger Menu Button - Visible on Mobile */}
                 <button
                   onClick={() => setIsOpen(true)}
                   type="button"
-                  className="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-800 rounded-lg md:hidden hover:bg-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+                  className={`inline-flex items-center p-2 w-10 h-10 justify-center rounded-xl md:hidden transition-colors ${isScrolled ? 'text-gray-900 hover:bg-gray-100' : 'text-white hover:bg-white/10'}`}
                   aria-controls="mobile-menu"
                   aria-expanded={isOpen}
                   aria-label="Abrir menú"
                 >
-                  <span className="sr-only">Open main menu</span>
-                  <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
-                  </svg>
+                    <svg className="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                      <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h15M1 7h15M1 13h15"/>
+                    </svg>
                 </button>
             </div>
-            <div className="hidden w-full md:block md:w-auto md:order-1" id="navbar-default">
-              <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-white/20 rounded-lg bg-white/20 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-transparent">
+            <div className="hidden md:flex items-center space-x-10">
+              <ul className="flex space-x-10">
                 {navItems.map(item => (
                   <li key={item.href}>
-                    <NavLink href={item.href} onClick={handleLinkClick} className="py-2 px-3 hover:bg-white/20 md:hover:bg-transparent md:border-0 md:hover:text-amber-500 md:p-0">{item.label}</NavLink>
+                    <NavLink href={item.href} onClick={handleLinkClick} className={isScrolled ? 'text-gray-900' : 'text-white'}>
+                      {item.label}
+                    </NavLink>
                   </li>
                 ))}
               </ul>

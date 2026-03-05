@@ -36,6 +36,7 @@ const ProductLandingPage: React.FC<ProductLandingPageProps> = ({ onBuyNow }) => 
     const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
     const allProducts = useMemo(() => getAllProducts(), []);
+    const [isFAQExpanded, setIsFAQExpanded] = React.useState(false);
     
     const product = useMemo(() => {
         const id = slug ? slugToId[slug] : null;
@@ -248,20 +249,50 @@ const ProductLandingPage: React.FC<ProductLandingPageProps> = ({ onBuyNow }) => 
             {/* FAQ Section - Clean Neumorphic */}
             <section className="py-20 px-4">
                 <div className="max-w-3xl mx-auto">
-                    <h2 className="text-3xl font-black text-center text-gray-900 mb-12 uppercase tracking-tighter italic">Preguntas Frecuentes</h2>
-                    <div className="space-y-6">
-                        <Accordion title={`¿Para qué superficies sirve el ${product.name}?`}>
-                            <p className="text-gray-600 leading-relaxed font-medium">
-                                Está diseñado específicamente para {product.details?.surfaces?.join(', ') || 'las superficies indicadas en la descripción'}. 
-                                Siempre recomendamos probar en un área pequeña antes de la aplicación completa para asegurar la compatibilidad.
-                            </p>
-                        </Accordion>
-                        <Accordion title="¿Tiempos de entrega?">
-                            <p className="text-gray-600 leading-relaxed font-medium">Realizamos envíos a todo el país con cobertura total. El tiempo estimado de entrega es de 2 a 5 días hábiles, con rastreo en tiempo real de tu pedido.</p>
-                        </Accordion>
-                        <Accordion title="¿Garantía de satisfacción?">
-                            <p className="text-gray-600 leading-relaxed font-medium">¡Absolutamente! En Nissi Car Home nos enorgullecemos de la calidad. Si el producto no cumple con lo prometido, nuestro equipo de soporte te ayudará de inmediato.</p>
-                        </Accordion>
+                    <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden bg-[#e0e5ec] border border-white/30">
+                        <div 
+                            className="text-center cursor-pointer group"
+                            onClick={() => setIsFAQExpanded(!isFAQExpanded)}
+                        >
+                            <div className="flex flex-col items-center">
+                                <h2 className="text-3xl font-black text-gray-900 mb-4 uppercase tracking-tighter italic flex items-center gap-3">
+                                    Preguntas Frecuentes
+                                    <svg 
+                                        className={`w-6 h-6 sm:w-8 sm:h-8 text-amber-500 transition-transform duration-500 ${isFAQExpanded ? 'rotate-180' : ''}`} 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </h2>
+                                <p className="text-gray-600 font-medium">
+                                    {isFAQExpanded 
+                                        ? "Resolvemos tus dudas sobre este producto y nuestros servicios."
+                                        : "Haz clic para ver las dudas comunes sobre este producto."
+                                    }
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className={`grid transition-all duration-500 ease-in-out ${isFAQExpanded ? 'grid-rows-[1fr] opacity-100 mt-8 sm:mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
+                            <div className="overflow-hidden">
+                                <div className="space-y-6">
+                                    <Accordion title={`¿Para qué superficies sirve el ${product.name}?`}>
+                                        <p className="text-gray-600 leading-relaxed font-medium">
+                                            Está diseñado específicamente para {product.details?.surfaces?.join(', ') || 'las superficies indicadas en la descripción'}. 
+                                            Siempre recomendamos probar en un área pequeña antes de la aplicación completa para asegurar la compatibilidad.
+                                        </p>
+                                    </Accordion>
+                                    <Accordion title="¿Tiempos de entrega?">
+                                        <p className="text-gray-600 leading-relaxed font-medium">Realizamos envíos a todo el país con cobertura total. El tiempo estimado de entrega es de 2 a 5 días hábiles, con rastreo en tiempo real de tu pedido.</p>
+                                    </Accordion>
+                                    <Accordion title="¿Garantía de satisfacción?">
+                                        <p className="text-gray-600 leading-relaxed font-medium">¡Absolutamente! En Nissi Car Home nos enorgullecemos de la calidad. Si el producto no cumple con lo prometido, nuestro equipo de soporte te ayudará de inmediato.</p>
+                                    </Accordion>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

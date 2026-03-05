@@ -178,34 +178,68 @@ const faqServicesData = [
     { question: "¿Dónde están ubicados?", answer: "Nuestra fábrica principal está en Pereira, con sedes en Ibagué y Espinal, Tolima. Todos los trabajos pesados se realizan bajo ambiente controlado en nuestras instalaciones." },
 ];
 
-const LandingSocialProofFAQ: React.FC = () => (
-    <section className="py-16 px-4 bg-white">
-         <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Lo Que Dicen Nuestros Clientes</h2>
-            <div className="grid md:grid-cols-2 gap-8 mb-16">
-                 {[
-                     {name: "Carlos M.", city: "Pereira", quote: "Llevé mi camioneta para el Servicio Gold y no podía creerlo. Los rayones desaparecieron y el interior quedó impecable, como sacado del concesionario."},
-                     {name: "Juliana R.", city: "Ibagué", quote: "Mis farolas estaban tan opacas que no alumbraban nada. En Nissi las dejaron transparentes y con un estilo personalizado increíble. ¡Recomendados!"},
-                 ].map(testimonial => (
-                    <div key={testimonial.name} className="bg-gray-50 p-6 rounded-lg shadow border border-gray-100">
-                        <div className="flex text-yellow-400 mb-2">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
-                        <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
-                        <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
+const LandingSocialProofFAQ: React.FC = () => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    return (
+        <section className="py-16 px-4 bg-white">
+             <div className="max-w-4xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Lo Que Dicen Nuestros Clientes</h2>
+                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                     {[
+                         {name: "Carlos M.", city: "Pereira", quote: "Llevé mi camioneta para el Servicio Gold y no podía creerlo. Los rayones desaparecieron y el interior quedó impecable, como sacado del concesionario."},
+                         {name: "Juliana R.", city: "Ibagué", quote: "Mis farolas estaban tan opacas que no alumbraban nada. En Nissi las dejaron transparentes y con un estilo personalizado increíble. ¡Recomendados!"},
+                     ].map(testimonial => (
+                        <div key={testimonial.name} className="bg-gray-50 p-6 rounded-lg shadow border border-gray-100">
+                            <div className="flex text-yellow-400 mb-2">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
+                            <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
+                            <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
+                        </div>
+                     ))}
+                </div>
+                
+                <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden bg-gray-50">
+                    <div 
+                        className="text-center cursor-pointer group"
+                        onClick={() => setIsExpanded(!isExpanded)}
+                    >
+                        <div className="flex flex-col items-center">
+                            <h2 className="text-2xl font-extrabold text-gray-800 sm:text-3xl flex items-center gap-3">
+                                Preguntas Frecuentes sobre Servicios
+                                <svg 
+                                    className={`w-6 h-6 sm:w-8 sm:h-8 text-amber-500 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} 
+                                    fill="none" 
+                                    stroke="currentColor" 
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </h2>
+                            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
+                                {isExpanded 
+                                    ? "Resolvemos tus dudas sobre nuestros procesos de detallado y restauración."
+                                    : "Haz clic aquí para ver las preguntas frecuentes sobre nuestros servicios especializados."
+                                }
+                            </p>
+                        </div>
                     </div>
-                 ))}
-            </div>
-            
-            <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Preguntas Frecuentes sobre Servicios</h2>
-             <div className="space-y-4">
-                {faqServicesData.map((item, index) => (
-                  <Accordion key={index} title={item.question}>
-                    <p className="text-gray-700 text-left leading-relaxed">{item.answer}</p>
-                  </Accordion>
-                ))}
+
+                    <div className={`grid transition-all duration-500 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-8 sm:mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
+                        <div className="overflow-hidden">
+                            <div className="space-y-4">
+                                {faqServicesData.map((item, index) => (
+                                    <Accordion key={index} title={item.question}>
+                                        <p className="text-gray-700 text-left leading-relaxed">{item.answer}</p>
+                                    </Accordion>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
              </div>
-         </div>
-    </section>
-);
+        </section>
+    );
+};
 
 
 // --- MAIN LANDING PAGE COMPONENT ---

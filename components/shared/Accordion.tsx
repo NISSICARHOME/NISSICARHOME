@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface AccordionProps {
   title: string;
@@ -9,32 +10,34 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg transition-all duration-300">
+    <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex justify-between items-center py-3 px-4 sm:py-4 sm:px-5 text-left text-sm sm:text-base font-semibold text-gray-800 hover:bg-white/20 transition-colors"
+        className="w-full flex justify-between items-center p-6 text-left group"
         aria-expanded={isOpen}
       >
-        <span className="flex-1 pr-4">{title}</span>
-        <svg
-          className={`w-6 h-6 transform transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-        </svg>
-      </button>
-      <div
-        className={`grid transition-all duration-500 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
-      >
-        <div className="overflow-hidden">
-          <div className="px-4 pt-0 pb-3 sm:px-5 sm:pb-4 sm:pt-0">
-            {children}
-          </div>
+        <span className={`text-lg font-bold transition-colors duration-300 ${isOpen ? 'text-amber-500' : 'text-gray-900'}`}>{title}</span>
+        <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen ? 'bg-amber-500 text-white rotate-180' : 'bg-gray-50 text-gray-400 group-hover:bg-gray-100'}`}>
+          <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+          </svg>
         </div>
-      </div>
+      </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3, ease: 'easeInOut' }}
+          >
+            <div className="px-6 pb-6 pt-0">
+              <div className="h-px bg-gray-50 mb-6"></div>
+              {children}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -2,6 +2,7 @@
 import React from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { Kit } from '../types';
+import { motion } from 'motion/react';
 
 interface ExtendedKit extends Kit {
     link?: string;
@@ -53,117 +54,135 @@ const complementsData: Kit[] = [
      { id: "comp-3", name: "Toalla de Microfibra", image: "https://lh3.googleusercontent.com/pw/AP1GczPn8Nx3WgdMKOguR8-_ISl7lyhdrJoWEWxaFuy3-po0uM7NAQAT4vSdBSj2LZkpNQ52hEvJ-Kgd3TG1WPCaaGklZSukEoquViMAuPeEImOPVd39drDoagydRag8yKyCAPh63Er63riRmEKFJLwZ_nv2=w354-h372-s-no-gm?authuser=0", description: "Ultra suave y absorbente, esencial para retirar ceras y secar sin dejar rayones." },
 ];
 
-const KitCard: React.FC<{ kit: ExtendedKit }> = ({ kit }) => {
+const KitCard: React.FC<{ kit: ExtendedKit; index: number }> = ({ kit, index }) => {
     const isSpecial = kit.id === 'kit-vidrex-clarity';
     const isBeautyKit = kit.id === 'kit-2';
-    const isBasicKit = kit.id === 'kit-1';
     
     const hasLandingPage = kit.link && kit.link.startsWith('#/');
     const to = hasLandingPage ? kit.link.substring(1) : '/#contacto';
 
     return (
-        <HashLink 
-            to={to}
-            className={`
-                bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl 
-                transition-all duration-300 transform hover:scale-[1.02] 
-                flex flex-col sm:flex-row items-center group relative hover:z-10 
-                ${isSpecial ? 'border-2 border-[#D90429]' : isBeautyKit ? 'border-2 border-[#F77F00]' : isBasicKit ? 'border-2 border-[#FFC107]' : ''}
-            `}
+        <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.1 }}
         >
-            {/* Image Section */}
-            <div className="w-full sm:w-1/3 p-4 flex-shrink-0">
-                <img src={kit.image} alt={kit.name} className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-110" />
-            </div>
+            <HashLink 
+                to={to}
+                className={`
+                    bg-white border border-gray-100 rounded-[2.5rem] shadow-sm hover:shadow-2xl 
+                    transition-all duration-500 flex flex-col lg:flex-row items-center group overflow-hidden
+                    ${isSpecial ? 'ring-2 ring-red-500 ring-offset-4' : isBeautyKit ? 'ring-2 ring-amber-500 ring-offset-4' : ''}
+                `}
+            >
+                <div className="w-full lg:w-2/5 p-8 flex-shrink-0 bg-gray-50 flex items-center justify-center">
+                    <img 
+                        src={kit.image} 
+                        alt={kit.name} 
+                        loading="lazy"
+                        className="w-full h-auto max-h-[300px] object-contain transition-transform duration-700 group-hover:scale-110" 
+                        referrerPolicy="no-referrer"
+                    />
+                </div>
 
-            {/* Content Section */}
-            <div className="p-4 sm:p-6 flex flex-col flex-grow">
-                <h3 className={`text-lg sm:text-xl font-bold ${isSpecial ? 'text-[#D90429]' : isBeautyKit ? 'text-[#F77F00]' : isBasicKit ? 'text-gray-800' : 'text-amber-600'}`}>{kit.name}</h3>
-                
-                {isBeautyKit && kit.oldPrice ? (
-                    <div className="mt-1 mb-3">
-                        <p className="text-lg font-bold text-[#F77F00]">¡OFERTA ESPECIAL!</p>
-                        <p className="text-base text-gray-500 line-through">Antes {kit.oldPrice}</p>
-                        <p className="text-2xl md:text-3xl font-bold text-[#F77F00] animate-pulse-scale">
-                            AHORA {kit.price}
-                        </p>
+                <div className="p-8 lg:p-12 flex flex-col flex-grow">
+                    <div className="flex items-center gap-3 mb-4">
+                        {isSpecial && <span className="px-3 py-1 bg-red-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full">Best Seller</span>}
+                        {isBeautyKit && <span className="px-3 py-1 bg-amber-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full">Recomendado</span>}
                     </div>
-                ) : (
-                    kit.price && (
-                        <div className="flex items-baseline gap-2 mt-1 mb-3">
-                            <p className={`text-base sm:text-lg font-semibold ${isSpecial ? 'text-[#D90429]' : isBasicKit ? 'text-gray-800' : 'text-gray-800'}`}>{kit.price}</p>
-                            {kit.specialPrice && <p className="text-base sm:text-lg font-bold text-[#D90429]">{kit.specialPrice}</p>}
+                    
+                    <h3 className="text-3xl font-black text-gray-900 mb-4 uppercase italic tracking-tighter leading-none">
+                        {kit.name}
+                    </h3>
+                    
+                    <div className="flex items-baseline gap-4 mb-6">
+                        {kit.oldPrice && <span className="text-lg text-gray-400 line-through font-medium">{kit.oldPrice}</span>}
+                        <span className={`text-4xl font-black tracking-tighter ${isSpecial ? 'text-red-500' : 'text-amber-500'}`}>
+                            {kit.specialPrice || kit.price}
+                        </span>
+                    </div>
+
+                    <p className="text-gray-500 text-lg leading-relaxed mb-8">
+                        {kit.description}
+                    </p>
+                    
+                    {kit.includes && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                            {kit.includes.map((item, i) => (
+                                <div key={i} className="flex items-center text-sm font-bold text-gray-700">
+                                    <div className="w-5 h-5 bg-green-50 rounded-full flex items-center justify-center text-green-500 mr-3">
+                                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                                    </div>
+                                    {item}
+                                </div>
+                            ))}
                         </div>
-                    )
-                )}
+                    )}
 
-                <p className="text-sm text-gray-700 mb-4 flex-grow">{kit.description}</p>
-                
-                {kit.includes && (
-                     <div className="flex-grow mb-4">
-                        <h4 className="font-semibold text-gray-800 mb-2">¿Qué Incluye el Kit?</h4>
-                        <ul className="space-y-2">
-                           {kit.includes.map((item, index) => (
-                                <li key={index} className="flex items-start text-sm text-gray-700">
-                                    <svg className="flex-shrink-0 h-5 w-5 text-green-500 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                                    <span>{item}</span>
-                                </li>
-                           ))}
-                        </ul>
-                    </div>
-                )}
-
-                {/* Action Button */}
-                <div className="mt-auto pt-4">
-                     <div className={`w-full sm:w-auto sm:max-w-xs text-center font-bold py-3 px-6 text-base rounded-lg transition-all duration-300 active:scale-95 shadow-md ${isSpecial ? 'bg-[#D90429] text-white group-hover:brightness-110' : isBeautyKit ? 'bg-[#F77F00] text-white group-hover:brightness-110' : isBasicKit ? 'bg-[#FFC107] text-gray-800 group-hover:brightness-110' : hasLandingPage ? 'bg-green-600 text-white group-hover:bg-green-700' : 'bg-amber-500/80 text-white group-hover:bg-amber-500/100'}`}>
-                        {isSpecial ? 'Ver Oferta Ahora' : hasLandingPage ? 'Ver Detalles del Kit' : 'Más Información'}
+                    <div className={`inline-flex items-center justify-center px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-sm transition-all duration-300 shadow-lg group-hover:shadow-amber-500/20 ${isSpecial ? 'bg-red-500 text-white' : 'bg-amber-500 text-white'}`}>
+                        {isSpecial ? 'Obtener Oferta' : 'Ver Detalles'}
+                        <svg className="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                     </div>
                 </div>
-            </div>
-        </HashLink>
+            </HashLink>
+        </motion.div>
     );
 };
 
-const ComplementCard: React.FC<{ complement: Kit }> = ({ complement }) => (
-    <HashLink smooth to="/#contacto" className="bg-white/20 backdrop-blur-md border border-white/30 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col text-center p-2 group items-center h-full">
-        <div className="h-20 w-full flex items-center justify-center">
-            <img src={complement.image} alt={complement.name} className="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-300" />
-        </div>
-        <div className="flex flex-col flex-grow mt-2 w-full">
-            <h4 className="font-bold text-xs text-gray-800 leading-tight">{complement.name}</h4>
-        </div>
-    </HashLink>
-);
-
-
 const Kits: React.FC = () => {
     return (
-        <section id="kits" className="py-10 md:py-20">
+        <section id="kits" className="py-24 bg-gray-50/50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset">
-                    <div className="text-center mb-8 sm:mb-16">
-                        <h2 className="text-xl sm:text-3xl lg:text-4xl font-extrabold text-gray-800">
-                            Kits y Complementos
-                        </h2>
-                        <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-lg text-gray-600">
-                            Soluciones completas y herramientas esenciales para llevar el cuidado de tu vehículo y hogar al siguiente nivel.
-                        </p>
+                <div className="text-center mb-20">
+                    <div className="inline-block mb-6 px-4 py-1.5 bg-amber-50 rounded-full">
+                        <span className="text-amber-600 text-xs font-black uppercase tracking-widest">Ahorro Inteligente</span>
                     </div>
-                    <div className="space-y-8">
-                        {kitsData.map(kit => <KitCard key={kit.id} kit={kit} />)}
-                    </div>
+                    <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6 uppercase italic tracking-tighter leading-none">
+                        KITS <span className="text-amber-500">EXCLUSIVOS</span>
+                    </h2>
+                    <p className="text-xl text-gray-500 max-w-2xl mx-auto">
+                        Soluciones completas diseñadas para maximizar resultados con el mejor precio del mercado.
+                    </p>
+                </div>
 
-                    <div className="mt-12 md:mt-20">
-                         <h3 className="text-center text-lg sm:text-2xl font-bold text-gray-800 mb-8">
-                            Complementos Esenciales
-                        </h3>
-                        <div className="grid grid-cols-3 gap-2 sm:gap-4 max-w-lg mx-auto">
-                            {complementsData.map(comp => <ComplementCard key={comp.id} complement={comp} />)}
-                        </div>
+                <div className="space-y-12 mb-24">
+                    {kitsData.map((kit, index) => <KitCard key={kit.id} kit={kit} index={index} />)}
+                </div>
+
+                <div className="bg-white rounded-[3rem] p-12 lg:p-20 border border-gray-100 shadow-sm text-center">
+                    <h3 className="text-3xl font-black text-gray-900 mb-12 uppercase italic tracking-tighter">Complementos Esenciales</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-12 max-w-4xl mx-auto">
+                        {complementsData.map((comp, index) => (
+                            <motion.div 
+                                key={comp.id}
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.1 }}
+                                className="group"
+                            >
+                                <div className="aspect-square bg-gray-50 rounded-[2rem] p-8 mb-6 flex items-center justify-center transition-all duration-500 group-hover:bg-amber-50 group-hover:shadow-xl group-hover:shadow-amber-500/10">
+                                    <img 
+                                        src={comp.image} 
+                                        alt={comp.name} 
+                                        loading="lazy"
+                                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110" 
+                                        referrerPolicy="no-referrer"
+                                    />
+                                </div>
+                                <h4 className="text-sm font-black text-gray-900 uppercase tracking-widest leading-tight">{comp.name}</h4>
+                            </motion.div>
+                        ))}
                     </div>
                 </div>
             </div>
         </section>
+    );
+};
+
+export default Kits;
+/section>
     );
 };
 

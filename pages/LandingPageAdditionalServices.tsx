@@ -27,6 +27,8 @@ const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({
 
 
 const LandingPageAdditionalServices: React.FC = () => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
     useEffect(() => {
         const originalTitle = document.title;
         document.title = "Spa Automotriz y Detailing Profesional - Nissi Car Home";
@@ -176,13 +178,43 @@ const LandingPageAdditionalServices: React.FC = () => {
                         </div>
                     </div>
                     
-                    <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Preguntas Frecuentes</h2>
-                    <div className="space-y-4">
-                        {faqData.map((item, index) => (
-                            <AccordionItem key={index} title={item.question}>
-                                {item.answer}
-                            </AccordionItem>
-                        ))}
+                    <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden bg-gray-50">
+                        <div 
+                            className="text-center cursor-pointer group"
+                            onClick={() => setIsExpanded(!isExpanded)}
+                        >
+                            <div className="flex flex-col items-center">
+                                <h2 className="text-2xl font-extrabold text-gray-800 sm:text-3xl flex items-center gap-3">
+                                    Preguntas Frecuentes
+                                    <svg 
+                                        className={`w-6 h-6 sm:w-8 sm:h-8 text-amber-500 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} 
+                                        fill="none" 
+                                        stroke="currentColor" 
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+                                    </svg>
+                                </h2>
+                                <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
+                                    {isExpanded 
+                                        ? "Resolvemos tus dudas sobre nuestros procesos de detallado y restauración."
+                                        : "Haz clic aquí para ver las preguntas frecuentes sobre nuestros servicios."
+                                    }
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className={`grid transition-all duration-500 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-8 sm:mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
+                            <div className="overflow-hidden">
+                                <div className="space-y-4">
+                                    {faqData.map((item, index) => (
+                                        <AccordionItem key={index} title={item.question}>
+                                            {item.answer}
+                                        </AccordionItem>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

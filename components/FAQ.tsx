@@ -1,6 +1,7 @@
 import React from 'react';
 import { FAQItem } from '../types';
 import Accordion from './shared/Accordion';
+import { motion } from 'motion/react';
 
 export const faqData: FAQItem[] = [
   {
@@ -31,11 +32,11 @@ export const faqData: FAQItem[] = [
     question: "¿Qué diferencia a Nissi Car Home de otras marcas más económicas del mercado?",
     answer: "Nuestra diferencia radica en la calidad y la confianza. Invertimos en investigación y materias primas de vanguardia para crear fórmulas que realmente funcionan y perduran. Mientras otros venden un producto, nosotros ofrecemos una solución completa que incluye asesoría personalizada y el respaldo de una garantía de 365 días."
   },
-    {
+  {
     question: "¿Sus productos son solo para vehículos o también los puedo usar en mi hogar?",
     answer: "Aunque nuestra especialidad es el sector automotriz, muchos de nuestros productos son excelentes para el hogar. Por ejemplo, el Kit Desmanchador de Vidrios es altamente eficaz para eliminar manchas de agua dura y sarro en las divisiones de baño, ventanas y superficies de acero inoxidable."
   },
-    {
+  {
     question: "No estoy seguro de qué comprar, ¿por dónde empiezo?",
     answer: "Una excelente opción para empezar es nuestro Kit #2: Kit de Embellecimiento para tu Vehículo. Es uno de los más completos, ya que te permite proteger la pintura con la Cera Hyper Diamond, dar un acabado profesional a las llantas con Perfect Llantix y restaurar las partes negras con el Ultra Restorer de obsequio."
   }
@@ -43,24 +44,48 @@ export const faqData: FAQItem[] = [
 
 const FAQ: React.FC = () => {
   return (
-    <section id="faq" className="py-10 md:py-20">
+    <section id="faq" className="py-24 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-xl font-extrabold text-gray-800 sm:text-4xl">
-              Preguntas Frecuentes
-            </h2>
-            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
-              Aquí respondemos a tus preguntas más comunes para que tengas toda la información que necesitas.
-            </p>
+        <div className="text-center mb-16">
+          <div className="inline-block mb-6 px-4 py-1.5 bg-amber-50 rounded-full">
+            <span className="text-amber-600 text-xs font-black uppercase tracking-widest">Soporte al Cliente</span>
           </div>
-          <div className="space-y-4">
-            {faqData.map((item, index) => (
-              <Accordion key={index} title={item.question}>
-                <p className="text-gray-700 text-sm sm:text-base">{item.answer}</p>
+          <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6 uppercase italic tracking-tighter leading-none">
+            PREGUNTAS <span className="text-amber-500">FRECUENTES</span>
+          </h2>
+          <p className="text-xl text-gray-500">
+            Todo lo que necesitas saber sobre nuestros productos y servicios.
+          </p>
+        </div>
+
+        <div className="space-y-4">
+          {faqData.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
+            >
+              <Accordion title={item.question}>
+                <p className="text-gray-500 text-lg leading-relaxed">{item.answer}</p>
               </Accordion>
-            ))}
-          </div>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-16 p-12 bg-gray-50 rounded-[3rem] text-center border border-gray-100">
+          <h3 className="text-2xl font-black text-gray-900 mb-4 uppercase italic tracking-tight">¿Aún tienes dudas?</h3>
+          <p className="text-gray-500 mb-8">Nuestro equipo de expertos está listo para asesorarte de forma personalizada.</p>
+          <a 
+            href="https://wa.me/573113141516" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-10 py-4 bg-green-500 text-white rounded-2xl font-black uppercase tracking-widest text-sm transition-all duration-300 shadow-lg hover:shadow-green-500/20 active:scale-95"
+          >
+            Hablar con un Experto
+            <svg className="w-5 h-5 ml-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.246 2.248 3.484 5.232 3.484 8.412 0 6.556-5.338 11.892-11.893 11.892-1.997-.001-3.951-.5-5.688-1.448l-6.309 1.656zm6.29-4.465l.353.21c1.445.859 3.11 1.313 4.813 1.314 5.235 0 9.497-4.262 9.497-9.497 0-2.537-1.002-4.931-2.822-6.751-1.821-1.82-4.215-2.822-6.751-2.822-5.235 0-9.497 4.262-9.497 9.497 0 2.093.544 4.135 1.575 5.915l.23.395-1.008 3.682 3.77-.988z" /></svg>
+          </a>
         </div>
       </div>
     </section>

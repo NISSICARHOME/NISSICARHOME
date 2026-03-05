@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { HashRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 
 // --- Type Imports ---
@@ -8,40 +8,53 @@ import { Product, CartItem, ActiveFilters } from './types';
 // --- Component Imports ---
 import Header from './components/Header';
 import Hero from './components/Hero';
-import About from './components/About';
-import Products, { getAllProducts } from './components/Products';
-import Kits from './components/Kits';
-import Services from './components/Services';
-import FAQ from './components/FAQ';
-import Policies from './components/Policies';
-import PaymentMethods from './components/PaymentMethods';
-import Footer from './components/Footer';
-import ProductModal from './components/shared/ProductModal';
-import QuickBuyModal from './components/shared/QuickBuyModal'; // Import the new Modal
-import CheckoutForm from './components/checkout/CheckoutForm';
-import Chatbot from './components/Chatbot';
-import Filters from './components/Filters';
-import SocialProofToast from './components/shared/SocialProofToast';
-import SEOManager from './components/shared/SEOManager';
 import WhatsAppButton from './components/shared/WhatsAppButton';
-
-// --- Page Imports ---
-import LandingPageVidrexClarityWash from './pages/LandingPageVidrexClarityWash';
-import LandingPageBeautyKit from './pages/LandingPageBeautyKit';
-import LandingPageBasicKit from './pages/LandingPageBasicKit';
-import LandingPageServices from './pages/LandingPageServices';
-import LandingPageAdditionalServices from './pages/LandingPageAdditionalServices';
-import LandingPageHyperDiamond from './pages/LandingPageHyperDiamond';
-import ProductLandingPage, { idToSlug } from './pages/ProductLandingPage';
-import AdminDashboard from './pages/AdminDashboard';
-
+import { TrackingService } from './services/TrackingService';
+import SEOManager from './components/shared/SEOManager';
 import { siteContent } from './data/siteContent';
+import { getAllProducts } from './components/Products';
+
+// --- Lazy Loaded Components ---
+const About = lazy(() => import('./components/About'));
+const Products = lazy(() => import('./components/Products'));
+const Kits = lazy(() => import('./components/Kits'));
+const Services = lazy(() => import('./components/Services'));
+const FAQ = lazy(() => import('./components/FAQ'));
+const Policies = lazy(() => import('./components/Policies'));
+const PaymentMethods = lazy(() => import('./components/PaymentMethods'));
+const Footer = lazy(() => import('./components/Footer'));
+const ProductModal = lazy(() => import('./components/shared/ProductModal'));
+const QuickBuyModal = lazy(() => import('./components/shared/QuickBuyModal'));
+const CheckoutForm = lazy(() => import('./components/checkout/CheckoutForm'));
+const Chatbot = lazy(() => import('./components/Chatbot'));
+const Filters = lazy(() => import('./components/Filters'));
+const SocialProofToast = lazy(() => import('./components/shared/SocialProofToast'));
+
+// --- Lazy Loaded Pages ---
+const LandingPageVidrexClarityWash = lazy(() => import('./pages/LandingPageVidrexClarityWash'));
+const LandingPageBeautyKit = lazy(() => import('./pages/LandingPageBeautyKit'));
+const LandingPageBasicKit = lazy(() => import('./pages/LandingPageBasicKit'));
+const LandingPageServices = lazy(() => import('./pages/LandingPageServices'));
+const LandingPageAdditionalServices = lazy(() => import('./pages/LandingPageAdditionalServices'));
+const LandingPageHyperDiamond = lazy(() => import('./pages/LandingPageHyperDiamond'));
+const ProductLandingPage = lazy(() => import('./pages/ProductLandingPage'));
+const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+
+import { idToSlug } from './pages/ProductLandingPage';
+
+// --- Loading Component ---
+const PageLoader = () => (
+  <div className="flex items-center justify-center min-h-[60vh]">
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+  </div>
+);
 
 // --- Helper component to scroll to top on route change ---
 const ScrollToTop = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
+    TrackingService.trackPageView(pathname);
   }, [pathname]);
   return null;
 };
@@ -55,9 +68,13 @@ const MainLayout: React.FC<{
   <>
     <Header cartItemCount={cartItemCount} onCartClick={onCartClick} onVoiceSearchStart={onVoiceSearchStart} />
     <main>
-      <Outlet />
+      <Suspense fallback={<PageLoader />}>
+        <Outlet />
+      </Suspense>
     </main>
-    <Footer />
+    <Suspense fallback={null}>
+      <Footer />
+    </Suspense>
   </>
 );
 
@@ -71,14 +88,16 @@ const HomePage: React.FC<{
 }> = ({ onProductSelect, onAddToCart, searchTerm, activeFilters, setActiveFilters }) => (
   <>
     <Hero />
-    <Filters activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
-    <Products onProductSelect={onProductSelect} onAddToCart={onAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} />
-    <Kits />
-    <About />
-    <Services />
-    <FAQ />
-    <Policies />
-    <PaymentMethods />
+    <Suspense fallback={<PageLoader />}>
+      <Filters activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
+      <Products onProductSelect={onProductSelect} onAddToCart={onAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} />
+      <Kits />
+      <About />
+      <Services />
+      <FAQ />
+      <Policies />
+      <PaymentMethods />
+    </Suspense>
   </>
 );
 
@@ -106,6 +125,15 @@ const App: React.FC = () => {
   const handleAddToCart = (productToAdd: Product, quantity: number = 1) => {
     setViewedProductIds(prev => Array.from(new Set([...prev, productToAdd.id])));
     setLastAddedProductId(productToAdd.id);
+    
+    // Tracking
+    TrackingService.trackAddToCart({
+      id: productToAdd.id,
+      name: productToAdd.name,
+      price: productToAdd.price,
+      quantity: quantity
+    });
+
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.id === productToAdd.id);
       if (existingItem) {
@@ -129,6 +157,14 @@ const App: React.FC = () => {
     // Adds a specific item (usually a kit from a landing page) and opens checkout
     setViewedProductIds(prev => Array.from(new Set([...prev, item.id])));
     setLastAddedProductId(item.id);
+
+    // Tracking
+    TrackingService.trackInitiateCheckout({
+      id: item.id,
+      name: item.name,
+      price: item.price
+    });
+
     setCart(prevCart => {
         const existingItem = prevCart.find(i => i.id === item.id);
         if (existingItem) {

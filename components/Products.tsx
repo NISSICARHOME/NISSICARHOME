@@ -191,46 +191,65 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCar
   return (
     <div 
         id={`product-card-${product.id}`}
-        className={`relative z-0 ${viewMode === 'grid' ? 'h-full hover:z-10' : 'w-full'}`}
+        className={`relative group ${viewMode === 'grid' ? 'h-full' : 'w-full'}`}
     >
         <div 
             onClick={onSelect}
             className={`
-                cursor-pointer transition-all duration-300 ease-out
+                cursor-pointer transition-all duration-500 ease-out overflow-hidden
                 ${viewMode === 'list' 
-                    ? 'flex flex-row items-center p-2 gap-3 bg-white/40 backdrop-blur-md border border-white/30 rounded-lg hover:shadow-lg' 
-                    : 'flex flex-col h-full bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-xl hover:shadow-2xl hover:scale-110'
+                    ? 'flex flex-row items-center p-3 gap-4 bg-white border border-gray-100 rounded-2xl hover:shadow-xl' 
+                    : 'flex flex-col h-full bg-white border border-gray-100 rounded-[2rem] shadow-sm hover:shadow-2xl hover:-translate-y-2'
                 }
             `}
         >
-            <div className={`flex-shrink-0 ${viewMode === 'list' ? 'w-24' : 'w-full p-6'}`}>
-                <div>
-                    <img src={product.image} alt={product.name} className={`
-                        w-full object-contain drop-shadow-lg
-                        ${viewMode === 'list' ? 'h-24' : 'h-48'}`
-                    } />
-                </div>
+            <div className={`flex-shrink-0 relative overflow-hidden ${viewMode === 'list' ? 'w-28 h-28' : 'w-full aspect-square p-8 bg-gray-50/50'}`}>
+                <img 
+                    src={product.image} 
+                    alt={product.name} 
+                    loading="lazy"
+                    className={`
+                        w-full h-full object-contain drop-shadow-2xl transition-transform duration-700 group-hover:scale-110
+                    `}
+                    referrerPolicy="no-referrer"
+                />
+                {viewMode === 'grid' && (
+                    <div className="absolute top-4 right-4 bg-amber-500 text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        Nuevo
+                    </div>
+                )}
             </div>
             
-            <div className={`flex flex-col flex-grow ${viewMode === 'grid' ? 'p-5 pt-0' : ''}`}>
-                <h3 className={`font-bold text-gray-800 ${viewMode === 'list' ? 'text-base' : 'text-lg mb-2 leading-tight'}`}>{product.name}</h3>
-                <p className={`text-gray-600 flex-grow ${viewMode === 'list' ? 'text-sm hidden sm:block' : 'text-xs mb-3'}`}>{product.shortDesc}</p>
+            <div className={`flex flex-col flex-grow ${viewMode === 'grid' ? 'p-6' : ''}`}>
+                <div className="mb-1">
+                    <span className="text-[10px] font-bold text-amber-600 uppercase tracking-widest">{product.category}</span>
+                </div>
+                <h3 className={`font-black text-gray-900 uppercase italic tracking-tight ${viewMode === 'list' ? 'text-lg' : 'text-xl mb-2 leading-tight'}`}>{product.name}</h3>
+                <p className={`text-gray-500 leading-relaxed flex-grow ${viewMode === 'list' ? 'text-sm hidden sm:block' : 'text-xs mb-4 line-clamp-2'}`}>{product.shortDesc}</p>
                 
-                <div className={`${viewMode === 'list' ? 'flex items-center gap-4' : 'mt-auto'}`}>
-                    <p className={`font-bold text-amber-600 ${viewMode === 'list' ? 'text-lg' : 'text-xl mb-3'}`}>{product.price.toLocaleString('es-CO')}</p>
+                <div className={`${viewMode === 'list' ? 'flex items-center gap-6' : 'mt-auto'}`}>
+                    <div className="flex flex-col">
+                        <span className="text-[10px] text-gray-400 uppercase font-bold tracking-tighter">Precio</span>
+                        <p className={`font-black text-gray-900 ${viewMode === 'list' ? 'text-xl' : 'text-2xl mb-4'}`}>${product.price.toLocaleString('es-CO')}</p>
+                    </div>
                     
                     <div className={`flex gap-2 ${viewMode === 'list' ? 'flex-1' : 'w-full'}`}>
                         <button 
                             onClick={(e) => { e.stopPropagation(); onSelect(); }} 
-                            className="flex-1 bg-white/50 text-gray-800 hover:bg-white/80 backdrop-blur-sm border border-white/50 font-bold rounded-lg transition-all duration-300 active:scale-95 shadow-sm hover:shadow-md text-xs py-2 px-3 sm:text-sm"
+                            className="flex-1 bg-gray-50 text-gray-900 hover:bg-gray-100 font-bold rounded-xl transition-all duration-300 active:scale-95 text-xs py-3 px-4 border border-gray-200"
                         >
                             Detalles
                         </button>
                         <button 
                             onClick={(e) => { e.stopPropagation(); onAddToCart(product); }} 
-                            className="flex-1 bg-amber-500 text-white hover:bg-amber-600 backdrop-blur-sm border border-amber-400 font-bold rounded-lg transition-all duration-300 active:scale-95 shadow-md hover:shadow-lg text-xs py-2 px-3 sm:text-sm"
+                            className="flex-1 bg-amber-500 text-white hover:bg-amber-600 font-bold rounded-xl transition-all duration-300 active:scale-95 shadow-lg shadow-amber-500/20 text-xs py-3 px-4 group/btn"
                         >
-                            Añadir
+                            <span className="flex items-center justify-center">
+                                Añadir
+                                <svg className="ml-1 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                                </svg>
+                            </span>
                         </button>
                     </div>
                 </div>

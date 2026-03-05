@@ -18,13 +18,23 @@ const SEOManager: React.FC<SEOProps> = ({ title, description }) => {
     document.title = finalTitle;
 
     const metaDescription = document.querySelector('meta[name="description"]');
+    const finalDescription = description || optimization.metaDescription || "Cuidado y estética automotriz de nivel profesional.";
     if (metaDescription) {
-      metaDescription.setAttribute('content', description || optimization.metaDescription || "Cuidado y estética automotriz de nivel profesional.");
+      metaDescription.setAttribute('content', finalDescription);
     }
 
-    // Google Analytics (Mock implementation for ID injection)
-    if (optimization.googleAnalyticsId && optimization.googleAnalyticsId !== 'G-XXXXXXXXXX') {
-      console.log(`Google Analytics initialized with ID: ${optimization.googleAnalyticsId}`);
+    // Open Graph
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.setAttribute('content', finalTitle);
+    
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) ogDescription.setAttribute('content', finalDescription);
+
+    // Google Analytics
+    if (typeof window !== 'undefined' && (window as any).gtag && optimization.googleAnalyticsId && optimization.googleAnalyticsId !== 'G-XXXXXXXXXX') {
+      (window as any).gtag('config', optimization.googleAnalyticsId, {
+        page_path: location.pathname + location.hash,
+      });
     }
   }, [title, description, location, optimization]);
 

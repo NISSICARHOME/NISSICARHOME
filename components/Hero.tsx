@@ -1,58 +1,101 @@
 import React, { useState, useEffect } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import { siteContent } from '../data/siteContent';
+import { motion } from 'motion/react';
 
 const Hero: React.FC = () => {
   const [offsetY, setOffsetY] = useState(0);
   const { hero } = siteContent;
 
-  // The parallax effect will be more pronounced, moving the image at 50% of the scroll speed.
   const handleScroll = () => {
       setOffsetY(window.scrollY * 0.5);
   };
 
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
-
-    // Cleanup function to remove the event listener
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <section id="inicio" className="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
+    <section id="inicio" className="relative h-screen flex items-center justify-center text-center text-white overflow-hidden bg-black">
       <div className="absolute inset-0 z-0">
         <img
           src={hero.backgroundImage}
           alt="Vehículo detallado"
-          // Make image taller and position it absolutely to allow for parallax movement without showing edges.
-          className="absolute top-0 left-0 w-full min-h-[120vh] object-cover"
+          className="absolute top-0 left-0 w-full min-h-[120vh] object-cover opacity-60"
           style={{ transform: `translateY(${offsetY}px)` }}
+          referrerPolicy="no-referrer"
+          fetchPriority="high"
         />
-        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
       </div>
-      <div className="relative z-10 p-8 max-w-4xl mx-auto bg-black/20 backdrop-blur-sm border border-white/20 rounded-2xl">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight text-amber-300">
-          {hero.title}
-        </h1>
-        <p className="text-lg md:text-2xl mb-8 font-light text-gray-100">
-          {hero.subtitle}
-        </p>
-        <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <HashLink
-            smooth
-            to="/#productos"
-            className="bg-amber-500/80 text-white hover:bg-amber-500/100 border border-amber-400/50 backdrop-blur-sm font-bold py-3 px-8 rounded-full text-lg transition-all transform hover:scale-105 duration-300 shadow-lg"
-          >
-            {hero.ctaText}
-          </HashLink>
-          <HashLink
-            smooth
-            to="/#servicios"
-            className="bg-white/10 border-2 border-white/50 text-white hover:bg-white/20 hover:border-white/80 backdrop-blur-sm font-bold py-3 px-8 rounded-full text-lg transition-all duration-300 shadow-lg"
-          >
-            Nuestros Servicios
-          </HashLink>
-        </div>
+      
+      <div className="relative z-10 p-6 max-w-5xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="inline-block mb-6 px-4 py-1.5 bg-amber-500/20 backdrop-blur-md border border-amber-500/30 rounded-full">
+            <span className="text-amber-400 text-xs font-black uppercase tracking-[0.2em]">Estética Automotriz de Élite</span>
+          </div>
+          <h1 className="text-5xl md:text-8xl lg:text-9xl font-black mb-6 tracking-tighter uppercase italic leading-[0.9]">
+            {hero.title.split(' ').map((word, i) => (
+              <span key={i} className={i === 1 ? "text-amber-500 block md:inline" : "text-white"}>
+                {word}{' '}
+              </span>
+            ))}
+          </h1>
+          <p className="text-lg md:text-2xl mb-10 font-medium text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            {hero.subtitle}
+          </p>
+          
+          <div className="flex flex-col sm:flex-row justify-center gap-6 mb-16">
+            <HashLink
+              smooth
+              to="/#productos"
+              className="group relative bg-amber-500 text-white font-black py-5 px-10 rounded-2xl text-xl transition-all transform hover:scale-105 duration-300 shadow-[0_20px_50px_rgba(245,158,11,0.3)] overflow-hidden"
+            >
+              <span className="relative z-10 flex items-center">
+                {hero.ctaText}
+                <svg className="ml-2 w-6 h-6 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </span>
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+            </HashLink>
+            <HashLink
+              smooth
+              to="/#servicios"
+              className="bg-white/5 border-2 border-white/20 text-white hover:bg-white/10 hover:border-white/40 backdrop-blur-md font-black py-5 px-10 rounded-2xl text-xl transition-all duration-300"
+            >
+              NUESTROS SERVICIOS
+            </HashLink>
+          </div>
+
+          {/* Trust Bar */}
+          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-black italic">3M</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-black italic">SONAX</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-black italic">MENZERNA</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-2xl font-black italic">MEGUIAR'S</span>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+        <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
       </div>
     </section>
   );

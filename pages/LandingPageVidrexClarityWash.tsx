@@ -1,6 +1,7 @@
 import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem } from '../types';
+import { TrackingService } from '../services/TrackingService';
 
 // --- HELPER COMPONENTS (scoped to this file) ---
 
@@ -84,12 +85,20 @@ const ImageSlider: React.FC<{ beforeImage: string; afterImage: string }> = ({ be
         src={afterImage} 
         alt="Resultado Después" 
         className="absolute w-full h-full object-cover pointer-events-none" 
+        loading="lazy"
+        referrerPolicy="no-referrer"
       />
       <div 
         className="absolute w-full h-full object-cover overflow-hidden pointer-events-none" 
         style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
       >
-        <img src={beforeImage} alt="Resultado Antes" className="w-full h-full object-cover pointer-events-none" />
+        <img 
+          src={beforeImage} 
+          alt="Resultado Antes" 
+          className="w-full h-full object-cover pointer-events-none" 
+          loading="lazy"
+          referrerPolicy="no-referrer"
+        />
       </div>
       <div 
         className="absolute top-0 bottom-0 w-1.5 bg-white pointer-events-none" 
@@ -125,6 +134,8 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
               src="https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0" 
               alt="Componentes del Kit Estrella: Vidrex y Clarity Wash" 
               className="w-full h-auto" 
+              loading="lazy"
+              referrerPolicy="no-referrer"
           />
       </div>
       <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4 text-center">¡NO CAMBIES TUS VIDRIOS, DESMANCHALOS!</h1>
@@ -158,7 +169,8 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
                 title="YouTube video player"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen>
+                allowFullScreen
+                loading="lazy">
             </iframe>
         </div>
       </div>
@@ -225,13 +237,14 @@ const LandingBenefits: React.FC = () => {
                                     height="100%" 
                                     allow="autoplay"
                                     className="border-0 w-full h-full"
+                                    loading="lazy"
                                 ></iframe>
                             </div>
                         </div>
-                        <img src={benefitsData[1].image} alt={benefitsData[1].title} className="col-span-3 rounded-2xl shadow-lg h-full w-full object-cover bg-white border-4 border-white ring-1 ring-gray-200" />
-                        <img src={benefitsData[2].image} alt={benefitsData[2].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" />
-                        <img src={benefitsData[3].image} alt={benefitsData[3].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" />
-                        <img src={benefitsData[4].image} alt={benefitsData[4].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" />
+                        <img src={benefitsData[1].image} alt={benefitsData[1].title} className="col-span-3 rounded-2xl shadow-lg h-full w-full object-cover bg-white border-4 border-white ring-1 ring-gray-200" loading="lazy" referrerPolicy="no-referrer" />
+                        <img src={benefitsData[2].image} alt={benefitsData[2].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" loading="lazy" referrerPolicy="no-referrer" />
+                        <img src={benefitsData[3].image} alt={benefitsData[3].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" loading="lazy" referrerPolicy="no-referrer" />
+                        <img src={benefitsData[4].image} alt={benefitsData[4].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" loading="lazy" referrerPolicy="no-referrer" />
                     </div>
                 </div>
             </div>
@@ -298,6 +311,7 @@ const LandingHowToUse: React.FC = () => {
                                           height="100%" 
                                           allow="autoplay"
                                           className="border-0 opacity-80 group-hover:opacity-100 transition-opacity"
+                                          loading="lazy"
                                       ></iframe>
                                   </div>
                                   <h3 className="text-3xl font-black text-gray-400 tracking-tighter leading-none text-center">LIMPIADORES COMUNES</h3>
@@ -336,7 +350,13 @@ const LandingHowToUse: React.FC = () => {
                     ].map(step => (
                          <div key={step.num} className="text-center">
                              <div className="relative mb-4">
-                                <img src={step.img} alt={`Paso ${step.num}`} className="rounded-lg shadow-md w-full h-48 object-cover"/>
+                                <img 
+                                    src={step.img} 
+                                    alt={`Paso ${step.num}`} 
+                                    className="rounded-lg shadow-md w-full h-48 object-cover"
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer"
+                                />
                                 <div className="absolute -top-4 -left-4 bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold border-4 border-white">{step.num}</div>
                              </div>
                              <h3 className="text-xl font-bold text-gray-800 text-center">{step.title}</h3>
@@ -402,49 +422,84 @@ const faqData = [
     { question: "¿En qué consiste la Garantía de 365 días?", answer: "Confiamos en nuestro producto. Si sigues las instrucciones y no obtienes resultados, te guiamos en una videollamada con un técnico para verificar la aplicación y responder por tu inversión." },
 ];
 
-const LandingSocialProofFAQ: React.FC = () => (
-    <section className="py-16 px-4 bg-gray-50">
-         <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">NO LO DECIMOS NOSOTROS, LO DICEN NUESTROS CLIENTES</h2>
-            <div className="grid md:grid-cols-2 gap-8 mb-16">
-                 {[
-                     {name: "María F.", city: "Pereira", quote: "¡Recuperé las divisiones del baño! Tenía manchas de sarro que no salían con nada. Probé el kit y fue inmediato. Se nota el cambio, parecen nuevos."},
-                     {name: "Carlos Mejía", city: "Ibagué", quote: "Muy útil para manejar seguro en lluvia. El parabrisas quedó excelente. El agua resbala y ya no se me mancha como antes. 100% recomendado."},
-                     {name: "David R.", city: "Bogotá", quote: "Quedé impresionado con el brillo. Lo usé en los vidrios del carro y en los rines de aluminio. Eliminó todo tipo de suciedad y les dio un brillo increíble."},
-                     {name: "Laura G.", city: "Medellín", quote: "El soporte técnico es de lo mejor. Tenía dudas con la aplicación, me contacté por WhatsApp y me guiaron paso a paso. ¡Qué gran servicio!"},
-                 ].map(testimonial => (
-                    <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
-                        <div className="flex text-yellow-400 mb-2 justify-center">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
-                        <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"{testimonial.quote}"</p>
-                        <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
-                    </div>
-                 ))}
-            </div>
-            
-            <div className="text-center my-16">
-                <h3 className="text-2xl font-bold text-gray-800 mb-4">¡Tu Opinión Nos Impulsa a Mejorar!</h3>
-                <p className="text-gray-600 max-w-2xl mx-auto mb-6">Si nuestros productos han superado tus expectativas, te invitamos a compartir tu experiencia. ¡Tu calificación nos ayuda a crecer y a que otros conozcan la calidad de Nissi Car Home!</p>
-                <a 
-                    href="https://g.page/r/Cf9bBmx6F9d8EBI/review"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-yellow-400 text-gray-800 font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:bg-yellow-500 transition-all transform hover:scale-105"
-                >
-                    Calificar con 5 Estrellas ⭐
-                </a>
-            </div>
+const LandingSocialProofFAQ: React.FC = () => {
+    const [isExpanded, setIsExpanded] = useState(false);
 
-            <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">PREGUNTAS FRECUENTES</h2>
-             <div className="space-y-4">
-                {faqData.map((item, index) => (
-                  <Accordion key={index} title={item.question}>
-                    <p className="text-gray-700 text-justify hyphens-auto break-words">{item.answer}</p>
-                  </Accordion>
-                ))}
+    return (
+        <section className="py-16 px-4 bg-gray-50">
+             <div className="max-w-4xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">NO LO DECIMOS NOSOTROS, LO DICEN NUESTROS CLIENTES</h2>
+                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                     {[
+                         {name: "María F.", city: "Pereira", quote: "¡Recuperé las divisiones del baño! Tenía manchas de sarro que no salían con nada. Probé el kit y fue inmediato. Se nota el cambio, parecen nuevos."},
+                         {name: "Carlos Mejía", city: "Ibagué", quote: "Muy útil para manejar seguro en lluvia. El parabrisas quedó excelente. El agua resbala y ya no se me mancha como antes. 100% recomendado."},
+                         {name: "David R.", city: "Bogotá", quote: "Quedé impresionado con el brillo. Lo usé en los vidrios del carro y en los rines de aluminio. Eliminó todo tipo de suciedad y les dio un brillo increíble."},
+                         {name: "Laura G.", city: "Medellín", quote: "El soporte técnico es de lo mejor. Tenía dudas con la aplicación, me contacté por WhatsApp y me guiaron paso a paso. ¡Qué gran servicio!"},
+                     ].map(testimonial => (
+                        <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
+                            <div className="flex text-yellow-400 mb-2 justify-center">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
+                            <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"{testimonial.quote}"</p>
+                            <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
+                        </div>
+                     ))}
+                </div>
+                
+                <div className="text-center my-16">
+                    <h3 className="text-2xl font-bold text-gray-800 mb-4">¡Tu Opinión Nos Impulsa a Mejorar!</h3>
+                    <p className="text-gray-600 max-w-2xl mx-auto mb-6">Si nuestros productos han superado tus expectativas, te invitamos a compartir tu experiencia. ¡Tu calificación nos ayuda a crecer y a que otros conozcan la calidad de Nissi Car Home!</p>
+                    <a 
+                        href="https://g.page/r/Cf9bBmx6F9d8EBI/review"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block bg-yellow-400 text-gray-800 font-bold text-lg py-3 px-8 rounded-lg shadow-lg hover:bg-yellow-500 transition-all transform hover:scale-105"
+                        onClick={() => TrackingService.trackLead('Google Review Click')}
+                    >
+                        Calificar con 5 Estrellas ⭐
+                    </a>
+                </div>
+
+                <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden bg-white">
+                    <div 
+                        className="text-center cursor-pointer group"
+                        onClick={() => setIsExpanded(!isExpanded)}
+                    >
+                        <div className="flex flex-col items-center">
+                            <h2 className="text-2xl font-extrabold text-gray-800 sm:text-3xl flex items-center gap-3">
+                                PREGUNTAS FRECUENTES
+                                <svg 
+                                    className={`w-6 h-6 sm:w-8 sm:h-8 text-amber-500 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} 
+                                    fill="none" 
+                                    stroke="currentColor" 
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </h2>
+                            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
+                                {isExpanded 
+                                    ? "Resolvemos tus dudas sobre el Kit Vidrex + Clarity Wash y su aplicación."
+                                    : "Haz clic aquí para ver las preguntas frecuentes sobre el Kit Estrella."
+                                }
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className={`grid transition-all duration-500 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-8 sm:mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
+                        <div className="overflow-hidden">
+                            <div className="space-y-4">
+                                {faqData.map((item, index) => (
+                                    <Accordion key={index} title={item.question}>
+                                        <p className="text-gray-700 text-justify hyphens-auto break-words">{item.answer}</p>
+                                    </Accordion>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
              </div>
-         </div>
-    </section>
-);
+        </section>
+    );
+};
 
 
 // --- MAIN LANDING PAGE COMPONENT ---

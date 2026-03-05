@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem } from '../types';
+import { TrackingService } from '../services/TrackingService';
 
 // --- HELPER COMPONENTS ---
 const CheckListItem: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -41,6 +42,8 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
               src="https://lh3.googleusercontent.com/pw/AP1GczPOSFnFflE6hcsTtHPybBLPUfECVYU5rzmbCHYRlWK8KomBZvI4N_SVy_knMkpVVRf7lUQ7jdtf3I1thYkuVCyIlqyy1n1Ws34eahtILybAJVbqxTBWECpEFzjcbt8co6QbWA-7F9lKGZmXw26CK57k=w777-h798-s-no-gm?authuser=0"
               alt="Kit de Embellecimiento Profesional 6 en 1" 
               className="w-full h-auto" 
+              loading="lazy"
+              referrerPolicy="no-referrer"
           />
       </div>
       <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4 text-center">Kit de Embellecimiento Profesional 6 en 1</h1>
@@ -111,6 +114,8 @@ const LandingShowcase: React.FC = () => {
                         alt="Vehículo detallado profesionalmente"
                         className={`absolute top-0 left-0 w-full min-h-[120vh] object-cover transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? 'opacity-100' : 'opacity-0'}`}
                         style={{ transform: `translateY(${offsetY}px)` }}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
                     />
                 ))}
                 <div className="absolute inset-0 bg-black opacity-60 water-overlay"></div>
@@ -142,7 +147,7 @@ const LandingWhatYouGet: React.FC = () => {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {kitItems.map(item => (
                         <div key={item.name} className="flex flex-col items-center text-center bg-white p-6 rounded-lg shadow-md h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-                            <img src={item.image} alt={item.name} className="h-40 object-contain mb-4" />
+                            <img src={item.image} alt={item.name} className="h-40 object-contain mb-4" loading="lazy" referrerPolicy="no-referrer" />
                             <h3 className="text-xl font-bold text-amber-600 flex-grow text-center">{item.name}</h3>
                             <p className="text-gray-700 text-justify hyphens-auto break-words">{item.content}</p>
                         </div>
@@ -165,7 +170,8 @@ const LandingVideo: React.FC = () => {
                         title="YouTube video player"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen>
+                        allowFullScreen
+                        loading="lazy">
                     </iframe>
                 </div>
             </div>
@@ -182,36 +188,70 @@ const faqBeautyKitData = [
     { question: "Los aplicadores y la toalla, ¿son de buena calidad?", answer: "Absolutamente. Son herramientas de grado profesional. Las espumas están diseñadas para no rayar y aplicar el producto de forma uniforme, y la toalla de microfibra tiene la suavidad y composición ideal (80% algodón, 20% poliéster) para un acabado perfecto." },
 ];
 
-const LandingSocialProofFAQ: React.FC = () => (
-    <section className="py-16 px-4 bg-gray-50">
-         <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Clientes Felices, Autos Impecables</h2>
-            <div className="grid md:grid-cols-2 gap-8 mb-16">
-                 {[
-                     {name: "Juan David G.", city: "Pereira", quote: "¡Mi carro parece otro! La cera le dio un brillo increíble y el restaurador de plásticos es simplemente mágico. Volvió negras unas partes que llevaban años grises."},
-                     {name: "Sofia L.", city: "Cali", quote: "Excelente relación calidad-precio. Con este kit tengo todo lo que necesito para dejar mi camioneta como nueva el fin de semana. ¡Y el envío fue rapidísimo!"},
-                     {name: "Miguel Ángel R.", city: "Medellín", quote: "Compré el kit sin muchas expectativas y me sorprendió. Los productos son muy fáciles de usar y los resultados son de nivel profesional. Lo recomiendo totalmente."},
-                     {name: "Carolina V.", city: "Bogotá", quote: "Me encantó el detalle de los aplicadores y la toalla. Se nota que piensan en todo. El shampoo quita las manchas de la cojinería súper fácil."},
-                 ].map(testimonial => (
-                    <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
-                        <div className="flex text-yellow-400 mb-2 justify-center">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
-                        <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"{testimonial.quote}"</p>
-                        <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
+const LandingSocialProofFAQ: React.FC = () => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    return (
+        <section className="py-16 px-4 bg-gray-50">
+             <div className="max-w-4xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Clientes Felices, Autos Impecables</h2>
+                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                     {[
+                         {name: "Juan David G.", city: "Pereira", quote: "¡Mi carro parece otro! La cera le dio un brillo increíble y el restaurador de plásticos es simplemente mágico. Volvió negras unas partes que llevaban años grises."},
+                         {name: "Sofia L.", city: "Cali", quote: "Excelente relación calidad-precio. Con este kit tengo todo lo que necesito para dejar mi camioneta como nueva el fin de semana. ¡Y el envío fue rapidísimo!"},
+                         {name: "Miguel Ángel R.", city: "Medellín", quote: "Compré el kit sin muchas expectativas y me sorprendió. Los productos son muy fáciles de usar y los resultados son de nivel profesional. Lo recomiendo totalmente."},
+                         {name: "Carolina V.", city: "Bogotá", quote: "Me encantó el detalle de los aplicadores y la toalla. Se nota que piensan en todo. El shampoo quita las manchas de la cojinería súper fácil."},
+                     ].map(testimonial => (
+                        <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
+                            <div className="flex text-yellow-400 mb-2 justify-center">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
+                            <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"{testimonial.quote}"</p>
+                            <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
+                        </div>
+                     ))}
+                </div>
+                
+                <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden bg-white">
+                    <div 
+                        className="text-center cursor-pointer group"
+                        onClick={() => setIsExpanded(!isExpanded)}
+                    >
+                        <div className="flex flex-col items-center">
+                            <h2 className="text-2xl font-extrabold text-gray-800 sm:text-3xl flex items-center gap-3">
+                                Resolvemos tus Dudas
+                                <svg 
+                                    className={`w-6 h-6 sm:w-8 sm:h-8 text-amber-500 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} 
+                                    fill="none" 
+                                    stroke="currentColor" 
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </h2>
+                            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
+                                {isExpanded 
+                                    ? "Resolvemos tus dudas sobre el Kit de Embellecimiento y sus componentes."
+                                    : "Haz clic aquí para ver las preguntas frecuentes sobre el Kit de Embellecimiento Profesional."
+                                }
+                            </p>
+                        </div>
                     </div>
-                 ))}
-            </div>
-            
-            <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Resolvemos tus Dudas</h2>
-             <div className="space-y-4">
-                {faqBeautyKitData.map((item, index) => (
-                  <Accordion key={index} title={item.question}>
-                    <p className="text-gray-700 text-justify hyphens-auto break-words">{item.answer}</p>
-                  </Accordion>
-                ))}
+
+                    <div className={`grid transition-all duration-500 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-8 sm:mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
+                        <div className="overflow-hidden">
+                            <div className="space-y-4">
+                                {faqBeautyKitData.map((item, index) => (
+                                    <Accordion key={index} title={item.question}>
+                                        <p className="text-gray-700 text-justify hyphens-auto break-words">{item.answer}</p>
+                                    </Accordion>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
              </div>
-         </div>
-    </section>
-);
+        </section>
+    );
+};
 
 
 // --- MAIN LANDING PAGE COMPONENT ---

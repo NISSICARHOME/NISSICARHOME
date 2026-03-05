@@ -130,34 +130,68 @@ const faqBasicKitData = [
     { question: "¿Qué resultados puedo esperar de este kit?", answer: "Puedes esperar un vehículo notablemente más limpio, con una pintura suave al tacto, un brillo profundo y una protección que repele el agua y la suciedad, facilitando los futuros lavados." },
 ];
 
-const LandingSocialProofFAQ: React.FC = () => (
-    <section className="py-16 px-4 bg-gray-50">
-         <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Resultados que Hablan por Sí Mismos</h2>
-            <div className="grid md:grid-cols-2 gap-8 mb-16">
-                 {[
-                     {name: "Andrea P.", city: "Bogotá", quote: "Ideal para empezar en el mundo del detailing. No sabía nada y con este kit mi carro quedó espectacular. ¡Muy fácil de usar y los resultados son increíbles!"},
-                     {name: "Felipe M.", city: "Pereira", quote: "La cera es de otro nivel. Deja un brillo muy profundo y el agua simplemente se desliza por la pintura. Una excelente compra, vale cada peso."},
-                 ].map(testimonial => (
-                    <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
-                        <div className="flex text-yellow-400 mb-2 justify-center">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
-                        <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"{testimonial.quote}"</p>
-                        <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
+const LandingSocialProofFAQ: React.FC = () => {
+    const [isExpanded, setIsExpanded] = useState(false);
+
+    return (
+        <section className="py-16 px-4 bg-gray-50">
+             <div className="max-w-4xl mx-auto">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Resultados que Hablan por Sí Mismos</h2>
+                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                     {[
+                         {name: "Andrea P.", city: "Bogotá", quote: "Ideal para empezar en el mundo del detailing. No sabía nada y con este kit mi carro quedó espectacular. ¡Muy fácil de usar y los resultados son increíbles!"},
+                         {name: "Felipe M.", city: "Pereira", quote: "La cera es de otro nivel. Deja un brillo muy profundo y el agua simplemente se desliza por la pintura. Una excelente compra, vale cada peso."},
+                     ].map(testimonial => (
+                        <div key={testimonial.name} className="bg-white p-6 rounded-lg shadow-md">
+                            <div className="flex text-yellow-400 mb-2 justify-center">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
+                            <p className="text-gray-600 italic mb-4 text-justify hyphens-auto break-words">"{testimonial.quote}"</p>
+                            <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
+                        </div>
+                     ))}
+                </div>
+                
+                <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden bg-white">
+                    <div 
+                        className="text-center cursor-pointer group"
+                        onClick={() => setIsExpanded(!isExpanded)}
+                    >
+                        <div className="flex flex-col items-center">
+                            <h2 className="text-2xl font-extrabold text-gray-800 sm:text-3xl flex items-center gap-3">
+                                Resolvemos tus Dudas
+                                <svg 
+                                    className={`w-6 h-6 sm:w-8 sm:h-8 text-amber-500 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} 
+                                    fill="none" 
+                                    stroke="currentColor" 
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+                                </svg>
+                            </h2>
+                            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
+                                {isExpanded 
+                                    ? "Resolvemos tus dudas sobre el Kit Básico y su aplicación."
+                                    : "Haz clic aquí para ver las preguntas frecuentes sobre el Kit Básico de Cuidado."
+                                }
+                            </p>
+                        </div>
                     </div>
-                 ))}
-            </div>
-            
-            <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Resolvemos tus Dudas</h2>
-             <div className="space-y-4">
-                {faqBasicKitData.map((item, index) => (
-                  <Accordion key={index} title={item.question}>
-                    <p className="text-gray-700 text-justify hyphens-auto break-words">{item.answer}</p>
-                  </Accordion>
-                ))}
+
+                    <div className={`grid transition-all duration-500 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-8 sm:mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
+                        <div className="overflow-hidden">
+                            <div className="space-y-4">
+                                {faqBasicKitData.map((item, index) => (
+                                    <Accordion key={index} title={item.question}>
+                                        <p className="text-gray-700 text-justify hyphens-auto break-words">{item.answer}</p>
+                                    </Accordion>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
              </div>
-         </div>
-    </section>
-);
+        </section>
+    );
+};
 
 
 // --- MAIN LANDING PAGE COMPONENT ---
