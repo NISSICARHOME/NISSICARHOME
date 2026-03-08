@@ -29,7 +29,7 @@ export const faqData: FAQItem[] = [
     answer: "Aceptamos una amplia variedad de métodos: transferencias a Nequi, Bancolombia y Daviplata; pagos con Tarjeta de Crédito y Débito a través de enlaces de pago seguros; la plataforma de Mercado Pago; y Efectivo para compras en nuestras sedes o en el servicio de pago contra entrega (sujeto a cobertura)."
   },
   {
-    question: "¿Qué diferencia a Nissi Car Home de otras marcas más económicas del mercado?",
+    question: "¿Qué diferencia a NISSI CAR-HOME de otras marcas más económicas del mercado?",
     answer: "Nuestra diferencia radica en la calidad y la confianza. Invertimos en investigación y materias primas de vanguardia para crear fórmulas que realmente funcionan y perduran. Mientras otros venden un producto, nosotros ofrecemos una solución completa que incluye asesoría personalizada y el respaldo de una garantía de 365 días."
   },
   {
@@ -43,35 +43,58 @@ export const faqData: FAQItem[] = [
 ];
 
 const FAQ: React.FC = () => {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
   return (
     <section id="faq" className="py-24 bg-white">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <div className="inline-block mb-6 px-4 py-1.5 bg-amber-50 rounded-full">
             <span className="text-amber-600 text-xs font-black uppercase tracking-widest">Soporte al Cliente</span>
           </div>
           <h2 className="text-4xl md:text-6xl font-black text-gray-900 mb-6 uppercase italic tracking-tighter leading-none">
             PREGUNTAS <span className="text-amber-500">FRECUENTES</span>
           </h2>
-          <p className="text-xl text-gray-500">
+          <p className="text-xl text-gray-500 mb-10">
             Todo lo que necesitas saber sobre nuestros productos y servicios.
           </p>
+
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="group relative inline-flex items-center justify-center px-12 py-5 bg-amber-500 text-white rounded-2xl font-black uppercase italic tracking-widest transition-all duration-500 hover:bg-amber-600 hover:shadow-[0_20px_50px_rgba(245,158,11,0.4)] hover:scale-105 active:scale-95"
+          >
+            <span className="relative z-10 flex items-center gap-3">
+              {isExpanded ? 'Ocultar Preguntas' : 'Ver Preguntas Frecuentes'}
+              <svg 
+                className={`w-6 h-6 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+              </svg>
+            </span>
+          </button>
         </div>
 
-        <div className="space-y-4">
-          {faqData.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
-            >
-              <Accordion title={item.question}>
-                <p className="text-gray-500 text-lg leading-relaxed">{item.answer}</p>
-              </Accordion>
-            </motion.div>
-          ))}
+        <div className={`grid transition-all duration-700 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
+          <div className="overflow-hidden">
+            <div className="space-y-4 pb-8">
+              {faqData.map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <Accordion title={item.question}>
+                    <p className="text-gray-500 text-lg leading-relaxed">{item.answer}</p>
+                  </Accordion>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="mt-16 p-12 bg-gray-50 rounded-[3rem] text-center border border-gray-100">

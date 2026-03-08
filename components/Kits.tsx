@@ -17,8 +17,15 @@ const kitsData: ExtendedKit[] = [
         image: "https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0",
         description: "La solución definitiva para desmanchar vidrios, eliminar sarro, lluvia ácida y devolver la vida a tu auto y hogar. ¡Resultados garantizados!",
         isSpecial: true,
-        price: "¡Oferta Especial!",
+        oldPrice: "$90.000 COP",
         specialPrice: "$65.500 COP",
+        includes: [
+            "1 Crema Clarity Wash (300 gr)",
+            "1 Vidrex Bloqueador (120 ml)",
+            "¡GRATIS! Segundo Potencializador",
+            "¡GRATIS! Aplicador Profesional",
+            "Asesoría Técnica Especializada",
+        ],
         link: "#/kit-vidrex-clarity-wash"
     },
     {
@@ -42,8 +49,16 @@ const kitsData: ExtendedKit[] = [
         id: "kit-1",
         name: "Kit Básico de Cuidado",
         image: "https://lh3.googleusercontent.com/pw/AP1GczOzc5XobmAERtALiliyk1JbpWK9TtlNYR-Gq8ho_9NrxGyhRPsDqNM-pw--dmicYoJ0_81bX_O_lzOKpZgscWtppJojH71Pg6PkQH4o-KcNy9eQKQ5Tb0jyUd6yAN_E_fQAB2JsWaoh-N5LdH_xss1_=w801-h584-s-no-gm?authuser=0",
-        description: "El punto de partida perfecto para mantener tu vehículo limpio y protegido. Incluye nuestros productos esenciales.",
+        description: "El punto de partida perfecto para mantener tu vehículo limpio y protegido. Incluye nuestros productos esenciales para un acabado profesional.",
+        oldPrice: "$150.000 COP",
         price: "$95.000 COP",
+        includes: [
+            "1 Cera Hyper Diamond (Brillo)",
+            "1 Ultra Restorer (Plásticos)",
+            "1 Perfect Llantix (Llantas)",
+            "¡GRATIS! 2 Aplicadores de Espuma",
+            "¡GRATIS! 1 Toalla de Microfibra",
+        ],
         link: "#/kit-basico-cuidado"
     },
 ];
@@ -57,6 +72,7 @@ const complementsData: Kit[] = [
 const KitCard: React.FC<{ kit: ExtendedKit; index: number }> = ({ kit, index }) => {
     const isSpecial = kit.id === 'kit-vidrex-clarity';
     const isBeautyKit = kit.id === 'kit-2';
+    const isBasicKit = kit.id === 'kit-1';
     
     const hasLandingPage = kit.link && kit.link.startsWith('#/');
     const to = hasLandingPage ? kit.link.substring(1) : '/#contacto';
@@ -73,7 +89,7 @@ const KitCard: React.FC<{ kit: ExtendedKit; index: number }> = ({ kit, index }) 
                 className={`
                     bg-white border border-gray-100 rounded-[2.5rem] shadow-sm hover:shadow-2xl 
                     transition-all duration-500 flex flex-col lg:flex-row items-center group overflow-hidden
-                    ${isSpecial ? 'ring-2 ring-red-500 ring-offset-4' : isBeautyKit ? 'ring-2 ring-amber-500 ring-offset-4' : ''}
+                    ${isSpecial ? 'ring-2 ring-red-500 ring-offset-4' : isBeautyKit ? 'ring-2 ring-amber-500 ring-offset-4' : isBasicKit ? 'ring-2 ring-blue-500 ring-offset-4' : ''}
                 `}
             >
                 <div className="w-full lg:w-2/5 p-8 flex-shrink-0 bg-gray-50 flex items-center justify-center">
@@ -88,8 +104,9 @@ const KitCard: React.FC<{ kit: ExtendedKit; index: number }> = ({ kit, index }) 
 
                 <div className="p-8 lg:p-12 flex flex-col flex-grow">
                     <div className="flex items-center gap-3 mb-4">
-                        {isSpecial && <span className="px-3 py-1 bg-red-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full">Best Seller</span>}
+                        {isSpecial && <span className="px-3 py-1 bg-red-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full">Oferta Estrella</span>}
                         {isBeautyKit && <span className="px-3 py-1 bg-amber-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full">Recomendado</span>}
+                        {isBasicKit && <span className="px-3 py-1 bg-blue-500 text-white text-[10px] font-black uppercase tracking-widest rounded-full">Esencial</span>}
                     </div>
                     
                     <h3 className="text-3xl font-black text-gray-900 mb-4 uppercase italic tracking-tighter leading-none">
@@ -98,7 +115,7 @@ const KitCard: React.FC<{ kit: ExtendedKit; index: number }> = ({ kit, index }) 
                     
                     <div className="flex items-baseline gap-4 mb-6">
                         {kit.oldPrice && <span className="text-lg text-gray-400 line-through font-medium">{kit.oldPrice}</span>}
-                        <span className={`text-4xl font-black tracking-tighter ${isSpecial ? 'text-red-500' : 'text-amber-500'}`}>
+                        <span className={`text-4xl font-black tracking-tighter ${isSpecial ? 'text-red-500' : isBeautyKit ? 'text-amber-500' : 'text-blue-500'}`}>
                             {kit.specialPrice || kit.price}
                         </span>
                     </div>
@@ -111,7 +128,7 @@ const KitCard: React.FC<{ kit: ExtendedKit; index: number }> = ({ kit, index }) 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
                             {kit.includes.map((item, i) => (
                                 <div key={i} className="flex items-center text-sm font-bold text-gray-700">
-                                    <div className="w-5 h-5 bg-green-50 rounded-full flex items-center justify-center text-green-500 mr-3">
+                                    <div className={`w-5 h-5 rounded-full flex items-center justify-center mr-3 ${isSpecial ? 'bg-red-50 text-red-500' : isBeautyKit ? 'bg-amber-50 text-amber-500' : 'bg-blue-50 text-blue-500'}`}>
                                         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
                                     </div>
                                     {item}
@@ -120,7 +137,7 @@ const KitCard: React.FC<{ kit: ExtendedKit; index: number }> = ({ kit, index }) 
                         </div>
                     )}
 
-                    <div className={`inline-flex items-center justify-center px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-sm transition-all duration-300 shadow-lg group-hover:shadow-amber-500/20 ${isSpecial ? 'bg-red-500 text-white' : 'bg-amber-500 text-white'}`}>
+                    <div className={`inline-flex items-center justify-center px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-sm transition-all duration-300 shadow-lg ${isSpecial ? 'bg-red-500 text-white group-hover:shadow-red-500/20' : isBeautyKit ? 'bg-amber-500 text-white group-hover:shadow-amber-500/20' : 'bg-blue-500 text-white group-hover:shadow-blue-500/20'}`}>
                         {isSpecial ? 'Obtener Oferta' : 'Ver Detalles'}
                         <svg className="w-4 h-4 ml-3 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
                     </div>
@@ -178,11 +195,6 @@ const Kits: React.FC = () => {
                 </div>
             </div>
         </section>
-    );
-};
-
-export default Kits;
-/section>
     );
 };
 

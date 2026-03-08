@@ -48,5 +48,3 @@ const WhatsAppButton: React.FC = () => {
 };
 
 export default WhatsAppButton;
-
-export default WhatsAppButton;

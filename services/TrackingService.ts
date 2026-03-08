@@ -1,30 +1,32 @@
 /**
  * Tracking Service for Nissi Car Home
  * Handles conversion events for Meta, Google, and TikTok.
- * Optimized for Conversion API (CAPI) and Server-Side tracking.
  */
 
 type EventParams = Record<string, any>;
-
-// Helper to generate a unique event ID for deduplication between Pixel and CAPI
-const generateEventId = () => `event_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
 export const TrackingService = {
   /**
    * Track a generic event across all platforms
    */
   trackEvent(eventName: string, params: EventParams = {}) {
-    const eventId = generateEventId();
-    const enrichedParams = { ...params, event_id: eventId };
+    const timestamp = new Date().toISOString();
+    const eventId = `event_${Math.random().toString(36).substr(2, 9)}_${Date.now()}`;
 
     // Meta Pixel
     if (typeof window !== 'undefined' && (window as any).fbq) {
-      (window as any).fbq('track', eventName, enrichedParams);
+      (window as any).fbq('track', eventName, {
+        ...params,
+        event_id: eventId
+      });
     }
 
     // TikTok Pixel
     if (typeof window !== 'undefined' && (window as any).ttq && typeof (window as any).ttq.track === 'function') {
-      (window as any).ttq.track(eventName, enrichedParams);
+      (window as any).ttq.track(eventName, {
+        ...params,
+        event_id: eventId
+      });
     }
 
     // Google Tag Manager / GA4
@@ -32,42 +34,29 @@ export const TrackingService = {
       (window as any).dataLayer.push({
         event: eventName,
         event_id: eventId,
+        timestamp,
         ...params
       });
     }
 
-    // Placeholder for Server-Side Conversion API (CAPI)
+    // Server-Side Conversion API (CAPI) Placeholder
     // In a real production environment, this would call a backend endpoint
-    // that forwards the event to Meta/TikTok/Google servers.
-    this.sendToCAPI(eventName, enrichedParams);
+    // that proxies the event to Meta/Google/TikTok servers.
+    this.sendToServerSideCAPI(eventName, { ...params, event_id: eventId, timestamp });
 
-    if (process.env.NODE_ENV === 'development') {
-      console.log(`[Tracking] Event: ${eventName}`, enrichedParams);
-    }
+    console.log(`[Tracking] Event: ${eventName}`, params);
   },
 
   /**
-   * Mock function for Server-Side Conversion API
+   * Mock for Server-Side Conversion API
    */
-  async sendToCAPI(eventName: string, params: EventParams) {
+  async sendToServerSideCAPI(eventName: string, payload: any) {
     try {
-      // Example: await fetch('/api/tracking/capi', { method: 'POST', body: JSON.stringify({ eventName, params }) });
+      // Example: fetch('/api/tracking/capi', { method: 'POST', body: JSON.stringify({ eventName, payload }) });
+      // This helps bypass ad-blockers and improves tracking accuracy.
     } catch (e) {
-      // Silent fail for tracking
+      console.error('CAPI Error:', e);
     }
-  },
-
-  /**
-   * Track when a user views a product
-   */
-  trackViewContent(product: { id: string; name: string; price: number }) {
-    this.trackEvent('ViewContent', {
-      content_ids: [product.id],
-      content_name: product.name,
-      content_type: 'product',
-      value: product.price,
-      currency: 'COP'
-    });
   },
 
   /**
@@ -79,12 +68,13 @@ export const TrackingService = {
       content_name: item.name,
       content_type: 'product',
       value: item.price * item.quantity,
-      currency: 'COP'
+      currency: 'COP',
+      num_items: item.quantity
     });
   },
 
   /**
-   * Track when a user initiates a purchase
+   * Track when a user initiates a purchase (e.g., clicks "Buy Now")
    */
   trackInitiateCheckout(item: { id: string; name: string; price: number }) {
     this.trackEvent('InitiateCheckout', {
@@ -97,15 +87,16 @@ export const TrackingService = {
   },
 
   /**
-   * Track successful purchase
+   * Track a successful purchase
    */
-  trackPurchase(order: { id: string; total: number; items: any[] }) {
+  trackPurchase(order: { id: string; value: number; items: any[] }) {
     this.trackEvent('Purchase', {
-      content_ids: order.items.map(i => i.id),
-      value: order.total,
+      transaction_id: order.id,
+      value: order.value,
       currency: 'COP',
-      num_items: order.items.length,
-      transaction_id: order.id
+      content_ids: order.items.map(i => i.id),
+      content_type: 'product',
+      num_items: order.items.length
     });
   },
 
@@ -115,7 +106,9 @@ export const TrackingService = {
   trackLead(source: string) {
     this.trackEvent('Lead', {
       content_category: 'WhatsApp',
-      content_name: source
+      content_name: source,
+      value: 0,
+      currency: 'COP'
     });
   },
 

@@ -4,7 +4,7 @@ import { HashLink } from 'react-router-hash-link';
 const Logo = () => (
     <img 
         src="https://lh3.googleusercontent.com/pw/AP1GczPGwrhJ8TEzkWPQmfysYWXzR5O6cQV42cDKDzJrE2eOjqiDvy-pOt4NnwuUIR8m8GJ_RlR94IazvXYNbTA2i2IZn-sD3VUHIYdz0EIKiTPzWncw30Fu0OIhqCnJClbZhq4d0WKf62FVyIlgeSLrLtpl=w1344-h768-s-no-gm?authuser=0" 
-        alt="Nissi Car Home Logo" 
+        alt="NISSI CAR-HOME Logo" 
         className="h-10 md:h-16 object-contain transition-all duration-500 ease-in-out filter drop-shadow-md hover:scale-105"
         fetchPriority="high"
     />

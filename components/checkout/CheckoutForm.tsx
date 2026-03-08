@@ -1,8 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { CartItem, OrderDetails } from '../../types';
 import { getAllProducts } from '../Products';
-
-declare const fbq: (type: string, event: string, data?: object) => void;
+import { TrackingService } from '../../services/TrackingService';
 
 // Mapping for kit images that might not be in the main products list
 const kitImages: Record<string, string> = {
@@ -112,16 +111,17 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({ cart, setCart, viewedProduc
         return;
     }
 
-    if (typeof fbq === 'function') {
-        const content_ids = cart.map(item => item.id);
-        const num_items = cart.reduce((sum, item) => sum + item.quantity, 0);
-        fbq('track', 'Purchase', {
-            content_ids: content_ids,
-            currency: 'COP',
-            value: totalPrice,
-            num_items: num_items
-        });
-    }
+    // Centralized Tracking
+    TrackingService.trackPurchase({
+        id: `order_${Date.now()}`,
+        value: totalPrice,
+        items: cart.map(item => ({
+            id: item.id,
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity
+        }))
+    });
 
     let orderSummary = "¡Hola Nissi Car Home! Quisiera realizar el siguiente pedido:\n\n";
     orderSummary += "--- PRODUCTOS ---\n";

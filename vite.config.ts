@@ -12,7 +12,28 @@ export default defineConfig(({ mode }) => {
       plugins: [react()],
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
-        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)
+        'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+        'window.VITE_GTM_ID': JSON.stringify(env.VITE_GTM_ID || ''),
+        'window.VITE_META_PIXEL_ID': JSON.stringify(env.VITE_META_PIXEL_ID || ''),
+        'window.VITE_TIKTOK_PIXEL_ID': JSON.stringify(env.VITE_TIKTOK_PIXEL_ID || ''),
+      },
+      build: {
+        minify: 'terser',
+        terserOptions: {
+          compress: {
+            drop_console: mode === 'production',
+            drop_debugger: mode === 'production',
+          },
+        },
+        rollupOptions: {
+          output: {
+            manualChunks: {
+              'vendor': ['react', 'react-dom', 'react-router-dom'],
+              'genai': ['@google/genai'],
+            },
+          },
+        },
+        chunkSizeWarningLimit: 1000,
       },
       resolve: {
         alias: {

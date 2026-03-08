@@ -10,15 +10,18 @@
     "lint": "tsc --noEmit"
   },
   "dependencies": {
+    "@google/genai": "^1.29.1",
+    "framer-motion": "^12.35.1",
+    "motion": "^12.35.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "@google/genai": "^1.29.1",
     "react-router-dom": "^6.25.1",
     "react-router-hash-link": "^2.4.3"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "terser": "^5.46.0",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }

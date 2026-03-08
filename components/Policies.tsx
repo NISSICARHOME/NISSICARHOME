@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Policy } from '../types';
 import Accordion from './shared/Accordion';
+import { motion } from 'motion/react';
 
 export const policiesData: Policy[] = [
   {
     title: 'Política de Garantía de Satisfacción 365 Días',
-    content: `En Nissi Car Home, confiamos plenamente en la calidad y eficacia de nuestras formulaciones. Por ello, ofrecemos una garantía única de 365 días sobre el resultado final de nuestros productos.
+    content: `En NISSI CAR-HOME, confiamos plenamente en la calidad y eficacia de nuestras formulaciones. Por ello, ofrecemos una garantía única de 365 días sobre el resultado final de nuestros productos.
 
 ¿Qué Cubre la Garantía?
 Cubre el rendimiento y la eficacia del producto según las especificaciones. Se aplicará si el producto, usado correctamente, no genera los resultados prometidos.
@@ -37,7 +38,7 @@ Si la garantía es aprobada, se ofrecerá un reemplazo del producto o un crédit
   },
   {
     title: 'Política de Tratamiento y Protección de Datos Personales',
-    content: `Nissi Car Home, en cumplimiento de la Ley 1581 de 2012, se compromete a proteger su privacidad y a manejar sus datos personales de forma segura y confidencial.
+    content: `NISSI CAR-HOME, en cumplimiento de la Ley 1581 de 2012, se compromete a proteger su privacidad y a manejar sus datos personales de forma segura y confidencial.
 
 Finalidad del Tratamiento de Datos:
 Su información es utilizada exclusivamente para procesar pedidos, brindar soporte, gestionar garantías y comunicar novedades (con su consentimiento).
@@ -51,19 +52,22 @@ Usted tiene derecho a conocer, actualizar, rectificar y solicitar la supresión 
 ];
 
 const Policies: React.FC = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(false);
 
   return (
-    <section id="policies" className="py-10 md:py-20">
+    <section id="policies" className="py-24 bg-gray-50/50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden">
+        <div className="p-3 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden bg-white">
           <div 
             className="text-center cursor-pointer group"
             onClick={() => setIsExpanded(!isExpanded)}
           >
             <div className="flex flex-col items-center">
-              <h2 className="text-xl font-extrabold text-gray-800 sm:text-4xl flex items-center gap-3">
-                Políticas y Condiciones
+              <div className="inline-block mb-6 px-4 py-1.5 bg-gray-50 rounded-full border border-gray-100 shadow-sm">
+                <span className="text-gray-400 text-xs font-black uppercase tracking-widest">Legal & Transparencia</span>
+              </div>
+              <h2 className="text-xl font-extrabold text-gray-800 sm:text-4xl flex items-center gap-3 uppercase italic tracking-tighter">
+                Políticas y <span className="text-amber-500">Condiciones</span>
                 <svg 
                   className={`w-6 h-6 sm:w-8 sm:h-8 text-amber-500 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} 
                   fill="none" 
@@ -75,8 +79,8 @@ const Policies: React.FC = () => {
               </h2>
               <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
                 {isExpanded 
-                  ? "Haz clic en cada política para ver los detalles completos."
-                  : "Nuestros compromisos de calidad, servicio y protección de tu información. Haz clic para ver las políticas."
+                  ? "Haz clic para ocultar nuestras normativas legales."
+                  : "Nuestros compromisos de calidad, servicio y protección de tu información. Haz clic para ver los detalles."
                 }
               </p>
             </div>
@@ -84,11 +88,19 @@ const Policies: React.FC = () => {
 
           <div className={`grid transition-all duration-500 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-8 sm:mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
             <div className="overflow-hidden">
-              <div className="space-y-4">
+              <div className="space-y-4 pb-8">
                 {policiesData.map((policy, index) => (
-                  <Accordion key={index} title={policy.title}>
-                    <p className="text-gray-700 text-sm whitespace-pre-wrap">{policy.content}</p>
-                  </Accordion>
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                  >
+                    <Accordion title={policy.title}>
+                      <p className="text-gray-500 text-lg leading-relaxed whitespace-pre-wrap">{policy.content}</p>
+                    </Accordion>
+                  </motion.div>
                 ))}
               </div>
             </div>

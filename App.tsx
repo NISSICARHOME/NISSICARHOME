@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { HashRouter, Routes, Route, Outlet, useLocation } from 'react-router-dom';
 
 // --- Type Imports ---
@@ -8,27 +8,23 @@ import { Product, CartItem, ActiveFilters } from './types';
 // --- Component Imports ---
 import Header from './components/Header';
 import Hero from './components/Hero';
+import About from './components/About';
+import Products, { getAllProducts } from './components/Products';
+import Kits from './components/Kits';
+import Services from './components/Services';
+import FAQ from './components/FAQ';
+import Policies from './components/Policies';
+import PaymentMethods from './components/PaymentMethods';
+import Footer from './components/Footer';
+import ProductModal from './components/shared/ProductModal';
+import QuickBuyModal from './components/shared/QuickBuyModal';
+import CheckoutForm from './components/checkout/CheckoutForm';
+import Chatbot from './components/Chatbot';
+import Filters from './components/Filters';
+import SocialProofToast from './components/shared/SocialProofToast';
+import SEOManager from './components/shared/SEOManager';
 import WhatsAppButton from './components/shared/WhatsAppButton';
 import { TrackingService } from './services/TrackingService';
-import SEOManager from './components/shared/SEOManager';
-import { siteContent } from './data/siteContent';
-import { getAllProducts } from './components/Products';
-
-// --- Lazy Loaded Components ---
-const About = lazy(() => import('./components/About'));
-const Products = lazy(() => import('./components/Products'));
-const Kits = lazy(() => import('./components/Kits'));
-const Services = lazy(() => import('./components/Services'));
-const FAQ = lazy(() => import('./components/FAQ'));
-const Policies = lazy(() => import('./components/Policies'));
-const PaymentMethods = lazy(() => import('./components/PaymentMethods'));
-const Footer = lazy(() => import('./components/Footer'));
-const ProductModal = lazy(() => import('./components/shared/ProductModal'));
-const QuickBuyModal = lazy(() => import('./components/shared/QuickBuyModal'));
-const CheckoutForm = lazy(() => import('./components/checkout/CheckoutForm'));
-const Chatbot = lazy(() => import('./components/Chatbot'));
-const Filters = lazy(() => import('./components/Filters'));
-const SocialProofToast = lazy(() => import('./components/shared/SocialProofToast'));
 
 // --- Lazy Loaded Pages ---
 const LandingPageVidrexClarityWash = lazy(() => import('./pages/LandingPageVidrexClarityWash'));
@@ -40,12 +36,13 @@ const LandingPageHyperDiamond = lazy(() => import('./pages/LandingPageHyperDiamo
 const ProductLandingPage = lazy(() => import('./pages/ProductLandingPage'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 
-import { idToSlug } from './pages/ProductLandingPage';
+import { siteContent } from './data/siteContent';
+import { idToSlug } from './constants';
 
 // --- Loading Component ---
 const PageLoader = () => (
   <div className="flex items-center justify-center min-h-[60vh]">
-    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-amber-500"></div>
+    <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
   </div>
 );
 
@@ -68,13 +65,9 @@ const MainLayout: React.FC<{
   <>
     <Header cartItemCount={cartItemCount} onCartClick={onCartClick} onVoiceSearchStart={onVoiceSearchStart} />
     <main>
-      <Suspense fallback={<PageLoader />}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </main>
-    <Suspense fallback={null}>
-      <Footer />
-    </Suspense>
+    <Footer />
   </>
 );
 
@@ -88,16 +81,14 @@ const HomePage: React.FC<{
 }> = ({ onProductSelect, onAddToCart, searchTerm, activeFilters, setActiveFilters }) => (
   <>
     <Hero />
-    <Suspense fallback={<PageLoader />}>
-      <Filters activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
-      <Products onProductSelect={onProductSelect} onAddToCart={onAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} />
-      <Kits />
-      <About />
-      <Services />
-      <FAQ />
-      <Policies />
-      <PaymentMethods />
-    </Suspense>
+    <Filters activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
+    <Products onProductSelect={onProductSelect} onAddToCart={onAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} />
+    <Kits />
+    <About />
+    <Services />
+    <FAQ />
+    <Policies />
+    <PaymentMethods />
   </>
 );
 
@@ -230,14 +221,46 @@ const App: React.FC = () => {
             index 
             element={<HomePage onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} setActiveFilters={setActiveFilters} />} 
           />
-          <Route path="/kit-vidrex-clarity-wash" element={<LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />} />
-          <Route path="/kit-embellecimiento" element={<LandingPageBeautyKit onBuyNow={handleBuyNow} />} />
-          <Route path="/kit-basico-cuidado" element={<LandingPageBasicKit onBuyNow={handleBuyNow} />} />
-          <Route path="/spa-automotriz" element={<LandingPageServices />} />
-          <Route path="/servicios-adicionales-y-soporte" element={<LandingPageAdditionalServices />} />
-          <Route path="/Cera-Hyper-Diamond" element={<LandingPageHyperDiamond onBuyNow={handleBuyNow} />} />
-          <Route path="/admin" element={<AdminDashboard />} />
-          <Route path="/:slug" element={<ProductLandingPage onBuyNow={handleBuyNow} />} />
+          <Route path="/kit-vidrex-clarity-wash" element={
+            <Suspense fallback={<PageLoader />}>
+              <LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />
+            </Suspense>
+          } />
+          <Route path="/kit-embellecimiento" element={
+            <Suspense fallback={<PageLoader />}>
+              <LandingPageBeautyKit onBuyNow={handleBuyNow} />
+            </Suspense>
+          } />
+          <Route path="/kit-basico-cuidado" element={
+            <Suspense fallback={<PageLoader />}>
+              <LandingPageBasicKit onBuyNow={handleBuyNow} />
+            </Suspense>
+          } />
+          <Route path="/spa-automotriz" element={
+            <Suspense fallback={<PageLoader />}>
+              <LandingPageServices />
+            </Suspense>
+          } />
+          <Route path="/servicios-adicionales-y-soporte" element={
+            <Suspense fallback={<PageLoader />}>
+              <LandingPageAdditionalServices />
+            </Suspense>
+          } />
+          <Route path="/Cera-Hyper-Diamond" element={
+            <Suspense fallback={<PageLoader />}>
+              <LandingPageHyperDiamond onBuyNow={handleBuyNow} />
+            </Suspense>
+          } />
+          <Route path="/admin" element={
+            <Suspense fallback={<PageLoader />}>
+              <AdminDashboard />
+            </Suspense>
+          } />
+          <Route path="/:slug" element={
+            <Suspense fallback={<PageLoader />}>
+              <ProductLandingPage onBuyNow={handleBuyNow} />
+            </Suspense>
+          } />
         </Route>
       </Routes>
       

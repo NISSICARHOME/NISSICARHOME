@@ -3,6 +3,19 @@ import { SocialLink } from './types';
 
 const iconClasses = "h-6 w-6 text-gray-700 group-hover:text-amber-500 transition-colors duration-300";
 
+export const idToSlug: Record<string, string> = {
+    'prod-vidrex': 'Vidrex-Bloqueador-Manchas',
+    'prod-clarity': 'Clarity-Wash',
+    'prod-hyper-diamond': 'Cera-Hyper-Diamond',
+    'prod-llantix': 'Perfect-Llantix',
+    'prod-perfume-iq': 'Perfum-NISSI-CAR',
+    'prod-restorer': 'Ultra-Restorer',
+    'prod-rayones-cero': 'Rayones-Cero',
+    'prod-shampoo': 'Shampoo-PH-Neutro',
+    'prod-aplicador': 'Aplicador-Media-Luna',
+    'prod-toalla': 'Toalla-Microfibra',
+    'prod-aplicador-redondo': 'Aplicador-Redondo-Profesional'
+};
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     name: 'WhatsApp',

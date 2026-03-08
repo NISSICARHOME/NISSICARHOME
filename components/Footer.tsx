@@ -18,9 +18,7 @@ const Footer: React.FC = () => {
           
           <div className="md:col-span-5">
             <h3 className="text-2xl font-black text-gray-900 uppercase italic tracking-tighter mb-6">
-              {footer.companyName.split(' ').map((word, i) => (
-                <span key={i} className={i === 1 ? "text-amber-500" : ""}>{word} </span>
-              ))}
+              NISSI <span className="text-amber-500">CAR-HOME</span>
             </h3>
             <p className="text-gray-500 text-lg leading-relaxed mb-8 max-w-md">
               {footer.description}
@@ -97,7 +95,5 @@ const Footer: React.FC = () => {
     </footer>
   );
 };
-
-export default Footer;
 
 export default Footer;

@@ -3,26 +3,39 @@ import { HashLink } from 'react-router-hash-link';
 import { siteContent } from '../data/siteContent';
 import { motion } from 'motion/react';
 
-const ServiceCard: React.FC<{ name: string; description: string; index: number }> = ({ name, description, index }) => (
-  <motion.div 
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ delay: index * 0.1 }}
-    className="group relative p-6 bg-white rounded-3xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden"
-  >
-    <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-amber-500/5 rounded-full blur-2xl group-hover:bg-amber-500/10 transition-colors duration-500"></div>
-    <div className="relative z-10">
-      <div className="flex items-center justify-center h-12 w-12 rounded-2xl bg-amber-50/80 text-amber-600 border border-amber-100 mb-4 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-500">
-        <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
-        </svg>
+const ServiceCard: React.FC<{ name: string; description: string; index: number }> = ({ name, description, index }) => {
+  const isSpecial = name.includes('Asesoría');
+  return (
+    <motion.div 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className={`group relative p-8 rounded-[2rem] border transition-all duration-500 overflow-hidden ${
+        isSpecial 
+          ? "bg-gradient-to-br from-amber-500 to-amber-600 border-amber-400 text-white shadow-amber-200 shadow-2xl" 
+          : "bg-white border-gray-100 shadow-sm hover:shadow-xl"
+      }`}
+    >
+      <div className={`absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 rounded-full blur-3xl transition-colors duration-500 ${
+        isSpecial ? "bg-white/20" : "bg-amber-500/5 group-hover:bg-amber-500/10"
+      }`}></div>
+      <div className="relative z-10">
+        <div className={`flex items-center justify-center h-14 w-14 rounded-2xl border mb-6 transition-all duration-500 ${
+          isSpecial 
+            ? "bg-white/20 text-white border-white/30" 
+            : "bg-amber-50/80 text-amber-600 border-amber-100 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white"
+        }`}>
+          <svg className="h-7 w-7" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isSpecial ? "M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" : "M5 13l4 4L19 7"} />
+          </svg>
+        </div>
+        <h3 className={`text-2xl font-black mb-3 italic uppercase tracking-tight ${isSpecial ? "text-white" : "text-gray-900 group-hover:text-amber-600"}`}>{name}</h3>
+        <p className={`text-lg leading-relaxed ${isSpecial ? "text-amber-50" : "text-gray-600"}`}>{description}</p>
       </div>
-      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors duration-300">{name}</h3>
-      <p className="text-gray-600 leading-relaxed">{description}</p>
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
+};
 
 const Services: React.FC = () => {
   const { services } = siteContent;
@@ -75,7 +88,7 @@ const Services: React.FC = () => {
             <div className="absolute top-0 right-0 -mt-20 -mr-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
             <h3 className="text-3xl font-black mb-6 italic uppercase tracking-tight">Compromiso de Excelencia</h3>
             <p className="text-lg text-amber-50/90 mb-8 leading-relaxed">
-              En Nissi Car Home, cada vehículo es tratado como una obra de arte. Utilizamos los mejores productos del mercado y técnicas avanzadas para garantizar un acabado de exhibición.
+              En NISSI CAR-HOME, cada vehículo es tratado como una obra de arte. Utilizamos los mejores productos del mercado y técnicas avanzadas para garantizar un acabado de exhibición.
             </p>
             <HashLink
               to="/servicios-adicionales-y-soporte"
@@ -91,14 +104,14 @@ const Services: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.items.map((service, index) => (
-            <ServiceCard key={service.name} name={service.name} description={service.description} index={index} />
+            <div key={service.name} className={service.name.includes('Asesoría') ? "md:col-span-2 lg:col-span-3" : ""}>
+              <ServiceCard name={service.name} description={service.description} index={index} />
+            </div>
           ))}
         </div>
       </div>
     </section>
   );
 };
-
-export default Services;
 
 export default Services;

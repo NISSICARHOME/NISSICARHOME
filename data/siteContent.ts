@@ -38,7 +38,7 @@ export interface SiteContent {
 
 export const siteContent: SiteContent = {
   hero: {
-    title: "Nissi Car Home",
+    title: "NISSI CAR-HOME",
     subtitle: "Soluciones premium para el cuidado y estética de tu vehículo. Tecnología de vanguardia para resultados de exhibición.",
     ctaText: "VER PRODUCTOS",
     videoUrl: "https://www.youtube.com/embed/vk3W73Pnan0?autoplay=1&mute=1&loop=1&playlist=vk3W73Pnan0",
@@ -49,21 +49,16 @@ export const siteContent: SiteContent = {
     subtitle: "No solo ofrecemos productos, sino también servicios especializados y el mejor soporte para ti.",
     multimediaUrl: "https://www.youtube.com/embed/oAgP4klzRAM?autoplay=1&mute=1&loop=1&playlist=oAgP4klzRAM",
     items: [
-      { name: 'Detailing Automotriz', description: 'Limpieza profunda y restauración interna de vehículos.' },
-      { name: 'Spa para Vehículos', description: 'Tratamientos completos para el cuidado interior y exterior de tu automóvil.' },
-      { name: 'Aplicación de Recubrimiento Cerámico y Porcelanizado', description: 'Revestimientos de protección avanzados para la carrocería y pintura.' },
-      { name: 'Desmanchado de Vidrios', description: 'Servicio especializado para hoteles, unidades residenciales, casas campestres y piscinas.' },
-      { name: 'Asesoría personalizada', description: 'Brindamos soporte uno a uno con cada cliente para garantizar los mejores resultados.' },
-      { name: 'Garantía de 365 días', description: 'Respaldamos nuestros productos con una política de garantía en el resultado final.' },
+      { name: 'Asesoría Personalizada y Garantía de 365 Días', description: 'Brindamos soporte uno a uno con cada cliente y respaldamos nuestros resultados con una política de garantía total por un año.' },
     ]
   },
   about: {
-    title: "Sobre Nissi Car Home",
+    title: "Sobre NISSI CAR-HOME",
     description: "Somos líderes en estética automotriz en Pereira. Nuestra pasión por los detalles y el uso de tecnología avanzada nos permite ofrecer resultados que superan las expectativas de nuestros clientes.",
     image: "https://drive.google.com/uc?id=13-PIubLkqJJofUxN8VxUuQ8ZeLBM5Qnt"
   },
   footer: {
-    companyName: "Nissi Car Home",
+    companyName: "NISSI CAR-HOME",
     description: "Cuidado y estética automotriz de nivel profesional.",
     address: "Pereira, Risaralda, Colombia",
     phone: "+57 310 375 4727",
@@ -79,7 +74,7 @@ export const siteContent: SiteContent = {
     socialProof: true,
     chatbotEnabled: true,
     googleAnalyticsId: "G-XXXXXXXXXX",
-    metaTitle: "Nissi Car Home | Estética Automotriz Premium",
+    metaTitle: "NISSI CAR-HOME | Estética Automotriz Premium",
     metaDescription: "Expertos en detallado, recubrimientos cerámicos y productos premium para el cuidado de tu vehículo en Pereira."
   }
 };

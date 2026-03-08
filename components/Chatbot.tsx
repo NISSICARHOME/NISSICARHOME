@@ -3,13 +3,12 @@ import { GoogleGenAI, Chat } from '@google/genai';
 import { systemInstruction } from '../data/chatbotContext';
 import { Product } from '../types';
 import { SOCIAL_LINKS } from '../constants';
-
-declare const fbq: (type: string, event: string, data?: object) => void;
+import { motion, AnimatePresence } from 'motion/react';
 
 // --- ICONS ---
 const ChatIcon: React.FC<{ className?: string }> = ({ className }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
+    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z" />
   </svg>
 );
 const SendIcon: React.FC<{ className?: string }> = ({ className }) => (
@@ -28,7 +27,6 @@ const MicIcon: React.FC<{ className?: string }> = ({ className }) => (
     </svg>
 );
 
-
 // --- TYPES ---
 interface Message {
   sender: 'user' | 'bot';
@@ -43,24 +41,25 @@ interface ChatbotProps {
     onListeningEnd: () => void;
 }
 
-
 // --- INTERACTIVE MESSAGE COMPONENTS ---
 
 const ProductCard: React.FC<{ product: Product; onClick: () => void }> = ({ product, onClick }) => (
-    <button onClick={onClick} className="w-full flex items-center gap-3 p-2 my-1 bg-white/50 backdrop-blur-lg border border-white/40 rounded-lg text-left hover:bg-white/70 transition-colors shadow-md">
-        <img src={product.image} alt={product.name} className="w-16 h-16 object-contain rounded-md bg-white p-1" />
+    <button onClick={onClick} className="w-full flex items-center gap-4 p-4 my-2 bg-white border border-gray-100 rounded-2xl text-left hover:shadow-xl transition-all duration-300 group">
+        <div className="w-20 h-20 flex-shrink-0 bg-gray-50 rounded-xl p-2">
+            <img src={product.image} alt={product.name} className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110" />
+        </div>
         <div className="flex-grow">
-            <p className="font-bold text-sm text-gray-900">{product.name}</p>
-            <p className="text-xs text-gray-700">{product.shortDesc}</p>
-            <p className="text-sm font-bold text-amber-700 mt-1">${product.price.toLocaleString('es-CO')}</p>
+            <p className="font-black text-sm text-gray-900 uppercase tracking-tight mb-1">{product.name}</p>
+            <p className="text-xs text-gray-500 line-clamp-2 mb-2">{product.shortDesc}</p>
+            <p className="text-sm font-black text-amber-500">${product.price.toLocaleString('es-CO')}</p>
         </div>
     </button>
 );
 
 const SocialLinks: React.FC = () => (
-    <div className="flex flex-wrap gap-2 my-1">
+    <div className="flex flex-wrap gap-2 my-2">
         {SOCIAL_LINKS.map(link => (
-            <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-white/50 hover:bg-white/70 backdrop-blur-sm border border-white/40 text-gray-800 font-semibold text-xs py-1 px-3 rounded-full transition-colors">
+            <a key={link.name} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 bg-gray-50 hover:bg-amber-500 hover:text-white text-gray-700 font-bold text-[10px] uppercase tracking-widest py-2 px-4 rounded-xl transition-all duration-300 border border-gray-100 shadow-sm">
                 <div className="w-4 h-4">{link.icon}</div>
                 {link.name}
             </a>
@@ -76,12 +75,11 @@ const ContactLink: React.FC<{ type: 'WhatsApp' | 'Location' }> = ({ type }) => {
     const text = isWhatsApp ? 'Abrir WhatsApp' : 'Ver Ubicación';
     
     return (
-        <a href={link} target="_blank" rel="noopener noreferrer" className="inline-block my-1 bg-green-500 text-white font-bold text-sm py-2 px-4 rounded-lg hover:bg-green-600 transition-colors">
+        <a href={link} target="_blank" rel="noopener noreferrer" className={`inline-flex items-center justify-center my-2 px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest text-white transition-all duration-300 shadow-lg ${isWhatsApp ? 'bg-green-500 hover:shadow-green-500/20' : 'bg-amber-500 hover:shadow-amber-500/20'}`}>
             {text}
         </a>
     );
 };
-
 
 // --- MAIN CHATBOT COMPONENT ---
 
@@ -95,9 +93,8 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const autoSendTimer = useRef<number | null>(null);
-  const recognitionRef = useRef<any>(null); // Using 'any' for SpeechRecognition for cross-browser compatibility
+  const recognitionRef = useRef<any>(null);
 
-  // --- Text-to-Speech (TTS) ---
   const speak = useCallback((text: string) => {
     if (typeof window === 'undefined' || !window.speechSynthesis) return;
     
@@ -106,7 +103,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
 
     const utterance = new SpeechSynthesisUtterance(cleanedText);
     const voices = window.speechSynthesis.getVoices();
-    // Prioritize 'Paulina' (es-MX) or 'Monica' (es-ES) for a quality female voice
     const femaleVoice = voices.find(v => v.name === 'Paulina' && v.lang.startsWith('es')) || 
                         voices.find(v => v.name === 'Monica' && v.lang.startsWith('es')) ||
                         voices.find(v => v.lang.startsWith('es-') && v.name.includes('Female')) ||
@@ -122,15 +118,11 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
     window.speechSynthesis.speak(utterance);
   }, []);
   
-  // --- Speech-to-Text (STT) ---
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    // Fix: Cast window to `any` to access non-standard SpeechRecognition properties.
     const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
-    if (!SpeechRecognition) {
-        console.warn("Speech recognition not supported in this browser.");
-        return;
-    }
+    if (!SpeechRecognition) return;
+
     recognitionRef.current = new SpeechRecognition();
     const recognition = recognitionRef.current;
     recognition.lang = 'es-CO';
@@ -140,16 +132,10 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
     recognition.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;
         setInputValue(transcript);
-        // Automatically submit after successful recognition
         setTimeout(() => formRef.current?.requestSubmit(), 100);
     };
-    recognition.onerror = (event: any) => {
-        console.error("Speech recognition error:", event.error);
-        setIsListening(false);
-    };
-    recognition.onend = () => {
-        setIsListening(false);
-    };
+    recognition.onerror = () => setIsListening(false);
+    recognition.onend = () => setIsListening(false);
   }, []);
 
   const toggleListen = useCallback(() => {
@@ -166,17 +152,14 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
   }, [isListening]);
 
   useEffect(() => {
-    // This effect handles the external trigger from the header
     if (isOpen && startListening && !isListening) {
       if (recognitionRef.current) {
         toggleListen();
       }
-      onListeningEnd(); // Reset the trigger in App.tsx
+      onListeningEnd();
     }
   }, [isOpen, startListening, isListening, onListeningEnd, toggleListen]);
 
-
-  // --- Core Chat Logic ---
   useEffect(() => {
     if (isOpen && !chat) {
         try {
@@ -227,12 +210,6 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
   const handleSendMessage = (messageText: string) => {
       if (!messageText.trim() || isLoading || !chat) return;
       
-      if (typeof fbq === 'function') {
-        fbq('track', 'Search', {
-          search_string: messageText
-        });
-      }
-
       if (autoSendTimer.current) {
           clearTimeout(autoSendTimer.current);
           autoSendTimer.current = null;
@@ -289,61 +266,101 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
 
   return (
     <>
-      <button
+      <motion.button
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-24 right-6 md:bottom-6 bg-amber-500/50 backdrop-blur-md border border-white/30 text-white w-16 h-16 rounded-full shadow-lg flex items-center justify-center hover:bg-amber-500/80 transition-all transform hover:scale-110 z-50"
+        className="fixed bottom-24 right-6 md:bottom-24 bg-amber-500 text-white w-16 h-16 rounded-full shadow-2xl flex items-center justify-center z-50 overflow-hidden group"
         aria-label="Abrir chat de ayuda"
       >
-        {isOpen ? <CloseIcon className="w-8 h-8"/> : <ChatIcon className="w-8 h-8" />}
-      </button>
+        <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+        <AnimatePresence mode="wait">
+          {isOpen ? (
+            <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }}>
+              <CloseIcon className="w-8 h-8 relative z-10"/>
+            </motion.div>
+          ) : (
+            <motion.div key="chat" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }}>
+              <ChatIcon className="w-8 h-8 relative z-10" />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.button>
 
-      <div className={`fixed bottom-44 right-6 md:bottom-24 w-[calc(100vw-3rem)] max-w-sm h-[70vh] max-h-[600px] bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl shadow-2xl flex flex-col transition-all duration-300 ease-out z-50 ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
-        <header className="bg-white/10 p-4 rounded-t-2xl flex justify-between items-center border-b border-white/20 flex-shrink-0">
-            <h3 className="text-lg font-bold text-gray-800">Asistente Virtual</h3>
-        </header>
-        
-        <div ref={chatContainerRef} className="flex-1 p-4 overflow-y-auto space-y-4">
-            {messages.map((msg, index) => (
-                <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-[85%] p-3 rounded-xl shadow-sm ${msg.sender === 'user' ? 'bg-amber-500/80 text-white' : 'bg-white/40 text-gray-800'}`}>
-                        <div className="text-sm space-y-2">{parseMessage(msg.text)}</div>
-                    </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.95 }}
+            className="fixed bottom-44 right-6 md:bottom-44 w-[calc(100vw-3rem)] max-w-sm h-[70vh] max-h-[600px] bg-white rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.15)] flex flex-col z-50 overflow-hidden border border-gray-100"
+          >
+            <header className="bg-white p-6 flex justify-between items-center border-b border-gray-50 flex-shrink-0">
+                <div>
+                  <h3 className="text-xl font-black text-gray-900 uppercase italic tracking-tighter">NissiBot</h3>
+                  <div className="flex items-center gap-2">
+                    <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">En línea</span>
+                  </div>
                 </div>
-            ))}
-            {isLoading && (
-                 <div className="flex justify-start">
-                    <div className="p-3 rounded-xl bg-white/40 text-gray-800">
-                        <div className="flex items-center space-x-2">
-                            <span className="h-2 w-2 bg-gray-600 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                            <span className="h-2 w-2 bg-gray-600 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                            <span className="h-2 w-2 bg-gray-600 rounded-full animate-bounce"></span>
+                <button onClick={() => setIsOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-xl bg-gray-50 text-gray-400 hover:bg-gray-100 transition-colors">
+                  <CloseIcon className="w-6 h-6" />
+                </button>
+            </header>
+            
+            <div ref={chatContainerRef} className="flex-1 p-6 overflow-y-auto space-y-6 bg-gray-50/50">
+                {messages.map((msg, index) => (
+                    <motion.div 
+                      key={index} 
+                      initial={{ opacity: 0, x: msg.sender === 'user' ? 20 : -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                        <div className={`max-w-[85%] p-4 rounded-2xl shadow-sm ${msg.sender === 'user' ? 'bg-amber-500 text-white rounded-tr-none' : 'bg-white text-gray-700 border border-gray-100 rounded-tl-none'}`}>
+                            <div className="text-sm leading-relaxed font-medium">{parseMessage(msg.text)}</div>
+                        </div>
+                    </motion.div>
+                ))}
+                {isLoading && (
+                     <div className="flex justify-start">
+                        <div className="p-4 rounded-2xl bg-white border border-gray-100 rounded-tl-none">
+                            <div className="flex items-center space-x-2">
+                                <span className="h-2 w-2 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.3s]"></span>
+                                <span className="h-2 w-2 bg-amber-500 rounded-full animate-bounce [animation-delay:-0.15s]"></span>
+                                <span className="h-2 w-2 bg-amber-500 rounded-full animate-bounce"></span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
-
-        <form ref={formRef} onSubmit={handleFormSubmit} className="p-3 border-t border-white/20 flex-shrink-0">
-            <div className="flex items-center bg-white/30 rounded-full">
-                <input
-                    type="text"
-                    name="message"
-                    placeholder={isListening ? "Escuchando..." : "Escribe tu pregunta..."}
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    autoComplete="off"
-                    disabled={isLoading || isListening}
-                    className="w-full bg-transparent px-4 py-3 text-gray-800 placeholder-gray-600 focus:outline-none disabled:opacity-50"
-                />
-                <button type="button" onClick={toggleListen} disabled={isLoading} className={`p-2 transition-colors ${isListening ? 'text-red-500 animate-pulse' : 'text-gray-600 hover:text-amber-600'}`}>
-                   <MicIcon className="w-6 h-6" />
-                </button>
-                <button type="submit" disabled={isLoading || !inputValue.trim()} className="p-3 text-amber-600 hover:text-amber-500 disabled:text-gray-400 disabled:cursor-not-allowed transition-colors">
-                   <SendIcon className="w-6 h-6" />
-                </button>
+                )}
             </div>
-        </form>
-      </div>
+
+            <form ref={formRef} onSubmit={handleFormSubmit} className="p-6 bg-white border-t border-gray-50 flex-shrink-0">
+                <div className="flex items-center bg-gray-50 rounded-2xl p-2 border border-gray-100">
+                    <input
+                        type="text"
+                        name="message"
+                        placeholder={isListening ? "Escuchando..." : "Escribe tu pregunta..."}
+                        value={inputValue}
+                        onChange={handleInputChange}
+                        autoComplete="off"
+                        disabled={isLoading || isListening}
+                        className="w-full bg-transparent px-4 py-2 text-gray-900 placeholder-gray-400 focus:outline-none disabled:opacity-50 font-bold text-sm"
+                    />
+                    <div className="flex gap-1">
+                      <button type="button" onClick={toggleListen} disabled={isLoading} className={`w-10 h-10 flex items-center justify-center rounded-xl transition-all ${isListening ? 'bg-red-500 text-white animate-pulse' : 'bg-white text-gray-400 hover:text-amber-500 shadow-sm'}`}>
+                         <MicIcon className="w-5 h-5" />
+                      </button>
+                      <button type="submit" disabled={isLoading || !inputValue.trim()} className="w-10 h-10 flex items-center justify-center rounded-xl bg-amber-500 text-white shadow-lg shadow-amber-500/20 disabled:bg-gray-200 disabled:shadow-none transition-all active:scale-95">
+                         <SendIcon className="w-5 h-5" />
+                      </button>
+                    </div>
+                </div>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

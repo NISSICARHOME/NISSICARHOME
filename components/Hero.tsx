@@ -73,21 +73,6 @@ const Hero: React.FC = () => {
             </HashLink>
           </div>
 
-          {/* Trust Bar */}
-          <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-black italic">3M</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-black italic">SONAX</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-black italic">MENZERNA</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span className="text-2xl font-black italic">MEGUIAR'S</span>
-            </div>
-          </div>
         </motion.div>
       </div>
 
