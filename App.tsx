@@ -24,7 +24,12 @@ import Filters from './components/Filters';
 import SocialProofToast from './components/shared/SocialProofToast';
 import SEOManager from './components/shared/SEOManager';
 import WhatsAppButton from './components/shared/WhatsAppButton';
+import ReviewSection from './components/shared/ReviewSection';
 import { TrackingService } from './services/TrackingService';
+
+// --- Data Imports ---
+import { initialReviews } from './data/reviews';
+import { Review } from './types';
 
 // --- Lazy Loaded Pages ---
 const LandingPageVidrexClarityWash = lazy(() => import('./pages/LandingPageVidrexClarityWash'));
@@ -78,7 +83,11 @@ const HomePage: React.FC<{
   searchTerm: string;
   activeFilters: ActiveFilters;
   setActiveFilters: React.Dispatch<React.SetStateAction<ActiveFilters>>;
-}> = ({ onProductSelect, onAddToCart, searchTerm, activeFilters, setActiveFilters }) => (
+  reviews: Review[];
+  onAddReview: (review: Omit<Review, 'id' | 'date'>) => void;
+  onDeleteReview: (id: string) => void;
+  isAdmin: boolean;
+}> = ({ onProductSelect, onAddToCart, searchTerm, activeFilters, setActiveFilters, reviews, onAddReview, onDeleteReview, isAdmin }) => (
   <>
     <Hero />
     <Filters activeFilters={activeFilters} setActiveFilters={setActiveFilters} />
@@ -86,6 +95,15 @@ const HomePage: React.FC<{
     <Kits />
     <About />
     <Services />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <ReviewSection 
+            targetId="general" 
+            reviews={reviews} 
+            onAddReview={onAddReview} 
+            onDeleteReview={onDeleteReview} 
+            isAdmin={isAdmin} 
+        />
+    </div>
     <FAQ />
     <Policies />
     <PaymentMethods />
@@ -109,6 +127,36 @@ const App: React.FC = () => {
     priceRange: { min: 0, max: Infinity },
     sortOrder: 'default'
   });
+
+  const [reviews, setReviews] = useState<Review[]>(initialReviews);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const handleAddReview = (reviewData: Omit<Review, 'id' | 'date'>) => {
+    const newReview: Review = {
+      ...reviewData,
+      id: `rev-${Date.now()}`,
+      date: new Date().toISOString().split('T')[0]
+    };
+    setReviews(prev => [newReview, ...prev]);
+  };
+
+  const handleDeleteReview = (id: string) => {
+    setReviews(prev => prev.filter(r => r.id !== id));
+  };
+
+  const toggleAdmin = () => {
+    if (isAdmin) {
+      setIsAdmin(false);
+    } else {
+      const pass = prompt('Ingrese la clave de administrador:');
+      if (pass === 'nissi2024') {
+        setIsAdmin(true);
+        alert('Modo administrador activado');
+      } else {
+        alert('Clave incorrecta');
+      }
+    }
+  };
 
   const allProducts = getAllProducts();
   const { optimization } = siteContent;
@@ -219,21 +267,21 @@ const App: React.FC = () => {
         <Route path="/" element={<MainLayout cartItemCount={cartItemCount} onCartClick={handleCartClick} onVoiceSearchStart={handleVoiceSearchStart} />}>
           <Route 
             index 
-            element={<HomePage onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} setActiveFilters={setActiveFilters} />} 
+            element={<HomePage onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} setActiveFilters={setActiveFilters} reviews={reviews} onAddReview={handleAddReview} onDeleteReview={handleDeleteReview} isAdmin={isAdmin} />} 
           />
           <Route path="/kit-vidrex-clarity-wash" element={
             <Suspense fallback={<PageLoader />}>
-              <LandingPageVidrexClarityWash onBuyNow={handleBuyNow} />
+              <LandingPageVidrexClarityWash onBuyNow={handleBuyNow} reviews={reviews} onAddReview={handleAddReview} onDeleteReview={handleDeleteReview} isAdmin={isAdmin} />
             </Suspense>
           } />
           <Route path="/kit-embellecimiento" element={
             <Suspense fallback={<PageLoader />}>
-              <LandingPageBeautyKit onBuyNow={handleBuyNow} />
+              <LandingPageBeautyKit onBuyNow={handleBuyNow} reviews={reviews} onAddReview={handleAddReview} onDeleteReview={handleDeleteReview} isAdmin={isAdmin} />
             </Suspense>
           } />
           <Route path="/kit-basico-cuidado" element={
             <Suspense fallback={<PageLoader />}>
-              <LandingPageBasicKit onBuyNow={handleBuyNow} />
+              <LandingPageBasicKit onBuyNow={handleBuyNow} reviews={reviews} onAddReview={handleAddReview} onDeleteReview={handleDeleteReview} isAdmin={isAdmin} />
             </Suspense>
           } />
           <Route path="/spa-automotriz" element={
@@ -248,9 +296,11 @@ const App: React.FC = () => {
           } />
           <Route path="/Cera-Hyper-Diamond" element={
             <Suspense fallback={<PageLoader />}>
-              <LandingPageHyperDiamond onBuyNow={handleBuyNow} />
+              <LandingPageHyperDiamond onBuyNow={handleBuyNow} reviews={reviews} onAddReview={handleAddReview} onDeleteReview={handleDeleteReview} isAdmin={isAdmin} />
             </Suspense>
           } />
+          <Route path="/privacidad" element={<div className="max-w-4xl mx-auto py-20 px-6"><h1 className="text-4xl font-black mb-8 italic uppercase tracking-tighter">Política de Privacidad</h1><p className="text-gray-600 leading-relaxed">En Nissi Car Home, nos tomamos muy en serio tu privacidad. Tus datos personales solo se utilizan para procesar tus pedidos y brindarte el mejor servicio posible. No compartimos tu información con terceros sin tu consentimiento expreso.</p></div>} />
+          <Route path="/configuracion" element={<div className="max-w-4xl mx-auto py-20 px-6"><h1 className="text-4xl font-black mb-8 italic uppercase tracking-tighter">Configuración</h1><button onClick={toggleAdmin} className="bg-gray-900 text-white px-8 py-4 rounded-xl font-black uppercase tracking-widest text-sm">{isAdmin ? 'Cerrar Sesión Admin' : 'Acceso Propietario'}</button></div>} />
           <Route path="/admin" element={
             <Suspense fallback={<PageLoader />}>
               <AdminDashboard />

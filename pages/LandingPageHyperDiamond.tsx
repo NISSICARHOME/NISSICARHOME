@@ -1,7 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Accordion from '../components/shared/Accordion';
-import { CartItem } from '../types';
+import { CartItem, Review } from '../types';
+import ReviewSection from '../components/shared/ReviewSection';
 
 // --- HELPER COMPONENTS ---
 const FeatureCard: React.FC<{ title: string; desc: string; icon: React.ReactNode }> = ({ title, desc, icon }) => (
@@ -253,9 +254,13 @@ const LandingSocialProofFAQ: React.FC = () => {
 
 interface LandingPageProps {
   onBuyNow: (item: CartItem) => void;
+  reviews: Review[];
+  onAddReview: (review: Omit<Review, 'id' | 'date'>) => void;
+  onDeleteReview: (id: string) => void;
+  isAdmin: boolean;
 }
 
-const LandingPageHyperDiamond: React.FC<LandingPageProps> = ({ onBuyNow }) => {
+const LandingPageHyperDiamond: React.FC<LandingPageProps> = ({ onBuyNow, reviews, onAddReview, onDeleteReview, isAdmin }) => {
     
     useEffect(() => {
         const originalTitle = document.title;
@@ -270,6 +275,15 @@ const LandingPageHyperDiamond: React.FC<LandingPageProps> = ({ onBuyNow }) => {
             <LandingFeatures />
             <LandingVideo />
             <LandingSocialProofFAQ />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <ReviewSection 
+                    targetId="prod-hyper-diamond" 
+                    reviews={reviews} 
+                    onAddReview={onAddReview} 
+                    onDeleteReview={onDeleteReview} 
+                    isAdmin={isAdmin} 
+                />
+            </div>
             
             {/* Sticky Mobile CTA */}
             <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-gray-200 p-4 md:hidden z-50 flex justify-between items-center shadow-[0_-4px_15px_rgba(0,0,0,0.1)]">

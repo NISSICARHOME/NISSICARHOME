@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Accordion from '../components/shared/Accordion';
-import { CartItem } from '../types';
+import { CartItem, Review } from '../types';
+import ReviewSection from '../components/shared/ReviewSection';
 
 // --- HELPER COMPONENTS ---
 const CheckListItem: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -197,9 +198,13 @@ const LandingSocialProofFAQ: React.FC = () => {
 // --- MAIN LANDING PAGE COMPONENT ---
 interface LandingPageProps {
   onBuyNow: (item: CartItem) => void;
+  reviews: Review[];
+  onAddReview: (review: Omit<Review, 'id' | 'date'>) => void;
+  onDeleteReview: (id: string) => void;
+  isAdmin: boolean;
 }
 
-const LandingPageBasicKit: React.FC<LandingPageProps> = ({ onBuyNow }) => {
+const LandingPageBasicKit: React.FC<LandingPageProps> = ({ onBuyNow, reviews, onAddReview, onDeleteReview, isAdmin }) => {
     
     useEffect(() => {
         const originalTitle = document.title;
@@ -248,6 +253,15 @@ const LandingPageBasicKit: React.FC<LandingPageProps> = ({ onBuyNow }) => {
             <LandingVideo />
             <LandingWhatYouGet />
             <LandingSocialProofFAQ />
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <ReviewSection 
+                    targetId="kit-1" 
+                    reviews={reviews} 
+                    onAddReview={onAddReview} 
+                    onDeleteReview={onDeleteReview} 
+                    isAdmin={isAdmin} 
+                />
+            </div>
              <style>{`
                 @keyframes fade-out {
                     0% { opacity: 1; transform: translateY(0) translateX(-50%); }

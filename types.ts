@@ -82,3 +82,12 @@ export interface ActiveFilters {
   priceRange: { min: number; max: number; };
   sortOrder: string;
 }
+
+export interface Review {
+  id: string;
+  targetId: string; // Product ID, Kit ID, or 'general'
+  userName: string;
+  rating: number;
+  comment: string;
+  date: string;
+}

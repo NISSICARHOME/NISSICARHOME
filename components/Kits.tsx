@@ -113,11 +113,24 @@ const KitCard: React.FC<{ kit: ExtendedKit; index: number }> = ({ kit, index }) 
                         {kit.name}
                     </h3>
                     
-                    <div className="flex items-baseline gap-4 mb-6">
-                        {kit.oldPrice && <span className="text-lg text-gray-400 line-through font-medium">{kit.oldPrice}</span>}
-                        <span className={`text-4xl font-black tracking-tighter ${isSpecial ? 'text-red-500' : isBeautyKit ? 'text-amber-500' : 'text-blue-500'}`}>
-                            {kit.specialPrice || kit.price}
-                        </span>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+                        <div className="flex flex-col">
+                            {kit.oldPrice && (
+                                <span className="text-sm text-gray-400 line-through font-bold mb-1">
+                                    Precio Regular: {kit.oldPrice}
+                                </span>
+                            )}
+                            <div className="flex items-center gap-3">
+                                <span className={`text-4xl font-black tracking-tighter ${isSpecial ? 'text-red-500' : isBeautyKit ? 'text-amber-500' : 'text-blue-500'}`}>
+                                    {kit.specialPrice || kit.price}
+                                </span>
+                                {kit.oldPrice && (
+                                    <span className={`px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest ${isSpecial ? 'bg-red-50 text-red-500' : isBeautyKit ? 'bg-amber-50 text-amber-500' : 'bg-blue-50 text-blue-500'}`}>
+                                        ¡Ahorra Hoy!
+                                    </span>
+                                )}
+                            </div>
+                        </div>
                     </div>
 
                     <p className="text-gray-500 text-lg leading-relaxed mb-8">

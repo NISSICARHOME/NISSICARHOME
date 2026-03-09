@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { siteContent } from '../data/siteContent';
+import { Review } from '../types';
+import ReviewSection from '../components/shared/ReviewSection';
 
 // --- Accordion Component (scoped for this page) ---
 const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
@@ -26,7 +28,12 @@ const AccordionItem: React.FC<{ title: string; children: React.ReactNode }> = ({
 };
 
 
-const LandingPageAdditionalServices: React.FC = () => {
+const LandingPageAdditionalServices: React.FC<{
+  reviews: Review[];
+  onAddReview: (review: Omit<Review, 'id' | 'date'>) => void;
+  onDeleteReview: (id: string) => void;
+  isAdmin: boolean;
+}> = ({ reviews, onAddReview, onDeleteReview, isAdmin }) => {
     const [isExpanded, setIsExpanded] = useState(false);
 
     useEffect(() => {
@@ -178,7 +185,7 @@ const LandingPageAdditionalServices: React.FC = () => {
                         </div>
                     </div>
                     
-                    <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden bg-gray-50">
+                    <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden bg-gray-50 mb-16">
                         <div 
                             className="text-center cursor-pointer group"
                             onClick={() => setIsExpanded(!isExpanded)}
@@ -216,6 +223,14 @@ const LandingPageAdditionalServices: React.FC = () => {
                             </div>
                         </div>
                     </div>
+
+                    <ReviewSection 
+                        targetId="additional-services" 
+                        reviews={reviews} 
+                        onAddReview={onAddReview} 
+                        onDeleteReview={onDeleteReview} 
+                        isAdmin={isAdmin} 
+                    />
                 </div>
             </section>
 

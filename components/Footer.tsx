@@ -87,8 +87,8 @@ const Footer: React.FC = () => {
         <div className="mt-16 pt-8 border-t border-gray-50 flex flex-col md:flex-row justify-between items-center gap-6">
           <p className="text-xs text-gray-400 font-medium uppercase tracking-widest">© {new Date().getFullYear()} {footer.companyName}. Todos los derechos reservados.</p>
           <div className="flex gap-8">
-            <HashLink to="/admin" className="text-[10px] text-gray-300 hover:text-amber-500 uppercase tracking-widest transition-colors font-bold">Configuración</HashLink>
-            <HashLink to="/politicas" className="text-[10px] text-gray-300 hover:text-amber-500 uppercase tracking-widest transition-colors font-bold">Privacidad</HashLink>
+            <HashLink to="/configuracion" className="text-[10px] text-gray-300 hover:text-amber-500 uppercase tracking-widest transition-colors font-bold">Configuración</HashLink>
+            <HashLink to="/privacidad" className="text-[10px] text-gray-300 hover:text-amber-500 uppercase tracking-widest transition-colors font-bold">Privacidad</HashLink>
           </div>
         </div>
       </div>
