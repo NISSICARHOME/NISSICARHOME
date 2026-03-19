@@ -42,7 +42,7 @@ export const siteContent: SiteContent = {
     subtitle: "Soluciones premium para el cuidado y estética de tu vehículo. Tecnología de vanguardia para resultados de exhibición.",
     ctaText: "VER PRODUCTOS",
     videoUrl: "https://www.youtube.com/embed/vk3W73Pnan0?autoplay=1&mute=1&loop=1&playlist=vk3W73Pnan0",
-    backgroundImage: "https://drive.google.com/uc?id=13-PIubLkqJJofUxN8VxUuQ8ZeLBM5Qnt"
+    backgroundImage: "https://lh3.googleusercontent.com/d/13-PIubLkqJJofUxN8VxUuQ8ZeLBM5Qnt"
   },
   services: {
     title: "EXPERTOS EN ESTÉTICA AUTOMOTRIZ",
@@ -55,7 +55,7 @@ export const siteContent: SiteContent = {
   about: {
     title: "Sobre NISSI CAR-HOME",
     description: "Somos líderes en estética automotriz en Pereira. Nuestra pasión por los detalles y el uso de tecnología avanzada nos permite ofrecer resultados que superan las expectativas de nuestros clientes.",
-    image: "https://drive.google.com/uc?id=13-PIubLkqJJofUxN8VxUuQ8ZeLBM5Qnt"
+    image: "https://lh3.googleusercontent.com/d/13-PIubLkqJJofUxN8VxUuQ8ZeLBM5Qnt"
   },
   footer: {
     companyName: "NISSI CAR-HOME",

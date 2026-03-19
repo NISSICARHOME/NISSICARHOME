@@ -97,7 +97,7 @@ const LandingVideo: React.FC = () => {
                     {/* NOTA: Reemplazar con video de servicios si existe, si no, mantener el actual */}
                     <iframe
                         className="w-full h-full"
-                        src="https://www.youtube.com/embed/vk3W73Pnan0?si=A6kWy7eGKIG4yxHa"
+                        src="https://www.youtube.com/embed/oAgP4klzRAM"
                         title="Proceso de Detailing"
                         frameBorder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

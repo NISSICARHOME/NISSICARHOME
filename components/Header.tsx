@@ -11,7 +11,7 @@ const Logo = () => (
 );
 
 const NavLink: React.FC<{ href: string; children: React.ReactNode; onClick: () => void; className?: string; }> = ({ href, children, onClick, className = '' }) => (
-  <HashLink smooth to={href} onClick={onClick} className={`text-sm font-bold uppercase tracking-widest transition-all duration-300 hover:text-amber-500 ${className}`}>
+  <HashLink smooth to={href} onClick={onClick} className={`text-sm font-black uppercase tracking-[0.15em] transition-all duration-300 hover:text-amber-500 ${className}`}>
     {children}
   </HashLink>
 );
@@ -49,7 +49,15 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
     { href: '/', label: 'Inicio' },
     { href: '/#productos', label: 'Productos' },
     { href: '/#kits', label: 'Kits' },
-    { href: '/spa-automotriz', label: 'Spa Automotriz' },
+    { 
+      href: '/spa-automotriz', 
+      label: (
+        <div className="flex flex-col items-center leading-none py-1">
+          <span>Spa</span>
+          <span className="text-[8px] md:text-[9px] mt-1 tracking-[0.15em] font-black">Automotriz</span>
+        </div>
+      ) 
+    },
     { href: '/#nosotros', label: 'Nosotros' },
     { href: '/#contacto', label: 'Contacto' },
     { href: '/#faq', label: 'FAQ' },
@@ -125,8 +133,8 @@ const Header: React.FC<HeaderProps> = ({ cartItemCount, onCartClick, onVoiceSear
                     </svg>
                 </button>
             </div>
-            <div className="hidden md:flex items-center space-x-10">
-              <ul className="flex space-x-10">
+            <div className="hidden md:flex items-center space-x-12">
+              <ul className="flex space-x-12 items-center">
                 {navItems.map(item => (
                   <li key={item.href}>
                     <NavLink href={item.href} onClick={handleLinkClick} className={isScrolled ? 'text-gray-900' : 'text-white'}>

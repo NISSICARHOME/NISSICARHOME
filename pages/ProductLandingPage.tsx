@@ -2,8 +2,9 @@
 import React, { useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getAllProducts } from '../components/Products';
-import { CartItem, Product } from '../types';
+import { CartItem, Product, Review } from '../types';
 import Accordion from '../components/shared/Accordion';
+import ReviewSection from '../components/shared/ReviewSection';
 
 // Mapping of slugs to product IDs
 const slugToId: Record<string, string> = {
@@ -30,9 +31,13 @@ declare const fbq: (type: string, event: string, data?: object) => void;
 
 interface ProductLandingPageProps {
     onBuyNow: (item: CartItem) => void;
+    reviews: Review[];
+    onAddReview: (review: Omit<Review, 'id' | 'date'>) => void;
+    onDeleteReview: (id: string) => void;
+    isAdmin: boolean;
 }
 
-const ProductLandingPage: React.FC<ProductLandingPageProps> = ({ onBuyNow }) => {
+const ProductLandingPage: React.FC<ProductLandingPageProps> = ({ onBuyNow, reviews, onAddReview, onDeleteReview, isAdmin }) => {
     const { slug } = useParams<{ slug: string }>();
     const navigate = useNavigate();
     const allProducts = useMemo(() => getAllProducts(), []);
@@ -296,6 +301,17 @@ const ProductLandingPage: React.FC<ProductLandingPageProps> = ({ onBuyNow }) => 
                     </div>
                 </div>
             </section>
+
+            {/* Reviews Section */}
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <ReviewSection 
+                    targetId={product.id} 
+                    reviews={reviews} 
+                    onAddReview={onAddReview} 
+                    onDeleteReview={onDeleteReview} 
+                    isAdmin={isAdmin} 
+                />
+            </div>
 
             {/* Sticky Mobile CTA - Refined */}
             <div className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-2xl border-t border-white/50 p-4 md:hidden z-50 flex justify-between items-center shadow-[0_-10px_40px_rgba(0,0,0,0.1)]">

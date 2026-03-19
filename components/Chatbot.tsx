@@ -160,6 +160,34 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
     }
   }, [isOpen, startListening, isListening, onListeningEnd, toggleListen]);
 
+  const recoveryTimerRef = useRef<number | null>(null);
+
+  const sendRecoveryMessage = useCallback(() => {
+    const recoveryMsg = "Hola, seguimos disponibles para ayudarte con el servicio para tu vehículo. Si deseas más información o agendar, con gusto te ayudamos.";
+    setMessages(prev => {
+      // Only send if the last message wasn't already a recovery message or from user recently
+      const lastMsg = prev[prev.length - 1];
+      if (lastMsg && lastMsg.sender === 'bot' && lastMsg.text !== recoveryMsg) {
+        speak(recoveryMsg);
+        return [...prev, { sender: 'bot', text: recoveryMsg }];
+      }
+      return prev;
+    });
+  }, [speak]);
+
+  useEffect(() => {
+    if (messages.length > 0 && messages[messages.length - 1].sender === 'bot') {
+      // Start a timer for recovery message (e.g., 2 minutes of inactivity)
+      if (recoveryTimerRef.current) clearTimeout(recoveryTimerRef.current);
+      recoveryTimerRef.current = window.setTimeout(sendRecoveryMessage, 120000); // 2 minutes
+    } else {
+      if (recoveryTimerRef.current) clearTimeout(recoveryTimerRef.current);
+    }
+    return () => {
+      if (recoveryTimerRef.current) clearTimeout(recoveryTimerRef.current);
+    };
+  }, [messages, sendRecoveryMessage]);
+
   useEffect(() => {
     if (isOpen && !chat) {
         try {
@@ -173,7 +201,15 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
             });
             setChat(chatInstance);
             if (messages.length === 0) {
-                const welcomeMsg = '¡Hola! Soy NissiBot, tu asistente virtual. ¿Cómo puedo ayudarte hoy?';
+                const welcomeMsg = `Hola 👋
+Soy NISSIBOT, asistente virtual de Nissi Car-Home.
+
+Te puedo ayudar con información sobre nuestros servicios de estética automotriz y cuidado de vehículos.
+
+Cuéntame:
+
+1️⃣ ¿Qué servicio necesitas?
+2️⃣ ¿Es para carro o moto?`;
                 setMessages([{ sender: 'bot', text: welcomeMsg }]);
                 speak(welcomeMsg);
             }
@@ -192,6 +228,9 @@ const Chatbot: React.FC<ChatbotProps> = ({ allProducts, onProductSelect, isOpen,
 
   const getBotResponse = useCallback(async (messageText: string) => {
     setIsLoading(true);
+    // Mock "Learning" system: register the question
+    console.log(`[NISSIBOT LEARNING] Registering question: "${messageText}"`);
+    
     try {
         const response = await chat.sendMessage({ message: messageText });
         const botResponse = response.text;

@@ -34,7 +34,7 @@ const StarRating: React.FC<{ rating: number; onRatingChange?: (rating: number) =
   );
 };
 
-const ReviewSection: React.FC<ReviewSectionProps> = ({ targetId, reviews, onAddReview, onDeleteReview, isAdmin }) => {
+const ReviewSection: React.FC<ReviewSectionProps> = ({ targetId, reviews = [], onAddReview, onDeleteReview, isAdmin }) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [newReview, setNewReview] = useState({ userName: '', rating: 5, comment: '' });
 

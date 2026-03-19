@@ -105,7 +105,7 @@ const LandingPageAdditionalServices: React.FC<{
                     <div className="aspect-video w-full rounded-lg shadow-lg overflow-hidden border-4 border-[#F77F00]">
                         <iframe
                             className="w-full h-full"
-                            src="https://www.youtube.com/embed/vk3W73Pnan0?si=A6kWy7eGKIG4yxHa"
+                            src="https://www.youtube.com/embed/oAgP4klzRAM"
                             title="Proceso de Detailing"
                             frameBorder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

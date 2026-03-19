@@ -286,12 +286,12 @@ const App: React.FC = () => {
           } />
           <Route path="/spa-automotriz" element={
             <Suspense fallback={<PageLoader />}>
-              <LandingPageServices />
+              <LandingPageServices reviews={reviews} onAddReview={handleAddReview} onDeleteReview={handleDeleteReview} isAdmin={isAdmin} />
             </Suspense>
           } />
           <Route path="/servicios-adicionales-y-soporte" element={
             <Suspense fallback={<PageLoader />}>
-              <LandingPageAdditionalServices />
+              <LandingPageAdditionalServices reviews={reviews} onAddReview={handleAddReview} onDeleteReview={handleDeleteReview} isAdmin={isAdmin} />
             </Suspense>
           } />
           <Route path="/Cera-Hyper-Diamond" element={
@@ -308,7 +308,7 @@ const App: React.FC = () => {
           } />
           <Route path="/:slug" element={
             <Suspense fallback={<PageLoader />}>
-              <ProductLandingPage onBuyNow={handleBuyNow} />
+              <ProductLandingPage onBuyNow={handleBuyNow} reviews={reviews} onAddReview={handleAddReview} onDeleteReview={handleDeleteReview} isAdmin={isAdmin} />
             </Suspense>
           } />
         </Route>
