@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { siteContent } from '../data/siteContent';
 import { Review } from '../types';
+import BuyNowButton from '../components/shared/BuyNowButton';
 import ReviewSection from '../components/shared/ReviewSection';
 
 // --- Accordion Component (scoped for this page) ---
@@ -84,16 +85,11 @@ const LandingPageAdditionalServices: React.FC<{
                     <p className="text-xl font-semibold text-blue-800">🌟 Especialidad: Servicio GOLD Full Vehículo</p>
                 </div>
 
-                <div className="max-w-md mx-auto flex items-center justify-center gap-4">
-                    <a
-                        href="https://wa.me/573103754727"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-grow bg-[#F77F00] text-white font-bold text-xl md:text-2xl py-4 px-6 rounded-lg shadow-lg hover:brightness-110 transition-all transform hover:scale-105 animate-pulse-strong"
-                    >
-                        AGENDAR CITA AHORA
-                    </a>
-                </div>
+                <BuyNowButton 
+                    onClick={() => window.open('https://wa.me/573103754727', '_blank')} 
+                    text="AGENDAR CITA AHORA"
+                    showShare={false}
+                />
                 <p className="mt-4 text-sm text-gray-500">Servicio realizado en nuestra fábrica en Pereira. Garantía de satisfacción total.</p>
             </section>
 

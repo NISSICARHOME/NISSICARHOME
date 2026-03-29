@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem, Review } from '../types';
+import BuyNowButton from '../components/shared/BuyNowButton';
 import ReviewSection from '../components/shared/ReviewSection';
 
 // --- HELPER COMPONENTS ---
@@ -49,28 +50,10 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
       <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 text-justify hyphens-auto break-words">Te damos las herramientas esenciales para una limpieza profunda y una protección brillante. ¡Fácil de usar, con resultados que enamoran!</p>
        <p className="text-2xl md:text-3xl font-bold text-gray-800 mb-8">Precio Especial: $95.000 COP</p>
 
-      <div className="max-w-md mx-auto flex items-center justify-center gap-4">
-        <button
-          onClick={() => onBuyNow(basicKit)}
-          className="flex-grow bg-[#FFC107] text-gray-800 font-bold text-xl md:text-2xl py-4 px-6 rounded-lg shadow-lg hover:brightness-110 transition-all transform hover:scale-105 animate-pulse"
-        >
-          ¡COMPRAR KIT BÁSICO!
-        </button>
-        <div className="relative">
-             <button
-              onClick={handleShare}
-              title="Compartir enlace"
-              className="p-4 bg-gray-200/50 rounded-full hover:bg-gray-200/80 transition-colors"
-            >
-              <ShareIcon />
-            </button>
-            {copied && (
-              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap animate-fade-out">
-                ¡Enlace copiado!
-              </div>
-            )}
-        </div>
-      </div>
+      <BuyNowButton 
+        onClick={() => onBuyNow(basicKit)} 
+        text="¡COMPRAR KIT BÁSICO!"
+      />
       <p className="mt-4 text-sm text-gray-500">Paga al recibir en la puerta de tu casa. ¡Envío rápido y seguro!</p>
     </section>
   );

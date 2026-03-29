@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem, Review } from '../types';
+import BuyNowButton from '../components/shared/BuyNowButton';
 import ReviewSection from '../components/shared/ReviewSection';
 
 // --- HELPER COMPONENTS ---
@@ -65,28 +66,11 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
             La evolución del encerado. Recubre, sella y protege la pintura de tu vehículo con tecnología hidrofóbica de alto brillo.
           </p>
           
-          <div className="flex flex-col sm:flex-row items-center gap-4 justify-center md:justify-start">
-            <button
-              onClick={() => onBuyNow(product)}
-              className="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold text-xl py-4 px-8 rounded-lg shadow-[0_0_20px_rgba(245,158,11,0.5)] hover:shadow-[0_0_30px_rgba(245,158,11,0.7)] hover:scale-105 transition-all duration-300 animate-pulse-slow"
-            >
-              ¡BLINDA TU AUTO AHORA!
-            </button>
-            <div className="relative group">
-                <button
-                  onClick={handleShare}
-                  className="p-4 bg-white/10 border border-white/20 rounded-lg hover:bg-white/20 transition-colors text-white"
-                  aria-label="Compartir"
-                >
-                  <ShareIcon />
-                </button>
-                 {copied && (
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-green-500 text-white text-xs py-1 px-2 rounded whitespace-nowrap">
-                    Copiado!
-                  </div>
-                )}
-            </div>
-          </div>
+          <BuyNowButton 
+            onClick={() => onBuyNow(product)} 
+            text="¡BLINDA TU AUTO AHORA!"
+            className="md:mx-0"
+          />
           <div className="mt-6 flex items-center justify-center md:justify-start gap-4 text-sm text-gray-400">
               <span className="flex items-center gap-1"><svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg> Envío Gratis</span>
               <span className="flex items-center gap-1"><svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd"/></svg> Pago Contra Entrega</span>

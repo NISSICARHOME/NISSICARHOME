@@ -24,6 +24,7 @@ import Filters from './components/Filters';
 import SocialProofToast from './components/shared/SocialProofToast';
 import SEOManager from './components/shared/SEOManager';
 import WhatsAppButton from './components/shared/WhatsAppButton';
+import HighConversionButton from './components/shared/HighConversionButton';
 import ReviewSection from './components/shared/ReviewSection';
 import { TrackingService } from './services/TrackingService';
 
@@ -262,6 +263,7 @@ const App: React.FC = () => {
       <ScrollToTop />
       <SEOManager />
       <WhatsAppButton />
+      <HighConversionButton />
       {optimization.socialProof && <SocialProofToast />}
       <Routes>
         <Route path="/" element={<MainLayout cartItemCount={cartItemCount} onCartClick={handleCartClick} onVoiceSearchStart={handleVoiceSearchStart} />}>

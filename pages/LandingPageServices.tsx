@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { HashLink } from 'react-router-hash-link';
 import Accordion from '../components/shared/Accordion';
 import { CartItem, Review } from '../types';
+import BuyNowButton from '../components/shared/BuyNowButton';
 import ReviewSection from '../components/shared/ReviewSection';
 
 // --- HELPER COMPONENTS ---
@@ -53,30 +54,10 @@ const LandingHero: React.FC = () => {
             <p className="text-xl font-semibold text-blue-800">🌟 Especialidad: Servicio GOLD Full Vehículo</p>
        </div>
 
-      <div className="max-w-md mx-auto flex items-center justify-center gap-4">
-        <a
-          href="https://wa.me/573103754727"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-grow bg-[#F77F00] text-white font-bold text-xl md:text-2xl py-4 px-6 rounded-lg shadow-lg hover:brightness-110 transition-all transform hover:scale-105 animate-pulse"
-        >
-          AGENDAR CITA AHORA
-        </a>
-        <div className="relative">
-             <button
-              onClick={handleShare}
-              title="Compartir Servicio"
-              className="p-4 bg-gray-200/50 rounded-full hover:bg-gray-200/80 transition-colors"
-            >
-              <ShareIcon />
-            </button>
-            {copied && (
-              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap animate-fade-out">
-                ¡Link copiado!
-              </div>
-            )}
-        </div>
-      </div>
+      <BuyNowButton 
+        onClick={() => window.open('https://wa.me/573103754727', '_blank')} 
+        text="AGENDAR CITA AHORA"
+      />
       <div className="mt-4">
         <HashLink smooth to="/#contacto" className="text-blue-600 hover:text-blue-800 underline transition-colors text-sm font-medium">
           O contáctanos para agendar una cita

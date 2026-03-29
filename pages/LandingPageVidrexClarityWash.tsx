@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback, useEffect } from 'react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem, Review } from '../types';
 import { TrackingService } from '../services/TrackingService';
+import BuyNowButton from '../components/shared/BuyNowButton';
 import ReviewSection from '../components/shared/ReviewSection';
 
 // --- HELPER COMPONENTS (scoped to this file) ---
@@ -176,28 +177,10 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
         </div>
       </div>
       
-      <div className="max-w-md mx-auto flex items-center justify-center gap-4">
-        <button
-          onClick={() => onBuyNow(defaultKit)}
-          className="flex-grow bg-[#D90429] text-white font-bold text-xl md:text-2xl py-4 px-6 rounded-lg shadow-lg hover:brightness-110 transition-all transform hover:scale-105 animate-pulse"
-        >
-          ¡PIDE AHORA Y PAGA EN CASA!
-        </button>
-        <div className="relative">
-             <button
-              onClick={handleShare}
-              title="Compartir enlace"
-              className="p-4 bg-gray-200/50 rounded-full hover:bg-gray-200/80 transition-colors"
-            >
-              <ShareIcon />
-            </button>
-            {copied && (
-              <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-xs rounded py-1 px-2 whitespace-nowrap animate-fade-out">
-                ¡Enlace copiado!
-              </div>
-            )}
-        </div>
-      </div>
+      <BuyNowButton 
+        onClick={() => onBuyNow(defaultKit)} 
+        className="mb-12"
+      />
       <p className="mt-4 text-sm text-gray-500">Haz clic para pedir tu kit. ¡Es fácil y seguro!</p>
 
        <div className="flex justify-center items-center gap-8 mt-8 text-gray-600 font-semibold">

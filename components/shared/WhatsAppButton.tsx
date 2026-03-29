@@ -4,11 +4,20 @@ import { siteContent } from '../../data/siteContent';
 import { TrackingService } from '../../services/TrackingService';
 import { motion } from 'motion/react';
 
+import { useLocation } from 'react-router-dom';
+
 const WhatsAppButton: React.FC = () => {
   const { footer, optimization } = siteContent;
+  const { pathname } = useLocation();
   const whatsappNumber = footer.phone.replace(/\D/g, '');
 
-  if (!optimization.whatsappFloating) return null;
+  const isLandingPage = pathname.includes('kit-') || 
+                        pathname.includes('spa-automotriz') || 
+                        pathname.includes('servicios-adicionales') || 
+                        pathname.includes('Cera-Hyper-Diamond') ||
+                        (pathname !== '/' && pathname !== '/admin' && pathname !== '/configuracion' && pathname !== '/privacidad');
+
+  if (!optimization.whatsappFloating || isLandingPage) return null;
 
   const handleClick = () => {
     TrackingService.trackLead('WhatsApp Floating');

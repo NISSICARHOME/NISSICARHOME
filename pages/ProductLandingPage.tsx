@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getAllProducts } from '../components/Products';
 import { CartItem, Product, Review } from '../types';
 import Accordion from '../components/shared/Accordion';
+import BuyNowButton from '../components/shared/BuyNowButton';
 import ReviewSection from '../components/shared/ReviewSection';
 
 // Mapping of slugs to product IDs
@@ -138,12 +139,12 @@ const ProductLandingPage: React.FC<ProductLandingPageProps> = ({ onBuyNow, revie
                         </p>
                         
                         <div className="flex flex-col sm:flex-row items-center gap-6 justify-center md:justify-start">
-                            <button
-                                onClick={handleBuyNow}
-                                className="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-white font-black text-lg py-4 px-10 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 active:scale-95 uppercase tracking-tight"
-                            >
-                                ¡Adquirir Ahora!
-                            </button>
+                            <BuyNowButton 
+                                onClick={handleBuyNow} 
+                                text="¡ADQUIRIR AHORA!"
+                                className="md:mx-0"
+                                showShare={false}
+                            />
                             <div className="flex flex-col">
                                 <span className="text-gray-400 text-xs line-through font-bold uppercase tracking-widest">Antes ${(product.price * 1.3).toLocaleString('es-CO')}</span>
                                 <span className="text-3xl font-black text-gray-900">${product.price.toLocaleString('es-CO')}</span>
