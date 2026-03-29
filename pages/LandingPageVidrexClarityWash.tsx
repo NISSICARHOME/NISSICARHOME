@@ -131,12 +131,13 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
 
   return (
     <section id="oferta" className="bg-white py-12 px-4 text-center">
-      <div className="w-full max-w-3xl mx-auto mb-8">
+      <div className="w-full max-w-3xl mx-auto mb-8 aspect-[1.3/1] bg-gray-100 rounded-2xl overflow-hidden relative">
           <img 
               src="https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0" 
               alt="Componentes del Kit Estrella: Vidrex y Clarity Wash" 
-              className="w-full h-auto" 
-              loading="lazy"
+              className="absolute inset-0 w-full h-full object-contain" 
+              loading="eager"
+              decoding="async"
               referrerPolicy="no-referrer"
           />
       </div>
@@ -225,10 +226,10 @@ const LandingBenefits: React.FC = () => {
                                 ></iframe>
                             </div>
                         </div>
-                        <img src={benefitsData[1].image} alt={benefitsData[1].title} className="col-span-3 rounded-2xl shadow-lg h-full w-full object-cover bg-white border-4 border-white ring-1 ring-gray-200" loading="lazy" referrerPolicy="no-referrer" />
-                        <img src={benefitsData[2].image} alt={benefitsData[2].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" loading="lazy" referrerPolicy="no-referrer" />
-                        <img src={benefitsData[3].image} alt={benefitsData[3].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" loading="lazy" referrerPolicy="no-referrer" />
-                        <img src={benefitsData[4].image} alt={benefitsData[4].title} className="col-span-2 rounded-xl shadow-md h-32 w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" loading="lazy" referrerPolicy="no-referrer" />
+                        <img src={benefitsData[1].image} alt={benefitsData[1].title} className="col-span-3 rounded-2xl shadow-lg aspect-square w-full object-cover bg-white border-4 border-white ring-1 ring-gray-200" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                        <img src={benefitsData[2].image} alt={benefitsData[2].title} className="col-span-2 rounded-xl shadow-md aspect-square w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                        <img src={benefitsData[3].image} alt={benefitsData[3].title} className="col-span-2 rounded-xl shadow-md aspect-square w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                        <img src={benefitsData[4].image} alt={benefitsData[4].title} className="col-span-2 rounded-xl shadow-md aspect-square w-full object-cover bg-white border-2 border-white ring-1 ring-gray-200" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                     </div>
                 </div>
             </div>
@@ -333,15 +334,16 @@ const LandingHowToUse: React.FC = () => {
                         {num: 4, title: 'ENJUAGA AL FINAL', desc: 'Una vez hayas desmanchado toda el área (todo el parabrisas, etc), enjuaga con abundante agua.', img: 'https://lh3.googleusercontent.com/pw/AP1GczPDEggKp3jj4TxNCl6PX6PK8TY5DiqvgNt4uRfqDUSqcGvLvXK3Zcm-SvOtAbNcMe8wwkzNsW1wuPAdvarNhJ7HqjQUxxt_SnklqvBQ2JVE3S6rFzjAM1IuKBxdIOLxDHr2DguPlaP9r90BISo0KYjJ=w991-h991-s-no-gm?authuser=0'},
                     ].map(step => (
                          <div key={step.num} className="text-center">
-                             <div className="relative mb-4">
+                             <div className="relative mb-4 aspect-square bg-gray-100 rounded-lg overflow-hidden">
                                 <img 
                                     src={step.img} 
                                     alt={`Paso ${step.num}`} 
-                                    className="rounded-lg shadow-md w-full h-48 object-cover"
+                                    className="absolute inset-0 w-full h-full object-cover"
                                     loading="lazy"
+                                    decoding="async"
                                     referrerPolicy="no-referrer"
                                 />
-                                <div className="absolute -top-4 -left-4 bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold border-4 border-white">{step.num}</div>
+                                <div className="absolute -top-4 -left-4 bg-green-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-2xl font-bold border-4 border-white z-10">{step.num}</div>
                              </div>
                              <h3 className="text-xl font-bold text-gray-800 text-center">{step.title}</h3>
                              <p className="text-gray-600 text-justify hyphens-auto break-words">{step.desc}</p>
@@ -555,16 +557,6 @@ const LandingPageVidrexClarityWash: React.FC<LandingPageProps> = ({ onBuyNow, re
                     isAdmin={isAdmin} 
                 />
             </div>
-             <style>{`
-                @keyframes fade-out {
-                    0% { opacity: 1; transform: translateY(0) translateX(-50%); }
-                    80% { opacity: 1; transform: translateY(0) translateX(-50%); }
-                    100% { opacity: 0; transform: translateY(-10px) translateX(-50%); }
-                }
-                .animate-fade-out {
-                    animation: fade-out 2s ease-in-out forwards;
-                }
-            `}</style>
         </div>
     );
 };

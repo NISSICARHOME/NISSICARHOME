@@ -153,12 +153,15 @@ const ProductLandingPage: React.FC<ProductLandingPageProps> = ({ onBuyNow, revie
                     </div>
 
                     <div className="w-full md:w-1/2 flex justify-center z-10">
-                        <div className="relative group p-4 sm:p-8">
+                        <div className="relative group p-4 sm:p-8 aspect-[1/1] w-full max-w-md">
                             <div className="absolute inset-0 bg-white/30 backdrop-blur-2xl rounded-[3rem] border border-white/50 shadow-neumorphic-outset transform rotate-3 group-hover:rotate-0 transition-transform duration-700"></div>
                             <img 
                                 src={product.image} 
                                 alt={product.name} 
-                                className="relative z-10 w-full max-w-md h-auto object-contain drop-shadow-2xl transform -rotate-3 group-hover:rotate-0 transition-transform duration-700"
+                                className="absolute inset-0 w-full h-full object-contain drop-shadow-2xl transform -rotate-3 group-hover:rotate-0 transition-transform duration-700 p-8"
+                                loading="eager"
+                                decoding="async"
+                                referrerPolicy="no-referrer"
                             />
                         </div>
                     </div>

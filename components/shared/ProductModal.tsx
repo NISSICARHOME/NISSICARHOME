@@ -21,9 +21,8 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onAddToCa
       onClick={onClose}
     >
       <div 
-        className="product-modal-content bg-white/80 backdrop-blur-lg border border-white/50 rounded-2xl shadow-lg shadow-black/5 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative transition-transform duration-300 transform scale-95 animate-scale-in"
+        className="product-modal-content bg-white/80 backdrop-blur-lg border border-white/50 rounded-2xl shadow-lg shadow-black/5 w-full max-w-2xl max-h-[90vh] overflow-y-auto relative transition-transform duration-300 transform animate-scale-in custom-scrollbar"
         onClick={(e) => e.stopPropagation()}
-        style={{ animation: 'scale-in 0.3s ease-out forwards' }}
       >
         <button 
           onClick={onClose} 
@@ -84,26 +83,6 @@ const ProductModal: React.FC<ProductModalProps> = ({ product, onClose, onAddToCa
             {product.details.barcode && <DetailSection title="Código de Barras">{product.details.barcode}</DetailSection>}
         </div>
       </div>
-       <style>{`
-        @keyframes scale-in {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        .product-modal-content::-webkit-scrollbar {
-            width: 6px;
-        }
-        .product-modal-content::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .product-modal-content::-webkit-scrollbar-thumb {
-            background-color: rgba(255, 255, 255, 0.5);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .product-modal-content::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-       `}</style>
     </div>
   );
 };

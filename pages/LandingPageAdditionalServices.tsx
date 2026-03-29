@@ -51,28 +51,15 @@ const LandingPageAdditionalServices: React.FC<{
 
     return (
         <div className="bg-white font-sans">
-             <style>{`
-                @keyframes pulse-strong {
-                    0%, 100% {
-                        transform: scale(1);
-                        box-shadow: 0 0 0 0 rgba(247, 127, 0, 0.7);
-                    }
-                    70% {
-                        transform: scale(1.05);
-                        box-shadow: 0 0 0 10px rgba(247, 127, 0, 0);
-                    }
-                }
-                .animate-pulse-strong {
-                    animation: pulse-strong 2s infinite;
-                }
-            `}</style>
-            
             <section id="oferta-servicios" className="bg-white py-12 px-4 text-center">
-                <div className="w-full max-w-3xl mx-auto mb-8">
+                <div className="w-full max-w-3xl mx-auto mb-8 aspect-[1.2/1] bg-gray-100 rounded-2xl overflow-hidden relative">
                     <img
                         src="https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=01"
                         alt="Nissi Car Home Spa Automotriz"
-                        className="w-full h-auto rounded-lg shadow-2xl"
+                        className="absolute inset-0 w-full h-full object-cover rounded-lg shadow-2xl"
+                        loading="eager"
+                        decoding="async"
+                        referrerPolicy="no-referrer"
                         onError={(e) => { const target = e.target as HTMLImageElement; target.onerror = null; target.src='https://placehold.co/1000x800/333/FFF?text=Nissi+Car+Home'; }}
                     />
                 </div>
@@ -120,7 +107,9 @@ const LandingPageAdditionalServices: React.FC<{
                     <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
                         
                         <div className="flex flex-col md:flex-row items-start gap-5 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl bg-white text-gray-800">
-                            <img src="https://placehold.co/400x300/60a5fa/FFF?text=Farolas" alt="Restauración de Farolas" className="w-full md:w-1/3 h-40 object-cover rounded-md flex-shrink-0" />
+                            <div className="w-full md:w-1/3 h-40 bg-gray-200 rounded-md flex-shrink-0 overflow-hidden relative">
+                                <img src="https://placehold.co/400x300/60a5fa/FFF?text=Farolas" alt="Restauración de Farolas" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                            </div>
                             <div className="w-full">
                                 <h3 className="text-2xl font-bold mb-2 text-blue-700">1. Restauración de Farolas & Personalización</h3>
                                 <p className="text-gray-600 text-justify hyphens-auto break-words">Recuperamos la transparencia eliminando opacidad y rayones. También personalizamos el estilo de tus luces al gusto (modificaciones visuales).</p>
@@ -128,7 +117,9 @@ const LandingPageAdditionalServices: React.FC<{
                         </div>
                        
                         <div className="flex flex-col md:flex-row items-start gap-5 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl bg-white text-gray-800">
-                            <img src="https://placehold.co/400x300/f87171/FFF?text=Exterior" alt="Detailing Exterior" className="w-full md:w-1/3 h-40 object-cover rounded-md flex-shrink-0" />
+                            <div className="w-full md:w-1/3 h-40 bg-gray-200 rounded-md flex-shrink-0 overflow-hidden relative">
+                                <img src="https://placehold.co/400x300/f87171/FFF?text=Exterior" alt="Detailing Exterior" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                            </div>
                             <div className="w-full">
                                 <h3 className="text-2xl font-bold mb-2 text-blue-700">2. Detailing Exterior (Cerámico)</h3>
                                 <p className="text-gray-600 text-justify hyphens-auto break-words">Proceso de 4 fases: Lavado pH neutro, Descontaminación, Corrección de pintura y Protección Cerámica (escudo hidrofóbico).</p>
@@ -136,7 +127,9 @@ const LandingPageAdditionalServices: React.FC<{
                         </div>
                         
                         <div className="flex flex-col md:flex-row items-start gap-5 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl bg-white text-gray-800">
-                            <img src="https://placehold.co/400x300/34d399/FFF?text=Interior" alt="Detailing Interno" className="w-full md:w-1/3 h-40 object-cover rounded-md flex-shrink-0" />
+                            <div className="w-full md:w-1/3 h-40 bg-gray-200 rounded-md flex-shrink-0 overflow-hidden relative">
+                                <img src="https://placehold.co/400x300/34d399/FFF?text=Interior" alt="Detailing Interno" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                            </div>
                             <div className="w-full">
                                 <h3 className="text-2xl font-bold mb-2 text-blue-700">3. Detailing Interno Profundo</h3>
                                 <p className="text-gray-600 text-justify hyphens-auto break-words">Desmontamos sillas y alfombras. Limpiamos ductos de aire, eliminamos olores, bacterias y manchas orgánicas. Tu interior queda desinfectado.</p>
@@ -144,7 +137,9 @@ const LandingPageAdditionalServices: React.FC<{
                         </div>
                         
                         <div className="flex flex-col md:flex-row items-start gap-5 p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl bg-white text-gray-800">
-                            <img src="https://placehold.co/400x300/c084fc/FFF?text=Vidrios" alt="Tratamiento de Vidrios" className="w-full md:w-1/3 h-40 object-cover rounded-md flex-shrink-0" />
+                            <div className="w-full md:w-1/3 h-40 bg-gray-200 rounded-md flex-shrink-0 overflow-hidden relative">
+                                <img src="https://placehold.co/400x300/c084fc/FFF?text=Vidrios" alt="Tratamiento de Vidrios" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                            </div>
                             <div className="w-full">
                                 <h3 className="text-2xl font-bold mb-2 text-blue-700">4. Tratamiento de Vidrios (Lluvia Ácida)</h3>
                                 <p className="text-gray-600 text-justify hyphens-auto break-words">Eliminación de sarro, minerales incrustados y gotas secas. Restauramos la visibilidad cristalina.</p>
@@ -152,7 +147,9 @@ const LandingPageAdditionalServices: React.FC<{
                         </div>
                         
                         <div className="lg:col-span-2 flex flex-col md:flex-row items-start gap-5 p-8 rounded-lg shadow-xl transition-all duration-300 bg-gray-900 text-white border-2 border-[#F77F00]">
-                            <img src="https://placehold.co/400x300/F77F00/FFF?text=GOLD" alt="Servicio GOLD" className="w-full md:w-1/3 h-40 object-cover rounded-md flex-shrink-0" />
+                            <div className="w-full md:w-1/3 h-40 bg-gray-200 rounded-md flex-shrink-0 overflow-hidden relative">
+                                <img src="https://placehold.co/400x300/F77F00/FFF?text=GOLD" alt="Servicio GOLD" className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                            </div>
                             <div className="w-full">
                                 <h3 className="text-3xl font-bold mb-2 text-[#F77F00]">🌟 5. Servicio GOLD Full Vehículo</h3>
                                 <p className="text-gray-300 text-lg text-justify hyphens-auto break-words">La experiencia definitiva. Incluye TODOS los servicios anteriores en un solo paquete premium para una transformación total de tu automóvil.</p>

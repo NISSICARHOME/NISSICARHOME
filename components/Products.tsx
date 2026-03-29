@@ -204,16 +204,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onSelect, onAddToCar
             `}
         >
             <div className={`flex-shrink-0 ${viewMode === 'list' ? 'w-24' : 'w-full p-6'}`}>
-                <div>
+                <div className={`relative overflow-hidden bg-gray-100/50 rounded-xl ${viewMode === 'list' ? 'aspect-square' : 'aspect-[4/3]'}`}>
                     <img 
                         src={product.image} 
                         alt={product.name} 
                         loading="lazy"
                         decoding="async"
-                        className={`
-                        w-full object-contain drop-shadow-lg
-                        ${viewMode === 'list' ? 'h-24' : 'h-48'}`
-                    } />
+                        className="absolute inset-0 w-full h-full object-contain drop-shadow-lg"
+                    />
                 </div>
             </div>
             

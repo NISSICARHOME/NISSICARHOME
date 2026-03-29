@@ -39,11 +39,14 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
 
   return (
     <section id="oferta-basico" className="bg-white py-12 px-4 text-center">
-      <div className="w-full max-w-2xl mx-auto mb-8">
+      <div className="w-full max-w-2xl mx-auto mb-8 aspect-[1.37/1] bg-gray-100 rounded-2xl overflow-hidden relative">
           <img 
               src="https://lh3.googleusercontent.com/pw/AP1GczOzc5XobmAERtALiliyk1JbpWK9TtlNYR-Gq8ho_9NrxGyhRPsDqNM-pw--dmicYoJ0_81bX_O_lzOKpZgscWtppJojH71Pg6PkQH4o-KcNy9eQKQ5Tb0jyUd6yAN_E_fQAB2JsWaoh-N5LdH_xss1_=w801-h584-s-no-gm?authuser=0"
               alt="Kit Básico de Cuidado Nissi Car Home" 
-              className="w-full h-auto" 
+              className="absolute inset-0 w-full h-full object-contain" 
+              loading="eager"
+              decoding="async"
+              referrerPolicy="no-referrer"
           />
       </div>
       <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4 text-center">Kit Básico de Cuidado: El Comienzo Perfecto</h1>
@@ -245,16 +248,6 @@ const LandingPageBasicKit: React.FC<LandingPageProps> = ({ onBuyNow, reviews, on
                     isAdmin={isAdmin} 
                 />
             </div>
-             <style>{`
-                @keyframes fade-out {
-                    0% { opacity: 1; transform: translateY(0) translateX(-50%); }
-                    80% { opacity: 1; transform: translateY(0) translateX(-50%); }
-                    100% { opacity: 0; transform: translateY(-10px) translateX(-50%); }
-                }
-                .animate-fade-out {
-                    animation: fade-out 2s ease-in-out forwards;
-                }
-            `}</style>
         </div>
     );
 };

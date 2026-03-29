@@ -12,6 +12,9 @@ const Hero: React.FC = () => {
   };
 
   useEffect(() => {
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (isTouchDevice) return;
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -22,10 +25,14 @@ const Hero: React.FC = () => {
         <img
           src={hero.backgroundImage}
           alt="Vehículo detallado"
-          className="absolute top-0 left-0 w-full min-h-[120vh] object-cover opacity-60"
-          style={{ transform: `translateY(${offsetY}px)` }}
+          className="absolute top-0 left-0 w-full h-full object-cover opacity-60"
+          style={{ 
+            transform: offsetY ? `translateY(${offsetY}px)` : 'none',
+            willChange: 'transform'
+          }}
           referrerPolicy="no-referrer"
           fetchPriority="high"
+          decoding="async"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
       </div>

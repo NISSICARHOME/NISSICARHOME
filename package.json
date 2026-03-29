@@ -11,12 +11,16 @@
   },
   "dependencies": {
     "@google/genai": "^1.29.1",
+    "@tailwindcss/vite": "^4.2.2",
+    "autoprefixer": "^10.4.27",
     "framer-motion": "^12.35.1",
     "motion": "^12.35.1",
+    "postcss": "^8.5.8",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-router-dom": "^6.25.1",
-    "react-router-hash-link": "^2.4.3"
+    "react-router-hash-link": "^2.4.3",
+    "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

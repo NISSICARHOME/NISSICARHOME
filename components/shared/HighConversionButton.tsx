@@ -103,15 +103,6 @@ const HighConversionButton: React.FC = () => {
                     </motion.div>
                 </motion.a>
             </motion.div>
-            <style>{`
-                @keyframes bounce-x {
-                    0%, 100% { transform: translateX(0); }
-                    50% { transform: translateX(5px); }
-                }
-                .animate-bounce-x {
-                    animation: bounce-x 1s infinite;
-                }
-            `}</style>
         </AnimatePresence>
     );
 };

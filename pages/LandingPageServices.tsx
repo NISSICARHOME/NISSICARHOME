@@ -37,12 +37,15 @@ const LandingHero: React.FC = () => {
 
   return (
     <section id="oferta-servicios" className="bg-white py-12 px-4 text-center">
-      <div className="w-full max-w-2xl mx-auto mb-8">
+      <div className="w-full max-w-2xl mx-auto mb-8 aspect-[1.2/1] bg-gray-100 rounded-2xl overflow-hidden relative">
           {/* NOTA: Usar foto de un auto de lujo brillando en la fábrica */}
           <img 
               src="https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=01" 
               alt="Nissi Car Home Spa Automotriz" 
-              className="w-full h-auto rounded-lg shadow-2xl" 
+              className="absolute inset-0 w-full h-full object-cover rounded-lg shadow-2xl" 
+              loading="eager"
+              decoding="async"
+              referrerPolicy="no-referrer"
           />
       </div>
       <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Renace tu Vehículo: Spa Automotriz Profesional</h1>
@@ -131,8 +134,8 @@ const LandingServicesList: React.FC = () => {
                         <div key={index} className={`flex flex-col p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl ${index === 4 ? 'bg-gray-900 text-white lg:col-span-2 border-2 border-[#F77F00]' : 'bg-white text-gray-800'}`}>
                             <div className="flex flex-col md:flex-row items-start gap-4">
                                 {/* Placeholder para imagen del servicio */}
-                                <div className="w-full md:w-1/3 h-40 bg-gray-200 rounded-md flex items-center justify-center overflow-hidden">
-                                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
+                                <div className="w-full md:w-1/3 h-40 bg-gray-200 rounded-md flex items-center justify-center overflow-hidden relative">
+                                     <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                                 </div>
                                 <div className="w-full md:w-2/3">
                                     <h3 className={`text-2xl font-bold mb-2 ${index === 4 ? 'text-[#F77F00]' : 'text-blue-700'}`}>{item.name}</h3>
@@ -257,16 +260,6 @@ const LandingPageServices: React.FC<{
                     isAdmin={isAdmin} 
                 />
             </div>
-             <style>{`
-                @keyframes fade-out {
-                    0% { opacity: 1; transform: translateY(0) translateX(-50%); }
-                    80% { opacity: 1; transform: translateY(0) translateX(-50%); }
-                    100% { opacity: 0; transform: translateY(-10px) translateX(-50%); }
-                }
-                .animate-fade-out {
-                    animation: fade-out 2s ease-in-out forwards;
-                }
-            `}</style>
         </div>
     );
 };

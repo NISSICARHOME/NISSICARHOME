@@ -39,12 +39,13 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
 
   return (
     <section id="oferta-embellecimiento" className="bg-white py-12 px-4 text-center">
-      <div className="w-full max-w-2xl mx-auto mb-8">
+      <div className="w-full max-w-2xl mx-auto mb-8 aspect-[1/1] bg-gray-100 rounded-2xl overflow-hidden relative">
           <img 
               src="https://lh3.googleusercontent.com/pw/AP1GczPOSFnFflE6hcsTtHPybBLPUfECVYU5rzmbCHYRlWK8KomBZvI4N_SVy_knMkpVVRf7lUQ7jdtf3I1thYkuVCyIlqyy1n1Ws34eahtILybAJVbqxTBWECpEFzjcbt8co6QbWA-7F9lKGZmXw26CK57k=w777-h798-s-no-gm?authuser=0"
               alt="Kit de Embellecimiento Profesional 6 en 1" 
-              className="w-full h-auto" 
-              loading="lazy"
+              className="absolute inset-0 w-full h-full object-contain" 
+              loading="eager"
+              decoding="async"
               referrerPolicy="no-referrer"
           />
       </div>
@@ -131,7 +132,9 @@ const LandingWhatYouGet: React.FC = () => {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {kitItems.map(item => (
                         <div key={item.name} className="flex flex-col items-center text-center bg-white p-6 rounded-lg shadow-md h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-                            <img src={item.image} alt={item.name} className="h-40 object-contain mb-4" loading="lazy" referrerPolicy="no-referrer" />
+                            <div className="h-40 w-full mb-4 relative overflow-hidden">
+                                <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-contain" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
+                            </div>
                             <h3 className="text-xl font-bold text-amber-600 flex-grow text-center">{item.name}</h3>
                             <p className="text-gray-700 text-justify hyphens-auto break-words">{item.content}</p>
                         </div>
@@ -306,37 +309,6 @@ const LandingPageBeautyKit: React.FC<LandingPageProps> = ({ onBuyNow, reviews, o
                     isAdmin={isAdmin} 
                 />
             </div>
-             <style>{`
-                @keyframes fade-out {
-                    0% { opacity: 1; transform: translateY(0) translateX(-50%); }
-                    80% { opacity: 1; transform: translateY(0) translateX(-50%); }
-                    100% { opacity: 0; transform: translateY(-10px) translateX(-50%); }
-                }
-                .animate-fade-out {
-                    animation: fade-out 2s ease-in-out forwards;
-                }
-                .scrollbar-hide::-webkit-scrollbar {
-                    display: none;
-                }
-                .scrollbar-hide {
-                    -ms-overflow-style: none;
-                    scrollbar-width: none;
-                }
-                @keyframes water-flow {
-                  0% { background-position: 0 0; }
-                  100% { background-position: -200px 400px; }
-                }
-                .water-overlay::after {
-                  content: '';
-                  position: absolute;
-                  inset: 0;
-                  background-image: url('https://www.transparenttextures.com/patterns/washi.png');
-                  background-repeat: repeat;
-                  opacity: 0.1;
-                  animation: water-flow 20s linear infinite;
-                  pointer-events: none;
-                }
-            `}</style>
         </div>
     );
 };
