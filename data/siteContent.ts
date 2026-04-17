@@ -42,7 +42,7 @@ export const siteContent: SiteContent = {
     subtitle: "Soluciones premium para el cuidado y estética de tu vehículo. Tecnología de vanguardia para resultados de exhibición.",
     ctaText: "VER PRODUCTOS",
     videoUrl: "https://www.youtube.com/embed/vk3W73Pnan0?autoplay=1&mute=1&loop=1&playlist=vk3W73Pnan0",
-    backgroundImage: "https://lh3.googleusercontent.com/d/13-PIubLkqJJofUxN8VxUuQ8ZeLBM5Qnt"
+    backgroundImage: "https://lh3.googleusercontent.com/d/13-PIubLkqJJofUxN8VxUuQ8ZeLBM5Qnt=w1920"
   },
   services: {
     title: "EXPERTOS EN ESTÉTICA AUTOMOTRIZ",

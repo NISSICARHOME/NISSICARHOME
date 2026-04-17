@@ -5,6 +5,7 @@ import { motion } from 'motion/react';
 
 const Hero: React.FC = () => {
   const [offsetY, setOffsetY] = useState(0);
+  const [isTouch, setIsTouch] = useState(false);
   const { hero } = siteContent;
 
   const handleScroll = () => {
@@ -13,6 +14,7 @@ const Hero: React.FC = () => {
 
   useEffect(() => {
     const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    setIsTouch(isTouchDevice);
     if (isTouchDevice) return;
 
     window.addEventListener('scroll', handleScroll);
@@ -20,21 +22,17 @@ const Hero: React.FC = () => {
   }, []);
 
   return (
-    <section id="inicio" className="relative h-screen flex items-center justify-center text-center text-white overflow-hidden bg-black">
-      <div className="absolute inset-0 z-0">
-        <img
-          src={hero.backgroundImage}
-          alt="Vehículo detallado"
-          className="absolute top-0 left-0 w-full h-full object-cover opacity-60"
-          style={{ 
-            transform: offsetY ? `translateY(${offsetY}px)` : 'none',
-            willChange: 'transform'
-          }}
-          referrerPolicy="no-referrer"
-          fetchPriority="high"
-          decoding="async"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80"></div>
+    <section id="inicio" className="relative h-screen h-[100dvh] min-h-[500px] flex items-center justify-center text-center text-white overflow-hidden bg-gray-900">
+      {/* Background Image Container */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat opacity-80 md:opacity-70 transition-opacity duration-700"
+        style={{ 
+          backgroundImage: `url(${hero.backgroundImage})`,
+          transform: !isTouch && offsetY ? `translateY(${offsetY}px)` : 'none',
+          willChange: !isTouch && offsetY ? 'transform' : 'auto'
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/10 to-black/80"></div>
       </div>
       
       <div className="relative z-10 p-6 max-w-5xl mx-auto">
