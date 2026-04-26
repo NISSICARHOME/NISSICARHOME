@@ -226,104 +226,158 @@ const SocialProof = () => {
 
 // 4. OFERTA FINAL
 const OfferSection = ({ id, onBuy }: { id: string, onBuy: (item: CartItem) => void }) => {
+    const handleWhatsApp = (promoName: string, price: string) => {
+        const message = encodeURIComponent(`Hola Nissi Car Home, deseo adquirir la promoción de ${promoName} por valor de ${price}`);
+        window.open(`https://wa.me/573103754727?text=${message}`, '_blank');
+    };
+
     return (
-        <section id={id} className="py-24 bg-nissi-blue px-6 relative overflow-hidden">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--color-ink)_0%,_transparent_100%)] opacity-30" />
+        <section id={id} className="py-24 bg-nissi-blue px-6 relative overflow-hidden font-sans">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--color-nissi-blue)_0%,_transparent_100%)] opacity-30" />
             
-            <div className="max-w-5xl mx-auto relative z-10 text-center">
+            <div className="max-w-6xl mx-auto relative z-10 text-center">
                 <h2 className="text-4xl md:text-6xl font-black text-white mb-16 uppercase tracking-tighter italic">
                     ¡Promoción de Lanzamiento! <br />
                     <span className="text-nissi-orange">Nissi Car Home</span>
                 </h2>
 
-                <div className="grid md:grid-cols-2 gap-8 items-stretch">
-                    {/* Option A */}
+                <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-stretch">
+                    {/* Oferta A - 2x1 */}
                     <motion.div 
                         whileHover={{ y: -10 }}
-                        className="bg-white/5 backdrop-blur-xl border border-white/10 p-10 rounded-[3rem] flex flex-col items-center justify-between"
+                        className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[3rem] p-12 flex flex-col items-center shadow-2xl relative min-h-[750px] justify-between"
                     >
-                        <div className="mb-8">
-                            <span className="text-white/50 text-xs font-black uppercase tracking-widest mb-4 block">Plan Personal</span>
-                            <h3 className="text-3xl font-black text-white mb-6 uppercase tracking-tight">1 Kit Vidrex</h3>
-                            <div className="text-white/40 line-through text-xl">$75.000</div>
-                            <div className="text-white text-5xl font-black mt-2">$55.000 COP</div>
-                        </div>
-                        
-                        <div className="w-full space-y-4 mb-10 text-left">
-                            <div className="flex items-center gap-3 text-white/80">
-                                <CheckCircle className="w-5 h-5 text-nissi-orange" />
-                                <span className="text-sm font-medium italic">Ideal para tu vehículo</span>
-                            </div>
-                            <div className="flex items-center gap-3 text-white/80">
-                                <CheckCircle className="w-5 h-5 text-nissi-orange" />
-                                <span className="text-sm font-medium italic">Manual de uso premium</span>
-                            </div>
+                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 bg-nissi-orange text-white px-8 py-3 rounded-full text-sm font-black uppercase tracking-widest shadow-2xl scale-110">
+                            RECOMENDADO
                         </div>
 
+                        <div className="w-full flex flex-col items-center">
+                            {/* Jerarquía: Título Arriba - Simetría Perfecta */}
+                            <div className="mb-12 text-center w-full">
+                                <h3 className="text-4xl font-black text-white italic uppercase tracking-tighter leading-none mb-2">
+                                    2X1 OBSEQUIO
+                                </h3>
+                                <div className="h-1.5 w-24 bg-nissi-orange mx-auto rounded-full" />
+                            </div>
+
+                            {/* Jerarquía: Productos en el Centro (Formato Vertical 9:16 Ad-Style) */}
+                            <div className="w-full max-w-[320px] aspect-[9/16] bg-black/40 rounded-[2.5rem] mb-12 border border-white/20 flex items-center justify-center relative overflow-hidden group shadow-[0_30px_60px_rgba(0,0,0,0.5)]">
+                                <iframe 
+                                    src="https://drive.google.com/file/d/1K66h7TUKC5Rx5PFgBVukB_UB5Dqf9iqt/preview" 
+                                    width="1080" 
+                                    height="1920" 
+                                    className="w-full h-full border-0 absolute inset-0 sm:scale-105"
+                                    allow="autoplay"
+                                    loading="lazy"
+                                    title="Promoción 2x1 Vidrex"
+                                ></iframe>
+                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-black/30 opacity-60" />
+                            </div>
+
+                            {/* Jerarquía: Precio Abajo - Máxima Legibilidad */}
+                            <div className="mb-12 text-center w-full bg-white/5 py-6 rounded-3xl border border-white/10">
+                                <span className="text-white/60 text-xs font-black uppercase tracking-[0.2em] block mb-2">Precio Lanzamiento Hoy</span>
+                                <div className="text-white text-6xl font-black italic drop-shadow-[0_10px_15px_rgba(255,102,0,0.3)] tracking-tighter flex items-center justify-center gap-2">
+                                    $75.000 <span className="text-2xl not-italic opacity-50 font-bold">COP</span>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <button 
-                            onClick={() => onBuy({id: 'vidrex-1', name: '1 Kit Vidrex', price: 55000, quantity: 1})}
-                            className="w-full py-5 bg-white text-nissi-blue font-black rounded-2xl hover:bg-gray-100 transition-all uppercase tracking-tight text-lg shadow-xl"
+                            onClick={() => handleWhatsApp('2x1 OBSEQUIO', '$75.000')}
+                            className="w-full py-6 bg-nissi-orange text-white font-black rounded-2xl transition-all uppercase tracking-tight text-2xl shadow-[0_25px_50px_rgba(255,102,0,0.4)] hover:scale-[1.03] hover:brightness-110 active:scale-95 border-b-8 border-black/20"
                         >
-                            Comprar Ahora
+                            ¡SOLICITAR 2X1 AHORA!
                         </button>
                     </motion.div>
 
-                    {/* Option B - Recommended */}
+                    {/* Oferta B - 3x2 */}
                     <motion.div 
                         whileHover={{ y: -10 }}
-                        className="bg-white p-10 rounded-[3rem] shadow-[0_40px_80px_rgba(0,0,0,0.5)] flex flex-col items-center justify-between border-4 border-nissi-orange relative"
+                        className="bg-white rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.4)] p-8 md:p-12 flex flex-col items-center border-8 border-nissi-orange relative min-h-[780px] justify-between z-10 overflow-hidden"
                     >
-                        <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-nissi-orange text-white px-8 py-2 rounded-full text-xs font-black uppercase tracking-widest shadow-xl">
-                            ¡RECOMENDADO! (EL MÁS VENDIDO)
+                        <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+                            <Truck className="w-16 h-16 text-nissi-blue rotate-12" />
+                        </div>
+                        <div className="absolute bottom-1/2 left-0 p-4 opacity-10 pointer-events-none -translate-x-4">
+                            <Star className="w-20 h-20 text-nissi-orange -rotate-12" />
                         </div>
 
-                        <div className="mb-8">
-                            <span className="text-nissi-blue/50 text-xs font-black uppercase tracking-widest mb-4 block">Plan Total</span>
-                            <h3 className="text-3xl font-black text-nissi-blue mb-6 uppercase tracking-tight">2 Kits Vidrex</h3>
-                            <div className="text-gray-400 line-through text-xl">$150.000</div>
-                            <div className="text-nissi-orange text-6xl font-black mt-2 italic shadow-nissi-orange/20 drop-shadow-lg">$99.000 COP</div>
-                            <div className="mt-4 inline-block bg-nissi-orange/10 text-nissi-orange text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-tighter">
-                                ¡Ahorras 30% de Descuento!
-                            </div>
+                        <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20 bg-nissi-blue text-white px-8 py-3 rounded-full text-sm font-black uppercase tracking-widest shadow-2xl scale-110">
+                            MEJOR PRECIO POR UNIDAD
                         </div>
-                        
-                        <div className="w-full space-y-4 mb-10 text-left">
-                            <div className="flex items-center gap-3 text-nissi-blue">
-                                <CheckCircle className="w-5 h-5 text-nissi-orange" />
-                                <span className="text-sm font-bold italic">Un kit para el Auto y otro para el Hogar</span>
+
+                        <div className="w-full flex flex-col items-center flex-grow">
+                            {/* Jerarquía: Título Arriba - Simetría Perfecta */}
+                            <div className="mb-8 text-center w-full pt-4">
+                                <h3 className="text-4xl md:text-5xl font-black text-nissi-blue mb-2 uppercase tracking-tight italic leading-tight">
+                                    PAGA 2 LLEVA 3 KITS
+                                </h3>
+                                <div className="h-2 w-32 bg-nissi-orange mx-auto rounded-full" />
                             </div>
-                            <div className="flex items-center gap-3 text-nissi-blue">
-                                <CheckCircle className="w-5 h-5 text-nissi-orange" />
-                                <span className="text-sm font-bold italic">Envío Prioritario Express</span>
+
+                            {/* Jerarquía: Productos en el Centro (Formato Vertical 9:16 Ad-Style) */}
+                            <div className="w-full max-w-[340px] aspect-[9/16] bg-black/5 rounded-[2.5rem] mb-8 border-4 border-nissi-blue/5 flex items-center justify-center relative overflow-hidden group shadow-2xl">
+                                <iframe 
+                                    src="https://drive.google.com/file/d/14LiL01LkOEIDzd2V-FVgD_WztIJxbxQ3/preview" 
+                                    width="1080" 
+                                    height="1920" 
+                                    className="w-full h-full border-0 absolute inset-0 sm:scale-105"
+                                    allow="autoplay"
+                                    loading="lazy"
+                                    title="Publicidad Paga 2 Lleva 3"
+                                ></iframe>
+                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-nissi-blue/20 opacity-40 group-hover:opacity-60 transition-opacity" />
                             </div>
-                            <div className="flex items-center gap-3 text-nissi-blue">
-                                <CheckCircle className="w-5 h-5 text-nissi-orange" />
-                                <span className="text-sm font-bold italic">Asesoría 1-a-1 vía WhatsApp</span>
+
+                            {/* Jerarquía: Precio Abajo - Máxima Legibilidad */}
+                            <div className="mb-8 text-center w-full bg-nissi-blue/5 py-4 px-6 rounded-3xl border border-nissi-blue/10 flex flex-col items-center">
+                                <div className="flex items-center gap-6 mb-2">
+                                    <div className="flex items-center gap-1">
+                                        <CheckCircle className="w-4 h-4 text-nissi-blue" />
+                                        <span className="text-[10px] font-black text-nissi-blue/60 uppercase tracking-widest">Original</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <CheckCircle className="w-4 h-4 text-nissi-blue" />
+                                        <span className="text-[10px] font-black text-nissi-blue/60 uppercase tracking-widest">Garantía</span>
+                                    </div>
+                                </div>
+                                <div className="text-nissi-orange text-6xl font-black italic drop-shadow-[0_10px_15px_rgba(255,102,0,0.2)] tracking-tighter flex items-center justify-center gap-2">
+                                    $120.000 <span className="text-2xl not-italic opacity-50 font-bold">COP</span>
+                                </div>
+                                <span className="text-nissi-blue/40 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Ahorro Máximo Garantizado</span>
                             </div>
                         </div>
 
                         <button 
-                            onClick={() => onBuy({id: 'vidrex-2', name: '2 Kits Vidrex - Promo', price: 99000, quantity: 1})}
-                            className="w-full py-6 bg-nissi-orange text-white font-black rounded-2xl transition-all uppercase tracking-tight text-xl shadow-[0_15px_30px_rgba(255,102,0,0.3)] hover:scale-[1.02] active:scale-95"
+                            onClick={() => handleWhatsApp('PAGA 2 LLEVA 3 KITS', '$120.000')}
+                            className="w-full py-6 bg-nissi-orange text-white font-black rounded-2xl transition-all uppercase tracking-tight text-3xl shadow-[0_25px_50px_rgba(255,102,0,0.4)] hover:scale-[1.03] hover:brightness-110 active:scale-95 border-b-8 border-black/20"
                         >
-                            ¡QUIERO LA PROMOCIÓN!
+                            APROVECHA HOY
                         </button>
                     </motion.div>
                 </div>
 
-                <div className="mt-20 flex flex-wrap justify-center gap-10">
-                    <div className="flex items-center gap-4 text-white">
-                        <Truck className="w-8 h-8 text-nissi-orange" />
+                <div className="mt-24 flex flex-wrap justify-center gap-10">
+                    <div className="flex items-center gap-4 text-white hover:text-nissi-orange transition-colors">
+                        <Truck className="w-10 h-10" />
                         <div className="text-left leading-tight">
-                            <div className="text-sm font-black uppercase italic tracking-widest">Contra Entrega</div>
-                            <div className="text-xs text-white/60 font-medium">Toda Colombia</div>
+                            <div className="text-lg font-black uppercase italic tracking-widest">Envíos a todo Colombia</div>
+                            <div className="text-sm text-white/60 font-medium italic">🚛 Logística Veloz</div>
                         </div>
                     </div>
-                    <div className="flex items-center gap-4 text-white">
-                        <ShoppingCart className="w-8 h-8 text-nissi-orange" />
+                    <div className="flex items-center gap-4 text-white hover:text-nissi-orange transition-colors">
+                        <ShoppingCart className="w-10 h-10" />
                         <div className="text-left leading-tight">
-                            <div className="text-sm font-black uppercase italic tracking-widest">Pago Seguro</div>
-                            <div className="text-xs text-white/60 font-medium">Al Recibir en Casa</div>
+                            <div className="text-lg font-black uppercase italic tracking-widest">Pago Contra Entrega</div>
+                            <div className="text-sm text-white/60 font-medium italic">💰 Paga al Recibir</div>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-4 text-white hover:text-nissi-orange transition-colors">
+                        <Star className="w-10 h-10" />
+                        <div className="text-left leading-tight">
+                            <div className="text-lg font-black uppercase italic tracking-widest">Efecto Cristal en Minutos</div>
+                            <div className="text-sm text-white/60 font-medium italic">✨ Brillo Inmediato</div>
                         </div>
                     </div>
                 </div>

@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Truck, ShoppingCart, Star, CheckCircle } from 'lucide-react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem, Review } from '../types';
-import { TrackingService } from '../services/TrackingService';
-import BuyNowButton from '../components/shared/BuyNowButton';
 import ReviewSection from '../components/shared/ReviewSection';
+
+// --- STYLES & CONSTANTS ---
+const NISSI_BLUE = "#003366";
+const NISSI_ORANGE = "#FF6600";
 
 // --- HELPER COMPONENTS ---
 const CheckListItem: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -24,41 +28,167 @@ const ShareIcon: React.FC = () => (
 
 // --- PAGE SECTIONS ---
 
-const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNow }) => {
-  const beautyKit: CartItem = {id: 'kit-2', name: "Kit de Embellecimiento Profesional 6 en 1", price: 135000, quantity: 1};
-  const [copied, setCopied] = useState(false);
-
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      })
-      .catch(err => console.error('Failed to copy link: ', err));
-  };
-
+const LandingHero: React.FC = () => {
   return (
-    <section id="oferta-embellecimiento" className="bg-white py-12 px-4 text-center">
-      <div className="w-full max-w-2xl mx-auto mb-8 aspect-[1/1] bg-gray-100 rounded-2xl overflow-hidden relative">
-          <img 
-              src="https://lh3.googleusercontent.com/pw/AP1GczPOSFnFflE6hcsTtHPybBLPUfECVYU5rzmbCHYRlWK8KomBZvI4N_SVy_knMkpVVRf7lUQ7jdtf3I1thYkuVCyIlqyy1n1Ws34eahtILybAJVbqxTBWECpEFzjcbt8co6QbWA-7F9lKGZmXw26CK57k=w777-h798-s-no-gm?authuser=0"
-              alt="Kit de Embellecimiento Profesional 6 en 1" 
-              className="absolute inset-0 w-full h-full object-contain" 
-              loading="eager"
-              decoding="async"
-              referrerPolicy="no-referrer"
-          />
-      </div>
-      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-800 mb-4 text-center">Kit de Embellecimiento Profesional 6 en 1</h1>
-      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8 text-justify hyphens-auto break-words">Todo lo que necesitas para restaurar, proteger y brillar tu vehículo como un profesional. ¡Resultados garantizados que deslumbran y duran!</p>
+    <section className="relative min-h-[80vh] flex flex-col items-center justify-center pt-24 pb-12 px-6 overflow-hidden bg-white">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-12">
+        <motion.div 
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="flex-1 text-center md:text-left"
+        >
+          <h1 className="text-4xl md:text-6xl font-black text-nissi-blue mb-6 leading-[1.1] uppercase tracking-tighter">
+            Kit de Embellecimiento Vehicular
+          </h1>
+          <p className="text-lg md:text-2xl text-gray-700 mb-10 leading-relaxed font-medium">
+            El Spa profesional para tu vehículo en un solo lugar. Restaura plásticos, brilla carrocería y protege cada detalle.
+          </p>
+          <a 
+            href="#precios"
+            className="inline-block bg-nissi-orange text-white font-black text-xl py-5 px-10 rounded-2xl shadow-[0_20px_40px_rgba(255,102,0,0.3)] hover:shadow-[0_25px_50px_rgba(255,102,0,0.45)] transition-all uppercase tracking-tight"
+          >
+            VER OFERTAS DE HOY
+          </a>
+        </motion.div>
 
-      <BuyNowButton 
-        onClick={() => onBuyNow(beautyKit)} 
-        text="¡LO QUIERO AHORA!"
-      />
-      <p className="mt-4 text-sm text-gray-500">Paga al recibir en la puerta de tu casa. ¡Envío gratis a toda Colombia!</p>
+        <motion.div 
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="flex-1 relative group"
+        >
+          <div className="absolute inset-0 bg-nissi-blue/5 blur-3xl rounded-full scale-110" />
+          <img 
+            src="https://lh3.googleusercontent.com/pw/AP1GczNSs4K4z7Muf8CJ8r97YPPxwdEt8v18SCeNjavCHFsFjRv4GxDJPB88me-dpcdn41MVMQm6AfXaKDAwyuJc5CMvz9IRl4FPDycp4k-zhkGv3CRm_W3SneIByCt3P07khKMOipuWliIdl-GXeovuPKxm=w991-h991-s-no-gm?authuser=0" 
+            alt="Kit Embellecimiento Nissi" 
+            className="relative z-10 w-full h-auto drop-shadow-2xl rounded-3xl"
+            referrerPolicy="no-referrer"
+          />
+        </motion.div>
+      </div>
     </section>
   );
+};
+
+const OffersGrid: React.FC = () => {
+    const handleWhatsApp = (promoName: string, price: string) => {
+        const message = encodeURIComponent(`Hola Nissi Car Home, deseo adquirir la promoción de ${promoName} por valor de ${price}`);
+        window.open(`https://wa.me/573103754727?text=${message}`, '_blank');
+    };
+
+    return (
+        <section id="precios" className="py-24 bg-gray-50 px-6 sm:px-8">
+            <div className="max-w-6xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+                    {/* Offer A - 2x1 */}
+                    <motion.div 
+                        whileHover={{ y: -10 }}
+                        className="bg-white rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.1)] p-12 flex flex-col items-center border border-gray-100 relative min-h-[750px] justify-between"
+                    >
+                        <div className="w-full flex flex-col items-center">
+                            {/* Jerarquía: Título Arriba - Simetría Perfecta */}
+                            <div className="mb-12 text-center w-full">
+                                <h3 className="text-4xl font-black text-nissi-blue mb-2 uppercase tracking-tight italic">
+                                    2X1 OBSEQUIO
+                                </h3>
+                                <div className="h-1.5 w-24 bg-nissi-orange mx-auto rounded-full" />
+                            </div>
+
+                            {/* Jerarquía: Productos en el Centro (Formato Vertical 9:16 Ad-Style) */}
+                            <div className="w-full max-w-[320px] aspect-[9/16] bg-black/5 rounded-[2.5rem] mb-12 border-4 border-black/5 flex items-center justify-center relative overflow-hidden group shadow-2xl">
+                                <iframe 
+                                    src="https://drive.google.com/file/d/1K66h7TUKC5Rx5PFgBVukB_UB5Dqf9iqt/preview" 
+                                    width="1080" 
+                                    height="1920"
+                                    className="w-full h-full border-0 absolute inset-0 sm:scale-105" 
+                                    allow="autoplay"
+                                    loading="lazy"
+                                    title="Promo 2x1 Nissi"
+                                ></iframe>
+                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent to-black/10 opacity-40 group-hover:opacity-60 transition-opacity" />
+                            </div>
+
+                            {/* Jerarquía: Precio Abajo - Máxima Legibilidad */}
+                            <div className="mb-12 text-center w-full bg-gray-50 py-6 rounded-3xl border border-gray-100">
+                                <span className="text-nissi-blue/40 text-xs font-black uppercase tracking-[0.2em] block mb-2">Oferta Especial Lanzamiento</span>
+                                <p className="text-5xl font-black text-nissi-orange italic tracking-tighter flex items-center justify-center gap-2">
+                                    $75.000 <span className="text-xl not-italic opacity-50 font-bold">COP</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <button 
+                            onClick={() => handleWhatsApp('PROMO 2X1 OBSEQUIO', '$75.000')}
+                            className="w-full py-6 bg-nissi-blue text-white font-black rounded-2xl hover:bg-nissi-blue/90 transition-all uppercase tracking-tight text-2xl shadow-xl shadow-nissi-blue/20 border-b-8 border-black/20"
+                        >
+                            LO QUIERO AHORA
+                        </button>
+                    </motion.div>
+
+                    {/* Offer B - 3x2 */}
+                    <motion.div 
+                        whileHover={{ y: -10 }}
+                        className="bg-white rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.1)] p-8 md:p-12 flex flex-col items-center border-8 border-nissi-orange relative min-h-[780px] justify-between overflow-hidden"
+                    >
+                        <div className="absolute top-0 left-0 p-4 opacity-10 pointer-events-none">
+                            <Truck className="w-16 h-16 text-nissi-blue -rotate-12" />
+                        </div>
+                        <div className="absolute bottom-1/2 right-0 p-4 opacity-10 pointer-events-none translate-x-4">
+                            <Star className="w-20 h-20 text-nissi-orange rotate-12" />
+                        </div>
+
+                        <div className="w-full flex flex-col items-center flex-grow">
+                            {/* Jerarquía: Título Arriba */}
+                            <div className="mb-8 text-center w-full pt-4">
+                                <h3 className="text-4xl md:text-5xl font-black text-nissi-blue mb-2 uppercase tracking-tight italic leading-tight">PAGA 2 LLEVA 3 KITS</h3>
+                                <div className="h-2 w-32 bg-nissi-orange mx-auto rounded-full" />
+                            </div>
+
+                            {/* Jerarquía: Productos en el Centro (9:16) */}
+                            <div className="w-full max-w-[340px] aspect-[9/16] bg-black/5 rounded-[2.5rem] mb-8 border-4 border-nissi-blue/5 flex items-center justify-center relative overflow-hidden group shadow-2xl">
+                                <iframe 
+                                    src="https://drive.google.com/file/d/14LiL01LkOEIDzd2V-FVgD_WztIJxbxQ3/preview" 
+                                    width="1080" 
+                                    height="1920"
+                                    className="w-full h-full border-0 absolute inset-0 sm:scale-105" 
+                                    allow="autoplay"
+                                    loading="lazy"
+                                    title="Promo Paga 2 Lleva 3 Nissi"
+                                ></iframe>
+                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent to-black/10 opacity-40 group-hover:opacity-60 transition-opacity" />
+                            </div>
+
+                            {/* Jerarquía: Precio Abajo */}
+                            <div className="mb-8 text-center w-full bg-gray-50 py-4 px-6 rounded-3xl border border-gray-100 flex flex-col items-center">
+                                <div className="flex items-center gap-6 mb-2">
+                                    <div className="flex items-center gap-1">
+                                        <CheckCircle className="w-4 h-4 text-nissi-blue" />
+                                        <span className="text-[10px] font-black text-nissi-blue/60 uppercase tracking-widest">Premium</span>
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <CheckCircle className="w-4 h-4 text-nissi-blue" />
+                                        <span className="text-[10px] font-black text-nissi-blue/60 uppercase tracking-widest">Garantía</span>
+                                    </div>
+                                </div>
+                                <div className="text-nissi-orange text-6xl font-black italic drop-shadow-[0_10px_15px_rgba(255,102,0,0.2)] tracking-tighter flex items-center justify-center gap-2">
+                                    $120.000 <span className="text-2xl not-italic opacity-50 font-bold">COP</span>
+                                </div>
+                                <span className="text-nissi-blue/40 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Ahorro Máximo Directo</span>
+                            </div>
+                        </div>
+
+                        <button 
+                            onClick={() => handleWhatsApp('PAGA 2 LLEVA 3 KITS', '$120.000')}
+                            className="w-full py-6 bg-nissi-orange text-white font-black rounded-2xl transition-all uppercase tracking-tight text-3xl shadow-[0_25px_50px_rgba(255,102,0,0.2)] hover:scale-[1.03] hover:brightness-110 active:scale-95 border-b-8 border-black/20"
+                        >
+                            APROVECHA HOY
+                        </button>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
 };
 
 const showcaseImages = [
@@ -294,13 +424,14 @@ const LandingPageBeautyKit: React.FC<LandingPageProps> = ({ onBuyNow, reviews, o
     }, []);
 
     return (
-        <div className="bg-white">
-            <LandingHero onBuyNow={onBuyNow} />
+        <div className="bg-white font-sans">
+            <LandingHero />
+            <OffersGrid />
             <LandingVideo />
             <LandingWhatYouGet />
             <LandingShowcase />
             <LandingSocialProofFAQ />
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-gray-100 mt-12">
                 <ReviewSection 
                     targetId="kit-2" 
                     reviews={reviews} 
@@ -308,6 +439,29 @@ const LandingPageBeautyKit: React.FC<LandingPageProps> = ({ onBuyNow, reviews, o
                     onDeleteReview={onDeleteReview} 
                     isAdmin={isAdmin} 
                 />
+            </div>
+            
+            {/* WhatsApp Float */}
+            <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 999 }}>
+                <motion.a 
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                    href="https://wa.me/573103754727?text=Hola,%20necesito%20asesoría%20con%20un%20producto" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 group"
+                >
+                    <div className="relative">
+                        <div className="absolute inset-0 bg-green-500 rounded-full animate-ping opacity-25" />
+                        <img 
+                            src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" 
+                            width="60" 
+                            height="60" 
+                            alt="Soporte Nissi"
+                            className="relative z-10 drop-shadow-xl"
+                        />
+                    </div>
+                </motion.a>
             </div>
         </div>
     );
