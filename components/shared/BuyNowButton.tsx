@@ -46,7 +46,7 @@ const BuyNowButton: React.FC<BuyNowButtonProps> = ({
                         ease: "easeInOut"
                     }
                 }}
-                className="flex-grow bg-[#D90429] text-white font-bold text-xl md:text-2xl py-4 px-6 rounded-lg shadow-lg transition-all"
+                className="flex-grow bg-[#D90429] text-white font-bold text-lg md:text-2xl py-3 md:py-4 px-6 md:px-8 rounded-lg shadow-lg transition-all"
             >
                 {text}
             </motion.button>

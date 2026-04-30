@@ -91,11 +91,11 @@ const Services: React.FC = () => {
               En NISSI CAR-HOME, cada vehículo es tratado como una obra de arte. Utilizamos los mejores productos del mercado y técnicas avanzadas para garantizar un acabado de exhibición.
             </p>
             <HashLink
-              to="/servicios-adicionales-y-soporte"
-              className="inline-flex items-center justify-center bg-white text-amber-600 font-bold py-4 px-8 rounded-2xl text-lg hover:bg-amber-50 transition-all transform hover:scale-105 duration-300 shadow-lg group"
+              to="/spa-automotriz"
+              className="inline-flex items-center justify-center bg-white text-nissi-orange font-black uppercase tracking-widest py-5 px-10 rounded-2xl text-sm hover:bg-white/90 transition-all transform hover:scale-105 duration-300 shadow-[0_20px_40px_rgba(255,102,0,0.2)] group"
             >
-              Ver Catálogo Completo
-              <svg className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              Ver servicios
+              <svg className="ml-3 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
             </HashLink>

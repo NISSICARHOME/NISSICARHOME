@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Truck, ShoppingCart, Star, CheckCircle } from 'lucide-react';
+import { Truck, ShoppingCart, Star, CheckCircle, ArrowRight } from 'lucide-react';
 import Accordion from '../components/shared/Accordion';
 import { CartItem, Review } from '../types';
 import ReviewSection from '../components/shared/ReviewSection';
@@ -56,7 +56,7 @@ const LandingHero: React.FC = () => {
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="flex-1 relative group"
+          className="flex-1 relative group contenedor-oferta-nissi"
         >
           <div className="absolute inset-0 bg-nissi-blue/5 blur-3xl rounded-full scale-110" />
           <img 
@@ -126,64 +126,81 @@ const OffersGrid: React.FC = () => {
                         </button>
                     </motion.div>
 
-                    {/* Offer B - 3x2 */}
+                    {/* Oferta B - 3x2 (Ad-Style Professional - 9:16 Optimized) */}
                     <motion.div 
-                        whileHover={{ y: -10 }}
-                        className="bg-white rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.1)] p-8 md:p-12 flex flex-col items-center border-8 border-nissi-orange relative min-h-[780px] justify-between overflow-hidden"
+                        whileHover={{ y: -5 }}
+                        className="bg-[#003da5] rounded-[3rem] shadow-[0_60px_120px_rgba(0,0,0,0.6)] flex flex-col items-center border-0 relative min-h-[900px] w-full max-w-[480px] mx-auto justify-between z-10 overflow-hidden"
                     >
-                        <div className="absolute top-0 left-0 p-4 opacity-10 pointer-events-none">
-                            <Truck className="w-16 h-16 text-nissi-blue -rotate-12" />
-                        </div>
-                        <div className="absolute bottom-1/2 right-0 p-4 opacity-10 pointer-events-none translate-x-4">
-                            <Star className="w-20 h-20 text-nissi-orange rotate-12" />
+                        {/* Background Dynamics - Clean & Premium */}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_#0066cc_0%,_transparent_65%)] opacity-30" />
+                        
+                        {/* 1. TÍTULO: Tercio Superior, Perfecto Centrado */}
+                        <div className="w-full flex flex-col items-center pt-16 px-8 z-10">
+                            <span className="bg-nissi-orange text-white px-5 py-1 rounded-full text-[12px] font-black uppercase tracking-[0.4em] mb-6 shadow-xl animate-pulse">
+                                OFERTA EXCLUSIVA
+                            </span>
+                            <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white italic uppercase tracking-tighter leading-tight mb-4 text-center drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                                PAGA 2 <br />
+                                <span className="text-yellow-400">LLEVA 3</span> KITS
+                            </h3>
+                            <div className="h-2 w-32 bg-white/40 rounded-full" />
                         </div>
 
-                        <div className="w-full flex flex-col items-center flex-grow">
-                            {/* Jerarquía: Título Arriba */}
-                            <div className="mb-8 text-center w-full pt-4">
-                                <h3 className="text-4xl md:text-5xl font-black text-nissi-blue mb-2 uppercase tracking-tight italic leading-tight">PAGA 2 LLEVA 3 KITS</h3>
-                                <div className="h-2 w-32 bg-nissi-orange mx-auto rounded-full" />
-                            </div>
-
-                            {/* Jerarquía: Productos en el Centro (9:16) */}
-                            <div className="w-full max-w-[340px] aspect-[9/16] bg-black/5 rounded-[2.5rem] mb-8 border-4 border-nissi-blue/5 flex items-center justify-center relative overflow-hidden group shadow-2xl">
+                        {/* 2. PRODUCTOS: Centro, Distribución Simétrica */}
+                        <div className="relative w-full flex-grow flex items-center justify-center p-8 z-10">
+                            <div className="w-full aspect-[9/16] max-h-[480px] bg-white/5 rounded-[3rem] border-0 flex items-center justify-center relative overflow-hidden group shadow-2xl">
                                 <iframe 
                                     src="https://drive.google.com/file/d/14LiL01LkOEIDzd2V-FVgD_WztIJxbxQ3/preview" 
                                     width="1080" 
-                                    height="1920"
-                                    className="w-full h-full border-0 absolute inset-0 sm:scale-105" 
+                                    height="1920" 
+                                    className="w-full h-full border-0 absolute inset-0 sm:scale-[1.2] origin-center"
                                     allow="autoplay"
                                     loading="lazy"
-                                    title="Promo Paga 2 Lleva 3 Nissi"
+                                    title="Publicidad Paga 2 Lleva 3"
                                 ></iframe>
-                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent to-black/10 opacity-40 group-hover:opacity-60 transition-opacity" />
-                            </div>
-
-                            {/* Jerarquía: Precio Abajo */}
-                            <div className="mb-8 text-center w-full bg-gray-50 py-4 px-6 rounded-3xl border border-gray-100 flex flex-col items-center">
-                                <div className="flex items-center gap-6 mb-2">
-                                    <div className="flex items-center gap-1">
-                                        <CheckCircle className="w-4 h-4 text-nissi-blue" />
-                                        <span className="text-[10px] font-black text-nissi-blue/60 uppercase tracking-widest">Premium</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                        <CheckCircle className="w-4 h-4 text-nissi-blue" />
-                                        <span className="text-[10px] font-black text-nissi-blue/60 uppercase tracking-widest">Garantía</span>
-                                    </div>
-                                </div>
-                                <div className="text-nissi-orange text-6xl font-black italic drop-shadow-[0_10px_15px_rgba(255,102,0,0.2)] tracking-tighter flex items-center justify-center gap-2">
-                                    $120.000 <span className="text-2xl not-italic opacity-50 font-bold">COP</span>
-                                </div>
-                                <span className="text-nissi-blue/40 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Ahorro Máximo Directo</span>
+                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#003da5]/40 via-transparent to-transparent opacity-60" />
                             </div>
                         </div>
 
-                        <button 
-                            onClick={() => handleWhatsApp('PAGA 2 LLEVA 3 KITS', '$120.000')}
-                            className="w-full py-6 bg-nissi-orange text-white font-black rounded-2xl transition-all uppercase tracking-tight text-3xl shadow-[0_25px_50px_rgba(255,102,0,0.2)] hover:scale-[1.03] hover:brightness-110 active:scale-95 border-b-8 border-black/20"
-                        >
-                            APROVECHA HOY
-                        </button>
+                        {/* 3. PRECIO Y CTA: Tercio Inferior, Máximo Contraste */}
+                        <div className="w-full flex flex-col items-center z-10 px-8 pb-12">
+                            {/* Price Group - Centered and High Contrast */}
+                            <div className="mb-8 scale-110">
+                                <div className="bg-[#cc0000] border-4 border-yellow-400 px-10 py-4 rounded-3xl shadow-[0_25px_50px_rgba(204,0,0,0.5)] relative">
+                                    <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-[#cc0000] text-[10px] font-black uppercase px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">
+                                        PRECIO TOTAL HOY
+                                    </span>
+                                    <div className="text-white text-6xl font-black tracking-tighter flex items-center justify-center gap-2 italic">
+                                        $120.000 <span className="text-2xl not-italic opacity-60">COP</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Beneficios: Línea Limpia y Alíneada */}
+                            <div className="flex items-center justify-center gap-8 mb-10 w-full">
+                                <div className="flex flex-col items-center gap-2">
+                                    <CheckCircle className="w-6 h-6 text-yellow-400" />
+                                    <span className="text-[10px] font-black text-white/80 uppercase tracking-widest">Premium</span>
+                                </div>
+                                <div className="flex flex-col items-center gap-2">
+                                    <Truck className="w-6 h-6 text-yellow-400" />
+                                    <span className="text-[10px] font-black text-white/80 uppercase tracking-widest">Envío Nacional</span>
+                                </div>
+                                <div className="flex flex-col items-center gap-2">
+                                    <Star className="w-6 h-6 text-yellow-400" />
+                                    <span className="text-[10px] font-black text-white/80 uppercase tracking-widest">Calidad 5.0</span>
+                                </div>
+                            </div>
+
+                            {/* CTA: Centrado, Visible y Potente */}
+                            <button 
+                                onClick={() => handleWhatsApp('PAGA 2 LLEVA 3 KITS', '$120.000')}
+                                className="w-full py-8 bg-[#ff6600] text-white font-black transition-all uppercase tracking-[0.15em] text-3xl flex items-center justify-center gap-4 hover:brightness-110 active:scale-95 group rounded-3xl shadow-[0_20px_40px_rgba(255,102,0,0.3)]"
+                            >
+                                APROVECHA HOY
+                                <ArrowRight className="w-10 h-10 group-hover:translate-x-4 transition-transform" />
+                            </button>
+                        </div>
                     </motion.div>
                 </div>
             </div>
@@ -221,7 +238,7 @@ const LandingShowcase: React.FC = () => {
 
     return (
         <section className="relative h-[60vh] md:h-[80vh] flex flex-col items-center justify-center text-white text-center overflow-hidden">
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0 contenedor-oferta-nissi">
                  {showcaseImages.map((src, index) => (
                     <img
                         key={src}
@@ -262,7 +279,7 @@ const LandingWhatYouGet: React.FC = () => {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {kitItems.map(item => (
                         <div key={item.name} className="flex flex-col items-center text-center bg-white p-6 rounded-lg shadow-md h-full transition-all duration-300 hover:shadow-xl hover:-translate-y-2">
-                            <div className="h-40 w-full mb-4 relative overflow-hidden">
+                            <div className="h-40 w-full mb-4 relative overflow-hidden contenedor-oferta-nissi">
                                 <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-contain" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
                             </div>
                             <h3 className="text-xl font-bold text-amber-600 flex-grow text-center">{item.name}</h3>

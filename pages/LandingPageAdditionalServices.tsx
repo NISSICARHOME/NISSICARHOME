@@ -73,7 +73,7 @@ const LandingPageAdditionalServices: React.FC<{
                 </div>
 
                 <BuyNowButton 
-                    onClick={() => window.open('https://wa.me/573103754727', '_blank')} 
+                    onClick={() => window.dispatchEvent(new CustomEvent('open-booking-modal'))} 
                     text="AGENDAR CITA AHORA"
                     showShare={false}
                 />
@@ -231,14 +231,12 @@ const LandingPageAdditionalServices: React.FC<{
             <footer className="bg-gray-900 text-center py-12 px-4">
                 <h2 className="text-3xl font-bold text-white mb-4">¿Listo para que tu auto renazca?</h2>
                 <p className="text-gray-300 text-lg mb-8">No esperes más. Dale a tu vehículo el tratamiento que merece.</p>
-                <a
-                    href={`https://wa.me/${siteContent.footer.phone.replace(/\D/g, '')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-[#F77F00] text-white font-bold text-xl py-4 px-8 rounded-lg shadow-lg hover:brightness-110 transition-all transform hover:scale-105"
+                <button
+                    onClick={() => window.dispatchEvent(new CustomEvent('open-booking-modal'))}
+                    className="inline-block bg-[#F77F00] text-white font-bold text-lg md:text-xl py-3 md:py-4 px-6 md:px-10 rounded-lg shadow-lg hover:brightness-110 transition-all transform hover:scale-105"
                 >
                     ¡AGENDAR MI CITA AHORA!
-                </a>
+                </button>
             </footer>
         </div>
     );

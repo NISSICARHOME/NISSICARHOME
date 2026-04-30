@@ -1,267 +1,489 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { HashLink } from 'react-router-hash-link';
-import Accordion from '../components/shared/Accordion';
-import { CartItem, Review } from '../types';
-import BuyNowButton from '../components/shared/BuyNowButton';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  CheckCircle, 
+  Award, 
+  Sparkles, 
+  ShieldCheck, 
+  Play, 
+  MessageCircle, 
+  X,
+  Star,
+  ChevronRight,
+  Droplets,
+  Sparkle,
+  ArrowRight,
+  Lightbulb,
+  Zap
+} from 'lucide-react';
 import ReviewSection from '../components/shared/ReviewSection';
+import { Review } from '../types';
 
-// --- HELPER COMPONENTS ---
-const CheckListItem: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <li className="flex items-start text-lg mb-3">
-    <svg className="h-6 w-6 text-blue-600 mr-3 flex-shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-    </svg>
-    <span className="text-gray-700">{children}</span>
-  </li>
-);
-
-const ShareIcon: React.FC = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-gray-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12s-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.368a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
-    </svg>
-);
-
-// --- PAGE SECTIONS ---
-
-const LandingHero: React.FC = () => {
-  const [copied, setCopied] = useState(false);
-
-  const handleShare = () => {
-    navigator.clipboard.writeText(window.location.href)
-      .then(() => {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      })
-      .catch(err => console.error('Failed to copy link: ', err));
-  };
-
-  return (
-    <section id="oferta-servicios" className="bg-white py-12 px-4 text-center">
-      <div className="w-full max-w-2xl mx-auto mb-8 aspect-[1.2/1] bg-gray-100 rounded-2xl overflow-hidden relative">
-          {/* NOTA: Usar foto de un auto de lujo brillando en la fábrica */}
-          <img 
-              src="https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=01" 
-              alt="Nissi Car Home Spa Automotriz" 
-              className="absolute inset-0 w-full h-full object-cover rounded-lg shadow-2xl" 
-              loading="eager"
-              decoding="async"
-              referrerPolicy="no-referrer"
-          />
-      </div>
-      <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Renace tu Vehículo: Spa Automotriz Profesional</h1>
-      <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-        Más que un lavado, es una restauración. Desde corrección de pintura y cerámica, hasta limpieza interna profunda. 
-        Devolvemos tu auto a su estado de fábrica con tecnología de punta.
-      </p>
-       <div className="bg-blue-50 p-4 rounded-lg inline-block mb-8">
-            <p className="text-xl font-semibold text-blue-800">🌟 Especialidad: Servicio GOLD Full Vehículo</p>
-       </div>
-
-      <BuyNowButton 
-        onClick={() => window.open('https://wa.me/573103754727', '_blank')} 
-        text="AGENDAR CITA AHORA"
-      />
-      <div className="mt-4">
-        <HashLink smooth to="/#contacto" className="text-blue-600 hover:text-blue-800 underline transition-colors text-sm font-medium">
-          O contáctanos para agendar una cita
-        </HashLink>
-      </div>
-      <p className="mt-2 text-sm text-gray-500">Servicio realizado en nuestra fábrica en Pereira. Garantía de satisfacción total.</p>
-    </section>
-  );
-};
-
-const LandingVideo: React.FC = () => {
-    return (
-        <section className="bg-gray-900 py-16 px-4 text-white">
-            <div className="max-w-4xl mx-auto text-center">
-                 <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-4">Así Trabajamos en Nissi Car Home</h2>
-                 <p className="mb-8 text-gray-300">Observa el proceso detallado de restauración y el nivel de perfección que aplicamos.</p>
-                 <div className="aspect-video w-full rounded-lg shadow-lg overflow-hidden border-4 border-[#F77F00]">
-                    {/* NOTA: Reemplazar con video de servicios si existe, si no, mantener el actual */}
-                    <iframe
-                        className="w-full h-full"
-                        src="https://www.youtube.com/embed/oAgP4klzRAM"
-                        title="Proceso de Detailing"
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen>
-                    </iframe>
-                </div>
-            </div>
-        </section>
-    );
-};
-
-const LandingServicesList: React.FC = () => {
-    // Aquí transformamos los "KitItems" en "Servicios"
-    const services = [
-        { 
-            name: '1. Restauración de Farolas & Personalización', 
-            content: "Recuperamos la transparencia eliminando opacidad y rayones. También personalizamos el estilo de tus luces al gusto (modificaciones visuales).",
-            image: 'https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=02' 
-        },
-        { 
-            name: '2. Detailing Exterior (Cerámico)', 
-            content: "Proceso de 4 fases: Lavado pH neutro (2 cubetas), Descontaminación (Clay Bar & Iron Remover), Corrección de pintura (eliminación de rayones y hologramas) y Protección Cerámica (escudo hidrofóbico).",
-            image: 'https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=03' 
-        },
-        { 
-            name: '3. Detailing Interno Profundo', 
-            content: "Desmontamos sillas y alfombras. Limpiamos ductos de aire, eliminamos olores, bacterias y manchas orgánicas. Tu interior queda desinfectado y como nuevo.",
-            image: 'https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=04' 
-        },
-        { 
-            name: '4. Tratamiento de Vidrios (Lluvia Ácida)', 
-            content: "Eliminación de sarro, minerales incrustados y gotas secas con Clarity Wash & Vidrex. Restauramos la visibilidad cristalina.",
-            image: 'https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=05' 
-        },
-        { 
-            name: '🌟 5. Servicio GOLD Full Vehículo', 
-            content: "La experiencia definitiva. Incluye TODOS los servicios anteriores en un solo paquete premium para una transformación total de tu automóvil.",
-            image: 'https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=06' 
-        }
-    ];
-
-    return (
-        <section className="bg-gray-50 py-16 px-4">
-            <div className="max-w-6xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-4">Nuestros Servicios Especializados</h2>
-                <p className="text-center text-xl text-gray-600 mb-12">Utilizamos insumos profesionales y técnicas avanzadas para garantizar resultados de exhibición.</p>
-                
-                <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
-                    {services.map((item, index) => (
-                        <div key={index} className={`flex flex-col p-6 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl ${index === 4 ? 'bg-gray-900 text-white lg:col-span-2 border-2 border-[#F77F00]' : 'bg-white text-gray-800'}`}>
-                            <div className="flex flex-col md:flex-row items-start gap-4">
-                                {/* Placeholder para imagen del servicio */}
-                                <div className="w-full md:w-1/3 h-40 bg-gray-200 rounded-md flex items-center justify-center overflow-hidden relative">
-                                     <img src={item.image} alt={item.name} className="absolute inset-0 w-full h-full object-cover" loading="lazy" decoding="async" referrerPolicy="no-referrer" />
-                                </div>
-                                <div className="w-full md:w-2/3">
-                                    <h3 className={`text-2xl font-bold mb-2 ${index === 4 ? 'text-[#F77F00]' : 'text-blue-700'}`}>{item.name}</h3>
-                                    <p className={`${index === 4 ? 'text-gray-300' : 'text-gray-600'}`}>{item.content}</p>
-                                    {index === 1 && (
-                                        <div className="mt-3 text-sm italic opacity-80">
-                                            *Incluye: Corte, Abrillantado y Sellador Sintético o Cerámico.
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </section>
-    );
-};
-
-const faqServicesData = [
-    { question: "¿En qué consiste el Detailing Exterior?", answer: "Es un proceso minucioso de 4 fases. 1) Lavado con técnica de dos cubetas y pH neutro. 2) Descontaminación física (Clay Bar) y química. 3) Corrección de pintura (pulido) para eliminar rayones y 'piel de naranja'. 4) Protección final con sellador cerámico o sintético que cura por 12-24 horas." },
-    { question: "¿Qué incluye el lavado interno?", answer: "No es solo una aspirada. Desmontamos sillas, carteras y consolas para llegar a cada rincón. Eliminamos manchas de sudor, malos olores, insectos y desinfectamos ductos de ventilación. Tu auto queda higienizado y con olor a nuevo." },
-    { question: "¿Pueden reparar mis farolas si están amarillas?", answer: "Sí. Realizamos una restauración completa lijando y puliendo el policarbonato para eliminar la capa quemada, y aplicamos protección UV. También hacemos personalizaciones (modding) si deseas cambiar la estética de tus luces." },
-    { question: "¿Cuánto tiempo toma el Servicio GOLD?", answer: "Debido al nivel de detalle y los tiempos de curado de los recubrimientos (el vehículo no debe tocar agua por 12-24h), este servicio suele requerir que el vehículo permanezca en nuestras instalaciones de 1 a 2 días para garantizar la perfección." },
-    { question: "¿Dónde están ubicados?", answer: "Nuestra fábrica principal está en Pereira, con sedes en Ibagué y Espinal, Tolima. Todos los trabajos pesados se realizan bajo ambiente controlado en nuestras instalaciones." },
+// --- DATA ---
+const SERVICES = [
+  {
+    id: 'farolas',
+    title: 'Restauración de Farolas y Personalización',
+    description: 'Eliminamos el tono amarillento y opaco. Devolvemos la transparencia y el brillo original con sellado UV de larga duración.',
+    videoUrl: 'https://drive.google.com/file/d/1heao9bZTBhBkqkF_JHSKlcv5kQ7o7sDy/preview',
+    mediaUrl: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=1200',
+    isVideo: false,
+    icon: Lightbulb,
+    badge: 'Seguridad'
+  },
+  {
+    id: 'exterior',
+    title: 'Detailing Exterior (Cerámico)',
+    description: 'Protección cerámica y sellado de pintura. Brillo profundo tipo espejo con propiedades hidrofóbicas extremas.',
+    videoUrl: 'https://drive.google.com/file/d/1vA-yF261U0eMv-8z3Z7s-Uly0lW9U3oJ/preview',
+    mediaUrl: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&q=80&w=1200',
+    isVideo: false,
+    icon: ShieldCheck,
+    badge: 'Efecto Cristal'
+  },
+  {
+    id: 'interior',
+    title: 'Detailing Interno Profundo',
+    description: 'Desinfección y restauración de cojinería, alfombras y techos. Hidratación premium de plásticos y cueros.',
+    videoUrl: 'https://drive.google.com/file/d/14LiL01LkOEIDzd2V-FVgD_WztIJxbxQ3/preview',
+    mediaUrl: 'https://images.unsplash.com/photo-1620334161528-94762c1767fb?auto=format&fit=crop&q=80&w=1200',
+    isVideo: false,
+    icon: Sparkles,
+    badge: 'Renovación'
+  },
+  {
+    id: 'vidrios',
+    title: 'Tratamiento de Vidrios (Lluvia Ácida)',
+    description: 'Eliminación técnica de lluvia ácida y manchas de sarro. Visibilidad perfecta y seguridad en climas lluviosos.',
+    videoUrl: 'https://drive.google.com/file/d/1K66h7TUKC5Rx5PFgBVukB_UB5Dqf9iqt/preview',
+    mediaUrl: 'https://images.unsplash.com/photo-1549399500-1448083046d5?auto=format&fit=crop&q=80&w=1200',
+    isVideo: false,
+    icon: Droplets,
+    badge: 'Kit Vidrex'
+  },
+  {
+    id: 'gold',
+    title: 'Servicio Gold Full Vehículo',
+    description: 'La experiencia completa Nissi. Restauración total exterior e interior para vehículos de alta gama y exhibición.',
+    videoUrl: 'https://drive.google.com/file/d/1vA-yF261U0eMv-8z3Z7s-Uly0lW9U3oJ/preview',
+    mediaUrl: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1200',
+    isVideo: false,
+    icon: Star,
+    badge: 'Máximo Lujo'
+  }
 ];
 
-const LandingSocialProofFAQ: React.FC = () => {
-    const [isExpanded, setIsExpanded] = useState(false);
+const PILLARS = [
+  {
+    icon: Award,
+    title: 'Técnicos Certificados',
+    desc: 'Experiencia real comprobada en cada proceso detallado.',
+  },
+  {
+    icon: Sparkle,
+    title: 'Productos Premium',
+    desc: 'Fórmulas propias de Nissi Car Home con altos estándares.',
+  },
+  {
+    icon: CheckCircle,
+    title: 'Garantía Total',
+    desc: 'Si no ves el cambio radical solicitado, no pagas el servicio.',
+  }
+];
 
-    return (
-        <section className="py-16 px-4 bg-white">
-             <div className="max-w-4xl mx-auto">
-                <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-12">Lo Que Dicen Nuestros Clientes</h2>
-                <div className="grid md:grid-cols-2 gap-8 mb-16">
-                     {[
-                         {name: "Carlos M.", city: "Pereira", quote: "Llevé mi camioneta para el Servicio Gold y no podía creerlo. Los rayones desaparecieron y el interior quedó impecable, como sacado del concesionario."},
-                         {name: "Juliana R.", city: "Ibagué", quote: "Mis farolas estaban tan opacas que no alumbraban nada. En Nissi las dejaron transparentes y con un estilo personalizado increíble. ¡Recomendados!"},
-                     ].map(testimonial => (
-                        <div key={testimonial.name} className="bg-gray-50 p-6 rounded-lg shadow border border-gray-100">
-                            <div className="flex text-yellow-400 mb-2">{"★★★★★".split("").map((s,i) => <span key={i}>{s}</span>)}</div>
-                            <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
-                            <p className="font-bold text-gray-800 text-right">- {testimonial.name} ({testimonial.city})</p>
-                        </div>
-                     ))}
-                </div>
-                
-                <div className="p-4 sm:p-8 rounded-3xl shadow-neumorphic-outset overflow-hidden bg-gray-50">
-                    <div 
-                        className="text-center cursor-pointer group"
-                        onClick={() => setIsExpanded(!isExpanded)}
-                    >
-                        <div className="flex flex-col items-center">
-                            <h2 className="text-2xl font-extrabold text-gray-800 sm:text-3xl flex items-center gap-3">
-                                Preguntas Frecuentes sobre Servicios
-                                <svg 
-                                    className={`w-6 h-6 sm:w-8 sm:h-8 text-amber-500 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} 
-                                    fill="none" 
-                                    stroke="currentColor" 
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </h2>
-                            <p className="mt-4 max-w-2xl mx-auto text-sm sm:text-base text-gray-600">
-                                {isExpanded 
-                                    ? "Resolvemos tus dudas sobre nuestros procesos de detallado y restauración."
-                                    : "Haz clic aquí para ver las preguntas frecuentes sobre nuestros servicios especializados."
-                                }
-                            </p>
-                        </div>
-                    </div>
+// --- COMPONENTS ---
 
-                    <div className={`grid transition-all duration-500 ease-in-out ${isExpanded ? 'grid-rows-[1fr] opacity-100 mt-8 sm:mt-12' : 'grid-rows-[0fr] opacity-0'}`}>
-                        <div className="overflow-hidden">
-                            <div className="space-y-4">
-                                {faqServicesData.map((item, index) => (
-                                    <Accordion key={index} title={item.question}>
-                                        <p className="text-gray-700 text-left leading-relaxed">{item.answer}</p>
-                                    </Accordion>
-                                ))}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-             </div>
-        </section>
-    );
-};
+import BookingModal from '../components/shared/BookingModal';
 
+const VideoModal = ({ isOpen, onClose, videoUrl }: { isOpen: boolean, onClose: () => void, videoUrl: string }) => (
+  <AnimatePresence>
+    {isOpen && (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
+        onClick={onClose}
+      >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          className="relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl contenedor-oferta-nissi"
+          onClick={e => e.stopPropagation()}
+        >
+          <button 
+            onClick={onClose}
+            className="absolute top-4 right-4 z-50 bg-white/20 hover:bg-white/40 p-3 rounded-full text-white transition-colors"
+          >
+            <X size={24} />
+          </button>
+          <iframe 
+            src={videoUrl}
+            className="w-full h-full border-0 shadow-inner"
+            allow="autoplay; encrypted-media"
+            allowFullScreen
+          />
+        </motion.div>
+      </motion.div>
+    )}
+  </AnimatePresence>
+);
 
-// --- MAIN LANDING PAGE COMPONENT ---
 const LandingPageServices: React.FC<{
   reviews: Review[];
   onAddReview: (review: Omit<Review, 'id' | 'date'>) => void;
   onDeleteReview: (id: string) => void;
   isAdmin: boolean;
 }> = ({ reviews, onAddReview, onDeleteReview, isAdmin }) => {
-    
-    useEffect(() => {
-        const originalTitle = document.title;
-        const newTitle = "Spa Automotriz y Detailing Profesional - Nissi Car Home";
-        document.title = newTitle;
-        
-        // Meta tags updates omitted for brevity but should be included by studio
-        return () => { document.title = originalTitle; };
-    }, []);
+  const [activeVideo, setActiveVideo] = useState<string | null>(null);
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<string | undefined>(undefined);
 
-    return (
-        <div className="bg-white font-sans">
-            <LandingHero />
-            <LandingVideo />
-            {/* Renamed Component to reflect Services */}
-            <LandingServicesList />
-            <LandingSocialProofFAQ />
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                <ReviewSection 
-                    targetId="services" 
-                    reviews={reviews} 
-                    onAddReview={onAddReview} 
-                    onDeleteReview={onDeleteReview} 
-                    isAdmin={isAdmin} 
-                />
-            </div>
+  const handleWhatsApp = (context = 'agendar una valoración gratis') => {
+    const msg = `Hola Nissi Car Home, vi los resultados de sus servicios y quiero ${context} para mi vehículo.`;
+    window.open(`https://wa.me/573103754727?text=${encodeURIComponent(msg)}`, '_blank');
+  };
+
+  const openBooking = (service?: string) => {
+    setSelectedService(service);
+    setIsBookingOpen(true);
+  };
+
+  useEffect(() => {
+    document.title = "Expertos en Estética Automotriz - Nissi Car Home";
+  }, []);
+
+  return (
+    <div className="bg-[#0a0a0b] text-white font-sans selection:bg-nissi-orange selection:text-white pb-32">
+      
+      {/* SECTION 1: HERO DE AUTORIDAD */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+        {/* Background Video/Image Overlay */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-[#0a0a0b] z-10" />
+          <img 
+            src="https://images.unsplash.com/photo-1621360841013-c7683c659ec6?auto=format&fit=crop&q=80&w=2000"
+            className="w-full h-full object-cover brightness-[0.7] animate-pulse-slow"
+            alt="Background detailing"
+            referrerPolicy="no-referrer"
+          />
         </div>
-    );
+
+        <div className="relative z-20 max-w-5xl mx-auto px-6 text-center space-y-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <span className="bg-nissi-orange/20 text-nissi-orange px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.4em] mb-6 inline-block border border-nissi-orange/30">
+              Estética de Exhibición
+            </span>
+            <h1 className="text-2xl xs:text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black italic tracking-tighter uppercase leading-[1.1] md:leading-tight mb-4 drop-shadow-2xl">
+              Tu Vehículo merece un <br className="hidden sm:block" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-nissi-orange to-amber-400">
+                acabado de exhibición.
+              </span>
+            </h1>
+            <p className="text-lg md:text-2xl text-white/70 max-w-3xl mx-auto font-medium leading-relaxed px-4 md:px-0 text-center md:text-justify md:hyphens-auto">
+              Servicios profesionales de detallado, restauración y protección con el sello exclusivo de <span className="text-white font-bold">Nissi Car Home.</span>
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.5, duration: 0.5 }}
+            className="pt-8"
+          >
+            <button 
+              onClick={() => openBooking()}
+              className="bg-nissi-orange text-white px-8 py-4 md:py-6 md:px-16 rounded-[1.5rem] md:rounded-[2rem] font-black uppercase tracking-[0.2em] text-md md:text-2xl shadow-[0_30px_60px_rgba(255,102,0,0.4),0_0_0_8px_rgba(255,102,0,0.1)] hover:scale-[1.05] hover:brightness-110 active:scale-95 transition-all duration-500 group flex items-center gap-4 md:gap-6 mx-auto relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
+              <span className="relative z-10 drop-shadow-md flex items-center gap-4">
+                AGENDAR Y CONFIRMAR
+                <motion.div
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.5 }}
+                >
+                  <ArrowRight size={24} className="md:w-8 md:h-8 stroke-[3px]" />
+                </motion.div>
+              </span>
+            </button>
+          </motion.div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 opacity-40"
+        >
+          <div className="w-1 h-12 bg-gradient-to-b from-nissi-orange to-transparent rounded-full" />
+        </motion.div>
+      </section>
+
+      {/* SECTION 2: CATÁLOGO CON VIDEO-TESTIMONIO */}
+      <section className="py-24 px-6 max-w-7xl mx-auto relative">
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-nissi-orange/10 blur-[120px] rounded-full pointer-events-none" />
+        
+        <div className="text-center mb-20 space-y-4">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl md:text-5xl font-black uppercase tracking-tighter italic"
+          >
+             Resultados que Hablan Solos
+          </motion.h2>
+          <div className="h-1.5 w-32 bg-nissi-orange mx-auto rounded-full" />
+          <p className="text-white/50 text-lg">Haz clic en "Ver Resultado Real" para comprobar la excelencia Nissi.</p>
+        </div>
+
+        <div className="space-y-24">
+          {SERVICES.map((s, idx) => (
+            <motion.div
+              key={s.id}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="group relative bg-[#121214] border border-white/5 rounded-[3rem] md:rounded-[5rem] overflow-hidden hover:border-nissi-orange/30 transition-all duration-700 flex flex-col shadow-[0_40px_100px_rgba(0,0,0,0.6)]"
+            >
+               {/* Card Background Branding */}
+               <div className="absolute top-10 right-10 opacity-[0.03] pointer-events-none">
+                  <Star size={400} fill="currentColor" />
+               </div>
+
+               <div className="p-8 md:p-24 relative z-10 space-y-8 md:space-y-12">
+                <div className="space-y-6">
+                  <div className="inline-flex items-center gap-4 bg-white/5 backdrop-blur-xl border border-white/10 p-1.5 pl-5 rounded-full">
+                     <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">{s.badge}</span>
+                     <div className="bg-nissi-orange p-2.5 rounded-full shadow-lg shadow-nissi-orange/20">
+                        <s.icon className="w-5 h-5 text-white" />
+                     </div>
+                  </div>
+
+                   {/* Dedicated HD Media Section above title */}
+                   <div className="space-y-8">
+                     {s.id === 'farolas' && (
+                        <div className="relative aspect-video w-full rounded-[2.5rem] overflow-hidden border-2 border-nissi-orange/50 shadow-[0_0_50px_rgba(255,102,0,0.2)] bg-black">
+                           <iframe 
+                            src={`${s.videoUrl}&controls=0&autoplay=1&mute=1&loop=1&rel=0`}
+                            className="w-full h-full object-cover scale-[1.5] brightness-110"
+                            allow="autoplay"
+                           />
+                           <div className="absolute top-6 left-6 z-20 flex items-center gap-3">
+                              <div className="bg-red-600 px-3 py-1 rounded-md flex items-center gap-2 animate-pulse">
+                                 <div className="w-2 h-2 rounded-full bg-white" />
+                                 <span className="text-[10px] font-black text-white tracking-widest uppercase">VIDEO REAL</span>
+                              </div>
+                           </div>
+                        </div>
+                     )}
+                     
+                     <div className="relative aspect-video w-full rounded-[2.5rem] overflow-hidden border border-white/10 group-hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-black">
+                        {s.isVideo ? (
+                           <iframe 
+                            src={`${s.mediaUrl}&controls=0&autoplay=1&mute=1&loop=1&rel=0`}
+                            className="w-full h-full object-cover scale-[1.5] brightness-110"
+                            allow="autoplay"
+                           />
+                        ) : (
+                           <img 
+                            src={s.mediaUrl} 
+                            alt={s.title} 
+                            className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+                            referrerPolicy="no-referrer"
+                           />
+                        )}
+                        <div className="absolute inset-0 pointer-events-none" />
+                        <div className="absolute top-6 left-6 z-20 flex items-center gap-3">
+                           <div className="bg-nissi-orange px-3 py-1 rounded-md flex items-center gap-2 shadow-lg shadow-nissi-orange/20">
+                              <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                              <span className="text-[10px] font-black text-white tracking-widest uppercase">HD PREMIUM</span>
+                           </div>
+                        </div>
+                     </div>
+                   </div>
+
+                <h3 className="text-2xl sm:text-3xl md:text-7xl font-black uppercase italic tracking-tighter leading-[1.1] md:leading-[1] group-hover:text-nissi-orange transition-colors">
+                     {idx + 1}. {s.title}
+                  </h3>
+                  <p className="text-lg md:text-2xl text-white/60 leading-relaxed font-medium max-w-4xl text-left md:text-justify md:hyphens-auto">
+                     {s.description}
+                  </p>
+                </div>
+ 
+                 <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
+                  <button 
+                    onClick={() => openBooking(s.title)}
+                    className="flex-1 py-5 md:py-7 bg-nissi-orange text-white rounded-2xl md:rounded-3xl flex items-center justify-center gap-4 font-black uppercase tracking-[0.2em] text-md md:text-2xl transition-all hover:scale-[1.03] active:scale-95 shadow-[0_20px_40px_rgba(255,102,0,0.3)] relative overflow-hidden group/btn"
+                  >
+                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
+                     <span className="relative z-10 italic flex items-center gap-3">
+                        AGENDAR Y CONFIRMAR 🎁
+                        <ArrowRight className="w-5 h-5 md:w-8 md:h-8 animate-bounce-x" />
+                     </span>
+                  </button>
+ 
+                  <button 
+                    onClick={() => setActiveVideo(s.videoUrl || '')}
+                    className="px-8 py-5 md:py-7 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-2xl md:rounded-3xl flex items-center justify-center gap-4 font-black uppercase tracking-[0.2em] text-md transition-all"
+                  >
+                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-nissi-orange flex items-center justify-center shadow-xl">
+                      <Play className="w-3 h-3 md:w-4 md:h-4 text-white fill-current ml-1" />
+                    </div>
+                    VER PROCESO
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* SECTION 3: POR QUÉ ELEGIRNOS */}
+      <section className="py-20 md:py-32 bg-[#0e0e10] border-y border-white/5 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="flex flex-col lg:flex-row gap-16 md:gap-24 items-center">
+            <div className="flex-1 space-y-8">
+              <motion.h2 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="text-2xl sm:text-4xl md:text-6xl lg:text-7xl font-black uppercase italic leading-[1.1] md:leading-none tracking-tighter px-4 md:px-0"
+              >
+                Seguridad y Calidad <br className="hidden sm:block" /> 
+                <span className="text-nissi-orange">Innegociables.</span>
+              </motion.h2>
+              <div className="space-y-8 md:space-y-12 pt-4 md:pt-8">
+                {PILLARS.map((p, idx) => (
+                  <motion.div 
+                    key={idx}
+                    initial={{ opacity: 0, x: -30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: idx * 0.2 }}
+                    className="flex gap-4 md:gap-6 items-start group/pillar"
+                  >
+                    <div className="mt-1 p-3 md:p-4 rounded-2xl bg-gradient-to-br from-white/10 to-transparent border border-white/10 shadow-2xl group-hover/pillar:border-nissi-orange/50 transition-colors shrink-0">
+                      <p.icon className="w-6 h-6 md:w-8 md:h-8 text-nissi-orange" />
+                    </div>
+                    <div>
+                      <h4 className="text-xl md:text-2xl font-black uppercase mb-1 md:mb-2 group-hover:text-nissi-orange transition-colors">
+                        {p.title}
+                      </h4>
+                      <p className="text-white/50 text-md md:text-lg leading-relaxed">
+                        {p.desc}
+                      </p>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex-1 w-full relative contenedor-oferta-nissi max-w-xl">
+                <div className="absolute inset-0 bg-nissi-orange/20 blur-[100px] rounded-full scale-75 animate-pulse-slow" />
+                <img 
+                  src="https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=0"
+                  alt="Servicio Detailing Nissi" 
+                  className="rounded-[3rem] shadow-2xl relative z-10 border border-white/10 grayscale-[0.3] hover:grayscale-0 transition-all duration-1000 w-full"
+                />
+                <div className="absolute -bottom-10 -right-4 md:-right-10 bg-nissi-blue p-8 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.5)] z-20 border-4 border-[#1a1a1c] hidden md:block">
+                   <div className="flex items-center gap-1 mb-2">
+                       {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" />)}
+                   </div>
+                   <p className="font-black text-4xl italic uppercase leading-none">5.0 <br /> <span className="text-[10px] font-black opacity-50 not-italic tracking-[0.3em] uppercase">Satisfacción Real</span></p>
+                </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 4: EL PASO FINAL */}
+      <section className="py-32 px-6 text-center">
+        <motion.div
+           initial={{ opacity: 0, scale: 0.9 }}
+           whileInView={{ opacity: 1, scale: 1 }}
+           viewport={{ once: true }}
+           className="max-w-4xl mx-auto p-12 md:p-20 rounded-[4rem] bg-gradient-to-br from-nissi-orange/20 via-transparent to-white/5 border border-white/10 relative group overflow-hidden shadow-2xl"
+        >
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 pointer-events-none" />
+          
+          <h2 className="text-2xl xs:text-3xl sm:text-5xl md:text-7xl font-black italic uppercase tracking-tighter mb-8 leading-[1.1] md:leading-tight px-4">
+            ¿Listo para <br className="hidden sm:block" />
+            <span className="text-nissi-orange">Transformar tu Auto?</span>
+          </h2>
+          <p className="text-lg md:text-xl text-white/50 mb-12 max-w-2xl mx-auto font-medium text-center md:text-justify md:hyphens-auto px-6">
+            No pierdas más tiempo pensando. Reserva tu cupo para valorarlo hoy mismo y experimenta el acabado que tu vehículo merece.
+          </p>
+          
+          <button 
+            onClick={() => openBooking('cita hoy mismo')}
+            className="w-full md:w-auto px-10 py-5 md:px-16 md:py-8 bg-nissi-orange text-white rounded-[1.5rem] md:rounded-[2rem] font-black uppercase tracking-[0.15em] md:tracking-[0.25em] text-lg md:text-4xl shadow-[0_30px_60px_rgba(255,102,0,0.4),0_0_0_8px_rgba(255,102,0,0.1)] hover:scale-105 transition-all duration-500 hover:brightness-110 active:scale-95 border-b-[8px] md:border-b-[12px] border-black/20 relative overflow-hidden group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
+            <span className="relative z-10 drop-shadow-lg flex items-center justify-center gap-4 md:gap-6">
+               RESERVAR CUPO HOY
+              <motion.div
+                animate={{ x: [0, 5, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+              >
+                <ArrowRight size={24} className="md:w-10 md:h-10 stroke-[3px]" />
+              </motion.div>
+            </span>
+          </button>
+        </motion.div>
+      </section>
+
+      {/* WHATSAPP FLOATING BUTTON */}
+      <motion.button
+         initial={{ scale: 1, opacity: 1 }}
+         animate={{ scale: 1, opacity: 1 }}
+         whileHover={{ scale: 1.1 }}
+         whileTap={{ scale: 0.9 }}
+         onClick={() => openBooking()}
+         className="fixed bottom-10 right-10 z-[80] bg-[#25D366] p-5 rounded-full shadow-[0_20px_40px_rgba(37,211,102,0.4)] group"
+      >
+        <MessageCircle size={32} className="text-white relative z-10" />
+        <motion.span 
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: [0, 1, 1, 0, 0] }}
+          transition={{ times: [0, 0.1, 0.8, 0.9, 1], duration: 5, delay: 1 }}
+          className="absolute right-full mr-6 top-1/2 -translate-y-1/2 bg-white text-[#25D366] px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest whitespace-nowrap group-hover:opacity-100 transition-all pointer-events-none shadow-2xl"
+        >
+           Agendar Valoración Gratis
+        </motion.span>
+      </motion.button>
+
+      {/* REVIEWS */}
+      <div className="max-w-7xl mx-auto px-6 py-24 border-t border-white/5">
+        <ReviewSection 
+          targetId="experts-services" 
+          reviews={reviews} 
+          onAddReview={onAddReview} 
+          onDeleteReview={onDeleteReview} 
+          isAdmin={isAdmin} 
+        />
+      </div>
+
+      {/* MODALS */}
+      <VideoModal 
+        isOpen={activeVideo !== null} 
+        onClose={() => setActiveVideo(null)} 
+        videoUrl={activeVideo || ''} 
+      />
+
+      <BookingModal 
+        isOpen={isBookingOpen}
+        onClose={() => setIsBookingOpen(false)}
+        initialService={selectedService}
+      />
+
+    </div>
+  );
 };
 
 export default LandingPageServices;

@@ -29,7 +29,6 @@ export interface SiteContent {
   optimization: {
     whatsappFloating: boolean;
     socialProof: boolean;
-    chatbotEnabled: boolean;
     googleAnalyticsId: string;
     metaTitle: string;
     metaDescription: string;
@@ -72,7 +71,6 @@ export const siteContent: SiteContent = {
   optimization: {
     whatsappFloating: true,
     socialProof: true,
-    chatbotEnabled: true,
     googleAnalyticsId: "G-XXXXXXXXXX",
     metaTitle: "NISSI CAR-HOME | Estética Automotriz Premium",
     metaDescription: "Expertos en detallado, recubrimientos cerámicos y productos premium para el cuidado de tu vehículo en Pereira."

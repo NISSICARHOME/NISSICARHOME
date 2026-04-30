@@ -19,12 +19,12 @@ import Footer from './components/Footer';
 import ProductModal from './components/shared/ProductModal';
 import QuickBuyModal from './components/shared/QuickBuyModal';
 import CheckoutForm from './components/checkout/CheckoutForm';
-import Chatbot from './components/Chatbot';
 import Filters from './components/Filters';
 import SocialProofToast from './components/shared/SocialProofToast';
 import SEOManager from './components/shared/SEOManager';
 import WhatsAppButton from './components/shared/WhatsAppButton';
 import HighConversionButton from './components/shared/HighConversionButton';
+import BookingModal from './components/shared/BookingModal';
 import ReviewSection from './components/shared/ReviewSection';
 import { TrackingService } from './services/TrackingService';
 
@@ -66,10 +66,9 @@ const ScrollToTop = () => {
 const MainLayout: React.FC<{
   cartItemCount: number;
   onCartClick: () => void;
-  onVoiceSearchStart: () => void;
-}> = ({ cartItemCount, onCartClick, onVoiceSearchStart }) => (
+}> = ({ cartItemCount, onCartClick }) => (
   <>
-    <Header cartItemCount={cartItemCount} onCartClick={onCartClick} onVoiceSearchStart={onVoiceSearchStart} />
+    <Header cartItemCount={cartItemCount} onCartClick={onCartClick} />
     <main>
       <Outlet />
     </main>
@@ -120,8 +119,6 @@ const App: React.FC = () => {
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [viewedProductIds, setViewedProductIds] = useState<string[]>([]);
   const [lastAddedProductId, setLastAddedProductId] = useState<string | null>(null);
-  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
-  const [startVoiceSearch, setStartVoiceSearch] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilters, setActiveFilters] = useState<ActiveFilters>({
     categories: [],
@@ -131,6 +128,17 @@ const App: React.FC = () => {
 
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
+  const [bookingInitialService, setBookingInitialService] = useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    const handleOpenBooking = (e: any) => {
+      setBookingInitialService(e.detail?.service);
+      setIsBookingModalOpen(true);
+    };
+    window.addEventListener('open-booking-modal', handleOpenBooking);
+    return () => window.removeEventListener('open-booking-modal', handleOpenBooking);
+  }, []);
 
   const handleAddReview = (reviewData: Omit<Review, 'id' | 'date'>) => {
     const newReview: Review = {
@@ -249,13 +257,6 @@ const App: React.FC = () => {
   const handleCloseQuickBuy = () => setQuickBuyProduct(null);
   const handleCartClick = () => setIsCheckoutOpen(true);
 
-  const handleVoiceSearchStart = () => {
-    setIsChatbotOpen(true);
-    setStartVoiceSearch(true);
-  };
-
-  const handleListeningEnd = () => setStartVoiceSearch(false);
-  
   const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
@@ -265,8 +266,13 @@ const App: React.FC = () => {
       <WhatsAppButton />
       <HighConversionButton />
       {optimization.socialProof && <SocialProofToast />}
+      <BookingModal 
+        isOpen={isBookingModalOpen} 
+        onClose={() => setIsBookingModalOpen(false)} 
+        initialService={bookingInitialService}
+      />
       <Routes>
-        <Route path="/" element={<MainLayout cartItemCount={cartItemCount} onCartClick={handleCartClick} onVoiceSearchStart={handleVoiceSearchStart} />}>
+        <Route path="/" element={<MainLayout cartItemCount={cartItemCount} onCartClick={handleCartClick} />}>
           <Route 
             index 
             element={<HomePage onProductSelect={handleProductSelect} onAddToCart={handleAddToCart} searchTerm={searchTerm} activeFilters={activeFilters} setActiveFilters={setActiveFilters} reviews={reviews} onAddReview={handleAddReview} onDeleteReview={handleDeleteReview} isAdmin={isAdmin} />} 
@@ -330,9 +336,6 @@ const App: React.FC = () => {
       {selectedProduct && <ProductModal product={selectedProduct} onClose={handleCloseModal} onAddToCart={handleAddToCart} />}
       
       {isCheckoutOpen && <CheckoutForm cart={cart} setCart={setCart} viewedProductIds={viewedProductIds} lastAddedProductId={lastAddedProductId} onClose={() => setIsCheckoutOpen(false)} />}
-      {optimization.chatbotEnabled && (
-        <Chatbot allProducts={allProducts} onProductSelect={handleProductSelect} isOpen={isChatbotOpen} setIsOpen={setIsChatbotOpen} startListening={startVoiceSearch} onListeningEnd={handleListeningEnd} />
-      )}
     </HashRouter>
   );
 };

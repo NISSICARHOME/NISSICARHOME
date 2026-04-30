@@ -39,7 +39,7 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
 
   return (
     <section id="oferta-basico" className="bg-white py-12 px-4 text-center">
-      <div className="w-full max-w-2xl mx-auto mb-8 aspect-[1.37/1] bg-gray-100 rounded-2xl overflow-hidden relative">
+      <div className="w-full max-w-2xl mx-auto mb-8 aspect-[1.37/1] bg-gray-100 rounded-2xl overflow-hidden relative contenedor-oferta-nissi">
           <img 
               src="https://lh3.googleusercontent.com/pw/AP1GczOzc5XobmAERtALiliyk1JbpWK9TtlNYR-Gq8ho_9NrxGyhRPsDqNM-pw--dmicYoJ0_81bX_O_lzOKpZgscWtppJojH71Pg6PkQH4o-KcNy9eQKQ5Tb0jyUd6yAN_E_fQAB2JsWaoh-N5LdH_xss1_=w801-h584-s-no-gm?authuser=0"
               alt="Kit Básico de Cuidado Nissi Car Home" 

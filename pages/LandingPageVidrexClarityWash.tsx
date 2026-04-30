@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShoppingCart, CheckCircle, Truck, ShieldCheck, Star } from 'lucide-react';
+import { ShoppingCart, CheckCircle, Truck, ShieldCheck, Star, ArrowRight } from 'lucide-react';
 import { CartItem, Review } from '../types';
 import ReviewSection from '../components/shared/ReviewSection';
 
@@ -40,7 +40,7 @@ const Hero = ({ onScrollToOffer }: { onScrollToOffer: () => void }) => {
                     Logra un <strong className="text-nissi-blue uppercase tracking-tight">"Efecto Cristal Nuevo"</strong> en tu auto, hogar y acabados de lujo.
                 </p>
 
-                <div className="mb-12 relative group max-w-2xl mx-auto">
+                <div className="mb-12 relative group max-w-2xl mx-auto contenedor-oferta-nissi">
                     <div className="absolute inset-0 bg-nissi-blue/10 blur-2xl rounded-3xl transform group-hover:scale-110 transition-transform duration-700" />
                     <img 
                         src="https://lh3.googleusercontent.com/pw/AP1GczN6yIeskFqBi_Gk6syxGzQB2TB-ERL44l2K905Io7mcitBNIWwpwAdxHIXuBCYkxX4T80d7FkisbUQ0hKAk0YQxe_CpeBmAOk6cVnpP2ehDIUZbL15rD548iIRUQtMTcyHs657Iy4XOVITsL6PM6hfx=w1040-h800-s-no-gm?authuser=0" 
@@ -111,7 +111,7 @@ const PainPoints = () => {
                             viewport={{ once: true }}
                             className="bg-white rounded-3xl overflow-hidden shadow-xl shadow-nissi-blue/5 border border-nissi-blue/5 flex flex-col"
                         >
-                            <div className="relative aspect-[4/3] overflow-hidden">
+                            <div className="relative aspect-[4/3] overflow-hidden contenedor-oferta-nissi">
                                 <img 
                                     src={point.image} 
                                     alt={point.title}
@@ -187,11 +187,11 @@ const SocialProof = () => {
                                 transition={{ duration: 0.5 }}
                                 className="absolute inset-0 grid grid-cols-2"
                             >
-                                <div className="relative h-full border-r-2 border-white">
+                                <div className="relative h-full border-r-2 border-white contenedor-oferta-nissi">
                                     <img src={examples[activeIndex].before} alt="Antes" className="w-full h-full object-cover" />
                                     <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 bg-black/50 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Antes</div>
                                 </div>
-                                <div className="relative h-full">
+                                <div className="relative h-full contenedor-oferta-nissi">
                                     <img src={examples[activeIndex].after} alt="Después" className="w-full h-full object-cover" />
                                     <div className="absolute bottom-4 right-4 sm:bottom-6 sm:right-6 bg-nissi-orange text-white text-[10px] font-black uppercase tracking-widest px-3 py-1 rounded-full">Después</div>
                                 </div>
@@ -291,70 +291,81 @@ const OfferSection = ({ id, onBuy }: { id: string, onBuy: (item: CartItem) => vo
                         </button>
                     </motion.div>
 
-                    {/* Oferta B - 3x2 */}
+                    {/* Oferta B - 3x2 (Ad-Style Professional - 9:16 Optimized) */}
                     <motion.div 
-                        whileHover={{ y: -10 }}
-                        className="bg-white rounded-[3rem] shadow-[0_50px_100px_rgba(0,0,0,0.4)] p-8 md:p-12 flex flex-col items-center border-8 border-nissi-orange relative min-h-[780px] justify-between z-10 overflow-hidden"
+                        whileHover={{ y: -5 }}
+                        className="bg-[#003da5] rounded-[3rem] shadow-[0_60px_120px_rgba(0,0,0,0.6)] flex flex-col items-center border-0 relative min-h-[900px] w-full max-w-[480px] mx-auto justify-between z-10 overflow-hidden"
                     >
-                        <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
-                            <Truck className="w-16 h-16 text-nissi-blue rotate-12" />
-                        </div>
-                        <div className="absolute bottom-1/2 left-0 p-4 opacity-10 pointer-events-none -translate-x-4">
-                            <Star className="w-20 h-20 text-nissi-orange -rotate-12" />
+                        {/* Background Dynamics - Clean & Premium */}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_30%,_#0066cc_0%,_transparent_65%)] opacity-30" />
+                        
+                        {/* 1. TÍTULO: Tercio Superior, Perfecto Centrado */}
+                        <div className="w-full flex flex-col items-center pt-16 px-8 z-10">
+                            <span className="bg-nissi-orange text-white px-5 py-1 rounded-full text-[12px] font-black uppercase tracking-[0.4em] mb-6 shadow-xl animate-pulse">
+                                OFERTA EXCLUSIVA
+                            </span>
+                            <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-white italic uppercase tracking-tighter leading-tight mb-4 text-center drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                                PAGA 2 <br />
+                                <span className="text-yellow-400">LLEVA 3</span> KITS
+                            </h3>
+                            <div className="h-2 w-32 bg-white/40 rounded-full" />
                         </div>
 
-                        <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20 bg-nissi-blue text-white px-8 py-3 rounded-full text-sm font-black uppercase tracking-widest shadow-2xl scale-110">
-                            MEJOR PRECIO POR UNIDAD
-                        </div>
-
-                        <div className="w-full flex flex-col items-center flex-grow">
-                            {/* Jerarquía: Título Arriba - Simetría Perfecta */}
-                            <div className="mb-8 text-center w-full pt-4">
-                                <h3 className="text-4xl md:text-5xl font-black text-nissi-blue mb-2 uppercase tracking-tight italic leading-tight">
-                                    PAGA 2 LLEVA 3 KITS
-                                </h3>
-                                <div className="h-2 w-32 bg-nissi-orange mx-auto rounded-full" />
-                            </div>
-
-                            {/* Jerarquía: Productos en el Centro (Formato Vertical 9:16 Ad-Style) */}
-                            <div className="w-full max-w-[340px] aspect-[9/16] bg-black/5 rounded-[2.5rem] mb-8 border-4 border-nissi-blue/5 flex items-center justify-center relative overflow-hidden group shadow-2xl">
+                        {/* 2. PRODUCTOS: Centro, Distribución Simétrica */}
+                        <div className="relative w-full flex-grow flex items-center justify-center p-8 z-10">
+                            <div className="w-full aspect-[9/16] max-h-[480px] bg-white/5 rounded-[3rem] border-0 flex items-center justify-center relative overflow-hidden group shadow-2xl">
                                 <iframe 
                                     src="https://drive.google.com/file/d/14LiL01LkOEIDzd2V-FVgD_WztIJxbxQ3/preview" 
                                     width="1080" 
                                     height="1920" 
-                                    className="w-full h-full border-0 absolute inset-0 sm:scale-105"
+                                    className="w-full h-full border-0 absolute inset-0 sm:scale-[1.2] origin-center"
                                     allow="autoplay"
                                     loading="lazy"
                                     title="Publicidad Paga 2 Lleva 3"
                                 ></iframe>
-                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-transparent to-nissi-blue/20 opacity-40 group-hover:opacity-60 transition-opacity" />
-                            </div>
-
-                            {/* Jerarquía: Precio Abajo - Máxima Legibilidad */}
-                            <div className="mb-8 text-center w-full bg-nissi-blue/5 py-4 px-6 rounded-3xl border border-nissi-blue/10 flex flex-col items-center">
-                                <div className="flex items-center gap-6 mb-2">
-                                    <div className="flex items-center gap-1">
-                                        <CheckCircle className="w-4 h-4 text-nissi-blue" />
-                                        <span className="text-[10px] font-black text-nissi-blue/60 uppercase tracking-widest">Original</span>
-                                    </div>
-                                    <div className="flex items-center gap-1">
-                                        <CheckCircle className="w-4 h-4 text-nissi-blue" />
-                                        <span className="text-[10px] font-black text-nissi-blue/60 uppercase tracking-widest">Garantía</span>
-                                    </div>
-                                </div>
-                                <div className="text-nissi-orange text-6xl font-black italic drop-shadow-[0_10px_15px_rgba(255,102,0,0.2)] tracking-tighter flex items-center justify-center gap-2">
-                                    $120.000 <span className="text-2xl not-italic opacity-50 font-bold">COP</span>
-                                </div>
-                                <span className="text-nissi-blue/40 text-[10px] font-bold uppercase tracking-[0.3em] mt-2">Ahorro Máximo Garantizado</span>
+                                <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#003da5]/40 via-transparent to-transparent opacity-60" />
                             </div>
                         </div>
 
-                        <button 
-                            onClick={() => handleWhatsApp('PAGA 2 LLEVA 3 KITS', '$120.000')}
-                            className="w-full py-6 bg-nissi-orange text-white font-black rounded-2xl transition-all uppercase tracking-tight text-3xl shadow-[0_25px_50px_rgba(255,102,0,0.4)] hover:scale-[1.03] hover:brightness-110 active:scale-95 border-b-8 border-black/20"
-                        >
-                            APROVECHA HOY
-                        </button>
+                        {/* 3. PRECIO Y CTA: Tercio Inferior, Máximo Contraste */}
+                        <div className="w-full flex flex-col items-center z-10 px-8 pb-12">
+                            {/* Price Group - Centered and High Contrast */}
+                            <div className="mb-8 scale-110">
+                                <div className="bg-[#cc0000] border-4 border-yellow-400 px-10 py-4 rounded-3xl shadow-[0_25px_50px_rgba(204,0,0,0.5)] relative">
+                                    <span className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-[#cc0000] text-[10px] font-black uppercase px-4 py-1.5 rounded-full shadow-lg whitespace-nowrap">
+                                        PRECIO TOTAL HOY
+                                    </span>
+                                    <div className="text-white text-6xl font-black tracking-tighter flex items-center justify-center gap-2 italic">
+                                        $120.000 <span className="text-2xl not-italic opacity-60">COP</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Beneficios: Línea Limpia y Alíneada */}
+                            <div className="flex items-center justify-center gap-8 mb-10 w-full">
+                                <div className="flex flex-col items-center gap-2">
+                                    <CheckCircle className="w-6 h-6 text-yellow-400" />
+                                    <span className="text-[10px] font-black text-white/80 uppercase tracking-widest">Original</span>
+                                </div>
+                                <div className="flex flex-col items-center gap-2">
+                                    <Truck className="w-6 h-6 text-yellow-400" />
+                                    <span className="text-[10px] font-black text-white/80 uppercase tracking-widest">Envío Gratis</span>
+                                </div>
+                                <div className="flex flex-col items-center gap-2">
+                                    <ShieldCheck className="w-6 h-6 text-yellow-400" />
+                                    <span className="text-[10px] font-black text-white/80 uppercase tracking-widest">Garantía</span>
+                                </div>
+                            </div>
+
+                            {/* CTA: Centrado, Visible y Potente */}
+                            <button 
+                                onClick={() => handleWhatsApp('PAGA 2 LLEVA 3 KITS', '$120.000')}
+                                className="w-full py-8 bg-[#ff6600] text-white font-black transition-all uppercase tracking-[0.15em] text-3xl flex items-center justify-center gap-4 hover:brightness-110 active:scale-95 group rounded-3xl shadow-[0_20px_40px_rgba(255,102,0,0.3)]"
+                            >
+                                APROVECHA HOY
+                                <ArrowRight className="w-10 h-10 group-hover:translate-x-4 transition-transform" />
+                            </button>
+                        </div>
                     </motion.div>
                 </div>
 

@@ -271,18 +271,6 @@ const AdminDashboard: React.FC = () => {
                         <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${content.optimization.socialProof ? 'left-7' : 'left-1'}`}></div>
                       </button>
                     </div>
-                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
-                      <div>
-                        <p className="font-bold text-gray-700">Asistente IA (Chatbot)</p>
-                        <p className="text-xs text-gray-500">Habilita el soporte 24/7 con IA.</p>
-                      </div>
-                      <button 
-                        onClick={() => handleToggleChange('chatbotEnabled', !content.optimization.chatbotEnabled)}
-                        className={`w-12 h-6 rounded-full transition-all relative ${content.optimization.chatbotEnabled ? 'bg-blue-500' : 'bg-gray-300'}`}
-                      >
-                        <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all ${content.optimization.chatbotEnabled ? 'left-7' : 'left-1'}`}></div>
-                      </button>
-                    </div>
                   </div>
 
                   <div className="space-y-6">

@@ -78,7 +78,7 @@ const LandingHero: React.FC<{ onBuyNow: (item: CartItem) => void }> = ({ onBuyNo
         </div>
 
         <div className="w-full md:w-1/2 z-10 flex justify-center">
-            <div className="relative w-full max-w-md aspect-[1.3/1] bg-gray-900/50 rounded-2xl overflow-hidden">
+            <div className="relative w-full max-w-md aspect-[1.3/1] bg-gray-900/50 rounded-2xl overflow-hidden contenedor-oferta-nissi">
                  <div className="absolute inset-0 bg-amber-500 rounded-full blur-[80px] opacity-20 animate-pulse-slow"></div>
                  <img 
                     src="https://lh3.googleusercontent.com/pw/AP1GczN-zXHr14d1RfpvNWQ9Zn6Y1vdjBlCgnsiDyT57kpTfA81-h5eZtRvzJmEPvxDcbGw5IBYvDqMEhlwuq7W6VpM7E-z3xtq6QOjAZN0tYTtQtIoGklEpD9Iufe8YT9ajvLN7jX8LUHoewgAhTKf64xRX=w1040-h800-s-no-gm?authuser=0" 

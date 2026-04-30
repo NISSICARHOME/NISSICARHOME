@@ -116,6 +116,24 @@
   animation: pulse-strong 2s infinite;
 }
 
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.animate-float {
+  animation: float 4s infinite ease-in-out;
+}
+
 @keyframes water-flow {
   0% { background-position: 0 0; }
   100% { background-position: -200px 400px; }
@@ -185,4 +203,13 @@
 /* Fix for iOS momentum scrolling */
 .overflow-y-auto {
   -webkit-overflow-scrolling: touch;
+}
+
+/* Este código congela la imagen y elimina el zoom */
+.contenedor-oferta-nissi img {
+  pointer-events: none; /* Elimina clics y gestos directos sobre la imagen */
+  user-select: none;    /* Evita que se seleccione o arrastre */
+  touch-action: none;   /* Desactiva gestos táctiles de zoom/paneo */
+  max-width: 100%;
+  display: block;
 }
