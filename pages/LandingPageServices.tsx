@@ -25,7 +25,7 @@ const SERVICES = [
     description: 'Eliminamos el tono amarillento y opaco. Devolvemos la transparencia y el brillo original con sellado UV de larga duración.',
     videoUrl: 'https://drive.google.com/file/d/1iS_eXbtEWWjD-qEQwtHpE3TxkxKywvrH/preview',
     processVideoUrl: 'https://drive.google.com/file/d/1WWLiw99X-IPEFpCm8DkLUzdPzbS3DRAZ/preview',
-    mediaUrl: 'https://images.unsplash.com/photo-1611702952136-2292f7685a49?auto=format&fit=crop&q=80&w=2000',
+    mediaUrl: 'https://lh3.googleusercontent.com/d/1iS_eXbtEWWjD-qEQwtHpE3TxkxKywvrH',
     gifUrl: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGZ6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKVUn7iM8FMEU24/giphy.gif',
     isVideo: false,
     icon: Lightbulb,
@@ -250,7 +250,7 @@ const LandingPageServices: React.FC<{
 
                   <div className="space-y-8">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                         <div className="relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 group-hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-black">
+                         <div className={`relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden transition-all duration-700 ${s.id === 'farolas' ? 'bg-[#0a0a0b]' : 'border border-white/10 group-hover:border-nissi-orange/50 shadow-2xl bg-black'}`}>
                             {/* Fallback & Poster Image */}
                             <img 
                               src={s.mediaUrl}
@@ -260,17 +260,25 @@ const LandingPageServices: React.FC<{
                             />
                             
                             {/* Native Video Handling for Detailing Sections */}
-                            {(s.id === 'farolas' || s.id === 'exterior' || s.id === 'interior' || s.id === 'vidrios' || s.id === 'gold') ? (
-                               <video
-                                 autoPlay
-                                 muted
-                                 loop
-                                 playsInline
-                                 className="relative z-10 w-full h-full object-cover scale-[1.02] brightness-110 pointer-events-none touch-action-none"
-                                 poster={s.mediaUrl}
-                               >
-                                 <source src={`${s.videoUrl.replace('/preview', '').replace('/file/d/', '/uc?id=')}`} type="video/mp4" />
-                               </video>
+                            {(s.id === 'exterior' || s.id === 'interior' || s.id === 'vidrios' || s.id === 'gold') ? (
+                               <div className="absolute inset-0 z-10 w-full h-full bg-black">
+                                 <iframe 
+                                   src={`${s.videoUrl}${s.videoUrl.includes('?') ? '&' : '?'}mute=1&autoplay=1&playsinline=1&controls=0&rel=0&modestbranding=1`}
+                                   className="w-full h-full object-cover pointer-events-none scale-[1.3] brightness-110"
+                                   allow="autoplay; encrypted-media"
+                                   referrerPolicy="no-referrer"
+                                 />
+                                 <div className="absolute inset-0 bg-transparent z-20" />
+                               </div>
+                            ) : s.id === 'farolas' ? (
+                               <div className="absolute inset-0 z-10 w-full h-full bg-[#0a0a0b] flex items-center justify-center p-2">
+                                  <img 
+                                    src={s.mediaUrl} 
+                                    alt={s.title} 
+                                    className="w-full h-full object-contain pointer-events-none brightness-110 transition-all duration-700"
+                                    referrerPolicy="no-referrer"
+                                  />
+                               </div>
                             ) : s.isVideo ? (
                                <video
                                  autoPlay
@@ -303,16 +311,15 @@ const LandingPageServices: React.FC<{
                          <div className="relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-[#1a1a1c] group/gif">
                             {/* Native high-quality GIF or Video Bypass */}
                             {(s as any).processVideoUrl ? (
-                               <video
-                                 autoPlay
-                                 muted
-                                 loop
-                                 playsInline
-                                 className="relative z-10 w-full h-full object-cover brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700 pointer-events-none touch-action-none"
-                                 poster={(s as any).gifUrl}
-                               >
-                                 <source src={`${(s as any).processVideoUrl.replace('/preview', '').replace('/file/d/', '/uc?id=')}`} type="video/mp4" />
-                               </video>
+                               <div className="absolute inset-0 z-10 w-full h-full">
+                                 <iframe 
+                                   src={`${(s as any).processVideoUrl}${(s as any).processVideoUrl.includes('?') ? '&' : '?'}mute=1&autoplay=1&playsinline=1&controls=0&modestbranding=1`}
+                                   className="w-full h-full object-cover pointer-events-none scale-[1.3] brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700"
+                                   allow="autoplay; encrypted-media"
+                                   referrerPolicy="no-referrer"
+                                 />
+                                 <div className="absolute inset-0 bg-transparent z-20" />
+                               </div>
                             ) : (
                                <img 
                                   src={(s as any).gifUrl} 
