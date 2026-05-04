@@ -127,19 +127,30 @@ const LandingPageServices: React.FC<{
   }, []);
 
   return (
-    <div className="bg-[#0a0a0b] text-white font-sans selection:bg-nissi-orange selection:text-white pb-32 antialiased overflow-x-hidden">
+    <div className="bg-[#0a0a0b] text-white font-sans selection:bg-nissi-orange selection:text-white pb-32 antialiased overflow-x-hidden selection:bg-opacity-50">
       
       {/* SECTION 1: HERO DE AUTORIDAD */}
       <section className="relative min-h-screen min-h-[100svh] flex items-center justify-center overflow-hidden">
         {/* Background Video/Image Overlay */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-[#0a0a0b] z-10" />
-          <img 
-            src="https://images.unsplash.com/photo-1621360841013-c7683c659ec6?auto=format&fit=crop&q=80&w=2000"
-            className="w-full h-full object-cover brightness-[0.7] animate-pulse-slow"
-            alt="Background detailing"
-            referrerPolicy="no-referrer"
-          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-[#0a0a0b] z-10" />
+          
+          {/* Optimized Background Visual for iOS */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover brightness-[0.6] opacity-60 pointer-events-none"
+            poster="https://images.unsplash.com/photo-1621360841013-c7683c659ec6?auto=format&fit=crop&q=80&w=2000"
+          >
+            <source src="https://drive.google.com/uc?id=1tL3X9w3n2vF8-Bv8D0F_uY1vY5G5S_yv" type="video/mp4" />
+            <img 
+              src="https://images.unsplash.com/photo-1621360841013-c7683c659ec6?auto=format&fit=crop&q=80&w=2000"
+              className="w-full h-full object-cover brightness-[0.7]"
+              alt="Estética Automotriz Nissi"
+            />
+          </video>
         </div>
 
         <div className="relative z-20 max-w-5xl mx-auto px-4 md:px-6 text-center space-y-6 md:space-y-8">
@@ -237,78 +248,89 @@ const LandingPageServices: React.FC<{
                      </div>
                   </div>
 
-                                      <div className="space-y-8">
-                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 group-hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-black">
-                           {/* Fallback Background Image for iOS / Loading state */}
-                           <img 
-                             src={s.mediaUrl}
-                             className="absolute inset-0 w-full h-full object-cover brightness-50 z-0"
-                             alt="Loading..."
-                           />
-                           
-                           {s.id === 'farolas' || s.id === 'exterior' || s.id === 'interior' || s.id === 'vidrios' || s.id === 'gold' ? (
-                              <iframe 
-                               src={`${s.videoUrl}${s.videoUrl.includes('?') ? '&' : '?'}mute=1&autoplay=1`}
-                               className="relative z-10 w-full h-full object-cover scale-[1.2] brightness-110 pointer-events-none touch-action-none"
-                               allow="autoplay; encrypted-media"
-                              />
-                           ) : s.isVideo ? (
-                              <iframe 
-                               src={`${s.mediaUrl}&controls=0&autoplay=1&mute=1&loop=1&rel=0`}
-                               className="relative z-10 w-full h-full object-cover scale-[1.5] brightness-110 pointer-events-none touch-action-none"
-                               allow="autoplay; encrypted-media"
-                              />
-                           ) : (
-                              <img 
-                               src={s.mediaUrl} 
-                               alt={s.title} 
-                               className="relative z-10 w-full h-full object-cover transition-all duration-1000 md:group-hover:scale-110"
-                               referrerPolicy="no-referrer"
-                              />
-                           )}
-                           <div className="absolute inset-0 pointer-events-none z-20" />
-                           <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20 flex items-center gap-2 md:gap-3">
-                              <div className="bg-nissi-orange px-2 py-0.5 md:px-3 md:py-1 rounded-md flex items-center gap-1.5 md:gap-2 shadow-lg shadow-nissi-orange/20">
-                                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white animate-pulse" />
-                                 <span className="text-[8px] md:text-[10px] font-black text-white tracking-widest uppercase">HD PREMIUM</span>
-                              </div>
-                           </div>
-                        </div>
-
-                        {/* GIF/Video Proceso Container */}
-                        <div className="relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-[#1a1a1c] group/gif">
-                           {/* Fallback visual for process */}
-                           <img 
-                             src={(s as any).gifUrl} 
-                             className="absolute inset-0 w-full h-full object-cover brightness-50 z-0"
-                             alt="Proceso"
-                           />
-
-                           {(s as any).processVideoUrl ? (
-                              <iframe 
-                                 src={`${(s as any).processVideoUrl}${(s as any).processVideoUrl.includes('?') ? '&' : '?'}mute=1&autoplay=1`}
+                  <div className="space-y-8">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                         <div className="relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 group-hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-black">
+                            {/* Fallback & Poster Image */}
+                            <img 
+                              src={s.mediaUrl}
+                              className="absolute inset-0 w-full h-full object-cover brightness-50 z-0"
+                              alt={s.title}
+                              referrerPolicy="no-referrer"
+                            />
+                            
+                            {/* Native Video Handling for Detailing Sections */}
+                            {(s.id === 'farolas' || s.id === 'exterior' || s.id === 'interior' || s.id === 'vidrios' || s.id === 'gold') ? (
+                               <video
+                                 autoPlay
+                                 muted
+                                 loop
+                                 playsInline
+                                 className="relative z-10 w-full h-full object-cover scale-[1.02] brightness-110 pointer-events-none touch-action-none"
+                                 poster={s.mediaUrl}
+                               >
+                                 <source src={`${s.videoUrl.replace('/preview', '').replace('/file/d/', '/uc?id=')}`} type="video/mp4" />
+                               </video>
+                            ) : s.isVideo ? (
+                               <video
+                                 autoPlay
+                                 muted
+                                 loop
+                                 playsInline
+                                 className="relative z-10 w-full h-full object-cover scale-[1.02] brightness-110 pointer-events-none touch-action-none"
+                                 poster={s.mediaUrl}
+                               >
+                                 <source src={s.mediaUrl} type="video/mp4" />
+                               </video>
+                            ) : (
+                               <img 
+                                src={s.mediaUrl} 
+                                alt={s.title} 
+                                className="relative z-10 w-full h-full object-cover transition-all duration-1000 md:group-hover:scale-110"
+                                referrerPolicy="no-referrer"
+                               />
+                            )}
+                            <div className="absolute inset-0 pointer-events-none z-20" />
+                            <div className="absolute top-4 left-4 md:top-6 md:left-6 z-30 flex items-center gap-2 md:gap-3">
+                               <div className="bg-nissi-orange px-2 py-0.5 md:px-3 md:py-1 rounded-md flex items-center gap-1.5 md:gap-2 shadow-lg shadow-nissi-orange/20">
+                                  <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white animate-pulse" />
+                                  <span className="text-[8px] md:text-[10px] font-black text-white tracking-widest uppercase">MUESTRA HD</span>
+                               </div>
+                            </div>
+                         </div>
+ 
+                         {/* GIF/Video Proceso Container - iOS Optimization */}
+                         <div className="relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-[#1a1a1c] group/gif">
+                            {/* Native high-quality GIF or Video Bypass */}
+                            {(s as any).processVideoUrl ? (
+                               <video
+                                 autoPlay
+                                 muted
+                                 loop
+                                 playsInline
                                  className="relative z-10 w-full h-full object-cover brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700 pointer-events-none touch-action-none"
-                                 allow="autoplay; encrypted-media"
-                              />
-                           ) : (
-                              <img 
-                                 src={(s as any).gifUrl} 
-                                 alt={`Proceso ${s.title}`} 
-                                 className="relative z-10 w-full h-full object-cover brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700"
-                                 referrerPolicy="no-referrer"
-                              />
-                           )}
-                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none z-20" />
-                           <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-20 flex items-center gap-2 md:gap-3">
-                              <div className="bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:py-1 rounded-md flex items-center gap-1.5 md:gap-2 border border-white/20">
-                                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-nissi-orange animate-bounce" />
-                                 <span className="text-[8px] md:text-[10px] font-black text-white tracking-widest uppercase">PROCESO EN VIVO</span>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                   </div>
+                                 poster={(s as any).gifUrl}
+                               >
+                                 <source src={`${(s as any).processVideoUrl.replace('/preview', '').replace('/file/d/', '/uc?id=')}`} type="video/mp4" />
+                               </video>
+                            ) : (
+                               <img 
+                                  src={(s as any).gifUrl} 
+                                  alt={`Proceso ${s.title}`} 
+                                  className="relative z-10 w-full h-full object-cover brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700 pointer-events-none touch-action-none"
+                                  referrerPolicy="no-referrer"
+                               />
+                            )}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none z-20" />
+                            <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-30 flex items-center gap-2 md:gap-3">
+                               <div className="bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:py-1 rounded-md flex items-center gap-1.5 md:gap-2 border border-white/20">
+                                  <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-nissi-orange animate-bounce" />
+                                  <span className="text-[8px] md:text-[10px] font-black text-white tracking-widest uppercase">PROCESO REAL</span>
+                               </div>
+                            </div>
+                         </div>
+                      </div>
+                    </div>
 
                 <h3 className="text-2xl sm:text-3xl md:text-7xl font-black uppercase italic tracking-tighter leading-[1.05] md:leading-[1] md:group-hover:text-nissi-orange transition-colors">
                      {idx + 1}. {s.title}
@@ -412,17 +434,52 @@ const LandingPageServices: React.FC<{
 
             <div className="flex-1 w-full relative contenedor-oferta-nissi max-w-xl">
                 <div className="absolute inset-0 bg-nissi-orange/20 blur-[100px] rounded-full scale-75 animate-pulse-slow" />
-                <div className="relative z-10 rounded-[3rem] overflow-hidden border border-white/10">
-                  <img 
-                    src="https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=0"
-                    alt="Servicio Detailing Nissi" 
-                    className="w-full object-cover grayscale-[0.3] hover:grayscale-0 transition-all duration-1000 shadow-2xl pointer-events-none"
-                    referrerPolicy="no-referrer"
-                  />
+                <div className="relative z-10 space-y-8">
+                  {/* Offer 1: Restauración de Farolas 2x1 */}
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    className="rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 relative group h-56 md:h-64 shadow-2xl transition-all hover:border-nissi-orange/50"
+                  >
+                    <img 
+                      src="https://images.unsplash.com/photo-1601362840469-51e4d8d59085?auto=format&fit=crop&q=80&w=800"
+                      alt="Oferta 2x1 Restauración de Farolas" 
+                      className="w-full h-full object-cover grayscale-[0.3] pointer-events-none"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-nissi-orange via-nissi-orange/20 to-transparent transition-all flex flex-col justify-end p-6 md:p-8">
+                        <span className="text-white font-black text-6xl md:text-7xl italic tracking-tighter leading-none">2X1</span>
+                        <div className="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 self-start mt-2">
+                           <span className="text-white font-black text-[10px] md:text-xs uppercase tracking-widest">Oferta: Restauración de Farolas</span>
+                        </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Offer 2: Gold Full Vehículo Paga 2 lleva 3 */}
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.2 }}
+                    className="rounded-[2.5rem] md:rounded-[3rem] overflow-hidden border border-white/10 relative group h-56 md:h-64 shadow-2xl transition-all hover:border-amber-500/50"
+                  >
+                    <img 
+                      src="https://images.unsplash.com/photo-1607860108855-64acf2078641?auto=format&fit=crop&q=80&w=800"
+                      alt="Oferta Paga 2 Lleva 3 Gold Service" 
+                      className="w-full h-full object-cover grayscale-[0.3] pointer-events-none"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-amber-600 via-amber-600/20 to-transparent transition-all flex flex-col justify-end p-6 md:p-8">
+                        <span className="text-white font-black text-4xl md:text-5xl italic tracking-tighter leading-none">PAGA 2 LLEVA 3</span>
+                        <div className="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 self-start mt-2">
+                           <span className="text-white font-black text-[10px] md:text-xs uppercase tracking-widest">Oferta: Gold Full Vehículo</span>
+                        </div>
+                    </div>
+                  </motion.div>
                 </div>
-                <div className="absolute -bottom-10 -right-4 md:-right-10 bg-nissi-blue p-8 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.5)] z-20 border-4 border-[#1a1a1c] hidden md:block">
+                
+                <div className="absolute -bottom-10 -right-4 md:-right-10 bg-[#151517] p-8 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.5)] z-20 border border-white/10 hidden md:block">
                    <div className="flex items-center gap-1 mb-2">
-                       {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" />)}
+                       {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 text-yellow-500" fill="currentColor" />)}
                    </div>
                    <p className="font-black text-4xl italic uppercase leading-none">5.0 <br /> <span className="text-[10px] font-black opacity-50 not-italic tracking-[0.3em] uppercase">Satisfacción Real</span></p>
                 </div>
@@ -438,14 +495,14 @@ const LandingPageServices: React.FC<{
          whileHover={{ scale: 1.1 }}
          whileTap={{ scale: 0.9 }}
          onClick={() => openBooking()}
-         className="fixed bottom-10 right-10 z-[80] bg-[#25D366] p-5 rounded-full shadow-[0_20px_40px_rgba(37,211,102,0.4)] group"
+         className="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100] bg-[#25D366] p-4 md:p-5 rounded-full shadow-[0_20px_40px_rgba(37,211,102,0.4)] group active:brightness-90 touch-none"
       >
-        <MessageCircle size={32} className="text-white relative z-10" />
+        <MessageCircle size={32} className="text-white relative z-10 w-6 h-6 md:w-8 md:h-8" />
         <motion.span 
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: [0, 1, 1, 0, 0] }}
           transition={{ times: [0, 0.1, 0.8, 0.9, 1], duration: 5, delay: 1 }}
-          className="absolute right-full mr-6 top-1/2 -translate-y-1/2 bg-white text-[#25D366] px-6 py-3 rounded-2xl text-xs font-black uppercase tracking-widest whitespace-nowrap group-hover:opacity-100 transition-all pointer-events-none shadow-2xl"
+          className="absolute right-full mr-6 top-1/2 -translate-y-1/2 bg-white text-[#25D366] px-6 py-3 rounded-2xl text-[10px] md:text-xs font-black uppercase tracking-widest whitespace-nowrap group-hover:opacity-100 transition-all pointer-events-none shadow-2xl hidden md:block"
         >
            Agendar Valoración Gratis
         </motion.span>
