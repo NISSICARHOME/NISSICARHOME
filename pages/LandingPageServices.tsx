@@ -5,9 +5,7 @@ import {
   Award, 
   Sparkles, 
   ShieldCheck, 
-  Play, 
   MessageCircle, 
-  X,
   Star,
   ChevronRight,
   Droplets,
@@ -25,8 +23,10 @@ const SERVICES = [
     id: 'farolas',
     title: 'Restauración de Farolas y Personalización',
     description: 'Eliminamos el tono amarillento y opaco. Devolvemos la transparencia y el brillo original con sellado UV de larga duración.',
-    videoUrl: 'https://drive.google.com/file/d/1heao9bZTBhBkqkF_JHSKlcv5kQ7o7sDy/preview',
-    mediaUrl: 'https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?auto=format&fit=crop&q=80&w=1200',
+    videoUrl: 'https://drive.google.com/file/d/1iS_eXbtEWWjD-qEQwtHpE3TxkxKywvrH/preview',
+    processVideoUrl: 'https://drive.google.com/file/d/1WWLiw99X-IPEFpCm8DkLUzdPzbS3DRAZ/preview',
+    mediaUrl: 'https://images.unsplash.com/photo-1611702952136-2292f7685a49?auto=format&fit=crop&q=80&w=2000',
+    gifUrl: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGZ6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKVUn7iM8FMEU24/giphy.gif',
     isVideo: false,
     icon: Lightbulb,
     badge: 'Seguridad'
@@ -35,8 +35,10 @@ const SERVICES = [
     id: 'exterior',
     title: 'Detailing Exterior (Cerámico)',
     description: 'Protección cerámica y sellado de pintura. Brillo profundo tipo espejo con propiedades hidrofóbicas extremas.',
-    videoUrl: 'https://drive.google.com/file/d/1vA-yF261U0eMv-8z3Z7s-Uly0lW9U3oJ/preview',
+    videoUrl: 'https://drive.google.com/file/d/1pCuU_8J5c_Qm-pmiQTPQGHQmwHipU8Aa/preview',
+    processVideoUrl: 'https://drive.google.com/file/d/1p8u_UcsJLIUFsW9cKbppKhA2YHO4CfJ9/preview',
     mediaUrl: 'https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&q=80&w=1200',
+    gifUrl: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGZ6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/l41lTfuxG5D0zG7iE/giphy.gif',
     isVideo: false,
     icon: ShieldCheck,
     badge: 'Efecto Cristal'
@@ -45,8 +47,10 @@ const SERVICES = [
     id: 'interior',
     title: 'Detailing Interno Profundo',
     description: 'Desinfección y restauración de cojinería, alfombras y techos. Hidratación premium de plásticos y cueros.',
-    videoUrl: 'https://drive.google.com/file/d/14LiL01LkOEIDzd2V-FVgD_WztIJxbxQ3/preview',
+    videoUrl: 'https://drive.google.com/file/d/19G5uaJwmur4-w3ZWEZE0PNu1Y4EuWic_/preview',
+    processVideoUrl: 'https://drive.google.com/file/d/1neMsFed31gyLtTNdDDKUe_NY1eSQ878m/preview?mute=1',
     mediaUrl: 'https://images.unsplash.com/photo-1620334161528-94762c1767fb?auto=format&fit=crop&q=80&w=1200',
+    gifUrl: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGZ6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKVUn7iM8FMEU24/giphy.gif',
     isVideo: false,
     icon: Sparkles,
     badge: 'Renovación'
@@ -55,8 +59,10 @@ const SERVICES = [
     id: 'vidrios',
     title: 'Tratamiento de Vidrios (Lluvia Ácida)',
     description: 'Eliminación técnica de lluvia ácida y manchas de sarro. Visibilidad perfecta y seguridad en climas lluviosos.',
-    videoUrl: 'https://drive.google.com/file/d/1K66h7TUKC5Rx5PFgBVukB_UB5Dqf9iqt/preview',
+    videoUrl: 'https://drive.google.com/file/d/1YE8YKWYhrou5Xk7Ns5g2UYcpy3pGEyGE/preview',
+    processVideoUrl: 'https://drive.google.com/file/d/1UbRM9xs55TP2FnIJS6sshUV9tGjHf24H/preview?mute=1',
     mediaUrl: 'https://images.unsplash.com/photo-1549399500-1448083046d5?auto=format&fit=crop&q=80&w=1200',
+    gifUrl: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGZ6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKVUn7iM8FMEU24/giphy.gif',
     isVideo: false,
     icon: Droplets,
     badge: 'Kit Vidrex'
@@ -65,8 +71,10 @@ const SERVICES = [
     id: 'gold',
     title: 'Servicio Gold Full Vehículo',
     description: 'La experiencia completa Nissi. Restauración total exterior e interior para vehículos de alta gama y exhibición.',
-    videoUrl: 'https://drive.google.com/file/d/1vA-yF261U0eMv-8z3Z7s-Uly0lW9U3oJ/preview',
+    videoUrl: 'https://drive.google.com/file/d/1_XCCakKskoghtybqqb-bcc7B6Q8jW3tN/preview',
+    processVideoUrl: 'https://drive.google.com/file/d/1u9GxOm9xIgsrJJCOioFgwN1-ZzUVyW1h/preview?mute=1',
     mediaUrl: 'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&q=80&w=1200',
+    gifUrl: 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3pueGZ6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6ZzR6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKVUn7iM8FMEU24/giphy.gif',
     isVideo: false,
     icon: Star,
     badge: 'Máximo Lujo'
@@ -95,48 +103,12 @@ const PILLARS = [
 
 import BookingModal from '../components/shared/BookingModal';
 
-const VideoModal = ({ isOpen, onClose, videoUrl }: { isOpen: boolean, onClose: () => void, videoUrl: string }) => (
-  <AnimatePresence>
-    {isOpen && (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        className="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
-        onClick={onClose}
-      >
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          className="relative w-full max-w-4xl aspect-video bg-black rounded-3xl overflow-hidden shadow-2xl contenedor-oferta-nissi"
-          onClick={e => e.stopPropagation()}
-        >
-          <button 
-            onClick={onClose}
-            className="absolute top-4 right-4 z-50 bg-white/20 hover:bg-white/40 p-3 rounded-full text-white transition-colors"
-          >
-            <X size={24} />
-          </button>
-          <iframe 
-            src={videoUrl}
-            className="w-full h-full border-0 shadow-inner"
-            allow="autoplay; encrypted-media"
-            allowFullScreen
-          />
-        </motion.div>
-      </motion.div>
-    )}
-  </AnimatePresence>
-);
-
 const LandingPageServices: React.FC<{
   reviews: Review[];
   onAddReview: (review: Omit<Review, 'id' | 'date'>) => void;
   onDeleteReview: (id: string) => void;
   isAdmin: boolean;
 }> = ({ reviews, onAddReview, onDeleteReview, isAdmin }) => {
-  const [activeVideo, setActiveVideo] = useState<string | null>(null);
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string | undefined>(undefined);
 
@@ -238,7 +210,7 @@ const LandingPageServices: React.FC<{
              Resultados que Hablan Solos
           </motion.h2>
           <div className="h-1.5 w-32 bg-nissi-orange mx-auto rounded-full" />
-          <p className="text-white/50 text-lg">Haz clic en "Ver Resultado Real" para comprobar la excelencia Nissi.</p>
+          <p className="text-white/50 text-lg">Experimenta la excelencia técnica de Nissi en cada detalle.</p>
         </div>
 
         <div className="space-y-24">
@@ -265,44 +237,60 @@ const LandingPageServices: React.FC<{
                      </div>
                   </div>
 
-                   {/* Dedicated HD Media Section above title */}
-                   <div className="space-y-8">
-                     {s.id === 'farolas' && (
-                        <div className="relative aspect-video w-full rounded-[2.5rem] overflow-hidden border-2 border-nissi-orange/50 shadow-[0_0_50px_rgba(255,102,0,0.2)] bg-black">
-                           <iframe 
-                            src={`${s.videoUrl}&controls=0&autoplay=1&mute=1&loop=1&rel=0`}
-                            className="w-full h-full object-cover scale-[1.5] brightness-110"
-                            allow="autoplay"
-                           />
+                                      <div className="space-y-8">
+                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="relative aspect-video w-full rounded-[2.5rem] overflow-hidden border border-white/10 group-hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-black">
+                           {s.id === 'farolas' || s.id === 'exterior' || s.id === 'interior' || s.id === 'vidrios' || s.id === 'gold' ? (
+                              <iframe 
+                               src={s.videoUrl}
+                               className="w-full h-full object-cover scale-[1.2] brightness-110"
+                               allow="autoplay"
+                              />
+                           ) : s.isVideo ? (
+                              <iframe 
+                               src={`${s.mediaUrl}&controls=0&autoplay=1&mute=1&loop=1&rel=0`}
+                               className="w-full h-full object-cover scale-[1.5] brightness-110"
+                               allow="autoplay"
+                              />
+                           ) : (
+                              <img 
+                               src={s.mediaUrl} 
+                               alt={s.title} 
+                               className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+                               referrerPolicy="no-referrer"
+                              />
+                           )}
+                           <div className="absolute inset-0 pointer-events-none" />
                            <div className="absolute top-6 left-6 z-20 flex items-center gap-3">
-                              <div className="bg-red-600 px-3 py-1 rounded-md flex items-center gap-2 animate-pulse">
-                                 <div className="w-2 h-2 rounded-full bg-white" />
-                                 <span className="text-[10px] font-black text-white tracking-widest uppercase">VIDEO REAL</span>
+                              <div className="bg-nissi-orange px-3 py-1 rounded-md flex items-center gap-2 shadow-lg shadow-nissi-orange/20">
+                                 <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                                 <span className="text-[10px] font-black text-white tracking-widest uppercase">HD PREMIUM</span>
                               </div>
                            </div>
                         </div>
-                     )}
-                     
-                     <div className="relative aspect-video w-full rounded-[2.5rem] overflow-hidden border border-white/10 group-hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-black">
-                        {s.isVideo ? (
-                           <iframe 
-                            src={`${s.mediaUrl}&controls=0&autoplay=1&mute=1&loop=1&rel=0`}
-                            className="w-full h-full object-cover scale-[1.5] brightness-110"
-                            allow="autoplay"
-                           />
-                        ) : (
-                           <img 
-                            src={s.mediaUrl} 
-                            alt={s.title} 
-                            className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
-                            referrerPolicy="no-referrer"
-                           />
-                        )}
-                        <div className="absolute inset-0 pointer-events-none" />
-                        <div className="absolute top-6 left-6 z-20 flex items-center gap-3">
-                           <div className="bg-nissi-orange px-3 py-1 rounded-md flex items-center gap-2 shadow-lg shadow-nissi-orange/20">
-                              <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                              <span className="text-[10px] font-black text-white tracking-widest uppercase">HD PREMIUM</span>
+
+                        {/* GIF/Video Proceso Container */}
+                        <div className="relative aspect-video w-full rounded-[2.5rem] overflow-hidden border border-white/10 hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-[#1a1a1c] group/gif">
+                           {(s as any).processVideoUrl ? (
+                              <iframe 
+                                 src={(s as any).processVideoUrl}
+                                 className="w-full h-full object-cover brightness-75 group-hover/gif:brightness-100 transition-all duration-700"
+                                 allow="autoplay"
+                              />
+                           ) : (
+                              <img 
+                                 src={(s as any).gifUrl} 
+                                 alt={`Proceso ${s.title}`} 
+                                 className="w-full h-full object-cover brightness-75 group-hover/gif:brightness-100 transition-all duration-700"
+                                 referrerPolicy="no-referrer"
+                              />
+                           )}
+                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                           <div className="absolute bottom-6 left-6 z-20 flex items-center gap-3">
+                              <div className="bg-white/10 backdrop-blur-md px-3 py-1 rounded-md flex items-center gap-2 border border-white/20">
+                                 <div className="w-2 h-2 rounded-full bg-nissi-orange animate-bounce" />
+                                 <span className="text-[10px] font-black text-white tracking-widest uppercase">PROCESO EN VIVO</span>
+                              </div>
                            </div>
                         </div>
                      </div>
@@ -316,10 +304,9 @@ const LandingPageServices: React.FC<{
                   </p>
                 </div>
  
-                 <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
                   <button 
                     onClick={() => openBooking(s.title)}
-                    className="flex-1 py-5 md:py-7 bg-nissi-orange text-white rounded-2xl md:rounded-3xl flex items-center justify-center gap-4 font-black uppercase tracking-[0.2em] text-md md:text-2xl transition-all hover:scale-[1.03] active:scale-95 shadow-[0_20px_40px_rgba(255,102,0,0.3)] relative overflow-hidden group/btn"
+                    className="w-full py-5 md:py-7 bg-nissi-orange text-white rounded-2xl md:rounded-3xl flex items-center justify-center gap-4 font-black uppercase tracking-[0.2em] text-md md:text-2xl transition-all hover:scale-[1.03] active:scale-95 shadow-[0_20px_40px_rgba(255,102,0,0.3)] relative overflow-hidden group/btn"
                   >
                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
                      <span className="relative z-10 italic flex items-center gap-3">
@@ -327,21 +314,46 @@ const LandingPageServices: React.FC<{
                         <ArrowRight className="w-5 h-5 md:w-8 md:h-8 animate-bounce-x" />
                      </span>
                   </button>
- 
-                  <button 
-                    onClick={() => setActiveVideo(s.videoUrl || '')}
-                    className="px-8 py-5 md:py-7 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-2xl md:rounded-3xl flex items-center justify-center gap-4 font-black uppercase tracking-[0.2em] text-md transition-all"
-                  >
-                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-nissi-orange flex items-center justify-center shadow-xl">
-                      <Play className="w-3 h-3 md:w-4 md:h-4 text-white fill-current ml-1" />
-                    </div>
-                    VER PROCESO
-                  </button>
                 </div>
-              </div>
             </motion.div>
           ))}
         </div>
+      </section>
+
+      {/* SECTION 4: EL PASO FINAL */}
+      <section className="py-32 px-6 text-center">
+        <motion.div
+           initial={{ opacity: 0, scale: 0.9 }}
+           whileInView={{ opacity: 1, scale: 1 }}
+           viewport={{ once: true }}
+           className="max-w-4xl mx-auto p-12 md:p-20 rounded-[4rem] bg-gradient-to-br from-nissi-orange/20 via-transparent to-white/5 border border-white/10 relative group overflow-hidden shadow-2xl"
+        >
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 pointer-events-none" />
+          
+          <h2 className="text-2xl xs:text-3xl sm:text-5xl md:text-7xl font-black italic uppercase tracking-tighter mb-8 leading-[1.1] md:leading-tight px-4">
+            ¿Listo para <br className="hidden sm:block" />
+            <span className="text-nissi-orange">Transformar tu Auto?</span>
+          </h2>
+          <p className="text-lg md:text-xl text-white/50 mb-12 max-w-2xl mx-auto font-medium text-center md:text-justify md:hyphens-auto px-6">
+            No pierdas más tiempo pensando. Reserva tu cupo para valorarlo hoy mismo y experimenta el acabado que tu vehículo merece.
+          </p>
+          
+          <button 
+            onClick={() => openBooking('cita hoy mismo')}
+            className="w-full md:w-auto px-10 py-5 md:py-7 bg-nissi-orange text-white rounded-2xl md:rounded-3xl font-black uppercase tracking-[0.2em] text-md md:text-2xl shadow-[0_20px_40px_rgba(255,102,0,0.3)] hover:scale-105 transition-all duration-500 hover:brightness-110 active:scale-95 relative overflow-hidden group"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
+            <span className="relative z-10 drop-shadow-lg flex items-center justify-center gap-4 md:gap-6">
+               RESERVAR CUPO HOY
+              <motion.div
+                animate={{ x: [0, 5, 0] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
+              >
+                <ArrowRight size={24} className="md:w-10 md:h-10 stroke-[3px]" />
+              </motion.div>
+            </span>
+          </button>
+        </motion.div>
       </section>
 
       {/* SECTION 3: POR QUÉ ELEGIRNOS */}
@@ -402,42 +414,6 @@ const LandingPageServices: React.FC<{
         </div>
       </section>
 
-      {/* SECTION 4: EL PASO FINAL */}
-      <section className="py-32 px-6 text-center">
-        <motion.div
-           initial={{ opacity: 0, scale: 0.9 }}
-           whileInView={{ opacity: 1, scale: 1 }}
-           viewport={{ once: true }}
-           className="max-w-4xl mx-auto p-12 md:p-20 rounded-[4rem] bg-gradient-to-br from-nissi-orange/20 via-transparent to-white/5 border border-white/10 relative group overflow-hidden shadow-2xl"
-        >
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 pointer-events-none" />
-          
-          <h2 className="text-2xl xs:text-3xl sm:text-5xl md:text-7xl font-black italic uppercase tracking-tighter mb-8 leading-[1.1] md:leading-tight px-4">
-            ¿Listo para <br className="hidden sm:block" />
-            <span className="text-nissi-orange">Transformar tu Auto?</span>
-          </h2>
-          <p className="text-lg md:text-xl text-white/50 mb-12 max-w-2xl mx-auto font-medium text-center md:text-justify md:hyphens-auto px-6">
-            No pierdas más tiempo pensando. Reserva tu cupo para valorarlo hoy mismo y experimenta el acabado que tu vehículo merece.
-          </p>
-          
-          <button 
-            onClick={() => openBooking('cita hoy mismo')}
-            className="w-full md:w-auto px-10 py-5 md:px-16 md:py-8 bg-nissi-orange text-white rounded-[1.5rem] md:rounded-[2rem] font-black uppercase tracking-[0.15em] md:tracking-[0.25em] text-lg md:text-4xl shadow-[0_30px_60px_rgba(255,102,0,0.4),0_0_0_8px_rgba(255,102,0,0.1)] hover:scale-105 transition-all duration-500 hover:brightness-110 active:scale-95 border-b-[8px] md:border-b-[12px] border-black/20 relative overflow-hidden group"
-          >
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
-            <span className="relative z-10 drop-shadow-lg flex items-center justify-center gap-4 md:gap-6">
-               RESERVAR CUPO HOY
-              <motion.div
-                animate={{ x: [0, 5, 0] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-              >
-                <ArrowRight size={24} className="md:w-10 md:h-10 stroke-[3px]" />
-              </motion.div>
-            </span>
-          </button>
-        </motion.div>
-      </section>
-
       {/* WHATSAPP FLOATING BUTTON */}
       <motion.button
          initial={{ scale: 1, opacity: 1 }}
@@ -468,13 +444,6 @@ const LandingPageServices: React.FC<{
           isAdmin={isAdmin} 
         />
       </div>
-
-      {/* MODALS */}
-      <VideoModal 
-        isOpen={activeVideo !== null} 
-        onClose={() => setActiveVideo(null)} 
-        videoUrl={activeVideo || ''} 
-      />
 
       <BookingModal 
         isOpen={isBookingOpen}
