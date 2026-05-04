@@ -127,10 +127,10 @@ const LandingPageServices: React.FC<{
   }, []);
 
   return (
-    <div className="bg-[#0a0a0b] text-white font-sans selection:bg-nissi-orange selection:text-white pb-32">
+    <div className="bg-[#0a0a0b] text-white font-sans selection:bg-nissi-orange selection:text-white pb-32 antialiased overflow-x-hidden">
       
       {/* SECTION 1: HERO DE AUTORIDAD */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen min-h-[100svh] flex items-center justify-center overflow-hidden">
         {/* Background Video/Image Overlay */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/30 to-[#0a0a0b] z-10" />
@@ -142,16 +142,16 @@ const LandingPageServices: React.FC<{
           />
         </div>
 
-        <div className="relative z-20 max-w-5xl mx-auto px-6 text-center space-y-8">
+        <div className="relative z-20 max-w-5xl mx-auto px-4 md:px-6 text-center space-y-6 md:space-y-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <span className="bg-nissi-orange/20 text-nissi-orange px-6 py-2 rounded-full text-xs font-black uppercase tracking-[0.4em] mb-6 inline-block border border-nissi-orange/30">
+            <span className="bg-nissi-orange/20 text-nissi-orange px-4 py-1.5 md:px-6 md:py-2 rounded-full text-[10px] md:text-xs font-black uppercase tracking-[0.3em] md:tracking-[0.4em] mb-4 md:mb-6 inline-block border border-nissi-orange/30">
               Estética de Exhibición
             </span>
-            <h1 className="text-2xl xs:text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black italic tracking-tighter uppercase leading-[1.1] md:leading-tight mb-4 drop-shadow-2xl">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black italic tracking-tighter uppercase leading-[1.05] md:leading-tight mb-4 drop-shadow-2xl">
               Tu Vehículo merece un <br className="hidden sm:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-nissi-orange to-amber-400">
                 acabado de exhibición.
@@ -170,7 +170,7 @@ const LandingPageServices: React.FC<{
           >
             <button 
               onClick={() => openBooking()}
-              className="bg-nissi-orange text-white px-8 py-4 md:py-6 md:px-16 rounded-[1.5rem] md:rounded-[2rem] font-black uppercase tracking-[0.2em] text-md md:text-2xl shadow-[0_30px_60px_rgba(255,102,0,0.4),0_0_0_8px_rgba(255,102,0,0.1)] hover:scale-[1.05] hover:brightness-110 active:scale-95 transition-all duration-500 group flex items-center gap-4 md:gap-6 mx-auto relative overflow-hidden"
+              className="bg-nissi-orange text-white px-6 py-4 md:py-6 md:px-16 rounded-2xl md:rounded-[2rem] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-sm md:text-2xl shadow-[0_30px_60px_rgba(255,102,0,0.4),0_0_0_8px_rgba(255,102,0,0.1)] hover:scale-[1.05] hover:brightness-110 active:scale-95 transition-all duration-500 group flex items-center gap-3 md:gap-6 mx-auto relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
               <span className="relative z-10 drop-shadow-md flex items-center gap-4">
@@ -219,94 +219,94 @@ const LandingPageServices: React.FC<{
               key={s.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: 0.1 }}
-              className="group relative bg-[#121214] border border-white/5 rounded-[3rem] md:rounded-[5rem] overflow-hidden hover:border-nissi-orange/30 transition-all duration-700 flex flex-col shadow-[0_40px_100px_rgba(0,0,0,0.6)]"
+              className="group relative bg-[#121214] border border-white/5 rounded-[2.5rem] md:rounded-[5rem] overflow-hidden hover:border-nissi-orange/30 transition-all duration-700 flex flex-col shadow-[0_40px_100px_rgba(0,0,0,0.6)]"
             >
                {/* Card Background Branding */}
                <div className="absolute top-10 right-10 opacity-[0.03] pointer-events-none">
                   <Star size={400} fill="currentColor" />
                </div>
 
-               <div className="p-8 md:p-24 relative z-10 space-y-8 md:space-y-12">
-                <div className="space-y-6">
-                  <div className="inline-flex items-center gap-4 bg-white/5 backdrop-blur-xl border border-white/10 p-1.5 pl-5 rounded-full">
-                     <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/50">{s.badge}</span>
-                     <div className="bg-nissi-orange p-2.5 rounded-full shadow-lg shadow-nissi-orange/20">
-                        <s.icon className="w-5 h-5 text-white" />
+               <div className="p-6 md:p-24 relative z-10 space-y-6 md:space-y-12">
+                <div className="space-y-4 md:space-y-6">
+                  <div className="inline-flex items-center gap-4 bg-white/5 backdrop-blur-xl border border-white/10 p-1 md:p-1.5 pl-4 md:pl-5 rounded-full">
+                     <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] text-white/50">{s.badge}</span>
+                     <div className="bg-nissi-orange p-2 md:p-2.5 rounded-full shadow-lg shadow-nissi-orange/20">
+                        <s.icon className="w-4 h-4 md:w-5 md:h-5 text-white" />
                      </div>
                   </div>
 
                                       <div className="space-y-8">
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="relative aspect-video w-full rounded-[2.5rem] overflow-hidden border border-white/10 group-hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-black">
+                        <div className="relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 group-hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-black">
                            {s.id === 'farolas' || s.id === 'exterior' || s.id === 'interior' || s.id === 'vidrios' || s.id === 'gold' ? (
                               <iframe 
                                src={s.videoUrl}
-                               className="w-full h-full object-cover scale-[1.2] brightness-110"
-                               allow="autoplay"
+                               className="w-full h-full object-cover scale-[1.2] brightness-110 pointer-events-auto"
+                               allow="autoplay; encrypted-media"
                               />
                            ) : s.isVideo ? (
                               <iframe 
                                src={`${s.mediaUrl}&controls=0&autoplay=1&mute=1&loop=1&rel=0`}
-                               className="w-full h-full object-cover scale-[1.5] brightness-110"
-                               allow="autoplay"
+                               className="w-full h-full object-cover scale-[1.5] brightness-110 pointer-events-auto"
+                               allow="autoplay; encrypted-media"
                               />
                            ) : (
                               <img 
                                src={s.mediaUrl} 
                                alt={s.title} 
-                               className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
+                               className="w-full h-full object-cover transition-all duration-1000 md:group-hover:scale-110"
                                referrerPolicy="no-referrer"
                               />
                            )}
                            <div className="absolute inset-0 pointer-events-none" />
-                           <div className="absolute top-6 left-6 z-20 flex items-center gap-3">
-                              <div className="bg-nissi-orange px-3 py-1 rounded-md flex items-center gap-2 shadow-lg shadow-nissi-orange/20">
-                                 <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                                 <span className="text-[10px] font-black text-white tracking-widest uppercase">HD PREMIUM</span>
+                           <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20 flex items-center gap-2 md:gap-3">
+                              <div className="bg-nissi-orange px-2 py-0.5 md:px-3 md:py-1 rounded-md flex items-center gap-1.5 md:gap-2 shadow-lg shadow-nissi-orange/20">
+                                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white animate-pulse" />
+                                 <span className="text-[8px] md:text-[10px] font-black text-white tracking-widest uppercase">HD PREMIUM</span>
                               </div>
                            </div>
                         </div>
 
                         {/* GIF/Video Proceso Container */}
-                        <div className="relative aspect-video w-full rounded-[2.5rem] overflow-hidden border border-white/10 hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-[#1a1a1c] group/gif">
+                        <div className="relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-[#1a1a1c] group/gif">
                            {(s as any).processVideoUrl ? (
                               <iframe 
                                  src={(s as any).processVideoUrl}
-                                 className="w-full h-full object-cover brightness-75 group-hover/gif:brightness-100 transition-all duration-700"
-                                 allow="autoplay"
+                                 className="w-full h-full object-cover brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700 pointer-events-auto"
+                                 allow="autoplay; encrypted-media"
                               />
                            ) : (
                               <img 
                                  src={(s as any).gifUrl} 
                                  alt={`Proceso ${s.title}`} 
-                                 className="w-full h-full object-cover brightness-75 group-hover/gif:brightness-100 transition-all duration-700"
+                                 className="w-full h-full object-cover brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700"
                                  referrerPolicy="no-referrer"
                               />
                            )}
                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
-                           <div className="absolute bottom-6 left-6 z-20 flex items-center gap-3">
-                              <div className="bg-white/10 backdrop-blur-md px-3 py-1 rounded-md flex items-center gap-2 border border-white/20">
-                                 <div className="w-2 h-2 rounded-full bg-nissi-orange animate-bounce" />
-                                 <span className="text-[10px] font-black text-white tracking-widest uppercase">PROCESO EN VIVO</span>
+                           <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-20 flex items-center gap-2 md:gap-3">
+                              <div className="bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:py-1 rounded-md flex items-center gap-1.5 md:gap-2 border border-white/20">
+                                 <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-nissi-orange animate-bounce" />
+                                 <span className="text-[8px] md:text-[10px] font-black text-white tracking-widest uppercase">PROCESO EN VIVO</span>
                               </div>
                            </div>
                         </div>
                      </div>
                    </div>
 
-                <h3 className="text-2xl sm:text-3xl md:text-7xl font-black uppercase italic tracking-tighter leading-[1.1] md:leading-[1] group-hover:text-nissi-orange transition-colors">
+                <h3 className="text-2xl sm:text-3xl md:text-7xl font-black uppercase italic tracking-tighter leading-[1.05] md:leading-[1] md:group-hover:text-nissi-orange transition-colors">
                      {idx + 1}. {s.title}
                   </h3>
-                  <p className="text-lg md:text-2xl text-white/60 leading-relaxed font-medium max-w-4xl text-left md:text-justify md:hyphens-auto">
+                  <p className="text-base md:text-2xl text-white/60 leading-relaxed font-medium max-w-4xl text-left md:text-justify md:hyphens-auto">
                      {s.description}
                   </p>
                 </div>
  
                   <button 
                     onClick={() => openBooking(s.title)}
-                    className="w-full py-5 md:py-7 bg-nissi-orange text-white rounded-2xl md:rounded-3xl flex items-center justify-center gap-4 font-black uppercase tracking-[0.2em] text-md md:text-2xl transition-all hover:scale-[1.03] active:scale-95 shadow-[0_20px_40px_rgba(255,102,0,0.3)] relative overflow-hidden group/btn"
+                    className="w-full py-5 md:py-7 bg-nissi-orange text-white rounded-2xl md:rounded-3xl flex items-center justify-center gap-4 font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-sm md:text-2xl transition-all hover:scale-[1.03] active:scale-95 shadow-[0_20px_40px_rgba(255,102,0,0.3)] relative overflow-hidden group/btn"
                   >
                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent -translate-x-full group-hover/btn:animate-shimmer" />
                      <span className="relative z-10 italic flex items-center gap-3">
@@ -321,26 +321,26 @@ const LandingPageServices: React.FC<{
       </section>
 
       {/* SECTION 4: EL PASO FINAL */}
-      <section className="py-32 px-6 text-center">
+      <section className="py-24 md:py-32 px-4 md:px-6 text-center">
         <motion.div
-           initial={{ opacity: 0, scale: 0.9 }}
+           initial={{ opacity: 0, scale: 0.95 }}
            whileInView={{ opacity: 1, scale: 1 }}
-           viewport={{ once: true }}
-           className="max-w-4xl mx-auto p-12 md:p-20 rounded-[4rem] bg-gradient-to-br from-nissi-orange/20 via-transparent to-white/5 border border-white/10 relative group overflow-hidden shadow-2xl"
+           viewport={{ once: true, margin: "-100px" }}
+           className="max-w-4xl mx-auto p-10 md:p-20 rounded-[2.5rem] md:rounded-[4rem] bg-gradient-to-br from-nissi-orange/20 via-transparent to-white/5 border border-white/10 relative group overflow-hidden shadow-2xl"
         >
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-5 pointer-events-none" />
           
-          <h2 className="text-2xl xs:text-3xl sm:text-5xl md:text-7xl font-black italic uppercase tracking-tighter mb-8 leading-[1.1] md:leading-tight px-4">
+          <h2 className="text-2xl xs:text-3xl sm:text-5xl md:text-7xl font-black italic uppercase tracking-tighter mb-6 md:mb-8 leading-[1.05] md:leading-tight px-4">
             ¿Listo para <br className="hidden sm:block" />
             <span className="text-nissi-orange">Transformar tu Auto?</span>
           </h2>
-          <p className="text-lg md:text-xl text-white/50 mb-12 max-w-2xl mx-auto font-medium text-center md:text-justify md:hyphens-auto px-6">
+          <p className="text-base md:text-xl text-white/50 mb-8 md:mb-12 max-w-2xl mx-auto font-medium text-center md:text-justify md:hyphens-auto px-4 md:px-6">
             No pierdas más tiempo pensando. Reserva tu cupo para valorarlo hoy mismo y experimenta el acabado que tu vehículo merece.
           </p>
           
           <button 
             onClick={() => openBooking('cita hoy mismo')}
-            className="w-full md:w-auto px-10 py-5 md:py-7 bg-nissi-orange text-white rounded-2xl md:rounded-3xl font-black uppercase tracking-[0.2em] text-md md:text-2xl shadow-[0_20px_40px_rgba(255,102,0,0.3)] hover:scale-105 transition-all duration-500 hover:brightness-110 active:scale-95 relative overflow-hidden group"
+            className="w-full md:w-auto px-8 py-5 md:px-16 md:py-7 bg-nissi-orange text-white rounded-2xl md:rounded-3xl font-black uppercase tracking-[0.15em] md:tracking-[0.2em] text-sm md:text-2xl shadow-[0_20px_40px_rgba(255,102,0,0.3)] hover:scale-105 transition-all duration-500 hover:brightness-110 active:scale-95 relative overflow-hidden group"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full group-hover:animate-shimmer" />
             <span className="relative z-10 drop-shadow-lg flex items-center justify-center gap-4 md:gap-6">
