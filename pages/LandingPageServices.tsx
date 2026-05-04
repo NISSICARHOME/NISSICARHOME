@@ -240,27 +240,34 @@ const LandingPageServices: React.FC<{
                                       <div className="space-y-8">
                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 group-hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-black">
+                           {/* Fallback Background Image for iOS / Loading state */}
+                           <img 
+                             src={s.mediaUrl}
+                             className="absolute inset-0 w-full h-full object-cover brightness-50 z-0"
+                             alt="Loading..."
+                           />
+                           
                            {s.id === 'farolas' || s.id === 'exterior' || s.id === 'interior' || s.id === 'vidrios' || s.id === 'gold' ? (
                               <iframe 
-                               src={s.videoUrl}
-                               className="w-full h-full object-cover scale-[1.2] brightness-110 pointer-events-auto"
+                               src={`${s.videoUrl}${s.videoUrl.includes('?') ? '&' : '?'}mute=1&autoplay=1`}
+                               className="relative z-10 w-full h-full object-cover scale-[1.2] brightness-110 pointer-events-none touch-action-none"
                                allow="autoplay; encrypted-media"
                               />
                            ) : s.isVideo ? (
                               <iframe 
                                src={`${s.mediaUrl}&controls=0&autoplay=1&mute=1&loop=1&rel=0`}
-                               className="w-full h-full object-cover scale-[1.5] brightness-110 pointer-events-auto"
+                               className="relative z-10 w-full h-full object-cover scale-[1.5] brightness-110 pointer-events-none touch-action-none"
                                allow="autoplay; encrypted-media"
                               />
                            ) : (
                               <img 
                                src={s.mediaUrl} 
                                alt={s.title} 
-                               className="w-full h-full object-cover transition-all duration-1000 md:group-hover:scale-110"
+                               className="relative z-10 w-full h-full object-cover transition-all duration-1000 md:group-hover:scale-110"
                                referrerPolicy="no-referrer"
                               />
                            )}
-                           <div className="absolute inset-0 pointer-events-none" />
+                           <div className="absolute inset-0 pointer-events-none z-20" />
                            <div className="absolute top-4 left-4 md:top-6 md:left-6 z-20 flex items-center gap-2 md:gap-3">
                               <div className="bg-nissi-orange px-2 py-0.5 md:px-3 md:py-1 rounded-md flex items-center gap-1.5 md:gap-2 shadow-lg shadow-nissi-orange/20">
                                  <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-white animate-pulse" />
@@ -271,21 +278,28 @@ const LandingPageServices: React.FC<{
 
                         {/* GIF/Video Proceso Container */}
                         <div className="relative aspect-video w-full rounded-2xl md:rounded-[2.5rem] overflow-hidden border border-white/10 hover:border-nissi-orange/50 transition-all duration-700 shadow-2xl bg-[#1a1a1c] group/gif">
+                           {/* Fallback visual for process */}
+                           <img 
+                             src={(s as any).gifUrl} 
+                             className="absolute inset-0 w-full h-full object-cover brightness-50 z-0"
+                             alt="Proceso"
+                           />
+
                            {(s as any).processVideoUrl ? (
                               <iframe 
-                                 src={(s as any).processVideoUrl}
-                                 className="w-full h-full object-cover brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700 pointer-events-auto"
+                                 src={`${(s as any).processVideoUrl}${(s as any).processVideoUrl.includes('?') ? '&' : '?'}mute=1&autoplay=1`}
+                                 className="relative z-10 w-full h-full object-cover brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700 pointer-events-none touch-action-none"
                                  allow="autoplay; encrypted-media"
                               />
                            ) : (
                               <img 
                                  src={(s as any).gifUrl} 
                                  alt={`Proceso ${s.title}`} 
-                                 className="w-full h-full object-cover brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700"
+                                 className="relative z-10 w-full h-full object-cover brightness-75 md:group-hover/gif:brightness-100 transition-all duration-700"
                                  referrerPolicy="no-referrer"
                               />
                            )}
-                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+                           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none z-20" />
                            <div className="absolute bottom-4 left-4 md:bottom-6 md:left-6 z-20 flex items-center gap-2 md:gap-3">
                               <div className="bg-white/10 backdrop-blur-md px-2 py-0.5 md:px-3 md:py-1 rounded-md flex items-center gap-1.5 md:gap-2 border border-white/20">
                                  <div className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-nissi-orange animate-bounce" />
@@ -398,11 +412,14 @@ const LandingPageServices: React.FC<{
 
             <div className="flex-1 w-full relative contenedor-oferta-nissi max-w-xl">
                 <div className="absolute inset-0 bg-nissi-orange/20 blur-[100px] rounded-full scale-75 animate-pulse-slow" />
-                <img 
-                  src="https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=0"
-                  alt="Servicio Detailing Nissi" 
-                  className="rounded-[3rem] shadow-2xl relative z-10 border border-white/10 grayscale-[0.3] hover:grayscale-0 transition-all duration-1000 w-full"
-                />
+                <div className="relative z-10 rounded-[3rem] overflow-hidden border border-white/10">
+                  <img 
+                    src="https://lh3.googleusercontent.com/pw/AP1GczMefKEzyVKnPdqKls5TiwS_x739Ddh9iUXt-IMB7AVXBGTR49HhMklZzcguLSPSPE6dAtYKa-Jy0Bi6wxH_DKMNFBwEq2bp7PnmcdDkpHsLxFTlYWdkbcXnBz8d0-RUTDDr5YGhvhQjnhixxOxNpyEb=w1120-h928-s-no-gm?authuser=0"
+                    alt="Servicio Detailing Nissi" 
+                    className="w-full object-cover grayscale-[0.3] hover:grayscale-0 transition-all duration-1000 shadow-2xl pointer-events-none"
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
                 <div className="absolute -bottom-10 -right-4 md:-right-10 bg-nissi-blue p-8 rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.5)] z-20 border-4 border-[#1a1a1c] hidden md:block">
                    <div className="flex items-center gap-1 mb-2">
                        {[...Array(5)].map((_, i) => <Star key={i} className="w-5 h-5 text-yellow-400" fill="currentColor" />)}
